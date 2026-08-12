@@ -1,0 +1,62 @@
+/* --- 12. Boutons d'overlay des cartes --------------------------------- */
+/* Point de vocabulaire indispensable avant de toucher a quoi que ce soit :
+   .cardOverlayButton-br designe DEUX choses differentes selon le layout,
+   parce que cardBuilder produit deux jeux de boutons sous des conditions
+   opposees.
+
+   Sur bureau, getHoverMenuHtml, appele sous  if (layoutManager.desktop) :
+   .cardOverlayButton-br est le conteneur flex du groupe vu / favori /
+   menu, en bas a droite, et il n'apparait qu'au survol.
+
+   Sur mobile, buildCard, sous  if (layoutManager.mobile) :
+     const btnCssClass = 'cardOverlayButton cardOverlayButton-br itemAction';
+   la classe est portee par le BOUTON PLAY lui-meme, pose directement sur la
+   vignette et visible en permanence. Il sort par defaut des que
+   item.MediaType vaut 'Video'. card.scss le cadre en bas a droite
+   (position: absolute; bottom: 0; right: 0), pile sur le bout de la barre.
+
+   Le "Accommodate play button on mobile" de floating.css visait donc bien
+   quelque chose de reel, contrairement a ce que laissait croire la seule
+   lecture de getHoverMenuHtml. Ce qui etait faux, c'etait sa portee : sa
+   marge de 3.2em tombe sous @media all and (max-width: 100em), soit environ
+   1600px, donc elle rognait aussi la barre sur les ecrans de bureau, ou ce
+   bouton n'existe pas. D'ou un vide a droite de la barre en permanence sur
+   la machine ou on regarde le plus.
+
+   Correctif retenu : on ne rogne plus la barre nulle part, et on sort le
+   bouton mobile de la zone de la barre en l'envoyant dans le coin haut
+   gauche. La barre garde toute sa largeur sur tous les ecrans, et la regle
+   ne vise que le layout concerne - layoutManager pose layout-mobile sur
+   l'element racine, comme le layout-tv utilise en section 6.
+
+   Haut GAUCHE et pas haut droite : le coin droit est pris par
+   .cardIndicators, cale a .5em par la section 8, qui y met le compteur
+   d'episodes non vus des series et l'indicateur de type, sur des cartes
+   parfaitement jouables. La pastille "vu", elle, ne coexiste jamais avec la
+   barre, Jellyfin n'affichant l'une que sous 100% de lecture et l'autre
+   qu'a partir de 100%.
+
+   right et bottom doivent etre remis a auto : card.scss cadre ce bouton en
+   position: absolute; bottom: 0; right: 0. Poser top et left sans annuler
+   les deux autres donnerait un element cale sur les quatre cotes, donc
+   etire sur toute la vignette, sa largeur etant auto.
+
+   Le :not(.cardOverlayButton-centered) protege la variante centree, que
+   cardBuilder produit sous l'option centerPlayButton et qui porte les deux
+   classes. Sans ce garde-fou, ces offsets en !important la decrocheraient
+   de son centrage. */
+.layout-mobile .cardOverlayButton-br:not(.cardOverlayButton-centered) {
+    top: 0 !important;
+    bottom: auto !important;
+    left: 0 !important;
+    right: auto !important;
+}
+
+/* Le coin haut gauche n'etait occupe que par .mediaSourceIndicator, pose a
+   left: .5em par la section 8. On le decale pour laisser passer le bouton.
+   Decalage limite a mobile : sur bureau ce bouton n'existe pas, la pastille
+   n'a aucune raison d'y bouger. Elle ne parait que sur les items a sources
+   multiples, la collision est donc rare - mais illisible quand elle a lieu. */
+.layout-mobile .mediaSourceIndicator {
+    left: 3em;
+}

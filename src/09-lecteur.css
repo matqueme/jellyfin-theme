@@ -1,0 +1,30 @@
+/* --- 9. Marqueurs de chapitres dans la barre de lecture --------------- */
+/* Jellyfin pose un span.sliderMarker par chapitre dans le
+   .sliderMarkerContainer de l'OSD video : des traits de 2px, bleus une fois
+   depasses, blancs translucides avant. Aucun reglage serveur ne les
+   desactive, les chapitres viennent des metadonnees embarquees du fichier
+   et existent meme sans extraction d'images. Donc CSS.
+   On masque les traits et pas leur conteneur : celui-ci est en position
+   absolue et sert d'ancrage, le retirer ne gagne rien. */
+.sliderMarker {
+    display: none !important;
+}
+
+/* --- 10. Barres de lecture arrondies --------------------------------- */
+/* Structure d'un emby-slider :
+     .mdl-slider-background-flex          rail gris, height .2em, overflow hidden
+       .mdl-slider-background-flex-inner
+         .mdl-slider-background-upper     portion mise en tampon
+         .mdl-slider-background-lower     portion lue, bleue
+   Le rail porte deja overflow:hidden et les deux remplissages sont ses
+   descendants : arrondir le seul rail suffit, le bleu est decoupe a la
+   meme forme. Pas besoin de toucher lower ni upper.
+   1em pour un rail de .2em de haut donne une gelule : le rayon est plafonne
+   a la moitie de la hauteur. Volontairement pas var(--rounding), qui est
+   calibre pour des vignettes et rendrait le resultat dependant du preset.
+   Une seule regle couvre la barre de progression ET celle du son : les deux
+   sont des emby-slider. Pour n'arrondir que la progression, prefixer par
+   .osdPositionSlider + .mdl-slider-background-flex-container. */
+.mdl-slider-background-flex {
+    border-radius: 1em !important;
+}

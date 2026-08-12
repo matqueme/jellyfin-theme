@@ -1,0 +1,36 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+
+jobs:
+  # dist/theme.css est commite, parce que jsDelivr sert depuis l'arbre git.
+  # Il peut donc diverger de src/ si on oublie de reconstruire avant de
+  # commiter : rien ne casserait, le CDN servirait simplement l'ancienne
+  # feuille. D'ou cette verification plutot qu'une reconstruction par la CI,
+  # qui masquerait l'oubli au lieu de le signaler.
+  verifier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: dist/ correspond-il a src/ ?
+        run: ./build.py --check
+
+  # Les URL taguees sont immuables cote jsDelivr : rien a purger pour elles.
+  # Seul @main a besoin d'etre purge, son cache CDN tenant de 12 heures a
+  # 7 jours — sinon un push est suivi de "rien ne change" cote client.
+  purger:
+    needs: verifier
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Purger le cache jsDelivr de @main
+        run: |
+          curl -sS --fail-with-body \
+            "https://purge.jsdelivr.net/gh/${{ github.repository }}@main/dist/theme.css"

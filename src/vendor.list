@@ -1,0 +1,14 @@
+# Modules Ultrachromic charges APRES le preset kaleidochromic.
+#
+# Le preset importe deja ses 16 modules ; build.py les resout dans son
+# ordre a lui. Ce fichier ne liste que les modules ajoutes par-dessus,
+# dans l'ordre ou ils doivent etre concatenes.
+#
+# Attention : ce sont des VARIANTES des modules que le preset charge deja
+# (title_simple, indicator_corner), pas des remplacements. Les deux
+# resteront actifs et se superposeront. Voir 08-indicateurs.css.
+#
+# Chemins relatifs a src/vendor/ultrachromic/, sans le .css.
+
+titlepage/title_banner-logo
+cornerindicator/indicator_floating

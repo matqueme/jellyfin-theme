@@ -1,0 +1,14 @@
+/* --acc : l'accent d'Ultrachromic, avec repli.
+   --accent est defini par type/colorful.css, importe par le preset, donc
+   au deuxieme niveau d'@import. Tant que cette feuille n'est pas arrivee,
+   rgba(var(--accent), .95) est une valeur invalide et la declaration est
+   simplement ignoree : bouton transparent au lieu de colore. Le repli
+   evite ce clignotement. Il ne sert que pendant le chargement ; des que
+   colorful.css est la, c'est --accent qui gagne. */
+
+/* --- Reglages -------------------------------------------------------- */
+:root {
+    --icon-scale: .85;        /* Phosphor remplit plus son cadre que Material */
+    --play-label: "Lecture";  /* garder les guillemets : valeur de content */
+    --play-label-size: .8em;
+}

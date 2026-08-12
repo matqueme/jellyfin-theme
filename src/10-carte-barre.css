@@ -1,0 +1,57 @@
+/* --- 11. Barre de progression des cartes ----------------------------- */
+/* Le preset charge overlayprogress.css, qui ne dessine pas une barre mais
+   un voile : il etire le pied de carte sur toute la vignette
+     .innerCardFooter... { top: 0; bottom: 0; left: 0; right: 0 }
+   et donne 2000em de haut a la barre, dont le remplissage accent a 35%
+   devient un calque translucide sur toute l'image.
+   progress/floating.css n'est pas une alternative utilisable telle quelle :
+   cette feuille ne touche jamais au positionnement du pied de carte.
+   Importee par-dessus, elle rend bien sa hauteur de 6px a la barre, mais le
+   pied reste etire et la barre se colle donc en HAUT de la vignette. D'ou
+   des regles ecrites ici plutot qu'un import de plus a corriger ensuite. */
+
+/* Le pied de carte redevient une bande en bas. Le border-radius que lui
+   pose la section 8 devient sans effet : le fond est transparent. */
+.innerCardFooter.fullInnerCardFooter.innerCardFooterClear {
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+/* Geometrie de la barre : ce sont les trois valeurs a retoucher pour
+   ajuster l'allure. En pixels et non en em, parce qu'un em se calcule sur
+   le font-size de l'element qui le porte - .cardOverlayButton est a 88%,
+   .innerCardFooter a 100% - et que toute mise en correspondance entre la
+   barre et un bouton d'overlay tombe alors a cote de quelques pixels. */
+:root {
+    --card-bar-height: 6px;
+    --card-bar-gap: 8px;    /* detachement du bord bas : l'effet flottant */
+    --card-bar-inset: 13px; /* retrait lateral */
+}
+
+/* Le !important sur height n'est pas decoratif : overlayprogress vise
+   #indexPage .itemProgressBar, donc un ID, qui l'emporte sur ce selecteur
+   de classes quel que soit l'ordre des feuilles.
+   C'est la marge qui fait l'effet flottant. Sans elle la barre est un trait
+   colle au bord bas, pleine largeur. --rounding vaut 12px mais un rayon est
+   plafonne a la moitie de la hauteur : sur 6px de haut, la barre est une
+   gelule quelle que soit la valeur. */
+.innerCardFooter .itemProgressBar {
+    height: var(--card-bar-height) !important;
+    margin: var(--card-bar-gap) var(--card-bar-inset) !important;
+    border-radius: var(--rounding) !important;
+    background: rgba(0, 0, 0, .35) !important;
+    backdrop-filter: blur(4px);
+    overflow: hidden;
+}
+
+/* overlayprogress laisse le remplissage a 35% d'opacite, ce qui convient a
+   un voile plein ecran mais delave une barre de 6px. */
+.innerCardFooter .itemProgressBarForeground {
+    background-color: rgba(var(--accent, 98, 121, 205), .95) !important;
+    border-radius: var(--rounding) !important;
+}

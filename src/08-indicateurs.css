@@ -1,0 +1,27 @@
+/* --- 8. Indicateur "vu" flottant ------------------------------------- */
+/* Le preset charge cornerindicator/indicator_corner.css. Les deux variantes
+   sont ALTERNATIVES, pas empilables : indicator_corner colle la pastille
+   dans l'angle avec des !important (right/top a 0, coins asymetriques),
+   qu'indicator_floating ne reprend pas — il ne pose que des fonds et des
+   ombres, sans !important. L'import seul restait donc sans effet visible.
+   On rend ici a la pastille son detachement et ses coins ronds. */
+.cardIndicators,
+.listItemIndicators {
+    right: .5em !important;
+    top: .5em !important;
+}
+
+.countIndicator,
+.playedIndicator {
+    border-radius: 999px !important;
+}
+
+.innerCardFooter {
+    border-radius: var(--rounding) !important;
+}
+
+.mediaSourceIndicator {
+    left: .5em;
+    top: .5em;
+    border-radius: var(--rounding) !important;
+}

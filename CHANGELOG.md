@@ -1,0 +1,42 @@
+# Journal des versions
+
+Format : [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/).
+Versionnage sémantique, indépendant de celui de Jellyfin — la compatibilité
+est indiquée par le titre de chaque version.
+
+## [1.0.0] — 2026-08-12 — Jellyfin 10.11.x
+
+Première version publiée. Reprend le `ultrachromic.css` maintenu jusqu'ici
+à la main, à l'octet près, réorganisé en modules.
+
+### Ajouté
+
+- Construction par `build.py` : Ultrachromic et les modules maison fusionnés
+  en un seul `dist/theme.css`, servi par jsDelivr en une requête.
+- Ultrachromic vendorisé et figé sur `fa158a2`. Le dépôt amont n'a ni tag ni
+  release, et une URL sans version pointait donc sur le HEAD de `main` : le
+  thème était bâti sur une cible mouvante.
+- `update-vendor.sh` pour resynchroniser cette copie, sans commit, de façon
+  à lire le diff avant de l'accepter.
+- Vérifications bloquantes à la construction : accolades équilibrées, aucun
+  `@import` après une règle, `display: !important` gardé par `:not(.hide)`.
+- `apply-local.sh` et `apply-js.sh` paramétrables par `JELLYFIN_DIR`,
+  `JELLYFIN_CONTAINER` et `JELLYFIN_URL`.
+
+### Modifié
+
+- Les `@import` distants sont remontés en tête du fichier construit, quelle
+  que soit leur place dans les sources.
+- Les URL d'images d'Ultrachromic, qui pointaient sur sa branche `main`,
+  sont épinglées sur le commit vendorisé.
+- `apply-local.sh` échappe le XML au lieu d'interdire `<` et `&` dans le CSS.
+  Cette interdiction était devenue intenable : `jf_font.css` importe Google
+  Fonts avec un `&` dans son URL. Le déséchappement est vérifié par relecture.
+
+### Corrigé
+
+- Trois à quatre niveaux d'`@import` en cascade à l'exécution, cause du flash
+  d'interface non stylée au premier chargement et de l'arrivée tardive de
+  `--accent`.
+
+[1.0.0]: https://github.com/matqueme/jellyfin-theme/releases/tag/v1.0.0

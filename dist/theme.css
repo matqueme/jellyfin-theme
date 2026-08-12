@@ -1,0 +1,2409 @@
+/* =====================================================================
+   Theme Jellyfin — matqueme
+   Version 1.0.0 — Jellyfin 10.11.x
+
+   FICHIER CONSTRUIT — NE PAS EDITER.
+   Genere par build.py depuis src/. Toute modification faite ici sera
+   perdue au prochain build. Editer src/, puis relancer ./build.py.
+
+   Base : Ultrachromic de CTalvio (MIT), vendorise et fusionne.
+          commit fa158a241cb24298c9996af3cf6460ae2f9d522f
+   Icones : Phosphor Bold 2.1.2 (MIT).
+   ===================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/bold/style.css');
+
+/* ===== ultrachromic/jf_font.css ===== */
+body, h1, h2, h3, h4 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.emby-textarea {
+  font-family: monospace;
+  font-size: 10pt;
+}
+
+/* ===== ultrachromic/fixes.css ===== */
+/*Enlarge button row on item page, even more on mobile*/
+.mainDetailButtons {
+	font-size: 120%;
+}
+
+/*Add fixes, start of file*/
+@media all and (min-width: 100em){
+  .button-flat {
+    margin: .2em !important;
+    padding: .85em !important;
+  }
+}
+@media all and (max-width: 100em){
+  .mainDetailButtons {
+    font-size: 155%;
+  }
+  .detailButton {
+    max-width: 15vw !important;
+  }
+}
+
+/*Media player*/
+.startTimeText, .endTimeText {
+    width: 3.4em;
+    display: block;
+    text-align: center;
+}
+.osdTitle {
+  margin-left: 0.5em;
+}
+
+.videoOsdBottom {
+    padding-top: 1em;
+}
+
+.skinHeader-withBackground.osdHeader {
+    height: 5em;
+}
+
+/*Accommodate ultrawide aspect ratios*/
+@media (min-aspect-ratio: 1.98/1) {
+  .detailImageContainer .card {
+    width: 21vw !important ;
+  }
+  .detailRibbon {
+    padding-left: 28.45vw !important;
+  }
+  .detailPagePrimaryContent {
+    padding-left: 28.45vw !important;
+  }
+  .detailPageContent {
+    padding-left: 28.45vw !important;
+  }
+}
+@media (min-aspect-ratio: 2.7/1) {
+  .detailImageContainer .card {
+    width: 16vw !important;
+  }
+  .detailRibbon {
+    padding-left: 23.45vw !important;
+  }
+  .detailPagePrimaryContent {
+    padding-left: 23.45vw !important;
+  }
+  .detailPageContent {
+    padding-left: 23.45vw !important;
+  }
+}
+
+/*Tweak entry field padding and alignment/sizes*/
+.emby-input,
+.emby-textarea {
+  padding: .4em .55em;
+}
+.emby-select {
+  padding: .35em 1.9em .35em .35em;
+}
+.selectArrow {
+    margin-top: 1.05em;
+}
+
+/*Fix weird shevron off centering*/
+.layout-mobile :not(.sectionTitleContainer-cards)>.sectionTitle-cards {
+ padding-top:0em;
+}
+.sectionTitle {
+	margin-left: .4em !important;
+	margin-top: .2em !important;
+	margin-bottom: .2em !important;
+}
+.sectionTitleTextButton > .material-icons {
+    margin: 0;
+}
+.layout-mobile .sectionTitleTextButton > .material-icons {
+    padding-top: .2em;
+}
+
+/*Fix the UI shifting around*/
+.nowPlayingBarCurrentTime {
+    width: 6em;
+}
+.osdTextContainer {
+    margin: 0 !important;
+    margin-top: 0.2em !important;
+    padding-left: 0.5em !important;
+    padding-right: 0.5em !important;
+}
+
+/*Fix top right user icon when using a profile image*/
+.headerUserButtonRound {
+  border-radius: 50px !important;
+}
+
+/*Improve some menu alignments*/
+.navMenuOptionText {
+    margin-top: 0;
+}
+.formDialogHeaderTitle {
+  margin-left: 1em;
+}
+.formDialogContent {
+  margin-bottom: 6.2em;
+}
+.dialogContentInner {
+  padding: .5em 1em 1em;
+  padding-right: 1em;
+  padding-left: 1em;
+}
+.listItem-indexnumberleft {
+  margin: 1em;
+}
+.listItem {
+  padding-left: 1em;
+}
+
+/* ===== ultrachromic/base.css ===== */
+:root {--indicator: 0, 164, 220;}
+:root {--selection: 0, 164, 220;}
+
+.css-4yt2of {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.emby-textarea {
+  font-family: monospace;
+  font-size: 10pt;
+}
+
+.card.show-animation:focus>.cardBox {
+  -webkit-transform:scale(1.1);
+  transform:scale(1.1);
+}
+
+/*Theme user setting tab buttons*/
+div[data-role="controlgroup"] a.ui-btn-active {
+  background: rgba(0, 0, 0, 0.5) !important;
+  color: white !important;
+}
+
+div[data-role="controlgroup"] a[data-role="button"] {
+  display: table-cell !important;
+  margin: 0 !important;
+}
+
+/*Mobile tweaks*/
+.layout-mobile .detailPagePrimaryContainer {
+    background: transparent;
+}
+.layout-mobile .adminDrawerLogo {
+    border-bottom: none;
+}
+.layout-mobile .itemBackdrop {
+    margin-top: 4rem;
+}
+
+/*Stop covers from being scrolled on desktop*/
+.layout-desktop .detailImageContainer .card {
+    position: fixed !important;
+    top: 10% !important;
+}
+.layout-mobile .detailImageContainer .card {
+    position: absolute !important;
+}
+/*Top "task bar" enlarge text*/
+.headerTabs.sectionTabs {
+  text-size-adjust: 110%;
+  font-size: 110%;
+}
+.pageTitle {
+  margin-top: auto; 
+  margin-bottom: auto;
+}
+
+/*Theme process progress ring*/
+.progressring-spiner {
+  border-color: rgba(var(--accent));
+  border-width: .35em;
+}
+.progressring {
+    margin: .4em;
+}
+.progressring-bg {
+   display: none;
+}
+
+/*Theme link color*/
+#itemDetailPage .button-link {color: inherit !important;}
+
+/*Accommodate mobile and align buttons and indicators*/
+.cardIndicators,
+.listItemIndicators {
+  right: 0.5em; 
+  top: 0.5em;
+}
+
+.mediaSourceIndicator {
+  left: 0.5em;
+  top: 0.5em;
+}
+
+@media all and (min-width: 70em){
+  .cardOverlayFab-primary {
+    background-color: #00000000;
+  }
+  .cardOverlayButtonIcon {
+    background-color: #00000000 !important;
+  }
+  .cardOverlayContainer {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+}
+/* Play button hovering (for low width windows) */
+@media all and (max-width: 70em){
+  .cardOverlayFab-primary {
+    background-color: #00000000;
+  }
+  .cardOverlayButtonIcon {
+    background-color: #00000000 !important;
+  }
+  .cardOverlayContainer {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+  .cardOverlayButton {
+    padding: 0.25em;
+  }
+}
+
+/*Media player*/
+.nowPlayingPageImage {
+  border: none;
+}
+
+.upNextDialog-countdownText {
+  color: white;
+}
+
+/*Shrink the mouseover chapter image when scrobbling, still media player*/
+.chapterThumb {
+    height: 14vh;
+    min-width: 14vh;
+	box-shadow: 0 0 1.9vh #000;
+}
+.chapterThumbText {
+    font-size: 1em;
+}
+.sliderBubble {
+  background: #0000;
+}
+.chapterThumbTextContainer {
+    right: auto;
+	bottom: 4px;
+	padding: .25em 0.7em;
+}
+.chapterThumbContainer {
+    box-shadow: 0 0 1.9vh #000;
+}
+.sliderBubble {
+    -webkit-transform: translate3d(-50%,-108%,0);
+    transform: translate3d(-50%,-108%,0);
+}
+
+/*Narrow margins, theme main page*/
+.cardBox-bottompadded {
+    margin-bottom: 0.6em !important;
+}
+.itemsContainer > .card > .cardBox {
+    margin-right: 0.8em;
+}
+.raised.homeLibraryButton {
+    background: rgba(0, 0, 0, 0.3) !important;
+}
+.raised.homeLibraryButton:hover {
+    background: rgba(0, 0, 0, 0.5) !important;
+}
+.raised.homeLibraryButton:hover {transition: filter 0.2s}
+.raised.homeLibraryButton {transition: filter 0.2s}
+.homeLibraryButton {
+    min-width: 12em;
+    margin: 0.4em;
+}
+@media all and (max-width: 26em){
+  .homeLibraryButton {
+    min-width: 45%;
+    width: auto !important;
+  }
+}
+.homeLibraryButton {
+  width: auto !important;
+}
+.listItem:hover {
+    transition: 0.2s;
+    background: rgba(0, 0, 0, 0.4);
+}
+.visualCardBox, .cardImageContainer {
+    box-shadow: none;
+}
+.backgroundProgress > div {
+    background: rgba(0, 0, 0, 0);
+}
+.itemProgressBar {
+    background: rgba(0, 0, 0, 0.25);
+}
+#divRunningTasks span {
+    color: rgba(255,255,255,0.75) !important;
+}
+.itemsContainer > .card > .cardBox {
+    margin-left: 0.6em !important;
+}
+.itemsContainer > .card > .cardBox {
+    margin-right: 0.8em;
+}
+
+/*ANIMATIONS*/
+/*Hover background for section title buttons*/
+.button-flat:hover {
+	background: rgba(0, 164, 220, 0.2);
+	color: #00a4dc !important;
+}
+.dashboardSection h3 {
+    margin: .5em .0em .5em .5em;
+}
+.dashboardSection .sectionTitleTextButton > .material-icons.material-icons {
+    margin-top: .5em;
+    margin-bottom: .5em;
+    margin-right: .2em;
+}
+
+/*Rating star, normally yellow*/
+.starIcon {
+    color: rgba(255,255,255,.8);
+}
+
+/*Remove background on some icons*/
+.listItemIcon {
+    background: #0000 !important;
+}
+
+/*Remove divider on list items*/
+.listItem-border {
+    border-color: rgba(255, 255, 255, 0) !important;
+}
+
+/*Fix footers/headers displaying on small pop-ups*/
+.formDialogFooter-clear,
+.formDialogHeader-clear,
+.innerCardFooterClear {
+    background-color: transparent !important;
+}
+
+/*Theme slider marker style*/
+.sliderMarker {
+  width: 3px;
+  border-radius: 2px;
+}
+
+/* ===== ultrachromic/accentlist.css ===== */
+.emby-button.show-focus:focus {
+  background: rgba(var(--accent),0.5) !important;
+}
+.paper-icon-button-light.show-focus:focus {
+    color: rgba(var(--accent)) !important;
+}
+
+/*Title text buttons*/
+button-flat:hover {
+    color: rgba(var(--accent)) !important;
+}
+
+.raised:hover, 
+.fab:hover,
+a[data-role="button"]:hover {
+  background: rgba(var(--accent),0.5) !important;
+}
+
+.subtitleappearance-preview {
+  background: linear-gradient(140deg,rgb(var(--accent)),#111) !important;
+}
+
+.navMenuOption-selected,
+.css-17c09up.Mui-selected {
+  color: rgba(var(--accent));
+}
+.mdl-slider-background-lower {
+  background-color: rgba(var(--accent));
+}   
+
+progress::-moz-progress-bar {
+  background-color: rgba(var(--accent),0.75);
+}
+progress::-webkit-progress-value {
+  background-color: rgba(var(--accent),0.75);
+}
+.taskProgressInner,
+.sliderMarker.watched {
+  background: rgba(var(--accent),0.75) !important;
+}
+
+#dashboardPage .playbackProgress > div {
+    background-color: rgba(var(--accent), 0.75) !important;
+}
+#dashboardPage .transcodingProgress > div {
+    background-color: rgba(var(--accent), 0.35) !important;
+}
+
+.mdl-slider-background-lower {
+  background-color: rgb(var(--accent));
+}
+.mdl-slider::-moz-range-thumb {
+  background: rgb(var(--accent));
+}
+.mdl-slider::-ms-thumb {
+  background: rgb(var(--accent));
+}
+.mdl-slider::-webkit-slider-thumb {
+  background: rgb(var(--accent));
+}
+.iconOsdProgressInner {
+  background: rgb(var(--accent));
+}
+
+.paper-icon-button-light:hover,
+.raised.homeLibraryButton:hover,
+.button-flat:hover,
+.playstatebutton-icon-played,
+.ratingbutton-icon-withrating,
+.paper-icon-button-light:hover:not(:disabled),
+.emby-tab-button:hover,
+.selectLabelFocused,
+.inputLabelFocused,
+.textareaLabelFocused,
+.buttonActive,
+.button-link {
+  color: rgba(var(--accent)) !important;
+}
+
+#itemDetailPage .button-link {color: inherit !important;}
+
+.navMenuOption:hover,
+.actionSheetMenuItem:hover,
+.css-17c09up:hover {
+  background-color: rgba(var(--accent),0.5) !important;
+}
+
+.emby-checkbox:checked + span + .checkboxOutline,
+.emby-textarea:focus,
+.emby-select-withcolor:focus,
+.emby-input:focus,
+.itemSelectionPanel {
+  border: 0.01em solid rgba(var(--accent),0.5) !important;
+}
+
+.upNextDialog-countdownText {
+  color: rgba(var(--accent));
+}
+
+.mdl-spinner__layer-1 {
+  border-color: rgba(var(--accent));
+}
+.mdl-switch__input:checked + .mdl-switch__label + .mdl-switch__trackContainer > .mdl-switch__track {
+  background: rgba(var(--accent), 0.5);
+}
+.mdl-switch__input:checked + .mdl-switch__label + .mdl-switch__trackContainer > .mdl-switch__thumb {
+  background: rgba(var(--accent));
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(var(--accent),0.8) !important;
+}
+* {
+  scrollbar-color: rgba(var(--accent),0.8) #0000 !important;
+}
+
+/* Syncplay theming*/
+.syncPlayIconCircle {
+  color: rgba(var(--accent),1) !important;
+  text-shadow: none !important;
+}
+
+.css-4yt2of {
+  border-right: 1px solid rgba(var(--accent), 0.12);
+}
+
+/* ===== ultrachromic/rounding.css ===== */
+/*Rounded corners on pretty much everything*/
+
+progress {
+  border-radius: var(--rounding);
+}
+progress::-webkit-progress-bar {
+  border-radius: var(--rounding);
+}
+progress::-moz-progress-bar {
+  border-radius: var(--rounding);
+}
+progress::-webkit-progress-value {
+  border-radius: var(--rounding);
+}
+.taskProgressOuter,
+.taskProgressInner {
+  border-radius: var(--rounding) !important;
+}
+.formDialogHeader {
+  border-top-left-radius: var(--rounding);
+  border-top-right-radius: var(--rounding);
+}
+.formDialogFooter {
+  border-bottom-left-radius: var(--rounding);
+  border-bottom-right-radius: var(--rounding);
+}
+.cardOverlayContainer {
+	border-radius: var(--rounding) !important;
+}
+.missingIndicator, 
+.unairedIndicator,
+.detailTable,
+.primaryImageWrapper > img,
+.toast,
+.paperList,
+.cardContent,
+.sessionNowPlayingInnerContent, 
+.listItem:hover, 
+.cardImage,
+.fab,
+.raised,
+.multiSelectCheckboxOutline,
+.itemSelectionPanel,
+.cardContent-button, 
+.cardContent-shadow, 
+.itemDetailImage, 
+.cardOverlayButton-hover,
+.cardImageContainer,
+.cardPadder,
+.listItemImage,
+.listItemImageButton,
+.listItemButton,
+.headerButton,
+.paper-icon-button-light,
+.innerCardFooter,
+.blurhash-canvas,
+.dialog,
+.countIndicator,
+.playedIndicator,
+.listItemIcon,
+.listItem-border,
+.button-flat,
+.visualCardBox,
+.checkboxOutline,
+.emby-select-withcolor,
+.chapterThumbTextContainer,
+.chapterThumbContainer,
+.chapterThumb,
+.emby-input, 
+.emby-textarea, 
+.emby-select-withcolor,
+.nowPlayingPageImage,
+.upNextDialog-poster-img,
+.upNextContainer,
+.cardOverlayButtonIcon {
+  border-radius: var(--rounding) !important;
+}
+.actionSheetMenuItem:hover {
+    border-radius: 0 !important;
+}
+fieldset {
+    border-radius: var(--rounding);
+}
+.osdPoster img {
+  border-radius: var(--rounding); border: none;
+}
+.mdl-slider::-moz-range-thumb {
+  border-radius: var(--rounding);
+}
+.mdl-slider::-ms-thumb {
+  border-radius: var(--rounding);
+}
+.mdl-slider::-webkit-slider-thumb {
+  border-radius: var(--rounding);
+}
+
+div[data-role="controlgroup"] a[data-role="button"]:first-child {
+	border-bottom-left-radius: var(--rounding);
+	border-top-left-radius: var(--rounding);
+}
+div[data-role="controlgroup"] a[data-role="button"]:last-child {
+	border-bottom-right-radius: var(--rounding);
+	border-top-right-radius: var(--rounding);
+}
+#dashboardPage .cardContent, #dashboardPage .sessionNowPlayingInnerContent {
+    border-radius: var(--rounding) var(--rounding) 0 0 !important;
+}
+#divVirtualFolders .cardImageContainer, #divVirtualFolders .cardContent {
+    border-radius: var(--rounding) var(--rounding) 0 0 !important;
+}
+#userProfilesPage .cardImage, #userProfilesPage .cardContent {
+    border-radius: var(--rounding) var(--rounding) 0 0 !important;
+}
+
+/* ===== ultrachromic/smallercast.css ===== */
+/*Shrink and square (or round) cast thumbnails*/
+@media all and (min-width: 131.25em){
+  #castContent .card.overflowPortraitCard,
+  #guestCastContent .card.overflowPortraitCard {
+    width: 6.3vw !important; 
+    font-size: 90% !important;
+  }
+}
+@media all and (min-width: 120em) and (max-width: 131.25em){
+  #castContent .card.overflowPortraitCard,
+  #guestCastContent .card.overflowPortraitCard {
+    width: 6.4vw !important; 
+    font-size: 90% !important;
+  }
+}
+@media all and (min-width: 100em) and (max-width: 120em){
+  #castContent .card.overflowPortraitCard,
+  #guestCastContent .card.overflowPortraitCard {
+    width: 7.6vw !important; 
+    font-size: 90% !important;
+  }
+}
+@media all and (min-width: 87.5em) and (max-width: 100em){
+  #castContent .card.overflowPortraitCard,
+  #guestCastContent .card.overflowPortraitCard {
+    width: 9.3vw !important; 
+    font-size: 90% !important;
+  }
+}
+@media all and (min-width: 75em) and (max-width: 87.5em){
+  #castContent .card.overflowPortraitCard,
+  #guestCastContent .card.overflowPortraitCard {
+    width: 10.5vw !important; 
+    font-size: 90% !important;
+  }
+}
+@media all and (min-width: 50em) and (max-width: 75em){
+  #castContent .card.overflowPortraitCard,
+  #guestCastContent .card.overflowPortraitCard {
+    width: 15vw !important;
+    font-size: 90% !important;
+  }
+}
+@media all and (min-width: 43.75em) and (max-width: 50em){
+  #castContent .card.overflowPortraitCard,
+  #guestCastContent .card.overflowPortraitCard {
+    width: 20.1vw !important; 
+    font-size: 90% !important;
+  }
+}
+@media all and (min-width: 25em) and (max-width: 43.75em){
+  #castContent .card.overflowPortraitCard,
+  #guestCastContent .card.overflowPortraitCard {
+    width: 31.2vw !important; 
+    font-size: 90% !important;
+  }
+}
+@media all and (max-width: 25em){
+  #castContent .card.overflowPortraitCard,
+  #guestCastContent .card.overflowPortraitCard {
+    width: 40vw !important; 
+    font-size: 90% !important;
+  }
+}
+
+.cardPadder {
+  background-color: #0000 !important; box-shadow: none !important;
+}
+
+/*Correct image aspect ratio behaviour, set border-radius to zero for square tiles*/
+
+@media all and (min-width: 131.25em){
+  #castContent .cardScalable,
+  #guestCastContent .cardScalable {
+    width: calc(6.3vw - 0.6em) !important; 
+    height: calc(6.3vw - 0.6em) !important;
+  }
+}
+@media all and (min-width: 120em) and (max-width: 131.25em){
+  #castContent .cardScalable,
+  #guestCastContent .cardScalable {
+    width:  calc(6.4vw - 0.6em) !important; 
+    height: calc(6.4vw - 0.6em) !important;
+  }
+}
+@media all and (min-width: 100em) and (max-width: 120em){
+  #castContent .cardScalable,
+  #guestCastContent .cardScalable {
+    width:  calc(7.6vw - 0.6em) !important; 
+    height: calc(7.6vw - 0.6em) !important;
+  }
+}
+@media all and (min-width: 87.5em) and (max-width: 100em){
+  #castContent .cardScalable,
+  #guestCastContent .cardScalable {
+    width:  calc(9.3vw - 0.6em) !important; 
+    height: calc(9.3vw - 0.6em) !important;
+  }
+}
+@media all and (min-width: 75em) and (max-width: 87.5em){
+  #castContent .cardScalable,
+  #guestCastContent .cardScalable {
+    width:  calc(10.5vw - 0.6em) !important; 
+    height: calc(10.5vw - 0.6em) !important;
+  }
+}
+@media all and (min-width: 50em) and (max-width: 75em){
+  #castContent .cardScalable,
+  #guestCastContent .cardScalable {
+    width:  calc(15vw - 0.6em) !important; 
+    height: calc(15vw - 0.6em) !important;
+  }
+}
+@media all and (min-width: 43.75em) and (max-width: 50em){
+  #castContent .cardScalable,
+  #guestCastContent .cardScalable {
+    width:  calc(20.1vw - 0.6em) !important; 
+    height: calc(20.1vw - 0.6em) !important;
+  }
+}
+@media all and (min-width: 25em) and (max-width: 43.75em){
+  #castContent .cardScalable,
+  #guestCastContent .cardScalable {
+    width:  calc(31.2vw - 0.6em) !important; 
+    height: calc(31.2vw - 0.6em) !important;
+  }
+}
+@media all and (max-width: 25em){
+  #castContent .cardScalable,
+  #guestCastContent .cardScalable {
+    width:  calc(40vw - 0.6em) !important;
+    height: calc(40vw - 0.6em) !important;
+  }
+}
+
+/* ===== ultrachromic/episodelist/episodes_compactlist.css ===== */
+/*Size episode preview images in a more compact way*/
+.listItemImage.listItemImage-large.itemAction.lazy {
+  transition: filter 0.2s
+}
+.listItemImageButton-icon {
+  padding: 0;
+}
+.secondary.listItem-overview.listItemBodyText {
+  height: unset !important;
+  margin: 0;
+}
+.listItemImageButton {
+  margin: auto; 
+  font-size: 1.6em !important;
+}
+@media all and (min-width: 100em){
+  .listItemImage.listItemImage-large.itemAction.lazy {
+    height: 160px !important;
+  }
+  .listItem-content {
+    height: unset !important;
+  }
+  .secondary.listItem-overview.listItemBodyText {
+    height: unset !important;
+    margin: 0;
+  }
+}
+@media all and (max-width: 100em){
+  .listItemImage.listItemImage-large.itemAction.lazy {height: 160px !important;}
+  .listItem-content {height: unset !important;}
+  .secondary.listItem-overview.listItemBodyText {height: unset !important; margin: 0;}
+}
+
+.missingIndicator, .unairedIndicator {
+    background: #ae3030eb;
+    padding: .3em .6em;
+    color: #fff;
+}
+.layout-mobile .listItemImageButton {
+    background: rgba(0, 0, 0, 0);
+}
+
+/* ===== ultrachromic/header/header_transparent-dashboard.css ===== */
+.skinHeader-withBackground {
+    background-color: transparent;
+}
+
+/*Pages the have single unit height taskbar*/
+@media all and (min-width: 100em){
+  #indexPage,
+  #moviesPage,
+  #tvRecommendedPage,
+  #musicRecommendedPage {
+    margin-top: 68px;
+    padding-top: 0px !important;
+    overflow-y: scroll;
+  }
+}
+
+/*Pages the have two unit height taskbar*/
+@media all and (max-width: 100em){
+  #indexPage,
+  #moviesPage,
+  #tvRecommendedPage,
+  #musicRecommendedPage {
+    margin-top: 130px;
+    padding-top: 0.5em !important;
+    overflow-y: scroll;
+  }
+}
+
+.force-scroll {
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+/* ===== ultrachromic/login/login_frame.css ===== */
+/*Narrow the login form, size according to display size (bigger on mobile)*/
+#loginPage .readOnlyContent,
+#loginPage form {
+  max-width: 22em;
+}
+
+#loginPage .padded-left.padded-right.padded-bottom-page {
+  margin-top: 8em
+}
+
+/*Hide "manual" and "forgot" buttons}*/
+#loginPage .raised.cancel.block.btnForgotPassword.emby-button {
+  display: none
+}
+
+#loginPage .padded-left.padded-right.padded-bottom-page {
+    margin-left: auto;
+    margin-right: auto;
+    background: rgba(0, 0, 0, 0.35);
+    width: 24em;
+    border-radius: var(--rounding);
+}
+#loginPage .squareCard {
+    width: 33%;
+}
+#loginPage form {
+    padding-top: 4em;
+}
+
+#loginPage .sectionTitle{
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-bottom: 1.2em !important;
+}
+#loginPage {
+  background: url(https://raw.githubusercontent.com/CTalvio/Ultrachromic/fa158a241cb24298c9996af3cf6460ae2f9d522f/assets/background.png) !important;
+  background-size: cover !important;
+}
+
+/* ===== ultrachromic/fields/fields_noborder.css ===== */
+/*No borders, background highlights*/
+.infoBanner {
+    background: rgba(var(--selection), 0.15) !important;
+}
+fieldset {
+    border: 1px solid rgba(var(--selection), 0.3);
+}
+.checkboxOutline,
+.emby-input,
+.emby-textarea,
+.emby-select-withcolor {
+  border: none !important;
+  background: rgba(0, 0, 0, 0.5); 
+}
+#itemDetailPage .emby-select-withcolor {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/*Change look of in-focus fields*/
+.emby-checkbox:checked + span + .checkboxOutline,
+.emby-input:focus,
+.emby-textarea:focus,
+.emby-select-withcolor:focus,
+.itemSelectionPanel {
+  border: none !important;
+  background: rgba(var(--selection), 0.25) !important;
+}
+.checkboxIcon {
+    color: rgba(var(--selection), 1);
+}
+
+/*Progress bars*/
+progress {
+  border: 0px solid rgba(255, 255, 255, 0.22);
+}
+progress::-webkit-progress-bar {
+  border: 0px solid rgba(255, 255, 255, 0.22);
+}
+.taskProgressOuter {
+  border: 0px solid rgba(255, 255, 255, 0.22);
+}
+
+/* ===== ultrachromic/cornerindicator/indicator_corner.css ===== */
+/*Card indicators style corner*/
+
+.cardIndicators,
+.listItemIndicators {
+  right: 0 !important;
+  top: 0 !important;
+}
+.innerCardFooter {
+  border-radius: 0px var(--rounding) !important;
+  box-shadow: 1px -1px 4px 0 rgba(0,0,0,0.3);
+}
+.countIndicator, .playedIndicator {
+  border-radius: 0px var(--rounding) !important;
+  box-shadow: -1px 1px 4px 0 rgba(0,0,0,0.3);
+}
+.countIndicator {
+  background: rgba(var(--indicator),0.8);
+}
+.playedIndicator, .innerCardFooter {
+  background: rgba(0,0,0,0.4)
+}
+
+.mediaSourceIndicator {
+  left: 0;
+  top: 0;
+}
+.mediaSourceIndicator {
+  border-radius: var(--rounding) 0px !important;
+  box-shadow: 1px 1px 4px 0 rgba(0,0,0,0.3);
+  background: rgba(0,0,0,0.4)
+}
+
+/* ===== ultrachromic/type/colorful.css ===== */
+/*This file contains color and style changes for the colorful theme type*/
+:root {--accent: 98, 121, 205;}
+:root {--indicator: var(--accent);}
+:root {--selection: var(--accent);}
+
+.dialog,
+.mainDrawer,
+.toast,
+.appfooter {
+    background-color: rgba(8, 8, 8, 0.85);
+}
+
+/*Login background*/
+#loginPage {
+  background: url(https://raw.githubusercontent.com/CTalvio/Ultrachromic/fa158a241cb24298c9996af3cf6460ae2f9d522f/assets/background.png) !important;
+  background-size: cover !important;
+}
+
+/*Colors for title_2*/
+.layout-desktop .detailRibbon {
+    background: rgba(0, 0, 0, 0.2);
+}
+.itemBackdrop::after {
+  background: rgba(0,0,0,.26) !important;
+}
+
+/*Accenting*/
+
+.preload {
+    background-color: black;
+}
+.backgroundContainer {
+    background-color: rgba(var(--accent),0.17) !important;
+}
+.formDialogHeader,
+.formDialogFooter {
+    background-color: rgba(var(--accent),0.15) !important;
+}
+/*Fix footers/headers displaying on small pop-ups*/
+.formDialogFooter-clear,
+.formDialogHeader-clear,
+.innerCardFooterClear {
+    background-color: transparent !important;
+}
+
+.button-flat:hover {
+	background: rgba(var(--accent),0.25);
+}
+.paper-icon-button-light:hover {
+  background-color: rgba(var(--accent),0.25) !important;
+}
+
+.navMenuOption-selected {
+  color: white;
+}
+
+.subtitleappearance-preview {
+  background: linear-gradient(140deg,rgba(var(--accent)),#111) !important;
+}
+.navMenuOption-selected, .selectionCommandsPanel {
+    background: rgba(var(--accent), 0.8) !important;
+}
+.raised,
+.fab,
+a[data-role="button"] {
+  background: rgba(var(--accent), 0.8) !important;
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+/*Various box-shadows, might be related to glowstyle*/
+.cardBox:not(.visualCardBox) .cardPadder, .cardContent-shadow {
+    box-shadow: none !important;
+}
+body, h1, h2, h3, h4, .textActionButton, .emby-button-foreground  {
+  text-shadow: 0px 0px 4px rgba(0,0,0,.6) !important;
+}
+.blurhashed {
+    box-shadow: 0 0 4px 0 rgba(0,0,0,.6) !important;
+}
+
+/*Dash and general UI styling*/
+.paperList, .visualCardBox {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.navMenuOption-selected {
+    color: white;
+}
+progress {
+    background: rgba(0, 0, 0, 0.5) !important;
+}
+
+/*Colors for loading spinner, placeholders, scroll bars*/
+.mdl-spinner__layer-1 {border-color: rgba(var(--accent), 1);}
+.mdl-spinner__layer-2 {border-color: rgba(var(--accent), .8);}
+.mdl-spinner__layer-3 {border-color: rgba(var(--accent), .6);}
+.mdl-spinner__layer-4 {border-color: rgba(var(--accent), .5);}
+
+
+.defaultCardBackground1 {
+	background-color: rgba(var(--accent), .5);
+}
+.defaultCardBackground2 {
+	background-color: rgba(var(--accent), .4);
+}
+.defaultCardBackground3 {
+	background-color: rgba(var(--accent), .8);
+}
+.defaultCardBackground4 {
+	background-color: rgba(var(--accent), .7);
+}
+.defaultCardBackground5 {
+	background-color: rgba(var(--accent), .6);
+}
+
+/*Syncplay*/
+@-webkit-keyframes pulse {
+ 0% {
+  -webkit-transform:scale(.95);
+  transform:scale(.95);
+  color:rgba(var(--accent),.7);
+  background:rgba(var(--accent),.3);
+  box-shadow:0 0 0 0 rgba(var(--accent),.3)
+ }
+ 70% {
+  -webkit-transform:scale(1);
+  transform:scale(1);
+  color:rgba(var(--accent),0);
+  background:rgba(var(--accent),0);
+  box-shadow:0 0 0 60px rgba(var(--accent),0)
+ }
+ to {
+  -webkit-transform:scale(.95);
+  transform:scale(.95);
+  color:rgba(var(--accent),0);
+  background:rgba(var(--accent),0);
+  box-shadow:0 0 0 0 rgba(var(--accent),0)
+ }
+}
+@keyframes pulse {
+ 0% {
+  -webkit-transform:scale(.95);
+  transform:scale(.95);
+  color:rgba(var(--accent),.7);
+  background:rgba(var(--accent),.3);
+  box-shadow:0 0 0 0 rgba(var(--accent),.3)
+ }
+ 70% {
+  -webkit-transform:scale(1);
+  transform:scale(1);
+  color:rgba(var(--accent),0);
+  background:rgba(var(--accent),0);
+  box-shadow:0 0 0 60px rgba(var(--accent),0)
+ }
+ to {
+  -webkit-transform:scale(.95);
+  transform:scale(.95);
+  color:rgba(var(--accent),0);
+  background:rgba(var(--accent),0);
+  box-shadow:0 0 0 0 rgba(var(--accent),0)
+ }
+}
+@-webkit-keyframes infinite-pulse {
+ 0% {
+  -webkit-transform:scale(.95);
+  transform:scale(.95);
+  color:rgba(var(--accent),.7);
+  background:rgba(var(--accent),.3);
+  box-shadow:0 0 0 0 rgba(var(--accent),.3)
+ }
+ 70% {
+  -webkit-transform:scale(1);
+  transform:scale(1);
+  color:rgba(var(--accent),.6);
+  background:rgba(var(--accent),0);
+  box-shadow:0 0 0 60px rgba(var(--accent),0)
+ }
+ to {
+  -webkit-transform:scale(.95);
+  transform:scale(.95);
+  color:rgba(var(--accent),.7);
+  background:rgba(var(--accent),.3);
+  box-shadow:0 0 0 0 rgba(var(--accent),0)
+ }
+}
+@keyframes infinite-pulse {
+ 0% {
+  -webkit-transform:scale(.95);
+  transform:scale(.95);
+  color:rgba(var(--accent),.7);
+  background:rgba(var(--accent),.3);
+  box-shadow:0 0 0 0 rgba(var(--accent),.3)
+ }
+ 70% {
+  -webkit-transform:scale(1);
+  transform:scale(1);
+  color:rgba(var(--accent),.6);
+  background:rgba(var(--accent),0);
+  box-shadow:0 0 0 60px rgba(var(--accent),0)
+ }
+ to {
+  -webkit-transform:scale(.95);
+  transform:scale(.95);
+  color:rgba(var(--accent),.7);
+  background:rgba(var(--accent),.3);
+  box-shadow:0 0 0 0 rgba(var(--accent),0)
+ }
+}
+
+/* ===== ultrachromic/titlepage/title_simple.css ===== */
+/*Tweak series/movie/album title screen*/
+
+.detailSectionContent {
+  max-width: 66em;
+}
+.trackSelections {
+  max-width: 22em;
+}
+.detailLogo {
+  display: none;
+}
+.detailPagePrimaryContainer {
+  background: rgba(0,0,0,0) !important;
+}
+.layout-desktop .detailRibbon {
+  background: rgba(0,0,0,0) !important;
+}
+@media all and (min-width: 32em){
+  .itemBackdrop {
+    display: none;
+  }
+	.layout-desktop .detailRibbon {
+    margin-top: 13vh;
+	}
+}
+
+/* ===== ultrachromic/overlayprogress.css ===== */
+#itemDetailPage .itemProgressBar,
+#indexPage .itemProgressBar {
+    height: 2000em;
+    background: #0000;
+}
+.innerCardFooter.fullInnerCardFooter.innerCardFooterClear {
+  background: rgba(0,0,0,0);
+	right: 0;
+        left: 0;
+        top: 0;
+        bottom: 0;
+	margin: 0;
+}
+.itemProgressBarForeground {
+    background-color: rgba(var(--accent), 0.35);
+}
+
+/* ===== ultrachromic/effects/hoverglow.css ===== */
+/* ========================================================
+   hoverglow.css (Static)
+   ======================================================== */
+
+/* INTENSIFIED GLOW EFFECT */
+/* FIXED SELECTORS: Now targeting ONLY explicit layout boundaries to prevent freezes */
+.cardBox:hover > .cardScalable .cardOverlayContainer,
+div.dialog.dialog-open,
+body > .toast,
+.raised.homeLibraryButton:hover {
+  /* Stacked box-shadows: a sharp inner glow, a thick intense mid-glow, and a wide ambient glow */
+  box-shadow: 0px 0px 4px rgb(var(--accent)), 
+              0px 0px 8px rgb(var(--accent)), 
+              0px 0px 12px rgba(var(--accent), 0.6) !important;
+  
+  /* Solid border with 100% opacity to fight against bright white poster art */
+  border: solid 2px rgb(var(--accent)) !important;
+  
+  /* CRITICAL: Allows the outer glow to bleed past the borders without being cut off */
+  overflow: visible !important;
+}
+
+/* Ensure the outer card frames never clip or truncate your glowing edges */
+.cardScalable, .cardBox {
+  overflow: visible !important;
+}
+
+/* ===== ultrachromic/effects/glassy.css ===== */
+@supports (backdrop-filter: blur(15px)) {
+  .skinHeader-withBackground,
+  .css-fknfom,
+  .dialog,
+  .mainDrawer,
+  .toast,
+  .appfooter,
+  .paper-icon-button-light:hover,
+  #itemDetailPage .itemProgressBar,
+  #dashboardPage .backgroundProgress > div,
+  .cardOverlayButtonIcon,
+  .indicator {
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    will-change: backdrop-filter;
+  }
+
+  .skinHeader-withBackground,
+  .css-fknfom {
+    backdrop-filter: blur(15px);
+  }
+  .dialog,
+  .mainDrawer,
+  .toast,
+  .appfooter {
+    backdrop-filter: blur(15px);
+    background-color: rgba(0, 0, 0, 0.35);
+  }
+  .paper-icon-button-light:hover,
+  #itemDetailPage .itemProgressBar,
+  #dashboardPage .backgroundProgress > div {
+    backdrop-filter: blur(4px);
+  }
+  @media all and (max-width: 70em){
+    .cardOverlayButtonIcon {
+      background-color: rgba(0, 0, 0, 0.35) !important;
+    }
+    .cardOverlayButtonIcon {
+      backdrop-filter: blur(4px);
+    }
+  }
+  .indicator {
+    backdrop-filter: blur(2px);
+  }
+}
+
+/* ===== ultrachromic/presets/kaleidochromic_preset.css ===== */
+:root {--rounding: 12px;}
+
+/*Style backdrop*/
+.backdropImage {
+  filter: blur(18px) saturate(120%) contrast(120%) brightness(40%);
+}
+
+/* ===== ultrachromic/titlepage/title_banner-logo.css ===== */
+/*Alternate itempage*/
+
+.itemBackdrop {
+  height: 31vh !important;
+  display: inherit;
+}
+.detailLogo {
+  display: none;
+}
+.layout-desktop .detailRibbon {
+  margin-top: 0;
+  padding-top: .5em;
+  padding-bottom: .5em;
+}
+
+#itemDetailPage .detailLogo {
+    position: static;
+    margin-left: 32.5%;
+    display: block;
+    -webkit-filter: drop-shadow(0 0 10px rgba(2, 2, 2, 0.75));
+    /*! filter: drop-shadow(0 0 10px rgba(2, 2, 2, 0.75)); */
+    flex-shrink: 0;
+    background-position: 0 50%;
+    margin-top: -18vh;
+    margin-bottom: 2vh;
+}
+
+.layout-mobile .detailLogo {
+    display: none !important;
+}
+
+#itemDetailPage .itemName.infoText.parentNameLast {
+    display: none;
+}
+
+.hide+.detailPageWrapperContainer .itemName {
+    display: block !important;
+}
+
+.itemName {
+    margin: .5em 0 !important;
+}
+
+.layout-mobile #itemDetailPage .itemName.infoText.parentNameLast {
+    display: block;
+}
+
+/* ===== ultrachromic/cornerindicator/indicator_floating.css ===== */
+/*Card indicators style normal*/
+.innerCardFooter {
+    margin: .5em;
+}
+
+.countIndicator {
+  background: rgba(var(--indicator),0.8);
+  box-shadow: none;
+}
+.playedIndicator, .innerCardFooter {
+  background: rgba(0,0,0,0.4);
+  box-shadow: none;
+}
+
+.mediaSourceIndicator {
+  background: rgba(0,0,0,0.4);
+  box-shadow: none;
+  border-radius: var(--rounding);
+}
+
+/* ===== 00-imports.css ===== */
+/* --- Imports distants ------------------------------------------------
+   Les seuls @import qui subsistent dans le fichier construit. Tout le
+   reste — Ultrachromic compris — est fusionne par build.py.
+
+   Ils ne peuvent pas etre fusionnes : ce sont des feuilles de police, qui
+   declarent des @font-face pointant vers des .woff2 par des URL relatives.
+   Les recopier ici casserait la resolution de ces URL.
+
+   build.py les remonte en tete du fichier construit, quelle que soit leur
+   place ici : un @import place apres une regle est ignore par le
+   navigateur. Le meme traitement s'applique a l'import Google Fonts que
+   porte vendor/ultrachromic/jf_font.css.
+
+   Version de Phosphor epinglee : une mise a jour changerait les points de
+   code, donc les icones de 07-icones.css. */
+
+/* ===== 01-reglages.css ===== */
+/* --acc : l'accent d'Ultrachromic, avec repli.
+   --accent est defini par type/colorful.css, importe par le preset, donc
+   au deuxieme niveau d'@import. Tant que cette feuille n'est pas arrivee,
+   rgba(var(--accent), .95) est une valeur invalide et la declaration est
+   simplement ignoree : bouton transparent au lieu de colore. Le repli
+   evite ce clignotement. Il ne sert que pendant le chargement ; des que
+   colorful.css est la, c'est --accent qui gagne. */
+
+/* --- Reglages -------------------------------------------------------- */
+:root {
+    --icon-scale: .85;        /* Phosphor remplit plus son cadre que Material */
+    --play-label: "Lecture";  /* garder les guillemets : valeur de content */
+    --play-label-size: .8em;
+}
+
+/* ===== 02-cartes-survol.css ===== */
+/* --- 1. Le bouton play des cartes ne grossit plus au survol ----------- */
+/* C'est Jellyfin qui le passe a scale(1.4) au survol. Rien d'autre n'est
+   touche : le bouton garde son apparence d'origine. */
+.cardOverlayContainer > .cardOverlayFab-primary:hover {
+    transform: none !important;
+}
+
+/* ===== 03-page-item.css ===== */
+/* --- 2. Page d'un film : bouton Lecture en pilule accent -------------- */
+/* Le :not(.hide) est indispensable : Jellyfin rend ce bouton avec la
+   classe hide (display:none !important) et ne la retire qu'une fois
+   l'item lisible. */
+.mainDetailButtons .btnPlay:not(.hide) {
+    flex-direction: row !important;
+    max-width: none !important;
+    padding: .55em 1.05em !important;
+    border-radius: 999px !important;
+    background: rgba(var(--accent, 98, 121, 205), .95) !important;
+    color: #fff !important;
+    transition: background .15s !important;
+}
+
+/* Ultrachromic pose .button-flat:hover { background: rgba(accent,.25) },
+   qui delaverait la pilule au survol.
+   Le survol eclaircit par un voile blanc superpose plutot que par une
+   couleur plus claire : --accent est un triplet RVB, pas une couleur, donc
+   impossible de l'eclaircir sans color-mix(), que les navigateurs de TV
+   ne connaissent pas toujours. Le voile marche partout et suit l'accent
+   quel qu'il soit. */
+.mainDetailButtons .btnPlay:not(.hide):hover,
+.mainDetailButtons .btnPlay:not(.hide):focus {
+    background-color: rgb(var(--accent, 98, 121, 205)) !important;
+    background-image: linear-gradient(rgba(255, 255, 255, .28),
+                                      rgba(255, 255, 255, .28)) !important;
+}
+
+/* Icone et libelle cote a cote : Jellyfin les empile en colonne. */
+.mainDetailButtons .btnPlay:not(.hide) .detailButton-content {
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: .4em !important;
+}
+
+.mainDetailButtons .btnPlay:not(.hide) .detailButton-content::after {
+    content: var(--play-label) !important;
+    /* Pour suivre la langue de Jellyfin : content: attr(title) !important; */
+    font-size: var(--play-label-size);
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.mainDetailButtons .detailButton {
+    align-self: center !important;
+}
+
+/* Le libelle elargit la rangee : sur un telephone etroit elle deborderait
+   au lieu de passer a la ligne. */
+.mainDetailButtons {
+    flex-wrap: wrap !important;
+}
+
+/* Telephone. Ultrachromic passe .mainDetailButtons a 155% sous 100em de
+   large : sur un ecran de bureau etroit ca passe, mais 100em vaut environ
+   1600px, donc un telephone tombe dans la meme regle et la rangee y
+   devient enorme au point de deborder sur deux lignes. On revient a une
+   echelle raisonnable en dessous de 50em, sans toucher au bureau ni a la
+   TV. Les boutons gardent une cible tactile d'environ 50px. */
+@media all and (max-width: 50em) {
+    .mainDetailButtons {
+        font-size: 110% !important;
+    }
+    :root {
+        --icon-scale: .8;
+    }
+    /* La rangee n'occupe que la colonne de droite, a cote de l'affiche :
+       sans ce resserrage, le dernier bouton passe seul a la ligne. */
+    .mainDetailButtons .detailButton {
+        padding-left: .42em !important;
+        padding-right: .42em !important;
+    }
+    .mainDetailButtons .btnPlay:not(.hide) {
+        padding: .5em .72em !important;
+    }
+    .mainDetailButtons .btnPlay:not(.hide) .detailButton-content::after {
+        font-size: .7em;
+    }
+}
+
+/* ===== 04-connexion.css ===== */
+/* --- 3. Page de connexion : carte centree, sans vide en bas ---------- */
+/* Trois reglages se cumulent ici :
+     .standalonePage      padding-top: 4.5em !important
+     .padded-bottom-page  padding-bottom: 5em !important   (le grand vide)
+     Ultrachromic         margin-top: 8em sur la carte
+   d'ou une carte poussee vers le bas et lestee d'un vide. */
+/* Le :not(.hide) est obligatoire des qu'on impose un display : une fois
+   connecte, Jellyfin masque la page en lui ajoutant la classe hide, qui
+   vaut display:none !important. Un selecteur d'ID l'emporte sur une
+   classe meme a !important egal, donc sans ce garde-fou la page de
+   connexion resterait affichee par-dessus l'accueil. */
+#loginPage:not(.hide) {
+    display: flex !important;
+    min-height: 100vh;
+    padding: 1.5em !important;
+    box-sizing: border-box;
+}
+
+/* margin auto plutot que align-items: center : centre sur les deux axes
+   sans jamais rogner le haut si la carte depasse la hauteur de l'ecran,
+   cas d'un telephone en paysage. */
+#loginPage .padded-bottom-page {
+    margin: auto !important;
+    width: 24em;
+    max-width: 100%;
+    padding: 2em 1.75em !important;
+    box-sizing: border-box;
+}
+
+/* Le conteneur de mentions legales est vide mais garde un margin-top de
+   2em, qui s'ajoute au vide du bas. */
+#loginPage .loginDisclaimer:empty {
+    display: none !important;
+}
+#loginPage .loginDisclaimerContainer {
+    margin-top: 0 !important;
+}
+
+/* Marges symetriques haut et bas : le titre et le bloc de boutons ont
+   chacun leur marge en style inline, qui s'ajoute au padding de la carte. */
+#loginPage .visualLoginForm h1 {
+    margin-top: 0 !important;
+    margin-bottom: .8em !important;
+}
+#loginPage .readOnlyContent {
+    margin: 1.2em auto 0 !important;
+}
+
+/* Titres sur une seule ligne et centres, dans les deux formulaires. */
+#loginPage h1 {
+    font-size: 1.6em !important;
+    text-align: center !important;
+}
+
+/* Anneau accent au survol et au focus sur les portraits. Un box-shadow
+   plutot qu'une border : la border prendrait de la place et decalerait
+   l'image, l'anneau se dessine en dehors sans rien bouger. Le :focus
+   couvre la navigation TV et clavier. */
+#divUsers .cardContent {
+    transition: box-shadow .15s !important;
+}
+#divUsers .card:hover .cardContent,
+#divUsers .card:focus .cardContent {
+    box-shadow: 0 0 0 .18em rgb(var(--accent, 98, 121, 205)),
+                0 .3em 1em -.3em rgba(0, 0, 0, .8) !important;
+}
+
+/* Connexion manuelle : Ultrachromic pousse le formulaire de 4em vers le
+   bas, ce qui creusait un vide au-dessus du titre. */
+#loginPage .manualLoginForm {
+    padding-top: 0 !important;
+}
+#loginPage .manualLoginForm .padded-left {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/* Champs : le fond noir d'Ultrachromic disparait sur la carte sombre.
+   Une surface claire les fait lire comme des champs, l'accent marque
+   celui qui a le focus. */
+#loginPage .emby-input {
+    background: rgba(255, 255, 255, .07) !important;
+    padding: .55em .7em !important;
+}
+#loginPage .emby-input:focus {
+    background: rgba(var(--accent, 98, 121, 205), .22) !important;
+    box-shadow: inset 0 0 0 .11em rgba(var(--accent, 98, 121, 205), .9) !important;
+}
+
+/* Hierarchie des boutons : trois pleins accent identiques ne disaient pas
+   quelle etait l'action principale. Seule la validation reste pleine. */
+#loginPage .raised.block {
+    margin: 0 0 .6em !important;
+}
+#loginPage .button-submit {
+    background: rgb(var(--accent, 98, 121, 205)) !important;
+}
+#loginPage .btnCancel,
+#loginPage .btnManual,
+#loginPage .btnQuick,
+#loginPage .btnSelectServer {
+    background: rgba(255, 255, 255, .08) !important;
+    color: #fff !important;
+}
+#loginPage .btnCancel:hover,
+#loginPage .btnManual:hover,
+#loginPage .btnQuick:hover,
+#loginPage .btnSelectServer:hover {
+    background: rgba(255, 255, 255, .15) !important;
+}
+
+/* ===== 05-onglets.css ===== */
+/* --- 4. Onglets Accueil / Favoris ------------------------------------ */
+/* Cales a gauche apres le logo, facon Netflix, et etat selectionne en
+   pilule : Jellyfin ne distingue l'onglet actif que par la graisse, ce
+   qui se voit a peine.
+   --tabs-left n'est qu'un repli, le temps que le script "Onglets dans la
+   page" mesure le bord droit reel du contenu de .headerLeft et pose sa
+   propre valeur : elle depend du titre de page, des boutons visibles et,
+   sur TV, d'un logo different. */
+:root {
+    --tabs-left: 11.5em;
+}
+
+/* Sur large ecran, Ultrachromic remonte la rangee sur la ligne du logo
+   avec un margin-top negatif calibre sur la hauteur d'origine des
+   onglets. La pilule les raccourcit, ce qui faussait ce calcul et faisait
+   tomber l'en-tete de 61 a 26px. On sort donc la rangee du flux : elle ne
+   participe plus au calcul de hauteur, et se cale a gauche.
+   .headerTabs est deja un conteneur flex, inutile de redeclarer display. */
+@media all and (min-width: 50em) {
+    .skinHeader .headerTabs.sectionTabs {
+        position: absolute !important;
+        /* Centrage par top: 50% + translate plutot que top/bottom: 0 :
+           etirer la rangee sur toute la hauteur de l'en-tete ne recentrait
+           pas son contenu, et la pilule restait collee en haut sous 100em
+           de large. Ici la rangee garde la hauteur de son contenu et se
+           centre quelle que soit la hauteur de l'en-tete. */
+        top: 50% !important;
+        bottom: auto !important;
+        transform: translateY(-50%) !important;
+        left: var(--tabs-left) !important;
+        /* width: auto + right: auto pour que la boite se reduise a son
+           contenu. Sans ca elle heritait d'une largeur pleine et son
+           justify-content: center recentrait les onglets a l'interieur :
+           ils repartaient au milieu de l'ecran sous 100em de large. */
+        width: auto !important;
+        right: auto !important;
+        justify-content: flex-start !important;
+        margin: 0 !important;
+        align-items: center !important;
+    }
+}
+
+.skinHeader .headerTabs .emby-tab-button {
+    padding: .45em 1.15em !important;
+    margin: 0 .2em !important;
+    border-radius: 999px !important;
+    color: rgba(255, 255, 255, .68) !important;
+    font-weight: 500 !important;
+    transition: background-color .15s, color .15s !important;
+}
+
+.skinHeader .headerTabs .emby-tab-button:hover {
+    background-color: rgba(255, 255, 255, .10) !important;
+    color: #fff !important;
+}
+
+.skinHeader .headerTabs .emby-tab-button-active {
+    background-color: rgba(255, 255, 255, .18) !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+}
+
+/* Focus a la telecommande. Jellyfin marque l'onglet vise par
+   .emby-tab-button.show-focus:focus, avec transform: scale(1.3) et
+   background: 0 : la pilule disparaissait et le libelle grossissait d'un
+   tiers, en debordant sur ses voisins puisque la rangee est en flex.
+   .show-focus n'est pose que par la navigation directionnelle, donc cette
+   regle ne change rien a la souris. On garde la pilule et on la remplit
+   d'accent : sans agrandissement, il faut une difference de couleur
+   franche pour distinguer l'onglet vise de l'onglet actif, qui lui reste
+   en gris clair. Specificite 0,5,0 contre 0,3,0 : on l'emporte a
+   !important egal. */
+.skinHeader .headerTabs .emby-tab-button.show-focus:focus {
+    transform: none !important;
+    background-color: rgba(var(--accent, 98, 121, 205), .95) !important;
+    color: #fff !important;
+}
+
+
+/* Onglets deplaces dans la page par le script "Onglets dans la page"
+   (extension JavaScript Injector). Le CSS ne peut pas reparenter un
+   element : le script clone la rangee dans la zone qui defile et pose
+   body.tabs-in-page. Ces regles ne s'appliquent donc que si le script
+   tourne ; sans lui, rien ne change. */
+body.tabs-in-page .skinHeader .headerTabs.sectionTabs {
+    display: none !important;
+}
+
+/* L'en-tete perd sa deuxieme ligne : le decalage du contenu suit. */
+/* --header-h et --tabs-host-left sont mesurees et posees par le script :
+   une valeur en dur se decalait des que l'en-tete changeait de hauteur. */
+body.tabs-in-page #indexPage {
+    margin-top: var(--header-h, 58px) !important;
+}
+
+.pageTabsHost {
+    display: flex;
+    gap: .35em;
+    align-items: center;
+    padding: .1em 0 .9em;
+    padding-left: var(--tabs-host-left, 0px);
+}
+
+.pageTab {
+    /* inline-flex + line-height: 1 : en display: block, la hauteur de ligne
+       naturelle de la police decalait le libelle vers le bas dans la pilule. */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    border: 0;
+    cursor: pointer;
+    padding: .38em .95em;
+    border-radius: 999px;
+    background-color: transparent;
+    color: rgba(255, 255, 255, .68);
+    font-family: inherit;
+    font-size: 1em;
+    font-weight: 500;
+    transition: background-color .15s, color .15s;
+}
+
+.pageTab-active {
+    background-color: rgba(255, 255, 255, .18);
+    color: #fff;
+    font-weight: 700;
+}
+
+
+/* --- 5. En-tete sur telephone ---------------------------------------- */
+/* L'en-tete faisait 123px de haut sur un ecran de 915, soit 13% de
+   l'ecran : Ultrachromic passe les onglets a 110% et Jellyfin les met sur
+   une deuxieme ligne. On resserre, et on remonte d'autant le decalage du
+   contenu, sinon un vide apparait sous l'en-tete. */
+@media all and (max-width: 50em) {
+    .headerTabs.sectionTabs {
+        font-size: 90% !important;
+    }
+    .skinHeader .headerTabs .emby-tab-button {
+        padding: .38em .85em !important;
+    }
+    /* Sur deux lignes, la pilule touchait le bord bas de la navbar. */
+    .skinHeader .headerTabs.sectionTabs {
+        margin-bottom: .5em !important;
+    }
+    /* Le script cale le bord gauche de la pilule sur le texte des titres
+       de section ; ce padding n'entre plus dans son calcul et peut donc
+       etre change librement. */
+    .pageTab {
+        padding: .5em .9em;
+    }
+    #indexPage,
+    #moviesPage,
+    #tvRecommendedPage,
+    #musicRecommendedPage {
+        margin-top: 100px !important;
+    }
+}
+
+/* ===== 06-tv.css ===== */
+/* --- 6. Corrections TV ----------------------------------------------- */
+/* Sur TV, Jellyfin dessine deja son propre cadre de focus :
+   .card.show-focus ... { border: .5em solid transparent } qui se colore
+   a l'accent. Mon anneau s'y ajoutait, d'ou le double liseré. Sur TV on
+   laisse faire Jellyfin ; l'anneau ne sert qu'a la souris. */
+.layout-tv #divUsers .card:focus .cardContent {
+    box-shadow: none !important;
+}
+
+/* Logo de la page d'un film. Jellyfin masque volontairement ce logo sur
+   TV et sur mobile (.layout-tv .detailLogo { display: none }), mais
+   title_banner-logo.css le reaffiche avec un selecteur d'ID, qui
+   l'emporte, tout en ne repositionnant que .layout-desktop. Le logo
+   heritait donc du margin-top: -18vh prevu pour le bureau, ce qui le
+   faisait remonter sous l'en-tete et le coupait.
+   Ici on le remet dans le flux et on limite sa hauteur.
+   Pour le masquer sur TV comme le prevoit Jellyfin, remplacer tout le
+   bloc par  display: none !important; */
+.layout-tv #itemDetailPage .detailLogo {
+    margin-top: 0 !important;
+    margin-bottom: 1vh !important;
+    height: 10vh !important;
+}
+
+
+/* Onglets cales apres le logo, en TV, sans mesure JavaScript.
+   L'app Tizen embarque sa propre copie du client web : le plugin
+   JavaScript Injector, qui patche le index.html servi par le serveur, ne
+   l'atteint jamais. Seul /Branding/Css arrive jusqu'ici. Le calage par
+   --tabs-left mesure donc dans le vide sur TV, et la valeur de repli du
+   CSS est calibree pour le bureau.
+
+   Deux ecarts a rattraper, tous deux propres a la TV :
+
+   1. Le logo. Jellyfin y remplace la banniere par la seule icone carree
+      (.layout-tv .pageTitleWithDefaultLogo { background-image: icon }),
+      mais la boite garde ses 13.2em avec background-size: contain cale a
+      gauche. .pageTitle fait 1.7em de haut : une image carree n'y peint
+      donc que 1.7em de large, et les 11.5em restants sont du vide. On
+      reduit la boite a sa hauteur, elle epouse alors exactement l'icone.
+
+   2. Les boutons. Jellyfin masque le hamburger en TV
+      (bureau, ou bien accueil hors TV) et affiche le retour
+      selon l'historique : le bord droit de .headerLeft n'est pas une
+      constante. Plutot qu'un offset devine, on passe l'en-tete en
+      flex-direction: row et on rend la rangee d'onglets a son flux : elle
+      se pose apres .headerTop, donc apres le contenu reel, quels que
+      soient les boutons affiches. .headerRight ne peut pas suivre - il
+      est enfant de .headerTop - on l'ancre donc a droite. L'ancrage vaut
+      sans position: relative, .skinHeader portant deja contain: layout.
+
+   Media query alignee sur celle de la section 4 : sous 50em la rangee
+   reste en dessous, comme sur telephone. */
+@media all and (min-width: 50em) {
+    .layout-tv .skinHeader {
+        flex-direction: row !important;
+        align-items: center !important;
+    }
+    .layout-tv .skinHeader .headerTop,
+    .layout-tv .skinHeader .headerLeft {
+        flex-grow: 0 !important;
+    }
+    .layout-tv .skinHeader .headerRight {
+        position: absolute !important;
+        right: .8em !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+    }
+    /* Plus haute specificite que la regle absolue de la section 4
+       (0,4,0 contre 0,3,0), qui ne concerne donc plus que le bureau. */
+    .layout-tv .skinHeader .headerTabs.sectionTabs {
+        position: static !important;
+        transform: none !important;
+        left: auto !important;
+        top: auto !important;
+        width: auto !important;
+        margin: 0 !important;
+    }
+    /* Boite carree : l'icone la remplit, plus aucun vide a sa droite.
+       1.7em est la hauteur que Jellyfin donne a .pageTitle. */
+    .layout-tv .pageTitleWithDefaultLogo {
+        width: 1.7em !important;
+    }
+}
+
+/* ===== 07-icones.css ===== */
+/* --- 7. Icones : Material Icons remplacees par Phosphor Bold ---------- */
+/* Jellyfin 10.11 rend ses icones par classe, avec une regle interne du
+   type  .material-icons.play_arrow:before { content: "..." }.  Reassigner
+   font-family et content suffit.
+
+   Le !important sur content n'est pas decoratif : Jellyfin injecte ses
+   feuilles de style au fil de la navigation, donc apres le CSS
+   personnalise. Sans lui, ce sont ses regles qui gagnent.
+
+   La reduction passe par transform et non par font-size : le font-size de
+   ces icones est fixe par des dizaines de regles differentes, souvent en
+   !important, alors que transform ne touche ni la mise en page ni ces
+   reglages. Regler --icon-scale plus haut pour des icones plus grosses.
+
+   Pour revenir au trait fin : remplacer bold par regular dans l'@import
+   ci-dessus, et "Phosphor-Bold" par "Phosphor" ci-dessous. Les points de
+   code sont identiques entre les deux graisses, rien d'autre a changer.
+
+   Seules les 100 classes listees sont remappees ; toute icone non listee
+   garde Material Icons et reste lisible. */
+
+.material-icons.add,
+.material-icons.airplay,
+.material-icons.album,
+.material-icons.arrow_back,
+.material-icons.arrow_forward,
+.material-icons.arrow_upward,
+.material-icons.audiotrack,
+.material-icons.autorenew,
+.material-icons.backspace,
+.material-icons.book,
+.material-icons.brightness_high,
+.material-icons.call_split,
+.material-icons.cast,
+.material-icons.check,
+.material-icons.chevron_left,
+.material-icons.chevron_right,
+.material-icons.close,
+.material-icons.closed_caption,
+.material-icons.cloud_download,
+.material-icons.content_copy,
+.material-icons.dashboard,
+.material-icons.delete,
+.material-icons.devices_other,
+.material-icons.download,
+.material-icons.drag_handle,
+.material-icons.dvr,
+.material-icons.exit_to_app,
+.material-icons.expand_more,
+.material-icons.explore,
+.material-icons.fast_forward,
+.material-icons.fast_rewind,
+.material-icons.favorite,
+.material-icons.fiber_manual_record,
+.material-icons.fiber_smart_record,
+.material-icons.file_download,
+.material-icons.filter_alt,
+.material-icons.folder,
+.material-icons.folder_open,
+.material-icons.forward_30,
+.material-icons.fullscreen,
+.material-icons.get_app,
+.material-icons.groups,
+.material-icons.home,
+.material-icons.info,
+.material-icons.info_outline,
+.material-icons.keyboard,
+.material-icons.keyboard_arrow_down,
+.material-icons.keyboard_arrow_left,
+.material-icons.keyboard_arrow_right,
+.material-icons.keyboard_arrow_up,
+.material-icons.keyboard_return,
+.material-icons.live_tv,
+.material-icons.local_movies,
+.material-icons.lock,
+.material-icons.lyrics,
+.material-icons.menu,
+.material-icons.mode_edit,
+.material-icons.more_vert,
+.material-icons.movie,
+.material-icons.music_note,
+.material-icons.navigate_before,
+.material-icons.navigate_next,
+.material-icons.pause,
+.material-icons.pause_circle_filled,
+.material-icons.person,
+.material-icons.phonelink_lock,
+.material-icons.photo,
+.material-icons.picture_in_picture_alt,
+.material-icons.play_arrow,
+.material-icons.play_circle_filled,
+.material-icons.playlist_add,
+.material-icons.preview,
+.material-icons.queue_music,
+.material-icons.redo,
+.material-icons.remove_circle,
+.material-icons.remove_red_eye,
+.material-icons.repeat,
+.material-icons.repeat_one,
+.material-icons.replay,
+.material-icons.replay_10,
+.material-icons.save,
+.material-icons.search,
+.material-icons.settings,
+.material-icons.shuffle,
+.material-icons.skip_next,
+.material-icons.skip_previous,
+.material-icons.sort_by_alpha,
+.material-icons.space_bar,
+.material-icons.star,
+.material-icons.stop,
+.material-icons.storage,
+.material-icons.subtitles,
+.material-icons.text_decrease,
+.material-icons.text_increase,
+.material-icons.theaters,
+.material-icons.toc,
+.material-icons.tv,
+.material-icons.undo,
+.material-icons.view_comfy,
+.material-icons.volume_up {
+    font-family: "Phosphor-Bold" !important;
+    transform: scale(var(--icon-scale));
+}
+
+.material-icons.add:before { content: "\e3d4" !important; }  /* ph-plus */
+.material-icons.airplay:before { content: "\e004" !important; }  /* ph-airplay */
+.material-icons.album:before { content: "\ecac" !important; }  /* ph-vinyl-record */
+.material-icons.arrow_back:before { content: "\e058" !important; }  /* ph-arrow-left */
+.material-icons.arrow_forward:before { content: "\e06c" !important; }  /* ph-arrow-right */
+.material-icons.arrow_upward:before { content: "\e08e" !important; }  /* ph-arrow-up */
+.material-icons.audiotrack:before { content: "\e33c" !important; }  /* ph-music-note */
+.material-icons.autorenew:before { content: "\e094" !important; }  /* ph-arrows-clockwise */
+.material-icons.backspace:before { content: "\e0ae" !important; }  /* ph-backspace */
+.material-icons.book:before { content: "\e0e2" !important; }  /* ph-book */
+.material-icons.brightness_high:before { content: "\e472" !important; }  /* ph-sun */
+.material-icons.call_split:before { content: "\ed3c" !important; }  /* ph-arrows-split */
+.material-icons.cast:before { content: "\e58a" !important; }  /* ph-monitor-arrow-up */
+.material-icons.check:before { content: "\e182" !important; }  /* ph-check */
+.material-icons.chevron_left:before { content: "\e138" !important; }  /* ph-caret-left */
+.material-icons.chevron_right:before { content: "\e13a" !important; }  /* ph-caret-right */
+.material-icons.close:before { content: "\e4f6" !important; }  /* ph-x */
+.material-icons.closed_caption:before { content: "\e1a4" !important; }  /* ph-closed-captioning */
+.material-icons.cloud_download:before { content: "\e1ac" !important; }  /* ph-cloud-arrow-down */
+.material-icons.content_copy:before { content: "\e1ca" !important; }  /* ph-copy */
+.material-icons.dashboard:before { content: "\e464" !important; }  /* ph-squares-four */
+.material-icons.delete:before { content: "\e4a6" !important; }  /* ph-trash */
+.material-icons.devices_other:before { content: "\eba4" !important; }  /* ph-devices */
+.material-icons.download:before { content: "\e20c" !important; }  /* ph-download-simple */
+.material-icons.drag_handle:before { content: "\e794" !important; }  /* ph-dots-six */
+.material-icons.dvr:before { content: "\e58c" !important; }  /* ph-monitor-play */
+.material-icons.exit_to_app:before { content: "\e42a" !important; }  /* ph-sign-out */
+.material-icons.expand_more:before { content: "\e136" !important; }  /* ph-caret-down */
+.material-icons.explore:before { content: "\e1c8" !important; }  /* ph-compass */
+.material-icons.fast_forward:before { content: "\e6a6" !important; }  /* ph-fast-forward */
+.material-icons.fast_rewind:before { content: "\e6a8" !important; }  /* ph-rewind */
+.material-icons.favorite:before { content: "\e2a8" !important; }  /* ph-heart */
+.material-icons.fiber_manual_record:before { content: "\e3ee" !important; }  /* ph-record */
+.material-icons.fiber_smart_record:before { content: "\e0f2" !important; }  /* ph-broadcast */
+.material-icons.file_download:before { content: "\e20c" !important; }  /* ph-download-simple */
+.material-icons.filter_alt:before { content: "\e266" !important; }  /* ph-funnel */
+.material-icons.folder:before { content: "\e24a" !important; }  /* ph-folder */
+.material-icons.folder_open:before { content: "\e256" !important; }  /* ph-folder-open */
+.material-icons.forward_30:before { content: "\e19e" !important; }  /* ph-clock-clockwise */
+.material-icons.fullscreen:before { content: "\e1d0" !important; }  /* ph-corners-out */
+.material-icons.get_app:before { content: "\e20c" !important; }  /* ph-download-simple */
+.material-icons.groups:before { content: "\e68e" !important; }  /* ph-users-three */
+.material-icons.home:before { content: "\e2c2" !important; }  /* ph-house */
+.material-icons.info:before { content: "\e2ce" !important; }  /* ph-info */
+.material-icons.info_outline:before { content: "\e2ce" !important; }  /* ph-info */
+.material-icons.keyboard:before { content: "\e2d8" !important; }  /* ph-keyboard */
+.material-icons.keyboard_arrow_down:before { content: "\e136" !important; }  /* ph-caret-down */
+.material-icons.keyboard_arrow_left:before { content: "\e138" !important; }  /* ph-caret-left */
+.material-icons.keyboard_arrow_right:before { content: "\e13a" !important; }  /* ph-caret-right */
+.material-icons.keyboard_arrow_up:before { content: "\e13c" !important; }  /* ph-caret-up */
+.material-icons.keyboard_return:before { content: "\e044" !important; }  /* ph-arrow-elbow-down-left */
+.material-icons.live_tv:before { content: "\e754" !important; }  /* ph-television */
+.material-icons.local_movies:before { content: "\e792" !important; }  /* ph-film-strip */
+.material-icons.lock:before { content: "\e308" !important; }  /* ph-lock-simple */
+.material-icons.lyrics:before { content: "\e75c" !important; }  /* ph-microphone-stage */
+.material-icons.menu:before { content: "\e2f0" !important; }  /* ph-list */
+.material-icons.mode_edit:before { content: "\e3b4" !important; }  /* ph-pencil-simple */
+.material-icons.more_vert:before { content: "\e208" !important; }  /* ph-dots-three-vertical */
+.material-icons.movie:before { content: "\e8c2" !important; }  /* ph-film-slate */
+.material-icons.music_note:before { content: "\e33c" !important; }  /* ph-music-note */
+.material-icons.navigate_before:before { content: "\e138" !important; }  /* ph-caret-left */
+.material-icons.navigate_next:before { content: "\e13a" !important; }  /* ph-caret-right */
+.material-icons.pause:before { content: "\e39e" !important; }  /* ph-pause */
+.material-icons.pause_circle_filled:before { content: "\e3a0" !important; }  /* ph-pause-circle */
+.material-icons.person:before { content: "\e4c2" !important; }  /* ph-user */
+.material-icons.phonelink_lock:before { content: "\e2fe" !important; }  /* ph-lock-key */
+.material-icons.photo:before { content: "\e2ca" !important; }  /* ph-image */
+.material-icons.picture_in_picture_alt:before { content: "\e64c" !important; }  /* ph-picture-in-picture */
+.material-icons.play_arrow:before { content: "\e3d0" !important; }  /* ph-play */
+.material-icons.play_circle_filled:before { content: "\e3d2" !important; }  /* ph-play-circle */
+.material-icons.playlist_add:before { content: "\e6aa" !important; }  /* ph-playlist */
+.material-icons.preview:before { content: "\e220" !important; }  /* ph-eye */
+.material-icons.queue_music:before { content: "\e6ac" !important; }  /* ph-queue */
+.material-icons.redo:before { content: "\e08c" !important; }  /* ph-arrow-u-up-right */
+.material-icons.remove_circle:before { content: "\e32c" !important; }  /* ph-minus-circle */
+.material-icons.remove_red_eye:before { content: "\e220" !important; }  /* ph-eye */
+.material-icons.repeat:before { content: "\e3f6" !important; }  /* ph-repeat */
+.material-icons.repeat_one:before { content: "\e3f8" !important; }  /* ph-repeat-once */
+.material-icons.replay:before { content: "\e038" !important; }  /* ph-arrow-counter-clockwise */
+.material-icons.replay_10:before { content: "\e1a0" !important; }  /* ph-clock-counter-clockwise */
+.material-icons.save:before { content: "\e248" !important; }  /* ph-floppy-disk */
+.material-icons.search:before { content: "\e30c" !important; }  /* ph-magnifying-glass */
+.material-icons.settings:before { content: "\e270" !important; }  /* ph-gear */
+.material-icons.shuffle:before { content: "\e422" !important; }  /* ph-shuffle */
+.material-icons.skip_next:before { content: "\e5a6" !important; }  /* ph-skip-forward */
+.material-icons.skip_previous:before { content: "\e5a4" !important; }  /* ph-skip-back */
+.material-icons.sort_by_alpha:before { content: "\e444" !important; }  /* ph-sort-ascending */
+.material-icons.space_bar:before { content: "\e32a" !important; }  /* ph-minus */
+.material-icons.star:before { content: "\e46a" !important; }  /* ph-star */
+.material-icons.stop:before { content: "\e46c" !important; }  /* ph-stop */
+.material-icons.storage:before { content: "\e2a0" !important; }  /* ph-hard-drives */
+.material-icons.subtitles:before { content: "\e1a8" !important; }  /* ph-subtitles */
+.material-icons.text_decrease:before { content: "\e48a" !important; }  /* ph-text-t */
+.material-icons.text_increase:before { content: "\e48a" !important; }  /* ph-text-t */
+.material-icons.theaters:before { content: "\e8c0" !important; }  /* ph-film-reel */
+.material-icons.toc:before { content: "\e2f2" !important; }  /* ph-list-bullets */
+.material-icons.tv:before { content: "\eae6" !important; }  /* ph-television-simple */
+.material-icons.undo:before { content: "\e08a" !important; }  /* ph-arrow-u-up-left */
+.material-icons.view_comfy:before { content: "\e296" !important; }  /* ph-grid-four */
+.material-icons.volume_up:before { content: "\e44a" !important; }  /* ph-speaker-high */
+
+/* ===== 08-indicateurs.css ===== */
+/* --- 8. Indicateur "vu" flottant ------------------------------------- */
+/* Le preset charge cornerindicator/indicator_corner.css. Les deux variantes
+   sont ALTERNATIVES, pas empilables : indicator_corner colle la pastille
+   dans l'angle avec des !important (right/top a 0, coins asymetriques),
+   qu'indicator_floating ne reprend pas — il ne pose que des fonds et des
+   ombres, sans !important. L'import seul restait donc sans effet visible.
+   On rend ici a la pastille son detachement et ses coins ronds. */
+.cardIndicators,
+.listItemIndicators {
+    right: .5em !important;
+    top: .5em !important;
+}
+
+.countIndicator,
+.playedIndicator {
+    border-radius: 999px !important;
+}
+
+.innerCardFooter {
+    border-radius: var(--rounding) !important;
+}
+
+.mediaSourceIndicator {
+    left: .5em;
+    top: .5em;
+    border-radius: var(--rounding) !important;
+}
+
+/* ===== 09-lecteur.css ===== */
+/* --- 9. Marqueurs de chapitres dans la barre de lecture --------------- */
+/* Jellyfin pose un span.sliderMarker par chapitre dans le
+   .sliderMarkerContainer de l'OSD video : des traits de 2px, bleus une fois
+   depasses, blancs translucides avant. Aucun reglage serveur ne les
+   desactive, les chapitres viennent des metadonnees embarquees du fichier
+   et existent meme sans extraction d'images. Donc CSS.
+   On masque les traits et pas leur conteneur : celui-ci est en position
+   absolue et sert d'ancrage, le retirer ne gagne rien. */
+.sliderMarker {
+    display: none !important;
+}
+
+/* --- 10. Barres de lecture arrondies --------------------------------- */
+/* Structure d'un emby-slider :
+     .mdl-slider-background-flex          rail gris, height .2em, overflow hidden
+       .mdl-slider-background-flex-inner
+         .mdl-slider-background-upper     portion mise en tampon
+         .mdl-slider-background-lower     portion lue, bleue
+   Le rail porte deja overflow:hidden et les deux remplissages sont ses
+   descendants : arrondir le seul rail suffit, le bleu est decoupe a la
+   meme forme. Pas besoin de toucher lower ni upper.
+   1em pour un rail de .2em de haut donne une gelule : le rayon est plafonne
+   a la moitie de la hauteur. Volontairement pas var(--rounding), qui est
+   calibre pour des vignettes et rendrait le resultat dependant du preset.
+   Une seule regle couvre la barre de progression ET celle du son : les deux
+   sont des emby-slider. Pour n'arrondir que la progression, prefixer par
+   .osdPositionSlider + .mdl-slider-background-flex-container. */
+.mdl-slider-background-flex {
+    border-radius: 1em !important;
+}
+
+/* ===== 10-carte-barre.css ===== */
+/* --- 11. Barre de progression des cartes ----------------------------- */
+/* Le preset charge overlayprogress.css, qui ne dessine pas une barre mais
+   un voile : il etire le pied de carte sur toute la vignette
+     .innerCardFooter... { top: 0; bottom: 0; left: 0; right: 0 }
+   et donne 2000em de haut a la barre, dont le remplissage accent a 35%
+   devient un calque translucide sur toute l'image.
+   progress/floating.css n'est pas une alternative utilisable telle quelle :
+   cette feuille ne touche jamais au positionnement du pied de carte.
+   Importee par-dessus, elle rend bien sa hauteur de 6px a la barre, mais le
+   pied reste etire et la barre se colle donc en HAUT de la vignette. D'ou
+   des regles ecrites ici plutot qu'un import de plus a corriger ensuite. */
+
+/* Le pied de carte redevient une bande en bas. Le border-radius que lui
+   pose la section 8 devient sans effet : le fond est transparent. */
+.innerCardFooter.fullInnerCardFooter.innerCardFooterClear {
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+/* Geometrie de la barre : ce sont les trois valeurs a retoucher pour
+   ajuster l'allure. En pixels et non en em, parce qu'un em se calcule sur
+   le font-size de l'element qui le porte - .cardOverlayButton est a 88%,
+   .innerCardFooter a 100% - et que toute mise en correspondance entre la
+   barre et un bouton d'overlay tombe alors a cote de quelques pixels. */
+:root {
+    --card-bar-height: 6px;
+    --card-bar-gap: 8px;    /* detachement du bord bas : l'effet flottant */
+    --card-bar-inset: 13px; /* retrait lateral */
+}
+
+/* Le !important sur height n'est pas decoratif : overlayprogress vise
+   #indexPage .itemProgressBar, donc un ID, qui l'emporte sur ce selecteur
+   de classes quel que soit l'ordre des feuilles.
+   C'est la marge qui fait l'effet flottant. Sans elle la barre est un trait
+   colle au bord bas, pleine largeur. --rounding vaut 12px mais un rayon est
+   plafonne a la moitie de la hauteur : sur 6px de haut, la barre est une
+   gelule quelle que soit la valeur. */
+.innerCardFooter .itemProgressBar {
+    height: var(--card-bar-height) !important;
+    margin: var(--card-bar-gap) var(--card-bar-inset) !important;
+    border-radius: var(--rounding) !important;
+    background: rgba(0, 0, 0, .35) !important;
+    backdrop-filter: blur(4px);
+    overflow: hidden;
+}
+
+/* overlayprogress laisse le remplissage a 35% d'opacite, ce qui convient a
+   un voile plein ecran mais delave une barre de 6px. */
+.innerCardFooter .itemProgressBarForeground {
+    background-color: rgba(var(--accent, 98, 121, 205), .95) !important;
+    border-radius: var(--rounding) !important;
+}
+
+/* ===== 11-carte-boutons.css ===== */
+/* --- 12. Boutons d'overlay des cartes --------------------------------- */
+/* Point de vocabulaire indispensable avant de toucher a quoi que ce soit :
+   .cardOverlayButton-br designe DEUX choses differentes selon le layout,
+   parce que cardBuilder produit deux jeux de boutons sous des conditions
+   opposees.
+
+   Sur bureau, getHoverMenuHtml, appele sous  if (layoutManager.desktop) :
+   .cardOverlayButton-br est le conteneur flex du groupe vu / favori /
+   menu, en bas a droite, et il n'apparait qu'au survol.
+
+   Sur mobile, buildCard, sous  if (layoutManager.mobile) :
+     const btnCssClass = 'cardOverlayButton cardOverlayButton-br itemAction';
+   la classe est portee par le BOUTON PLAY lui-meme, pose directement sur la
+   vignette et visible en permanence. Il sort par defaut des que
+   item.MediaType vaut 'Video'. card.scss le cadre en bas a droite
+   (position: absolute; bottom: 0; right: 0), pile sur le bout de la barre.
+
+   Le "Accommodate play button on mobile" de floating.css visait donc bien
+   quelque chose de reel, contrairement a ce que laissait croire la seule
+   lecture de getHoverMenuHtml. Ce qui etait faux, c'etait sa portee : sa
+   marge de 3.2em tombe sous @media all and (max-width: 100em), soit environ
+   1600px, donc elle rognait aussi la barre sur les ecrans de bureau, ou ce
+   bouton n'existe pas. D'ou un vide a droite de la barre en permanence sur
+   la machine ou on regarde le plus.
+
+   Correctif retenu : on ne rogne plus la barre nulle part, et on sort le
+   bouton mobile de la zone de la barre en l'envoyant dans le coin haut
+   gauche. La barre garde toute sa largeur sur tous les ecrans, et la regle
+   ne vise que le layout concerne - layoutManager pose layout-mobile sur
+   l'element racine, comme le layout-tv utilise en section 6.
+
+   Haut GAUCHE et pas haut droite : le coin droit est pris par
+   .cardIndicators, cale a .5em par la section 8, qui y met le compteur
+   d'episodes non vus des series et l'indicateur de type, sur des cartes
+   parfaitement jouables. La pastille "vu", elle, ne coexiste jamais avec la
+   barre, Jellyfin n'affichant l'une que sous 100% de lecture et l'autre
+   qu'a partir de 100%.
+
+   right et bottom doivent etre remis a auto : card.scss cadre ce bouton en
+   position: absolute; bottom: 0; right: 0. Poser top et left sans annuler
+   les deux autres donnerait un element cale sur les quatre cotes, donc
+   etire sur toute la vignette, sa largeur etant auto.
+
+   Le :not(.cardOverlayButton-centered) protege la variante centree, que
+   cardBuilder produit sous l'option centerPlayButton et qui porte les deux
+   classes. Sans ce garde-fou, ces offsets en !important la decrocheraient
+   de son centrage. */
+.layout-mobile .cardOverlayButton-br:not(.cardOverlayButton-centered) {
+    top: 0 !important;
+    bottom: auto !important;
+    left: 0 !important;
+    right: auto !important;
+}
+
+/* Le coin haut gauche n'etait occupe que par .mediaSourceIndicator, pose a
+   left: .5em par la section 8. On le decale pour laisser passer le bouton.
+   Decalage limite a mobile : sur bureau ce bouton n'existe pas, la pastille
+   n'a aucune raison d'y bouger. Elle ne parait que sur les items a sources
+   multiples, la collision est donc rare - mais illisible quand elle a lieu. */
+.layout-mobile .mediaSourceIndicator {
+    left: 3em;
+}
+
+/* ===== 12-carte-zone.css ===== */
+/* --- 13. Zone de survol des cartes ----------------------------------- */
+/* Deux declencheurs de survol coexistent, poses sur deux elements de
+   tailles differentes, et aucun des deux n'est l'affiche :
+
+     card.scss          .card-hoverable:hover .cardOverlayContainer
+                        { opacity: 1 }            voile sombre + boutons
+     effects/hoverglow  .cardBox:hover > .cardScalable .cardOverlayContainer
+                        { border + box-shadow }   liseré accent
+
+   .card-hoverable est porte par .card, qui englobe le margin de .6em de
+   .cardBox, et le margin-bottom de 1.8em de .cardBox-bottompadded. Survoler
+   cette bande exterieure allume donc les boutons sans le liseré, .cardBox
+   n'etant pas atteint. Et .cardBox, lui, inclut le bandeau de texte sous
+   l'affiche : survoler le titre allume les deux, loin de la vignette.
+
+   L'affiche, c'est .cardScalable - .cardBox > .cardScalable, position
+   relative, sa hauteur est exactement celle de l'image. On y ramene les
+   deux effets, et la zone sensible redevient ce qu'on voit.
+
+   Question de specificite, pas seulement d'ordre : le selecteur de
+   hoverglow pese 0-4-0. Rejouer le liseré sur .cardScalable:hover
+   .cardOverlayContainer, qui ne pese que 0-3-0, se ferait battre par la
+   regle d'annulation ci-dessous, qui matche elle aussi quand l'affiche est
+   survolee. D'ou la forme .cardBox > .cardScalable:hover, a 0-4-0 comme
+   l'originale, donc departagee par l'ordre - annulation d'abord,
+   retablissement ensuite. */
+
+/* Annulation des deux declencheurs trop larges. */
+.card:hover .cardOverlayContainer,
+.card-hoverable:hover .cardOverlayContainer,
+.cardBox:hover .cardOverlayContainer {
+    opacity: 0;
+}
+
+.cardBox:hover > .cardScalable .cardOverlayContainer {
+    box-shadow: none !important;
+    border: 0 solid transparent !important;
+}
+
+/* Retablissement sur la seule affiche. Valeurs reprises telles quelles de
+   hoverglow.css : l'apparence ne change pas, seule la zone qui la declenche.
+   :focus-within n'est pas touche, la navigation clavier et TV continue
+   d'allumer l'overlay par la regle d'origine de Jellyfin.
+
+   Le liseré est bien une border, et il decale les icones de 2px a chaque
+   survol : border participe au modele de boite, et .cardOverlayContainer
+   etant cale sur ses quatre cotes, les 2px se prennent sur l'interieur.
+   Connu et assume, l'effet etant a peine perceptible. Le correctif tient en
+   deux lignes si l'envie revient - outline ne participe pas au modele de
+   boite, donc ne decale rien :
+     outline: 2px solid rgb(var(--accent, 98, 121, 205)) !important;
+     outline-offset: -2px;
+   a poser ici en remplacement de la border, et sans rien d'autre a changer :
+   la regle d'annulation ci-dessus neutralise deja la border dans tous les
+   cas. */
+.cardBox > .cardScalable:hover .cardOverlayContainer {
+    opacity: 1;
+    box-shadow: 0 0 4px rgb(var(--accent, 98, 121, 205)),
+                0 0 8px rgb(var(--accent, 98, 121, 205)),
+                0 0 12px rgba(var(--accent, 98, 121, 205), .6) !important;
+    border: solid 2px rgb(var(--accent, 98, 121, 205)) !important;
+}
+
+/* ===== 13-carte-curseur.css ===== */
+/* --- 14. Curseur main cale sur la carte visible ----------------------- */
+/* card.scss pose  .card { cursor: pointer }  sur l'element EXTERIEUR, celui
+   qui contient le margin de .6em de .cardBox. La gouttiere entre les
+   cartes affiche donc une main, alors que la section 13 vient de lui
+   retirer tout retour visuel : curseur cliquable, zone morte a l'oeil.
+   .cardBox porte padding: 0 et margin: .6em, donc sa boite de bordure est
+   exactement la carte visible, affiche et bandeau de titre compris. C'est
+   la bonne frontiere.
+   !important pour la meme raison qu'en section 7 : Jellyfin injecte ses
+   feuilles au fil de la navigation, donc apres le CSS personnalise, et une
+   simple egalite de specificite se ferait battre par l'ordre.
+   Le !important de .cardBox ne desactive pas le curseur des enfants : une
+   declaration prioritaire ne l'emporte que pour l'element qui la porte, et
+   l'heritage ne s'applique qu'aux enfants qui n'ont pas la leur.
+   .cardContent et les boutons gardent donc les leurs. */
+.card {
+    cursor: default !important;
+}
+
+.cardBox {
+    cursor: pointer !important;
+}
+
+/* Le bandeau sous l'affiche ne doit pas etre main sur toute sa surface : il
+   porte le titre, mais aussi l'annee et les lignes secondaires.
+   Et la difference est reelle, pas seulement d'intention : dans le DOM
+   rendu, seul le titre est un lien,
+     div.cardText.cardText-first  bdi  a.itemAction.textActionButton
+   tandis que la ligne suivante n'est qu'un
+     div.cardText.cardText-secondary  bdi  2011
+   sans ancre ni data-action. On pose donc la fleche sur la ligne et la main
+   sur les seules ancres : la regle suit ce qui est reellement cliquable, et
+   restera juste si une ligne secondaire recoit un lien un jour, comme le
+   nom de serie sur les cartes d'episode.
+
+   Les .cardText sont enfants directs de .cardBox quand la carte n'a pas de
+   pied - c'est le cas des vignettes d'accueil - et de .cardFooter quand
+   cardBuilder en genere un. Les deux parents sont donc vises.
+   Passer par eux plutot que par .cardText seul n'est pas cosmetique : les
+   cartes a texte incruste posent aussi des .cardText, mais dans
+   .innerCardFooter, donc a l'interieur de l'ancre qui couvre l'affiche. La
+   main y est legitime, il ne faut pas l'y retirer. */
+.cardBox > .cardText,
+.cardFooter > .cardText {
+    cursor: default !important;
+}
+
+.cardBox > .cardText a,
+.cardFooter > .cardText a {
+    cursor: pointer !important;
+}
+
+/* Reste une incoherence, assumee : un clic dans la gouttiere navigue
+   toujours vers l'item, .card portant le data-action. Pour rendre cette
+   bande reellement inerte, et supprimer les clics a cote :
+     .card    { pointer-events: none; }
+     .cardBox { pointer-events: auto; }
+   Les evenements remontent depuis .cardBox jusqu'au gestionnaire delegue,
+   qui continue de fonctionner. Non active par defaut : ca touche a la
+   saisie et pas seulement a l'apparence. */
+
+/* Sur bureau on ne touche a rien : le groupe de boutons recouvre le bout de
+   la barre au survol, mais card.scss pose au meme instant
+   .cardOverlayContainer { background: rgba(0, 0, 0, .5) } sur toute la
+   vignette. La carte entiere est deja sous un voile noir, il n'y a rien a
+   proteger. Deux tentatives ecartees, pour ne pas les refaire :
+     - marge droite rendue au survol seulement : la barre se retracte a
+       chaque passage de souris, ca frétille sur une grille entiere ;
+     - groupe deplace dans un coin haut : a droite il percute
+       .cardIndicators (compteur d'episodes non vus d'une serie, indicateur
+       de type ; la pastille "vu", elle, ne coexiste jamais avec la barre,
+       Jellyfin n'affichant l'une que sous 100% de lecture et l'autre qu'a
+       partir de 100%), et a gauche les trois icones alignees sous le bord
+       haut donnent un resultat batard. */

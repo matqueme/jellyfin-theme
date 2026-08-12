@@ -1,0 +1,158 @@
+/* --- 4. Onglets Accueil / Favoris ------------------------------------ */
+/* Cales a gauche apres le logo, facon Netflix, et etat selectionne en
+   pilule : Jellyfin ne distingue l'onglet actif que par la graisse, ce
+   qui se voit a peine.
+   --tabs-left n'est qu'un repli, le temps que le script "Onglets dans la
+   page" mesure le bord droit reel du contenu de .headerLeft et pose sa
+   propre valeur : elle depend du titre de page, des boutons visibles et,
+   sur TV, d'un logo different. */
+:root {
+    --tabs-left: 11.5em;
+}
+
+/* Sur large ecran, Ultrachromic remonte la rangee sur la ligne du logo
+   avec un margin-top negatif calibre sur la hauteur d'origine des
+   onglets. La pilule les raccourcit, ce qui faussait ce calcul et faisait
+   tomber l'en-tete de 61 a 26px. On sort donc la rangee du flux : elle ne
+   participe plus au calcul de hauteur, et se cale a gauche.
+   .headerTabs est deja un conteneur flex, inutile de redeclarer display. */
+@media all and (min-width: 50em) {
+    .skinHeader .headerTabs.sectionTabs {
+        position: absolute !important;
+        /* Centrage par top: 50% + translate plutot que top/bottom: 0 :
+           etirer la rangee sur toute la hauteur de l'en-tete ne recentrait
+           pas son contenu, et la pilule restait collee en haut sous 100em
+           de large. Ici la rangee garde la hauteur de son contenu et se
+           centre quelle que soit la hauteur de l'en-tete. */
+        top: 50% !important;
+        bottom: auto !important;
+        transform: translateY(-50%) !important;
+        left: var(--tabs-left) !important;
+        /* width: auto + right: auto pour que la boite se reduise a son
+           contenu. Sans ca elle heritait d'une largeur pleine et son
+           justify-content: center recentrait les onglets a l'interieur :
+           ils repartaient au milieu de l'ecran sous 100em de large. */
+        width: auto !important;
+        right: auto !important;
+        justify-content: flex-start !important;
+        margin: 0 !important;
+        align-items: center !important;
+    }
+}
+
+.skinHeader .headerTabs .emby-tab-button {
+    padding: .45em 1.15em !important;
+    margin: 0 .2em !important;
+    border-radius: 999px !important;
+    color: rgba(255, 255, 255, .68) !important;
+    font-weight: 500 !important;
+    transition: background-color .15s, color .15s !important;
+}
+
+.skinHeader .headerTabs .emby-tab-button:hover {
+    background-color: rgba(255, 255, 255, .10) !important;
+    color: #fff !important;
+}
+
+.skinHeader .headerTabs .emby-tab-button-active {
+    background-color: rgba(255, 255, 255, .18) !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+}
+
+/* Focus a la telecommande. Jellyfin marque l'onglet vise par
+   .emby-tab-button.show-focus:focus, avec transform: scale(1.3) et
+   background: 0 : la pilule disparaissait et le libelle grossissait d'un
+   tiers, en debordant sur ses voisins puisque la rangee est en flex.
+   .show-focus n'est pose que par la navigation directionnelle, donc cette
+   regle ne change rien a la souris. On garde la pilule et on la remplit
+   d'accent : sans agrandissement, il faut une difference de couleur
+   franche pour distinguer l'onglet vise de l'onglet actif, qui lui reste
+   en gris clair. Specificite 0,5,0 contre 0,3,0 : on l'emporte a
+   !important egal. */
+.skinHeader .headerTabs .emby-tab-button.show-focus:focus {
+    transform: none !important;
+    background-color: rgba(var(--accent, 98, 121, 205), .95) !important;
+    color: #fff !important;
+}
+
+
+/* Onglets deplaces dans la page par le script "Onglets dans la page"
+   (extension JavaScript Injector). Le CSS ne peut pas reparenter un
+   element : le script clone la rangee dans la zone qui defile et pose
+   body.tabs-in-page. Ces regles ne s'appliquent donc que si le script
+   tourne ; sans lui, rien ne change. */
+body.tabs-in-page .skinHeader .headerTabs.sectionTabs {
+    display: none !important;
+}
+
+/* L'en-tete perd sa deuxieme ligne : le decalage du contenu suit. */
+/* --header-h et --tabs-host-left sont mesurees et posees par le script :
+   une valeur en dur se decalait des que l'en-tete changeait de hauteur. */
+body.tabs-in-page #indexPage {
+    margin-top: var(--header-h, 58px) !important;
+}
+
+.pageTabsHost {
+    display: flex;
+    gap: .35em;
+    align-items: center;
+    padding: .1em 0 .9em;
+    padding-left: var(--tabs-host-left, 0px);
+}
+
+.pageTab {
+    /* inline-flex + line-height: 1 : en display: block, la hauteur de ligne
+       naturelle de la police decalait le libelle vers le bas dans la pilule. */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    border: 0;
+    cursor: pointer;
+    padding: .38em .95em;
+    border-radius: 999px;
+    background-color: transparent;
+    color: rgba(255, 255, 255, .68);
+    font-family: inherit;
+    font-size: 1em;
+    font-weight: 500;
+    transition: background-color .15s, color .15s;
+}
+
+.pageTab-active {
+    background-color: rgba(255, 255, 255, .18);
+    color: #fff;
+    font-weight: 700;
+}
+
+
+/* --- 5. En-tete sur telephone ---------------------------------------- */
+/* L'en-tete faisait 123px de haut sur un ecran de 915, soit 13% de
+   l'ecran : Ultrachromic passe les onglets a 110% et Jellyfin les met sur
+   une deuxieme ligne. On resserre, et on remonte d'autant le decalage du
+   contenu, sinon un vide apparait sous l'en-tete. */
+@media all and (max-width: 50em) {
+    .headerTabs.sectionTabs {
+        font-size: 90% !important;
+    }
+    .skinHeader .headerTabs .emby-tab-button {
+        padding: .38em .85em !important;
+    }
+    /* Sur deux lignes, la pilule touchait le bord bas de la navbar. */
+    .skinHeader .headerTabs.sectionTabs {
+        margin-bottom: .5em !important;
+    }
+    /* Le script cale le bord gauche de la pilule sur le texte des titres
+       de section ; ce padding n'entre plus dans son calcul et peut donc
+       etre change librement. */
+    .pageTab {
+        padding: .5em .9em;
+    }
+    #indexPage,
+    #moviesPage,
+    #tvRecommendedPage,
+    #musicRecommendedPage {
+        margin-top: 100px !important;
+    }
+}

@@ -1,0 +1,74 @@
+/* --- 14. Curseur main cale sur la carte visible ----------------------- */
+/* card.scss pose  .card { cursor: pointer }  sur l'element EXTERIEUR, celui
+   qui contient le margin de .6em de .cardBox. La gouttiere entre les
+   cartes affiche donc une main, alors que la section 13 vient de lui
+   retirer tout retour visuel : curseur cliquable, zone morte a l'oeil.
+   .cardBox porte padding: 0 et margin: .6em, donc sa boite de bordure est
+   exactement la carte visible, affiche et bandeau de titre compris. C'est
+   la bonne frontiere.
+   !important pour la meme raison qu'en section 7 : Jellyfin injecte ses
+   feuilles au fil de la navigation, donc apres le CSS personnalise, et une
+   simple egalite de specificite se ferait battre par l'ordre.
+   Le !important de .cardBox ne desactive pas le curseur des enfants : une
+   declaration prioritaire ne l'emporte que pour l'element qui la porte, et
+   l'heritage ne s'applique qu'aux enfants qui n'ont pas la leur.
+   .cardContent et les boutons gardent donc les leurs. */
+.card {
+    cursor: default !important;
+}
+
+.cardBox {
+    cursor: pointer !important;
+}
+
+/* Le bandeau sous l'affiche ne doit pas etre main sur toute sa surface : il
+   porte le titre, mais aussi l'annee et les lignes secondaires.
+   Et la difference est reelle, pas seulement d'intention : dans le DOM
+   rendu, seul le titre est un lien,
+     div.cardText.cardText-first  bdi  a.itemAction.textActionButton
+   tandis que la ligne suivante n'est qu'un
+     div.cardText.cardText-secondary  bdi  2011
+   sans ancre ni data-action. On pose donc la fleche sur la ligne et la main
+   sur les seules ancres : la regle suit ce qui est reellement cliquable, et
+   restera juste si une ligne secondaire recoit un lien un jour, comme le
+   nom de serie sur les cartes d'episode.
+
+   Les .cardText sont enfants directs de .cardBox quand la carte n'a pas de
+   pied - c'est le cas des vignettes d'accueil - et de .cardFooter quand
+   cardBuilder en genere un. Les deux parents sont donc vises.
+   Passer par eux plutot que par .cardText seul n'est pas cosmetique : les
+   cartes a texte incruste posent aussi des .cardText, mais dans
+   .innerCardFooter, donc a l'interieur de l'ancre qui couvre l'affiche. La
+   main y est legitime, il ne faut pas l'y retirer. */
+.cardBox > .cardText,
+.cardFooter > .cardText {
+    cursor: default !important;
+}
+
+.cardBox > .cardText a,
+.cardFooter > .cardText a {
+    cursor: pointer !important;
+}
+
+/* Reste une incoherence, assumee : un clic dans la gouttiere navigue
+   toujours vers l'item, .card portant le data-action. Pour rendre cette
+   bande reellement inerte, et supprimer les clics a cote :
+     .card    { pointer-events: none; }
+     .cardBox { pointer-events: auto; }
+   Les evenements remontent depuis .cardBox jusqu'au gestionnaire delegue,
+   qui continue de fonctionner. Non active par defaut : ca touche a la
+   saisie et pas seulement a l'apparence. */
+
+/* Sur bureau on ne touche a rien : le groupe de boutons recouvre le bout de
+   la barre au survol, mais card.scss pose au meme instant
+   .cardOverlayContainer { background: rgba(0, 0, 0, .5) } sur toute la
+   vignette. La carte entiere est deja sous un voile noir, il n'y a rien a
+   proteger. Deux tentatives ecartees, pour ne pas les refaire :
+     - marge droite rendue au survol seulement : la barre se retracte a
+       chaque passage de souris, ca frétille sur une grille entiere ;
+     - groupe deplace dans un coin haut : a droite il percute
+       .cardIndicators (compteur d'episodes non vus d'une serie, indicateur
+       de type ; la pastille "vu", elle, ne coexiste jamais avec la barre,
+       Jellyfin n'affichant l'une que sous 100% de lecture et l'autre qu'a
+       partir de 100%), et a gauche les trois icones alignees sous le bord
+       haut donnent un resultat batard. */

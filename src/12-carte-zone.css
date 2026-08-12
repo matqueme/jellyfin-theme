@@ -1,0 +1,62 @@
+/* --- 13. Zone de survol des cartes ----------------------------------- */
+/* Deux declencheurs de survol coexistent, poses sur deux elements de
+   tailles differentes, et aucun des deux n'est l'affiche :
+
+     card.scss          .card-hoverable:hover .cardOverlayContainer
+                        { opacity: 1 }            voile sombre + boutons
+     effects/hoverglow  .cardBox:hover > .cardScalable .cardOverlayContainer
+                        { border + box-shadow }   liseré accent
+
+   .card-hoverable est porte par .card, qui englobe le margin de .6em de
+   .cardBox, et le margin-bottom de 1.8em de .cardBox-bottompadded. Survoler
+   cette bande exterieure allume donc les boutons sans le liseré, .cardBox
+   n'etant pas atteint. Et .cardBox, lui, inclut le bandeau de texte sous
+   l'affiche : survoler le titre allume les deux, loin de la vignette.
+
+   L'affiche, c'est .cardScalable - .cardBox > .cardScalable, position
+   relative, sa hauteur est exactement celle de l'image. On y ramene les
+   deux effets, et la zone sensible redevient ce qu'on voit.
+
+   Question de specificite, pas seulement d'ordre : le selecteur de
+   hoverglow pese 0-4-0. Rejouer le liseré sur .cardScalable:hover
+   .cardOverlayContainer, qui ne pese que 0-3-0, se ferait battre par la
+   regle d'annulation ci-dessous, qui matche elle aussi quand l'affiche est
+   survolee. D'ou la forme .cardBox > .cardScalable:hover, a 0-4-0 comme
+   l'originale, donc departagee par l'ordre - annulation d'abord,
+   retablissement ensuite. */
+
+/* Annulation des deux declencheurs trop larges. */
+.card:hover .cardOverlayContainer,
+.card-hoverable:hover .cardOverlayContainer,
+.cardBox:hover .cardOverlayContainer {
+    opacity: 0;
+}
+
+.cardBox:hover > .cardScalable .cardOverlayContainer {
+    box-shadow: none !important;
+    border: 0 solid transparent !important;
+}
+
+/* Retablissement sur la seule affiche. Valeurs reprises telles quelles de
+   hoverglow.css : l'apparence ne change pas, seule la zone qui la declenche.
+   :focus-within n'est pas touche, la navigation clavier et TV continue
+   d'allumer l'overlay par la regle d'origine de Jellyfin.
+
+   Le liseré est bien une border, et il decale les icones de 2px a chaque
+   survol : border participe au modele de boite, et .cardOverlayContainer
+   etant cale sur ses quatre cotes, les 2px se prennent sur l'interieur.
+   Connu et assume, l'effet etant a peine perceptible. Le correctif tient en
+   deux lignes si l'envie revient - outline ne participe pas au modele de
+   boite, donc ne decale rien :
+     outline: 2px solid rgb(var(--accent, 98, 121, 205)) !important;
+     outline-offset: -2px;
+   a poser ici en remplacement de la border, et sans rien d'autre a changer :
+   la regle d'annulation ci-dessus neutralise deja la border dans tous les
+   cas. */
+.cardBox > .cardScalable:hover .cardOverlayContainer {
+    opacity: 1;
+    box-shadow: 0 0 4px rgb(var(--accent, 98, 121, 205)),
+                0 0 8px rgb(var(--accent, 98, 121, 205)),
+                0 0 12px rgba(var(--accent, 98, 121, 205), .6) !important;
+    border: solid 2px rgb(var(--accent, 98, 121, 205)) !important;
+}

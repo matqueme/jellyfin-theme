@@ -1,0 +1,9 @@
+# Le depot vit sur un lecteur Windows monte dans WSL. Sans cette contrainte,
+# git peut convertir les fins de ligne selon la plateforme et faire diverger
+# dist/theme.css de ce que build.py produit, ce qui ferait echouer --check.
+* text=auto eol=lf
+
+# Chemins vers l'amont : marques comme tiers, pour que GitHub ne les compte
+# pas dans les statistiques de langage ni ne les affiche dans les diffs.
+src/vendor/** linguist-vendored
+dist/theme.css linguist-generated

@@ -1,0 +1,225 @@
+/* --- 7. Icones : Material Icons remplacees par Phosphor Bold ---------- */
+/* Jellyfin 10.11 rend ses icones par classe, avec une regle interne du
+   type  .material-icons.play_arrow:before { content: "..." }.  Reassigner
+   font-family et content suffit.
+
+   Le !important sur content n'est pas decoratif : Jellyfin injecte ses
+   feuilles de style au fil de la navigation, donc apres le CSS
+   personnalise. Sans lui, ce sont ses regles qui gagnent.
+
+   La reduction passe par transform et non par font-size : le font-size de
+   ces icones est fixe par des dizaines de regles differentes, souvent en
+   !important, alors que transform ne touche ni la mise en page ni ces
+   reglages. Regler --icon-scale plus haut pour des icones plus grosses.
+
+   Pour revenir au trait fin : remplacer bold par regular dans l'@import
+   ci-dessus, et "Phosphor-Bold" par "Phosphor" ci-dessous. Les points de
+   code sont identiques entre les deux graisses, rien d'autre a changer.
+
+   Seules les 100 classes listees sont remappees ; toute icone non listee
+   garde Material Icons et reste lisible. */
+
+.material-icons.add,
+.material-icons.airplay,
+.material-icons.album,
+.material-icons.arrow_back,
+.material-icons.arrow_forward,
+.material-icons.arrow_upward,
+.material-icons.audiotrack,
+.material-icons.autorenew,
+.material-icons.backspace,
+.material-icons.book,
+.material-icons.brightness_high,
+.material-icons.call_split,
+.material-icons.cast,
+.material-icons.check,
+.material-icons.chevron_left,
+.material-icons.chevron_right,
+.material-icons.close,
+.material-icons.closed_caption,
+.material-icons.cloud_download,
+.material-icons.content_copy,
+.material-icons.dashboard,
+.material-icons.delete,
+.material-icons.devices_other,
+.material-icons.download,
+.material-icons.drag_handle,
+.material-icons.dvr,
+.material-icons.exit_to_app,
+.material-icons.expand_more,
+.material-icons.explore,
+.material-icons.fast_forward,
+.material-icons.fast_rewind,
+.material-icons.favorite,
+.material-icons.fiber_manual_record,
+.material-icons.fiber_smart_record,
+.material-icons.file_download,
+.material-icons.filter_alt,
+.material-icons.folder,
+.material-icons.folder_open,
+.material-icons.forward_30,
+.material-icons.fullscreen,
+.material-icons.get_app,
+.material-icons.groups,
+.material-icons.home,
+.material-icons.info,
+.material-icons.info_outline,
+.material-icons.keyboard,
+.material-icons.keyboard_arrow_down,
+.material-icons.keyboard_arrow_left,
+.material-icons.keyboard_arrow_right,
+.material-icons.keyboard_arrow_up,
+.material-icons.keyboard_return,
+.material-icons.live_tv,
+.material-icons.local_movies,
+.material-icons.lock,
+.material-icons.lyrics,
+.material-icons.menu,
+.material-icons.mode_edit,
+.material-icons.more_vert,
+.material-icons.movie,
+.material-icons.music_note,
+.material-icons.navigate_before,
+.material-icons.navigate_next,
+.material-icons.pause,
+.material-icons.pause_circle_filled,
+.material-icons.person,
+.material-icons.phonelink_lock,
+.material-icons.photo,
+.material-icons.picture_in_picture_alt,
+.material-icons.play_arrow,
+.material-icons.play_circle_filled,
+.material-icons.playlist_add,
+.material-icons.preview,
+.material-icons.queue_music,
+.material-icons.redo,
+.material-icons.remove_circle,
+.material-icons.remove_red_eye,
+.material-icons.repeat,
+.material-icons.repeat_one,
+.material-icons.replay,
+.material-icons.replay_10,
+.material-icons.save,
+.material-icons.search,
+.material-icons.settings,
+.material-icons.shuffle,
+.material-icons.skip_next,
+.material-icons.skip_previous,
+.material-icons.sort_by_alpha,
+.material-icons.space_bar,
+.material-icons.star,
+.material-icons.stop,
+.material-icons.storage,
+.material-icons.subtitles,
+.material-icons.text_decrease,
+.material-icons.text_increase,
+.material-icons.theaters,
+.material-icons.toc,
+.material-icons.tv,
+.material-icons.undo,
+.material-icons.view_comfy,
+.material-icons.volume_up {
+    font-family: "Phosphor-Bold" !important;
+    transform: scale(var(--icon-scale));
+}
+
+.material-icons.add:before { content: "\e3d4" !important; }  /* ph-plus */
+.material-icons.airplay:before { content: "\e004" !important; }  /* ph-airplay */
+.material-icons.album:before { content: "\ecac" !important; }  /* ph-vinyl-record */
+.material-icons.arrow_back:before { content: "\e058" !important; }  /* ph-arrow-left */
+.material-icons.arrow_forward:before { content: "\e06c" !important; }  /* ph-arrow-right */
+.material-icons.arrow_upward:before { content: "\e08e" !important; }  /* ph-arrow-up */
+.material-icons.audiotrack:before { content: "\e33c" !important; }  /* ph-music-note */
+.material-icons.autorenew:before { content: "\e094" !important; }  /* ph-arrows-clockwise */
+.material-icons.backspace:before { content: "\e0ae" !important; }  /* ph-backspace */
+.material-icons.book:before { content: "\e0e2" !important; }  /* ph-book */
+.material-icons.brightness_high:before { content: "\e472" !important; }  /* ph-sun */
+.material-icons.call_split:before { content: "\ed3c" !important; }  /* ph-arrows-split */
+.material-icons.cast:before { content: "\e58a" !important; }  /* ph-monitor-arrow-up */
+.material-icons.check:before { content: "\e182" !important; }  /* ph-check */
+.material-icons.chevron_left:before { content: "\e138" !important; }  /* ph-caret-left */
+.material-icons.chevron_right:before { content: "\e13a" !important; }  /* ph-caret-right */
+.material-icons.close:before { content: "\e4f6" !important; }  /* ph-x */
+.material-icons.closed_caption:before { content: "\e1a4" !important; }  /* ph-closed-captioning */
+.material-icons.cloud_download:before { content: "\e1ac" !important; }  /* ph-cloud-arrow-down */
+.material-icons.content_copy:before { content: "\e1ca" !important; }  /* ph-copy */
+.material-icons.dashboard:before { content: "\e464" !important; }  /* ph-squares-four */
+.material-icons.delete:before { content: "\e4a6" !important; }  /* ph-trash */
+.material-icons.devices_other:before { content: "\eba4" !important; }  /* ph-devices */
+.material-icons.download:before { content: "\e20c" !important; }  /* ph-download-simple */
+.material-icons.drag_handle:before { content: "\e794" !important; }  /* ph-dots-six */
+.material-icons.dvr:before { content: "\e58c" !important; }  /* ph-monitor-play */
+.material-icons.exit_to_app:before { content: "\e42a" !important; }  /* ph-sign-out */
+.material-icons.expand_more:before { content: "\e136" !important; }  /* ph-caret-down */
+.material-icons.explore:before { content: "\e1c8" !important; }  /* ph-compass */
+.material-icons.fast_forward:before { content: "\e6a6" !important; }  /* ph-fast-forward */
+.material-icons.fast_rewind:before { content: "\e6a8" !important; }  /* ph-rewind */
+.material-icons.favorite:before { content: "\e2a8" !important; }  /* ph-heart */
+.material-icons.fiber_manual_record:before { content: "\e3ee" !important; }  /* ph-record */
+.material-icons.fiber_smart_record:before { content: "\e0f2" !important; }  /* ph-broadcast */
+.material-icons.file_download:before { content: "\e20c" !important; }  /* ph-download-simple */
+.material-icons.filter_alt:before { content: "\e266" !important; }  /* ph-funnel */
+.material-icons.folder:before { content: "\e24a" !important; }  /* ph-folder */
+.material-icons.folder_open:before { content: "\e256" !important; }  /* ph-folder-open */
+.material-icons.forward_30:before { content: "\e19e" !important; }  /* ph-clock-clockwise */
+.material-icons.fullscreen:before { content: "\e1d0" !important; }  /* ph-corners-out */
+.material-icons.get_app:before { content: "\e20c" !important; }  /* ph-download-simple */
+.material-icons.groups:before { content: "\e68e" !important; }  /* ph-users-three */
+.material-icons.home:before { content: "\e2c2" !important; }  /* ph-house */
+.material-icons.info:before { content: "\e2ce" !important; }  /* ph-info */
+.material-icons.info_outline:before { content: "\e2ce" !important; }  /* ph-info */
+.material-icons.keyboard:before { content: "\e2d8" !important; }  /* ph-keyboard */
+.material-icons.keyboard_arrow_down:before { content: "\e136" !important; }  /* ph-caret-down */
+.material-icons.keyboard_arrow_left:before { content: "\e138" !important; }  /* ph-caret-left */
+.material-icons.keyboard_arrow_right:before { content: "\e13a" !important; }  /* ph-caret-right */
+.material-icons.keyboard_arrow_up:before { content: "\e13c" !important; }  /* ph-caret-up */
+.material-icons.keyboard_return:before { content: "\e044" !important; }  /* ph-arrow-elbow-down-left */
+.material-icons.live_tv:before { content: "\e754" !important; }  /* ph-television */
+.material-icons.local_movies:before { content: "\e792" !important; }  /* ph-film-strip */
+.material-icons.lock:before { content: "\e308" !important; }  /* ph-lock-simple */
+.material-icons.lyrics:before { content: "\e75c" !important; }  /* ph-microphone-stage */
+.material-icons.menu:before { content: "\e2f0" !important; }  /* ph-list */
+.material-icons.mode_edit:before { content: "\e3b4" !important; }  /* ph-pencil-simple */
+.material-icons.more_vert:before { content: "\e208" !important; }  /* ph-dots-three-vertical */
+.material-icons.movie:before { content: "\e8c2" !important; }  /* ph-film-slate */
+.material-icons.music_note:before { content: "\e33c" !important; }  /* ph-music-note */
+.material-icons.navigate_before:before { content: "\e138" !important; }  /* ph-caret-left */
+.material-icons.navigate_next:before { content: "\e13a" !important; }  /* ph-caret-right */
+.material-icons.pause:before { content: "\e39e" !important; }  /* ph-pause */
+.material-icons.pause_circle_filled:before { content: "\e3a0" !important; }  /* ph-pause-circle */
+.material-icons.person:before { content: "\e4c2" !important; }  /* ph-user */
+.material-icons.phonelink_lock:before { content: "\e2fe" !important; }  /* ph-lock-key */
+.material-icons.photo:before { content: "\e2ca" !important; }  /* ph-image */
+.material-icons.picture_in_picture_alt:before { content: "\e64c" !important; }  /* ph-picture-in-picture */
+.material-icons.play_arrow:before { content: "\e3d0" !important; }  /* ph-play */
+.material-icons.play_circle_filled:before { content: "\e3d2" !important; }  /* ph-play-circle */
+.material-icons.playlist_add:before { content: "\e6aa" !important; }  /* ph-playlist */
+.material-icons.preview:before { content: "\e220" !important; }  /* ph-eye */
+.material-icons.queue_music:before { content: "\e6ac" !important; }  /* ph-queue */
+.material-icons.redo:before { content: "\e08c" !important; }  /* ph-arrow-u-up-right */
+.material-icons.remove_circle:before { content: "\e32c" !important; }  /* ph-minus-circle */
+.material-icons.remove_red_eye:before { content: "\e220" !important; }  /* ph-eye */
+.material-icons.repeat:before { content: "\e3f6" !important; }  /* ph-repeat */
+.material-icons.repeat_one:before { content: "\e3f8" !important; }  /* ph-repeat-once */
+.material-icons.replay:before { content: "\e038" !important; }  /* ph-arrow-counter-clockwise */
+.material-icons.replay_10:before { content: "\e1a0" !important; }  /* ph-clock-counter-clockwise */
+.material-icons.save:before { content: "\e248" !important; }  /* ph-floppy-disk */
+.material-icons.search:before { content: "\e30c" !important; }  /* ph-magnifying-glass */
+.material-icons.settings:before { content: "\e270" !important; }  /* ph-gear */
+.material-icons.shuffle:before { content: "\e422" !important; }  /* ph-shuffle */
+.material-icons.skip_next:before { content: "\e5a6" !important; }  /* ph-skip-forward */
+.material-icons.skip_previous:before { content: "\e5a4" !important; }  /* ph-skip-back */
+.material-icons.sort_by_alpha:before { content: "\e444" !important; }  /* ph-sort-ascending */
+.material-icons.space_bar:before { content: "\e32a" !important; }  /* ph-minus */
+.material-icons.star:before { content: "\e46a" !important; }  /* ph-star */
+.material-icons.stop:before { content: "\e46c" !important; }  /* ph-stop */
+.material-icons.storage:before { content: "\e2a0" !important; }  /* ph-hard-drives */
+.material-icons.subtitles:before { content: "\e1a8" !important; }  /* ph-subtitles */
+.material-icons.text_decrease:before { content: "\e48a" !important; }  /* ph-text-t */
+.material-icons.text_increase:before { content: "\e48a" !important; }  /* ph-text-t */
+.material-icons.theaters:before { content: "\e8c0" !important; }  /* ph-film-reel */
+.material-icons.toc:before { content: "\e2f2" !important; }  /* ph-list-bullets */
+.material-icons.tv:before { content: "\eae6" !important; }  /* ph-television-simple */
+.material-icons.undo:before { content: "\e08a" !important; }  /* ph-arrow-u-up-left */
+.material-icons.view_comfy:before { content: "\e296" !important; }  /* ph-grid-four */
+.material-icons.volume_up:before { content: "\e44a" !important; }  /* ph-speaker-high */

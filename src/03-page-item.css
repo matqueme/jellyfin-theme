@@ -1,0 +1,79 @@
+/* --- 2. Page d'un film : bouton Lecture en pilule accent -------------- */
+/* Le :not(.hide) est indispensable : Jellyfin rend ce bouton avec la
+   classe hide (display:none !important) et ne la retire qu'une fois
+   l'item lisible. */
+.mainDetailButtons .btnPlay:not(.hide) {
+    flex-direction: row !important;
+    max-width: none !important;
+    padding: .55em 1.05em !important;
+    border-radius: 999px !important;
+    background: rgba(var(--accent, 98, 121, 205), .95) !important;
+    color: #fff !important;
+    transition: background .15s !important;
+}
+
+/* Ultrachromic pose .button-flat:hover { background: rgba(accent,.25) },
+   qui delaverait la pilule au survol.
+   Le survol eclaircit par un voile blanc superpose plutot que par une
+   couleur plus claire : --accent est un triplet RVB, pas une couleur, donc
+   impossible de l'eclaircir sans color-mix(), que les navigateurs de TV
+   ne connaissent pas toujours. Le voile marche partout et suit l'accent
+   quel qu'il soit. */
+.mainDetailButtons .btnPlay:not(.hide):hover,
+.mainDetailButtons .btnPlay:not(.hide):focus {
+    background-color: rgb(var(--accent, 98, 121, 205)) !important;
+    background-image: linear-gradient(rgba(255, 255, 255, .28),
+                                      rgba(255, 255, 255, .28)) !important;
+}
+
+/* Icone et libelle cote a cote : Jellyfin les empile en colonne. */
+.mainDetailButtons .btnPlay:not(.hide) .detailButton-content {
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: .4em !important;
+}
+
+.mainDetailButtons .btnPlay:not(.hide) .detailButton-content::after {
+    content: var(--play-label) !important;
+    /* Pour suivre la langue de Jellyfin : content: attr(title) !important; */
+    font-size: var(--play-label-size);
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.mainDetailButtons .detailButton {
+    align-self: center !important;
+}
+
+/* Le libelle elargit la rangee : sur un telephone etroit elle deborderait
+   au lieu de passer a la ligne. */
+.mainDetailButtons {
+    flex-wrap: wrap !important;
+}
+
+/* Telephone. Ultrachromic passe .mainDetailButtons a 155% sous 100em de
+   large : sur un ecran de bureau etroit ca passe, mais 100em vaut environ
+   1600px, donc un telephone tombe dans la meme regle et la rangee y
+   devient enorme au point de deborder sur deux lignes. On revient a une
+   echelle raisonnable en dessous de 50em, sans toucher au bureau ni a la
+   TV. Les boutons gardent une cible tactile d'environ 50px. */
+@media all and (max-width: 50em) {
+    .mainDetailButtons {
+        font-size: 110% !important;
+    }
+    :root {
+        --icon-scale: .8;
+    }
+    /* La rangee n'occupe que la colonne de droite, a cote de l'affiche :
+       sans ce resserrage, le dernier bouton passe seul a la ligne. */
+    .mainDetailButtons .detailButton {
+        padding-left: .42em !important;
+        padding-right: .42em !important;
+    }
+    .mainDetailButtons .btnPlay:not(.hide) {
+        padding: .5em .72em !important;
+    }
+    .mainDetailButtons .btnPlay:not(.hide) .detailButton-content::after {
+        font-size: .7em;
+    }
+}

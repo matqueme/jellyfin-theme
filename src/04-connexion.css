@@ -1,0 +1,110 @@
+/* --- 3. Page de connexion : carte centree, sans vide en bas ---------- */
+/* Trois reglages se cumulent ici :
+     .standalonePage      padding-top: 4.5em !important
+     .padded-bottom-page  padding-bottom: 5em !important   (le grand vide)
+     Ultrachromic         margin-top: 8em sur la carte
+   d'ou une carte poussee vers le bas et lestee d'un vide. */
+/* Le :not(.hide) est obligatoire des qu'on impose un display : une fois
+   connecte, Jellyfin masque la page en lui ajoutant la classe hide, qui
+   vaut display:none !important. Un selecteur d'ID l'emporte sur une
+   classe meme a !important egal, donc sans ce garde-fou la page de
+   connexion resterait affichee par-dessus l'accueil. */
+#loginPage:not(.hide) {
+    display: flex !important;
+    min-height: 100vh;
+    padding: 1.5em !important;
+    box-sizing: border-box;
+}
+
+/* margin auto plutot que align-items: center : centre sur les deux axes
+   sans jamais rogner le haut si la carte depasse la hauteur de l'ecran,
+   cas d'un telephone en paysage. */
+#loginPage .padded-bottom-page {
+    margin: auto !important;
+    width: 24em;
+    max-width: 100%;
+    padding: 2em 1.75em !important;
+    box-sizing: border-box;
+}
+
+/* Le conteneur de mentions legales est vide mais garde un margin-top de
+   2em, qui s'ajoute au vide du bas. */
+#loginPage .loginDisclaimer:empty {
+    display: none !important;
+}
+#loginPage .loginDisclaimerContainer {
+    margin-top: 0 !important;
+}
+
+/* Marges symetriques haut et bas : le titre et le bloc de boutons ont
+   chacun leur marge en style inline, qui s'ajoute au padding de la carte. */
+#loginPage .visualLoginForm h1 {
+    margin-top: 0 !important;
+    margin-bottom: .8em !important;
+}
+#loginPage .readOnlyContent {
+    margin: 1.2em auto 0 !important;
+}
+
+/* Titres sur une seule ligne et centres, dans les deux formulaires. */
+#loginPage h1 {
+    font-size: 1.6em !important;
+    text-align: center !important;
+}
+
+/* Anneau accent au survol et au focus sur les portraits. Un box-shadow
+   plutot qu'une border : la border prendrait de la place et decalerait
+   l'image, l'anneau se dessine en dehors sans rien bouger. Le :focus
+   couvre la navigation TV et clavier. */
+#divUsers .cardContent {
+    transition: box-shadow .15s !important;
+}
+#divUsers .card:hover .cardContent,
+#divUsers .card:focus .cardContent {
+    box-shadow: 0 0 0 .18em rgb(var(--accent, 98, 121, 205)),
+                0 .3em 1em -.3em rgba(0, 0, 0, .8) !important;
+}
+
+/* Connexion manuelle : Ultrachromic pousse le formulaire de 4em vers le
+   bas, ce qui creusait un vide au-dessus du titre. */
+#loginPage .manualLoginForm {
+    padding-top: 0 !important;
+}
+#loginPage .manualLoginForm .padded-left {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/* Champs : le fond noir d'Ultrachromic disparait sur la carte sombre.
+   Une surface claire les fait lire comme des champs, l'accent marque
+   celui qui a le focus. */
+#loginPage .emby-input {
+    background: rgba(255, 255, 255, .07) !important;
+    padding: .55em .7em !important;
+}
+#loginPage .emby-input:focus {
+    background: rgba(var(--accent, 98, 121, 205), .22) !important;
+    box-shadow: inset 0 0 0 .11em rgba(var(--accent, 98, 121, 205), .9) !important;
+}
+
+/* Hierarchie des boutons : trois pleins accent identiques ne disaient pas
+   quelle etait l'action principale. Seule la validation reste pleine. */
+#loginPage .raised.block {
+    margin: 0 0 .6em !important;
+}
+#loginPage .button-submit {
+    background: rgb(var(--accent, 98, 121, 205)) !important;
+}
+#loginPage .btnCancel,
+#loginPage .btnManual,
+#loginPage .btnQuick,
+#loginPage .btnSelectServer {
+    background: rgba(255, 255, 255, .08) !important;
+    color: #fff !important;
+}
+#loginPage .btnCancel:hover,
+#loginPage .btnManual:hover,
+#loginPage .btnQuick:hover,
+#loginPage .btnSelectServer:hover {
+    background: rgba(255, 255, 255, .15) !important;
+}
