@@ -1,0 +1,121 @@
+name: veille-upstream
+
+# Surveille Ultrachromic et ouvre une issue quand un commit amont touche un
+# module qu'on utilise reellement.
+#
+# Le filtrage est tout l'interet du procede. Ultrachromic contient des
+# dizaines de modules dont on ne charge que 19 : sans filtre, la moitie des
+# notifications concerneraient des variantes qu'on n'importe pas, et on
+# cesserait de les lire. Un commit qui ne touche aucun fichier vendorise ne
+# produit donc rien du tout.
+
+on:
+  schedule:
+    - cron: '0 7 * * 1'     # tous les lundis, 07:00 UTC
+  workflow_dispatch:         # et a la demande
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  veiller:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Comparer l'amont a la copie vendorisee
+        id: diff
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, os, subprocess, urllib.request
+          from pathlib import Path
+
+          AMONT = "CTalvio/Ultrachromic"
+          VENDOR = Path("src/vendor/ultrachromic")
+
+          def api(chemin):
+              req = urllib.request.Request(
+                  f"https://api.github.com/repos/{chemin}",
+                  headers={"Authorization": f"Bearer {os.environ['GH_TOKEN']}",
+                           "Accept": "application/vnd.github+json"})
+              return json.load(urllib.request.urlopen(req, timeout=30))
+
+          fige = (VENDOR / "VERSION").read_text().strip()
+          tete = api(f"{AMONT}/commits/main")["sha"]
+
+          if fige == tete:
+              print("etat=jour")
+              raise SystemExit(0)
+
+          # Ce qu'on utilise : les modules vendorises, plus les images qu'ils
+          # referencent — leur URL est epinglee sur le commit fige, donc un
+          # changement amont ne nous atteint pas, mais reste bon a savoir.
+          suivis = {str(p.relative_to(VENDOR)) for p in VENDOR.rglob("*.css")}
+          for p in VENDOR.rglob("*.css"):
+              for bout in p.read_text(encoding="utf-8").split("assets/")[1:]:
+                  suivis.add("assets/" + bout.split(")")[0].split("'")[0].strip())
+
+          cmp = api(f"{AMONT}/compare/{fige}...{tete}")
+          touches = sorted({f["filename"] for f in cmp.get("files", [])} & suivis)
+          nb_commits = cmp.get("total_commits", 0)
+
+          if not touches:
+              print("etat=sans-impact")
+              print(f"resume={nb_commits} commit(s) amont, aucun module utilise touche")
+              raise SystemExit(0)
+
+          corps = [
+              f"[{fige[:7]}...{tete[:7]}](https://github.com/{AMONT}/compare/{fige}...{tete})",
+              f" — {nb_commits} commit(s) amont.", "",
+              "## Modules utilises qui ont change", "",
+          ]
+          corps += [f"- `{f}`" for f in touches]
+          corps += [
+              "", "## Points de vigilance", "",
+              "Les modules maison s'appuient sur les valeurs exactes et sur la",
+              "specificite de l'amont. Un changement y est silencieux :",
+              "",
+              "| Si l'amont touche | Relire |",
+              "|---|---|",
+              "| `effects/hoverglow.css` | `src/12-carte-zone.css` — reprend ses valeurs telles quelles |",
+              "| `overlayprogress.css` | `src/10-carte-barre.css` — corrige son etirement du pied de carte |",
+              "| `cornerindicator/` | `src/08-indicateurs.css` — variantes non empilables |",
+              "| `titlepage/` | `src/06-tv.css` — repositionne le logo que `title_banner-logo` reaffiche |",
+              "| `type/colorful.css` | definit `--accent`, consommee partout |",
+              "", "## Pour accepter", "",
+              "```bash", f"./update-vendor.sh {tete}",
+              "git diff -- src/vendor/", "./apply-local.sh", "```",
+              "", "_Ouverte automatiquement par `veille-upstream`._",
+          ]
+          Path("corps.md").write_text("\n".join(corps), encoding="utf-8")
+
+          print("etat=impact")
+          print(f"titre=Ultrachromic a bouge : {len(touches)} module(s) utilise(s) touche(s) ({tete[:7]})")
+          PY
+
+      - name: Ouvrir une issue
+        if: steps.diff.outputs.etat == 'impact'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Une seule issue de veille ouverte a la fois : tant que la
+          # precedente n'est pas traitee, en empiler d'autres n'apporte rien.
+          ouvertes=$(gh issue list --state open --limit 50 --json title \
+                     --jq '[.[] | select(.title | startswith("Ultrachromic a bouge"))] | length')
+          if [ "$ouvertes" != "0" ]; then
+            echo "Une issue de veille est deja ouverte, rien a faire."
+            exit 0
+          fi
+          gh issue create --title "${{ steps.diff.outputs.titre }}" --body-file corps.md
+
+      - name: Resume
+        run: |
+          echo "### Veille Ultrachromic" >> "$GITHUB_STEP_SUMMARY"
+          case "${{ steps.diff.outputs.etat }}" in
+            jour)        echo "Copie vendorisee a jour." >> "$GITHUB_STEP_SUMMARY" ;;
+            sans-impact) echo "${{ steps.diff.outputs.resume }}." >> "$GITHUB_STEP_SUMMARY" ;;
+            impact)      echo "${{ steps.diff.outputs.titre }}" >> "$GITHUB_STEP_SUMMARY" ;;
+          esac
