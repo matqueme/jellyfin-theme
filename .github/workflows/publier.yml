@@ -1,0 +1,102 @@
+name: publier
+
+# Cree le tag et la release a partir du fichier VERSION.
+#
+# VERSION est deja la source de verite : build.py l'estampille dans l'en-tete
+# de dist/theme.css, et c'est ce numero que porte l'URL jsDelivr du branding.
+# Le tag n'etait qu'une recopie manuelle de cette valeur — donc une occasion
+# d'oubli, et un decalage possible entre le numero annonce par la feuille
+# servie et celui du tag qui la sert.
+#
+# Publier une version se reduit desormais a : editer VERSION, completer
+# CHANGELOG.md, commiter, pousser.
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  publier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0    # les tags existants, pour ne pas republier
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verifier le build
+        run: ./build.py --check
+
+      - name: Le tag existe-t-il deja ?
+        id: etat
+        run: |
+          VERSION="$(cat VERSION)"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          if git rev-parse -q --verify "refs/tags/v$VERSION" >/dev/null; then
+            echo "Tag v$VERSION deja present, rien a publier."
+            echo "publier=non" >> "$GITHUB_OUTPUT"
+          else
+            echo "publier=oui" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Les notes viennent du CHANGELOG plutot que des messages de commit :
+      # c'est le seul endroit ou l'effet d'une version est decrit du point de
+      # vue de quelqu'un qui l'installe.
+      - name: Extraire les notes du CHANGELOG
+        if: steps.etat.outputs.publier == 'oui'
+        run: |
+          python3 - <<'PY'
+          import os, re, sys
+          from pathlib import Path
+
+          version = os.environ["VERSION"]
+          texte = Path("CHANGELOG.md").read_text(encoding="utf-8")
+          m = re.search(rf"^## \[{re.escape(version)}\][^\n]*\n(.*?)(?=^## |\Z)",
+                        texte, re.S | re.M)
+          if not m or not m.group(1).strip():
+              sys.exit(f"CHANGELOG.md n'a pas de section pour {version} : "
+                       f"une version sans notes n'a pas a etre publiee")
+          Path("notes.md").write_text(m.group(1).strip() + "\n", encoding="utf-8")
+          print(f"notes extraites pour {version}")
+          PY
+        env:
+          VERSION: ${{ steps.etat.outputs.version }}
+
+      - name: Creer le tag et la release
+        if: steps.etat.outputs.publier == 'oui'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.etat.outputs.version }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "v$VERSION" -m "v$VERSION - Jellyfin 10.11.x"
+          git push origin "v$VERSION"
+          gh release create "v$VERSION" \
+            --title "v$VERSION — Jellyfin 10.11.x" \
+            --notes-file notes.md
+
+      - name: Resume
+        env:
+          VERSION: ${{ steps.etat.outputs.version }}
+        run: |
+          {
+            echo "### Publication"
+            if [ "${{ steps.etat.outputs.publier }}" = "oui" ]; then
+              echo "\`v$VERSION\` publiee."
+              echo ""
+              echo "Ligne a mettre dans le branding Jellyfin :"
+              echo ""
+              echo '```css'
+              echo "@import url('https://cdn.jsdelivr.net/gh/${{ github.repository }}@v$VERSION/dist/theme.css');"
+              echo '```'
+            else
+              echo "\`v$VERSION\` existe deja, rien a publier."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

@@ -189,11 +189,26 @@ cible mouvante, et ce script est le seul endroit où elle bouge.
 
 ## Publier une version
 
-```bash
-./build.py && git add -A && git commit -m "..." && git tag v1.1.0 && git push --follow-tags
-```
+Le tag et la release sont créés par GitHub Actions à partir du fichier
+`VERSION`. Il n'y a rien à taguer à la main :
 
-Puis mettre à jour la ligne d'`@import` du branding avec le nouveau tag.
+1. Éditer `VERSION` (ex. `1.2.0`) et ajouter la section correspondante dans
+   `CHANGELOG.md`.
+2. `./build.py` — l'en-tête de `dist/theme.css` porte le nouveau numéro.
+3. Commiter, pousser sur `main`.
+
+Le workflow `publier` vérifie le build, refuse une version sans notes dans le
+`CHANGELOG`, crée le tag `vX.Y.Z` puis la release dont les notes sont cette
+section. Il ne fait rien si le tag existe déjà : pousser plusieurs fois est
+sans effet.
+
+`VERSION` était déjà la source de vérité — `build.py` l'estampille dans le CSS
+servi. Taguer à la main revenait à recopier ce numéro, donc à pouvoir
+l'oublier, ou à publier une feuille qui s'annonce en `1.1.0` sous un tag
+`v1.0.0`.
+
+Le résumé d'exécution du workflow affiche la ligne d'`@import` à coller dans
+le branding : c'est la seule étape qui reste manuelle, côté Jellyfin.
 
 Les URL jsDelivr taguées sont **immuables et mises en cache définitivement** :
 pas de purge à faire, et un retour arrière consiste à remettre l'ancien tag.
