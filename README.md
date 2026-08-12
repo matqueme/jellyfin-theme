@@ -17,7 +17,7 @@ l'exécution ni aucune dépendance à un dépôt tiers qui bouge.
 Tableau de bord → Général → **CSS personnalisé**, une seule ligne :
 
 ```css
-@import url('https://cdn.jsdelivr.net/gh/matqueme/jellyfin-theme@v1.1.0/dist/theme.css');
+@import url('https://cdn.jsdelivr.net/gh/matqueme/jellyfin-theme@v1.1.1/dist/theme.css');
 ```
 
 Puis `Ctrl+F5` sur le client.
@@ -89,6 +89,7 @@ src/
   12-carte-zone.css     zone de survol calée sur l'affiche
   13-carte-curseur.css  curseur main calé sur la carte visible
   14-carte-fond.css     fond d'attente des affiches
+  15-barre-defilement.css  axe horizontal refermé sur les conteneurs de page
   vendor/ultrachromic/  Ultrachromic figé sur un commit (32 Ko)
   vendor.list           modules Ultrachromic chargés après le preset
   vendor.exclude        modules du preset volontairement écartés
@@ -245,6 +246,13 @@ beaucoup ce risque, mais les replis restent la bonne pratique.
 alternatives. Le preset en charge déjà une ; ajouter l'autre par-dessus ne la
 remplace pas, car la première pose des `!important` que la seconde ne reprend
 pas. C'est tout l'objet de `08-indicateurs.css`.
+
+**Poser `overflow-y` ouvre aussi `overflow-x`.** La spec impose qu'un axe
+resté à `visible` face à un axe qui ne l'est pas se calcule en `auto`. Un
+`overflow-y: scroll` sur un conteneur de page lui donne donc une barre
+horizontale dès qu'un pixel dépasse — c'était le cas de `#indexPage`, corrigé
+en 1.1.1 par `15-barre-defilement.css`. Le symptôme trompe : `documentElement`
+et `body` ne débordent pas, seul le conteneur intermédiaire défile.
 
 **Les `<` et `&` ne sont plus interdits.** Le CSS est stocké comme texte dans
 `branding.xml`, et une version antérieure de l'outillage les proscrivait pour

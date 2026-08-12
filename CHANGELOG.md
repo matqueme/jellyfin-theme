@@ -4,6 +4,22 @@ Format : [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/).
 Versionnage sémantique, indépendant de celui de Jellyfin — la compatibilité
 est indiquée par le titre de chaque version.
 
+## [1.1.1] — 2026-08-12 — Jellyfin 10.11.x
+
+### Corrigé
+
+- Une barre de défilement horizontale apparaissait en bas de l'accueil, alors
+  qu'aucun contenu ne débordait réellement de la page. `src/15-barre-defilement.css`
+  referme l'axe sur `#indexPage` et ses trois pages sœurs.
+
+  L'origine est indirecte : `header_transparent-dashboard.css` pose
+  `overflow-y: scroll` sur ces pages pour qu'elles défilent sous l'en-tête
+  transparent, et la spec CSS impose alors que l'axe horizontal, resté à
+  `visible`, se calcule en `auto`. Le conteneur de page devenait défilable
+  latéralement pour un dépassement d'un pixel. Jellyfin, lui, ne pose aucun
+  `overflow` sur ses conteneurs de page. Les rangées de cartes gardent leur
+  propre défileur `.scrollX` : on continue de défiler sur la ligne.
+
 ## [1.1.0] — 2026-08-12 — Jellyfin 10.11.x
 
 ### Supprimé
@@ -70,4 +86,6 @@ Première version publiée. Reprend le `ultrachromic.css` maintenu jusqu'ici
   d'interface non stylée au premier chargement et de l'arrivée tardive de
   `--accent`.
 
+[1.1.1]: https://github.com/matqueme/jellyfin-theme/releases/tag/v1.1.1
+[1.1.0]: https://github.com/matqueme/jellyfin-theme/releases/tag/v1.1.0
 [1.0.0]: https://github.com/matqueme/jellyfin-theme/releases/tag/v1.0.0

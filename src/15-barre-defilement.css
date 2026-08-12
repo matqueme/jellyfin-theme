@@ -1,0 +1,27 @@
+/* --- 15. Barre de defilement horizontale des pages ------------------- */
+/* header/header_transparent-dashboard.css pose  overflow-y: scroll  sur
+   #indexPage et ses trois pages soeurs, pour qu'elles defilent sous
+   l'en-tete rendu transparent. L'effet de bord n'est pas dans cette
+   declaration mais dans la cascade : la spec impose qu'un axe reste a
+   visible face a un axe qui ne l'est pas se calcule en auto. Poser
+   overflow-y ouvre donc aussi overflow-x, et le conteneur de page gagne
+   une barre horizontale des que son contenu depasse d'un pixel — celle
+   qu'on voyait en bas de l'accueil.
+
+   Jellyfin ne pose aucun overflow sur ses conteneurs de page : c'est le
+   document qui defile, et l'axe horizontal n'est jamais ouvert. Les
+   rangees de cartes portent chacune leur propre defileur, .scrollX, que
+   cette regle ne touche pas — on continue de defiler sur la ligne.
+
+   Fermer l'axe ne masque donc aucun contenu : il n'y a rien a atteindre
+   en defilant vers la droite. C'est retablir l'intention de l'amont.
+
+   Sans !important, et ce n'est pas un oubli : la regle d'Ultrachromic
+   porte sur overflow-y, celle-ci sur overflow-x. Deux proprietes
+   distinctes, aucun arbitrage a gagner. */
+#indexPage,
+#moviesPage,
+#tvRecommendedPage,
+#musicRecommendedPage {
+    overflow-x: hidden;
+}
