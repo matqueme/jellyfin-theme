@@ -10,6 +10,8 @@ Livré comme **un seul fichier** : `dist/theme.css`. Ultrachromic est vendorisé
 et fusionné à la construction, il n'y a donc aucune cascade d'`@import` à
 l'exécution ni aucune dépendance à un dépôt tiers qui bouge.
 
+<img width="2549" height="1314" alt="image" src="https://github.com/user-attachments/assets/d4ca6f8c-034c-45df-bc63-41bbb013c3ff" />
+
 ## Installation
 
 Tableau de bord → Général → **CSS personnalisé**, une seule ligne :
