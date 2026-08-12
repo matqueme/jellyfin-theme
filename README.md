@@ -140,6 +140,21 @@ Le CSS fonctionne sans eux : les règles concernées sont gardées par
 > l'atteint. D'où le calage des onglets en TV fait entièrement en CSS, dans
 > `06-tv.css`.
 
+### Sur un lecteur Windows monté dans WSL
+
+Le dépôt réclame `core.filemode false` : `drvfs` remonte tous les fichiers en
+777, et sans ce réglage git verrait des changements de permissions partout.
+Corollaire : `chmod +x` n'a plus aucun effet sur ce que git enregistre, et un
+script ajouté ici arrive en `100644` — donc non exécutable une fois cloné
+sous Linux, ou sur un runner GitHub Actions. Pour tout nouveau script :
+
+```bash
+git update-index --chmod=+x mon-script.sh
+```
+
+`--chmod` écrit le mode directement dans l'index, sans consulter le système
+de fichiers. C'est le seul moyen quand `core.filemode` vaut `false`.
+
 ```bash
 ./update-vendor.sh [sha]
 ```
