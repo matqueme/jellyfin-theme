@@ -4,6 +4,37 @@ Format : [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/).
 Versionnage sémantique, indépendant de celui de Jellyfin — la compatibilité
 est indiquée par le titre de chaque version.
 
+## [1.1.0] — 2026-08-12 — Jellyfin 10.11.x
+
+### Supprimé
+
+- `smallercast.css` n'est plus chargé : ses 18 media queries rapetissaient et
+  carraient les vignettes du casting. Les vignettes portrait de Jellyfin sont
+  rétablies.
+
+### Ajouté
+
+- `src/vendor.exclude`, seul moyen de retirer un module du preset sans
+  modifier l'amont — ce qui rendrait `update-vendor.sh` conflictuel à chaque
+  resynchronisation. `build.py` refuse de construire si une entrée n'est
+  jamais rencontrée, et le fichier construit porte la liste de ce qui a
+  réellement été omis.
+- `src/14-carte-fond.css`. `smallercast.css` portait aussi une règle
+  `.cardPadder` globale, sans rapport avec le casting : elle neutralise le
+  fond d'attente affiché sous chaque vignette avant chargement de l'image.
+  Elle est reprise à l'identique, sinon ce fond réapparaissait sur toutes les
+  grilles.
+
+### Corrigé
+
+- `build.py` annonçait des caractères sous le libellé « octets ». Les tirets
+  cadratins en pèsent trois chacun en UTF-8, d'où un écart de 18 avec ce que
+  renvoyait le CDN.
+- Les quatre scripts étaient enregistrés en `100644`. Le dépôt vit sur un
+  lecteur Windows, donc sous `core.filemode false`, où `chmod +x` n'influence
+  plus ce que git enregistre : ils arrivaient non exécutables sur un clone
+  Linux et la CI échouait en code 126.
+
 ## [1.0.0] — 2026-08-12 — Jellyfin 10.11.x
 
 Première version publiée. Reprend le `ultrachromic.css` maintenu jusqu'ici

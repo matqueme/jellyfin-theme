@@ -55,10 +55,12 @@ def strip_comments(css: str) -> str:
 class Assembler:
     """Concatene les modules en collectant les @import distants au passage."""
 
-    def __init__(self) -> None:
+    def __init__(self, excluded: set[str] | None = None) -> None:
         self.chunks: list[str] = []
         self.remote: list[str] = []       # @import distants, ordre de decouverte
         self.seen: set[Path] = set()      # anti-boucle sur les imports croises
+        self.excluded = excluded or set()  # modules du preset volontairement omis
+        self.skipped: set[str] = set()     # ceux effectivement rencontres et omis
 
     def add_remote(self, url: str) -> None:
         if url not in self.remote:
@@ -78,6 +80,9 @@ class Assembler:
         Les @import vers Ultrachromic sont resolus en local et remplaces par
         le contenu du fichier ; ils ne comptent donc pas comme distants.
         """
+        if rel in self.excluded:
+            self.skipped.add(rel)
+            return
         path = (VENDOR / f"{rel}.css").resolve()
         if path in self.seen:
             return
@@ -96,21 +101,38 @@ class Assembler:
         self.emit(f"ultrachromic/{rel}.css", UC_IMPORT.sub("", raw))
 
 
+def lire_liste(nom: str) -> list[str]:
+    """Lit un fichier de src/ : une entree par ligne, # pour commenter."""
+    fichier = SRC / nom
+    if not fichier.exists():
+        return []
+    return [l.split("#", 1)[0].strip()
+            for l in fichier.read_text(encoding="utf-8").splitlines()
+            if l.split("#", 1)[0].strip()]
+
+
 def build() -> str:
     theme_version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
     uc_sha = (VENDOR / "VERSION").read_text(encoding="utf-8").strip()
 
-    asm = Assembler()
+    asm = Assembler(excluded=set(lire_liste("vendor.exclude")))
 
     # 1. Ultrachromic. Le preset porte l'ordre de chargement : on le suit
     #    plutot que de recopier sa liste, pour ne pas avoir a la maintenir.
     asm.add_vendor("presets/kaleidochromic_preset")
 
     # 2. Les variantes ajoutees par-dessus le preset.
-    for line in (SRC / "vendor.list").read_text(encoding="utf-8").splitlines():
-        line = line.split("#", 1)[0].strip()
-        if line:
-            asm.add_vendor(line)
+    for rel in lire_liste("vendor.list"):
+        asm.add_vendor(rel)
+
+    # Un module liste en exclusion mais jamais rencontre est le signe d'une
+    # faute de frappe, ou d'un module que le preset amont ne charge plus :
+    # dans les deux cas l'exclusion ne fait rien et le croire serait pire
+    # que l'erreur.
+    inutiles = asm.excluded - asm.skipped
+    if inutiles:
+        sys.exit(f"vendor.exclude : jamais rencontre(s) -> {sorted(inutiles)}\n"
+                 f"  chemin errone, ou module que le preset ne charge plus")
 
     # 3. Les modules maison, dans l'ordre de leur prefixe numerique.
     #    Cet ordre reproduit celui du fichier d'origine : le modifier
@@ -120,6 +142,13 @@ def build() -> str:
         sys.exit("aucun module dans src/")
     for path in own:
         asm.emit(path.name, path.read_text(encoding="utf-8"))
+
+    # Une exclusion doit se voir dans le fichier servi : sans cette mention,
+    # un module absent du resultat est indiscernable d'un module oublie.
+    exclusions = ""
+    if asm.skipped:
+        exclusions = ("\n   Modules du preset volontairement exclus :\n"
+                      + "".join(f"          {m}.css\n" for m in sorted(asm.skipped)))
 
     header = f"""/* =====================================================================
    Theme Jellyfin — matqueme
@@ -132,7 +161,7 @@ def build() -> str:
    Base : Ultrachromic de CTalvio (MIT), vendorise et fusionne.
           commit {uc_sha}
    Icones : Phosphor Bold 2.1.2 (MIT).
-   ===================================================================== */
+{exclusions}   ===================================================================== */
 """
 
     # Les @import remontent en tete : un @import place apres une regle est

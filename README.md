@@ -15,7 +15,7 @@ l'exécution ni aucune dépendance à un dépôt tiers qui bouge.
 Tableau de bord → Général → **CSS personnalisé**, une seule ligne :
 
 ```css
-@import url('https://cdn.jsdelivr.net/gh/matqueme/jellyfin-theme@v1.0.0/dist/theme.css');
+@import url('https://cdn.jsdelivr.net/gh/matqueme/jellyfin-theme@v1.1.0/dist/theme.css');
 ```
 
 Puis `Ctrl+F5` sur le client.
@@ -37,6 +37,7 @@ indésirable, `apply-local.sh` écrit le fichier directement dans le
 
 | Thème | Jellyfin | Ultrachromic |
 |---|---|---|
+| `v1.1.0` | 10.11.x | [`fa158a2`](https://github.com/CTalvio/Ultrachromic/tree/fa158a241cb24298c9996af3cf6460ae2f9d522f) |
 | `v1.0.0` | 10.11.x | [`fa158a2`](https://github.com/CTalvio/Ultrachromic/tree/fa158a241cb24298c9996af3cf6460ae2f9d522f) |
 
 Le thème suit son propre semver ; la version de Jellyfin visée est une donnée
@@ -85,8 +86,10 @@ src/
   11-carte-boutons.css  boutons d'overlay
   12-carte-zone.css     zone de survol calée sur l'affiche
   13-carte-curseur.css  curseur main calé sur la carte visible
+  14-carte-fond.css     fond d'attente des affiches
   vendor/ultrachromic/  Ultrachromic figé sur un commit (32 Ko)
   vendor.list           modules Ultrachromic chargés après le preset
+  vendor.exclude        modules du preset volontairement écartés
 js/                     comportements non réalisables en CSS
 dist/theme.css          fichier construit — commité, c'est lui que sert le CDN
 ```
@@ -94,6 +97,24 @@ dist/theme.css          fichier construit — commité, c'est lui que sert le CD
 **L'ordre des modules est significatif.** Les préfixes numériques donnent
 l'ordre de concaténation, et donc la cascade. Plusieurs modules s'appuient
 sur le fait qu'ils passent après tel autre — renuméroter change le rendu.
+
+### Écarter un module d'Ultrachromic
+
+Le preset importe sa propre liste de modules, que `build.py` suit telle
+quelle. Pour en retirer un, l'inscrire dans
+[`src/vendor.exclude`](src/vendor.exclude) plutôt que de toucher à
+`src/vendor/` — une modification là-bas rendrait `update-vendor.sh`
+conflictuel à chaque resynchronisation.
+
+`build.py` refuse de construire si une entrée n'est jamais rencontrée : une
+exclusion qui ne s'applique à rien serait indiscernable d'une exclusion qui
+marche. Le fichier construit porte en en-tête la liste de ce qui a réellement
+été omis.
+
+Vérifier ce que le module faisait **d'autre** avant de l'écarter : plusieurs
+modules d'Ultrachromic mêlent des règles sans rapport avec leur nom.
+`smallercast.css` portait ainsi une règle `.cardPadder` globale, qu'il a fallu
+reprendre dans `14-carte-fond.css`.
 
 `dist/theme.css` est un fichier construit : ne jamais l'éditer, il est
 réécrit à chaque build. jsDelivr sert depuis l'arbre git, d'où sa présence

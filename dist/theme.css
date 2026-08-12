@@ -1,6 +1,6 @@
 /* =====================================================================
    Theme Jellyfin — matqueme
-   Version 1.0.0 — Jellyfin 10.11.x
+   Version 1.1.0 — Jellyfin 10.11.x
 
    FICHIER CONSTRUIT — NE PAS EDITER.
    Genere par build.py depuis src/. Toute modification faite ici sera
@@ -9,6 +9,9 @@
    Base : Ultrachromic de CTalvio (MIT), vendorise et fusionne.
           commit fa158a241cb24298c9996af3cf6460ae2f9d522f
    Icones : Phosphor Bold 2.1.2 (MIT).
+
+   Modules du preset volontairement exclus :
+          smallercast.css
    ===================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
@@ -640,142 +643,6 @@ div[data-role="controlgroup"] a[data-role="button"]:last-child {
 }
 #userProfilesPage .cardImage, #userProfilesPage .cardContent {
     border-radius: var(--rounding) var(--rounding) 0 0 !important;
-}
-
-/* ===== ultrachromic/smallercast.css ===== */
-/*Shrink and square (or round) cast thumbnails*/
-@media all and (min-width: 131.25em){
-  #castContent .card.overflowPortraitCard,
-  #guestCastContent .card.overflowPortraitCard {
-    width: 6.3vw !important; 
-    font-size: 90% !important;
-  }
-}
-@media all and (min-width: 120em) and (max-width: 131.25em){
-  #castContent .card.overflowPortraitCard,
-  #guestCastContent .card.overflowPortraitCard {
-    width: 6.4vw !important; 
-    font-size: 90% !important;
-  }
-}
-@media all and (min-width: 100em) and (max-width: 120em){
-  #castContent .card.overflowPortraitCard,
-  #guestCastContent .card.overflowPortraitCard {
-    width: 7.6vw !important; 
-    font-size: 90% !important;
-  }
-}
-@media all and (min-width: 87.5em) and (max-width: 100em){
-  #castContent .card.overflowPortraitCard,
-  #guestCastContent .card.overflowPortraitCard {
-    width: 9.3vw !important; 
-    font-size: 90% !important;
-  }
-}
-@media all and (min-width: 75em) and (max-width: 87.5em){
-  #castContent .card.overflowPortraitCard,
-  #guestCastContent .card.overflowPortraitCard {
-    width: 10.5vw !important; 
-    font-size: 90% !important;
-  }
-}
-@media all and (min-width: 50em) and (max-width: 75em){
-  #castContent .card.overflowPortraitCard,
-  #guestCastContent .card.overflowPortraitCard {
-    width: 15vw !important;
-    font-size: 90% !important;
-  }
-}
-@media all and (min-width: 43.75em) and (max-width: 50em){
-  #castContent .card.overflowPortraitCard,
-  #guestCastContent .card.overflowPortraitCard {
-    width: 20.1vw !important; 
-    font-size: 90% !important;
-  }
-}
-@media all and (min-width: 25em) and (max-width: 43.75em){
-  #castContent .card.overflowPortraitCard,
-  #guestCastContent .card.overflowPortraitCard {
-    width: 31.2vw !important; 
-    font-size: 90% !important;
-  }
-}
-@media all and (max-width: 25em){
-  #castContent .card.overflowPortraitCard,
-  #guestCastContent .card.overflowPortraitCard {
-    width: 40vw !important; 
-    font-size: 90% !important;
-  }
-}
-
-.cardPadder {
-  background-color: #0000 !important; box-shadow: none !important;
-}
-
-/*Correct image aspect ratio behaviour, set border-radius to zero for square tiles*/
-
-@media all and (min-width: 131.25em){
-  #castContent .cardScalable,
-  #guestCastContent .cardScalable {
-    width: calc(6.3vw - 0.6em) !important; 
-    height: calc(6.3vw - 0.6em) !important;
-  }
-}
-@media all and (min-width: 120em) and (max-width: 131.25em){
-  #castContent .cardScalable,
-  #guestCastContent .cardScalable {
-    width:  calc(6.4vw - 0.6em) !important; 
-    height: calc(6.4vw - 0.6em) !important;
-  }
-}
-@media all and (min-width: 100em) and (max-width: 120em){
-  #castContent .cardScalable,
-  #guestCastContent .cardScalable {
-    width:  calc(7.6vw - 0.6em) !important; 
-    height: calc(7.6vw - 0.6em) !important;
-  }
-}
-@media all and (min-width: 87.5em) and (max-width: 100em){
-  #castContent .cardScalable,
-  #guestCastContent .cardScalable {
-    width:  calc(9.3vw - 0.6em) !important; 
-    height: calc(9.3vw - 0.6em) !important;
-  }
-}
-@media all and (min-width: 75em) and (max-width: 87.5em){
-  #castContent .cardScalable,
-  #guestCastContent .cardScalable {
-    width:  calc(10.5vw - 0.6em) !important; 
-    height: calc(10.5vw - 0.6em) !important;
-  }
-}
-@media all and (min-width: 50em) and (max-width: 75em){
-  #castContent .cardScalable,
-  #guestCastContent .cardScalable {
-    width:  calc(15vw - 0.6em) !important; 
-    height: calc(15vw - 0.6em) !important;
-  }
-}
-@media all and (min-width: 43.75em) and (max-width: 50em){
-  #castContent .cardScalable,
-  #guestCastContent .cardScalable {
-    width:  calc(20.1vw - 0.6em) !important; 
-    height: calc(20.1vw - 0.6em) !important;
-  }
-}
-@media all and (min-width: 25em) and (max-width: 43.75em){
-  #castContent .cardScalable,
-  #guestCastContent .cardScalable {
-    width:  calc(31.2vw - 0.6em) !important; 
-    height: calc(31.2vw - 0.6em) !important;
-  }
-}
-@media all and (max-width: 25em){
-  #castContent .cardScalable,
-  #guestCastContent .cardScalable {
-    width:  calc(40vw - 0.6em) !important;
-    height: calc(40vw - 0.6em) !important;
-  }
 }
 
 /* ===== ultrachromic/episodelist/episodes_compactlist.css ===== */
@@ -2407,3 +2274,27 @@ body.tabs-in-page #indexPage {
        Jellyfin n'affichant l'une que sous 100% de lecture et l'autre qu'a
        partir de 100%), et a gauche les trois icones alignees sous le bord
        haut donnent un resultat batard. */
+
+/* ===== 14-carte-fond.css ===== */
+/* --- 14. Fond d'attente des affiches --------------------------------- */
+/* Reprise a l'identique d'une regle que portait smallercast.css, exclu
+   par src/vendor.exclude pour ses vignettes de casting.
+
+   Cette regle n'avait rien a voir avec le casting : elle est globale, et
+   neutralise le fond et l'ombre du .cardPadder, l'element que Jellyfin
+   empile sous l'affiche pour lui reserver son rapport d'aspect avant que
+   l'image soit chargee. Sans elle, ce fond reapparait derriere chaque
+   vignette de chaque grille — un effet de bord qui n'a aucun rapport avec
+   le motif de l'exclusion, d'ou sa reprise ici.
+
+   Position dans la cascade : smallercast passait avant type/colorful.css,
+   qui pose  .cardBox:not(.visualCardBox) .cardPadder { box-shadow: none
+   !important }.  Ce module-ci passe apres. Sans consequence : les deux
+   declarations sont en !important, donc departagees par la specificite
+   (0,3,0 contre 0,1,0) et non par l'ordre. colorful l'emporte sur les
+   cartes non visuelles exactement comme avant, et cette regle continue de
+   couvrir les .visualCardBox, que colorful exclut. */
+.cardPadder {
+    background-color: #0000 !important;
+    box-shadow: none !important;
+}

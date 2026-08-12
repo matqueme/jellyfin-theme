@@ -1,0 +1,19 @@
+# Modules qu'Ultrachromic charge et qu'on ne veut PAS.
+#
+# Le preset kaleidochromic importe sa liste de modules ; build.py la suit
+# telle quelle plutot que d'en tenir une copie. Ce fichier est le seul
+# moyen de retirer un module du resultat sans modifier l'amont, ce qui
+# rendrait update-vendor.sh conflictuel a chaque resynchronisation.
+#
+# build.py refuse de construire si une entree n'est jamais rencontree :
+# une exclusion qui ne s'applique a rien serait indiscernable d'une
+# exclusion qui fonctionne, et le fichier construit porte la liste de ce
+# qui a reellement ete omis.
+#
+# Chemins relatifs a src/vendor/ultrachromic/, sans le .css.
+
+# Rapetisse et carre les vignettes du casting, sur 18 media queries.
+# Rendu non souhaite : on prefere les vignettes portrait de Jellyfin.
+# Ce module portait aussi une regle .cardPadder sans rapport avec le
+# casting, reprise dans src/14-carte-fond.css.
+smallercast

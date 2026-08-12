@@ -1,0 +1,22 @@
+/* --- 14. Fond d'attente des affiches --------------------------------- */
+/* Reprise a l'identique d'une regle que portait smallercast.css, exclu
+   par src/vendor.exclude pour ses vignettes de casting.
+
+   Cette regle n'avait rien a voir avec le casting : elle est globale, et
+   neutralise le fond et l'ombre du .cardPadder, l'element que Jellyfin
+   empile sous l'affiche pour lui reserver son rapport d'aspect avant que
+   l'image soit chargee. Sans elle, ce fond reapparait derriere chaque
+   vignette de chaque grille — un effet de bord qui n'a aucun rapport avec
+   le motif de l'exclusion, d'ou sa reprise ici.
+
+   Position dans la cascade : smallercast passait avant type/colorful.css,
+   qui pose  .cardBox:not(.visualCardBox) .cardPadder { box-shadow: none
+   !important }.  Ce module-ci passe apres. Sans consequence : les deux
+   declarations sont en !important, donc departagees par la specificite
+   (0,3,0 contre 0,1,0) et non par l'ordre. colorful l'emporte sur les
+   cartes non visuelles exactement comme avant, et cette regle continue de
+   couvrir les .visualCardBox, que colorful exclut. */
+.cardPadder {
+    background-color: #0000 !important;
+    box-shadow: none !important;
+}
