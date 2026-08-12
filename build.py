@@ -185,14 +185,14 @@ def main() -> None:
         current = DIST.read_text(encoding="utf-8") if DIST.exists() else None
         if current != css:
             sys.exit("dist/theme.css n'est pas a jour : lancer ./build.py et commiter")
-        print(f"OK - dist/theme.css a jour ({len(css)} octets)")
+        print(f"OK - dist/theme.css a jour ({len(css.encode())} octets)")
         return
 
     DIST.parent.mkdir(parents=True, exist_ok=True)
     DIST.write_text(css, encoding="utf-8")
     rules = len(re.findall(r"\{", strip_comments(css)))
     print(f"OK - dist/theme.css : {len(css.splitlines())} lignes, "
-          f"{len(css)} octets, {rules} regles")
+          f"{len(css.encode())} octets, {rules} regles")
 
 
 if __name__ == "__main__":
