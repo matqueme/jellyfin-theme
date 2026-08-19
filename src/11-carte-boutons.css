@@ -46,10 +46,10 @@
    classes. Sans ce garde-fou, ces offsets en !important la decrocheraient
    de son centrage. */
 .layout-mobile .cardOverlayButton-br:not(.cardOverlayButton-centered) {
-    top: 0 !important;
-    bottom: auto !important;
-    left: 0 !important;
-    right: auto !important;
+  top: 0 !important;
+  bottom: auto !important;
+  left: 0 !important;
+  right: auto !important;
 }
 
 /* Le coin haut gauche n'etait occupe que par .mediaSourceIndicator, pose a
@@ -58,5 +58,5 @@
    n'a aucune raison d'y bouger. Elle ne parait que sur les items a sources
    multiples, la collision est donc rare - mais illisible quand elle a lieu. */
 .layout-mobile .mediaSourceIndicator {
-    left: 3em;
+  left: 3em;
 }

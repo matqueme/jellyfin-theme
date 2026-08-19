@@ -7,7 +7,7 @@
    On masque les traits et pas leur conteneur : celui-ci est en position
    absolue et sert d'ancrage, le retirer ne gagne rien. */
 .sliderMarker {
-    display: none !important;
+  display: none !important;
 }
 
 /* --- 10. Barres de lecture arrondies --------------------------------- */
@@ -26,5 +26,5 @@
    sont des emby-slider. Pour n'arrondir que la progression, prefixer par
    .osdPositionSlider + .mdl-slider-background-flex-container. */
 .mdl-slider-background-flex {
-    border-radius: 1em !important;
+  border-radius: 1em !important;
 }

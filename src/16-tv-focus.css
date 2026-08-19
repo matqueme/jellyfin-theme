@@ -1,0 +1,162 @@
+/* --- 16. Etats de focus sur TV ---------------------------------------- */
+/* Tout ce module ne vise que .layout-tv, pose par layoutManager sur
+   l'element racine. La souris et le tactile ne le voient jamais. */
+
+/* Pourquoi la TV n'a pas le zoom de focus du client.
+
+   cardBuilder ne pose .show-animation que sous
+       enableFocusTransform = !browser.slow && !browser.edge
+   et Tizen tombe dans "slow". Les deux regles de card.scss se lisent
+   alors a l'envers de ce qu'on attend :
+
+     .card.show-animation:focus > .cardBox      { transform: scale(1.07) }
+     .card.show-focus:not(.show-animation)
+         .cardBox:not(.visualCardBox) .cardScalable
+                                        { border: .5em solid transparent;
+                                          border-radius: .7em }
+
+   La premiere, le zoom, est le cas nominal — et c'est celle que la TV
+   n'obtient jamais. La seconde est le repli pour appareil lent, un cadre
+   de .5em que themes/dark/theme.css colore ensuite :
+
+     .card:focus .cardBox:not(.visualCardBox) .cardScalable
+                                        { border-color: #00a4dc !important }
+
+   D'ou le gros liseré, et son bleu : #00a4dc est l'accent par defaut de
+   Jellyfin, code en dur dans le theme sombre, sans rapport avec --accent.
+
+   On reprend les deux : le cadre devient un anneau fin a l'accent, et le
+   zoom que la TV aurait du avoir est rendu ici. */
+
+:root {
+  --tv-card-ring: 0.13em; /* epaisseur de l'anneau de focus des cartes */
+  --tv-card-zoom: 1.06; /* agrandissement de la carte visee */
+}
+
+/* Le cadre de repli, sur TOUTES les cartes, visees ou non : .show-focus
+   est pose par cardBuilder sur chaque carte des que layoutManager.tv, ce
+   n'est pas un etat. L'affiner ici agrandit donc les affiches de la
+   grille entiere, uniformement — aucun decalage au passage du focus,
+   puisque la boite ne change pas de taille selon l'etat.
+
+   Le rayon suit --rounding, que le preset fixe a 12px et que rounding.css
+   applique deja a .cardImageContainer et a .cardOverlayContainer. Un
+   anneau doit arrondir un peu plus que ce qu'il entoure, sinon il se
+   pince dans les angles : d'ou le calc.
+
+   Specificite 0,6,0 avec !important contre 0,6,0 sans : on l'emporte. */
+.layout-tv .card.show-focus .cardBox.visualCardBox,
+.layout-tv .card.show-focus .cardBox:not(.visualCardBox) .cardScalable {
+  border-width: var(--tv-card-ring, 0.13em) !important;
+  border-color: transparent !important;
+  border-radius: calc(
+    var(--rounding, 12px) + var(--tv-card-ring, 0.13em)
+  ) !important;
+  transition:
+    border-color 0.18s ease-out,
+    box-shadow 0.18s ease-out !important;
+}
+
+/* La carte visee. L'anneau prend l'accent, et l'ombre detache l'affiche du
+   fond — c'est elle qui fait lire la carte comme posee au-dessus des
+   autres, plus que le zoom lui-meme.
+   0,6,0 !important contre le 0,4,0 !important du theme sombre. */
+.layout-tv .card:focus .cardBox.visualCardBox,
+.layout-tv .card:focus .cardBox:not(.visualCardBox) .cardScalable {
+  border-color: rgb(var(--accent, 98, 121, 205)) !important;
+  box-shadow:
+    0 0.5em 1.5em rgba(0, 0, 0, 0.55),
+    0 0 1.2em rgba(var(--accent, 98, 121, 205), 0.5) !important;
+}
+
+/* Le zoom. Trois choses le rendaient impossible telles quelles :
+
+   1. .card:not(.show-animation) { contain: layout style paint }. Le
+      confinement de peinture rogne les descendants a la boite de la
+      carte : l'agrandissement etait decoupe pile a son bord. On retire le
+      seul mot-cle qui gene, et sur la seule carte visee — pas sur la
+      grille entiere, le confinement etant precisement ce qui garde une TZ
+      fluide sur une page de deux cents affiches.
+
+   2. .cardBox { transition: none }. Sans transition le zoom claque.
+
+   3. .scrollX { overflow-y: hidden } sur les rangees de l'accueil
+      rognerait le haut et le bas de la carte agrandie. Jellyfin l'a deja
+      prevu : .layout-tv .padded-top-focusscale { margin-top: -1.5em;
+      padding-top: 1.5em }, et sa jumelle en bas, portees par les rangees.
+      Le rembourrage entre dans la boite de rognage, la marge negative
+      annule son effet sur la mise en page : 1.5em de degagement gratuit,
+      auxquels s'ajoutent le margin de .4em de .cardBox. C'est ce qui
+      borne --tv-card-zoom : au-dela de 1.15 environ, la carte ressort du
+      degagement et se fait couper sur les rangees horizontales.
+
+   L'empilement, lui, est deja acquis : card.scss pose
+   .card:focus { position: relative !important; z-index: 10 !important },
+   la carte agrandie passe donc au-dessus de ses voisines. */
+.layout-tv .card > .cardBox {
+  transition: transform 0.18s ease-out !important;
+}
+
+.layout-tv .card:focus {
+  contain: layout style !important;
+}
+
+.layout-tv .card:focus > .cardBox {
+  transform: scale(var(--tv-card-zoom, 1.06)) !important;
+}
+
+/* --- Boutons de la page d'un film, hors Lecture ----------------------- */
+/* Meme langage que les icones de l'en-tete, que la TV traite ainsi :
+     .paper-icon-button-light.show-focus:focus { color: accent }
+   couleur seule, aucun fond. Les boutons de la rangee de detail sont des
+   .emby-button, qui recoivent au contraire un aplat :
+     themes/dark   .emby-button.show-focus:focus { background: #00a4dc }
+     accentlist    .emby-button.show-focus:focus
+                       { background: rgba(var(--accent),.5) !important }
+   On retire l'aplat et on passe l'accent sur le trait. Le scale(1.2) de
+   card.scss est conserve : c'est lui qui porte le retour de focus une
+   fois le fond parti, exactement comme le scale(1.3) des icones de
+   l'en-tete.
+
+   :not(.btnPlay) parce que le bouton Lecture porte lui aussi .detailButton
+   et garde sa pilule, traitee juste en dessous.
+   0,5,0 !important contre le 0,3,0 !important d'accentlist. */
+.layout-tv .mainDetailButtons .detailButton:not(.btnPlay):focus {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: rgb(var(--accent, 98, 121, 205)) !important;
+}
+
+/* --- Bouton Lecture vise --------------------------------------------- */
+/* La pilule est deja a l'accent au repos (section 2) : l'eclaircir un peu
+   ne se voyait pas d'un fauteuil. Une inversion a ete essayee — fond
+   blanc, trait a l'accent, sur le modele de
+     themes/dark  .layout-tv .emby-button.detailFloatingButton:focus
+                      { background-color: #f2f2f2; color: #00a4dc }
+   — et ecartee : deux aplats de couleur qui s'echangent font une rupture,
+   la ou le bouton doit simplement se signaler.
+
+   La pilule garde donc sa couleur, et c'est un anneau blanc qui porte le
+   focus. Le blanc n'est pas un choix par defaut : sur un fond deja a
+   l'accent, un anneau d'accent serait invisible, et le blanc est ce que
+   le theme emploie deja pour marquer un etat par-dessus une surface
+   coloree — pilule d'onglet actif, voile de survol de la section 17.
+
+   scale(1.06) et non le 1.2 de card.scss : la pilule est large, et
+   l'agrandir d'un cinquieme la faisait chevaucher le bouton voisin.
+   0,5,0 !important contre le 0,4,0 !important de la section 2. */
+.layout-tv .mainDetailButtons .btnPlay:not(.hide):focus {
+  background-color: rgb(var(--accent, 98, 121, 205)) !important;
+  background-image: none !important;
+  color: #fff !important;
+  box-shadow:
+    0 0 0 0.15em #fff,
+    0 0 1.6em rgba(var(--accent, 98, 121, 205), 0.65),
+    0 0.4em 1.2em rgba(0, 0, 0, 0.5) !important;
+  transform: scale(1.06) !important;
+  transition:
+    background-color 0.15s,
+    box-shadow 0.15s,
+    transform 0.15s !important;
+}
+

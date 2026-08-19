@@ -17,6 +17,6 @@
    cartes non visuelles exactement comme avant, et cette regle continue de
    couvrir les .visualCardBox, que colorful exclut. */
 .cardPadder {
-    background-color: #0000 !important;
-    box-shadow: none !important;
+  background-color: #0000 !important;
+  box-shadow: none !important;
 }

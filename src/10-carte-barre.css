@@ -13,13 +13,13 @@
 /* Le pied de carte redevient une bande en bas. Le border-radius que lui
    pose la section 8 devient sans effet : le fond est transparent. */
 .innerCardFooter.fullInnerCardFooter.innerCardFooterClear {
-    top: auto !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    margin: 0 !important;
-    background: transparent !important;
-    box-shadow: none !important;
+  top: auto !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 /* Geometrie de la barre : ce sont les trois valeurs a retoucher pour
@@ -28,9 +28,9 @@
    .innerCardFooter a 100% - et que toute mise en correspondance entre la
    barre et un bouton d'overlay tombe alors a cote de quelques pixels. */
 :root {
-    --card-bar-height: 6px;
-    --card-bar-gap: 8px;    /* detachement du bord bas : l'effet flottant */
-    --card-bar-inset: 13px; /* retrait lateral */
+  --card-bar-height: 6px;
+  --card-bar-gap: 8px; /* detachement du bord bas : l'effet flottant */
+  --card-bar-inset: 13px; /* retrait lateral */
 }
 
 /* Le !important sur height n'est pas decoratif : overlayprogress vise
@@ -41,17 +41,17 @@
    plafonne a la moitie de la hauteur : sur 6px de haut, la barre est une
    gelule quelle que soit la valeur. */
 .innerCardFooter .itemProgressBar {
-    height: var(--card-bar-height) !important;
-    margin: var(--card-bar-gap) var(--card-bar-inset) !important;
-    border-radius: var(--rounding) !important;
-    background: rgba(0, 0, 0, .35) !important;
-    backdrop-filter: blur(4px);
-    overflow: hidden;
+  height: var(--card-bar-height) !important;
+  margin: var(--card-bar-gap) var(--card-bar-inset) !important;
+  border-radius: var(--rounding) !important;
+  background: rgba(0, 0, 0, 0.35) !important;
+  backdrop-filter: blur(4px);
+  overflow: hidden;
 }
 
 /* overlayprogress laisse le remplissage a 35% d'opacite, ce qui convient a
    un voile plein ecran mais delave une barre de 6px. */
 .innerCardFooter .itemProgressBarForeground {
-    background-color: rgba(var(--accent, 98, 121, 205), .95) !important;
-    border-radius: var(--rounding) !important;
+  background-color: rgba(var(--accent, 98, 121, 205), 0.95) !important;
+  border-radius: var(--rounding) !important;
 }

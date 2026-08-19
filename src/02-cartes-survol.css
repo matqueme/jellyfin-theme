@@ -2,5 +2,5 @@
 /* C'est Jellyfin qui le passe a scale(1.4) au survol. Rien d'autre n'est
    touche : le bouton garde son apparence d'origine. */
 .cardOverlayContainer > .cardOverlayFab-primary:hover {
-    transform: none !important;
+  transform: none !important;
 }

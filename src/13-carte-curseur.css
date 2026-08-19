@@ -14,11 +14,11 @@
    l'heritage ne s'applique qu'aux enfants qui n'ont pas la leur.
    .cardContent et les boutons gardent donc les leurs. */
 .card {
-    cursor: default !important;
+  cursor: default !important;
 }
 
 .cardBox {
-    cursor: pointer !important;
+  cursor: pointer !important;
 }
 
 /* Le bandeau sous l'affiche ne doit pas etre main sur toute sa surface : il
@@ -42,12 +42,12 @@
    main y est legitime, il ne faut pas l'y retirer. */
 .cardBox > .cardText,
 .cardFooter > .cardText {
-    cursor: default !important;
+  cursor: default !important;
 }
 
 .cardBox > .cardText a,
 .cardFooter > .cardText a {
-    cursor: pointer !important;
+  cursor: pointer !important;
 }
 
 /* Reste une incoherence, assumee : un clic dans la gouttiere navigue

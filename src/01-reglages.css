@@ -8,7 +8,8 @@
 
 /* --- Reglages -------------------------------------------------------- */
 :root {
-    --icon-scale: .85;        /* Phosphor remplit plus son cadre que Material */
-    --play-label: "Lecture";  /* garder les guillemets : valeur de content */
-    --play-label-size: .8em;
+  --icon-scale: 0.85; /* Phosphor remplit plus son cadre que Material */
+  --play-label: "Lecture"; /* garder les guillemets : valeur de content */
+  --play-label-size: 0.8em;
+  --btn-hover-bg: rgba(255, 255, 255, 0.1); /* survol des boutons secondaires */
 }

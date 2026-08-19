@@ -17,7 +17,7 @@ l'exécution ni aucune dépendance à un dépôt tiers qui bouge.
 Tableau de bord → Général → **CSS personnalisé**, une seule ligne :
 
 ```css
-@import url('https://cdn.jsdelivr.net/gh/matqueme/jellyfin-theme@v1.1.1/dist/theme.css');
+@import url('https://cdn.jsdelivr.net/gh/matqueme/jellyfin-theme@v1.2.0/dist/theme.css');
 ```
 
 Puis `Ctrl+F5` sur le client.
@@ -39,6 +39,7 @@ indésirable, `apply-local.sh` écrit le fichier directement dans le
 
 | Thème | Jellyfin | Ultrachromic |
 |---|---|---|
+| `v1.2.0` | 10.11.x | [`fa158a2`](https://github.com/CTalvio/Ultrachromic/tree/fa158a241cb24298c9996af3cf6460ae2f9d522f) |
 | `v1.1.0` | 10.11.x | [`fa158a2`](https://github.com/CTalvio/Ultrachromic/tree/fa158a241cb24298c9996af3cf6460ae2f9d522f) |
 | `v1.0.0` | 10.11.x | [`fa158a2`](https://github.com/CTalvio/Ultrachromic/tree/fa158a241cb24298c9996af3cf6460ae2f9d522f) |
 
@@ -60,10 +61,13 @@ Les valeurs prévues pour être retouchées, avec leur emplacement :
 | `--icon-scale` | [`src/01-reglages.css`](src/01-reglages.css) | Taille des icônes Phosphor, qui remplissent plus leur cadre que Material |
 | `--play-label` | [`src/01-reglages.css`](src/01-reglages.css) | Libellé du bouton Lecture. Garder les guillemets : c'est une valeur de `content` |
 | `--play-label-size` | [`src/01-reglages.css`](src/01-reglages.css) | Taille de ce libellé |
+| `--btn-hover-bg` | [`src/01-reglages.css`](src/01-reglages.css) | Survol des boutons secondaires — en-tête, rangée d'un film, bandeau de sélection |
 | `--tabs-left` | [`src/05-onglets.css`](src/05-onglets.css) | Décalage des onglets d'en-tête. Repli seulement : le script les mesure et pose sa propre valeur |
 | `--card-bar-height` | [`src/10-carte-barre.css`](src/10-carte-barre.css) | Épaisseur de la barre de progression des cartes |
 | `--card-bar-gap` | [`src/10-carte-barre.css`](src/10-carte-barre.css) | Détachement du bord bas — c'est ce qui fait l'effet flottant |
 | `--card-bar-inset` | [`src/10-carte-barre.css`](src/10-carte-barre.css) | Retrait latéral de cette barre |
+| `--tv-card-ring` | [`src/16-tv-focus.css`](src/16-tv-focus.css) | Épaisseur de l'anneau de focus des cartes en TV |
+| `--tv-card-zoom` | [`src/16-tv-focus.css`](src/16-tv-focus.css) | Agrandissement de la carte visée en TV. Au-delà de 1.15 environ, elle sort du dégagement des rangées et se fait couper |
 
 Pour repasser les icônes en trait fin : remplacer `bold` par `regular` dans
 l'`@import` de [`src/00-imports.css`](src/00-imports.css), et `Phosphor-Bold`
@@ -90,6 +94,9 @@ src/
   13-carte-curseur.css  curseur main calé sur la carte visible
   14-carte-fond.css     fond d'attente des affiches
   15-barre-defilement.css  axe horizontal refermé sur les conteneurs de page
+  16-tv-focus.css       focus TV : cartes, boutons d'un film, bouton Lecture
+  17-boutons-survol.css survol partagé des boutons secondaires
+  18-selection.css      bandeau de sélection, cartes en mode sélection
   vendor/ultrachromic/  Ultrachromic figé sur un commit (32 Ko)
   vendor.list           modules Ultrachromic chargés après le preset
   vendor.exclude        modules du preset volontairement écartés
@@ -253,6 +260,35 @@ resté à `visible` face à un axe qui ne l'est pas se calcule en `auto`. Un
 horizontale dès qu'un pixel dépasse — c'était le cas de `#indexPage`, corrigé
 en 1.1.1 par `15-barre-defilement.css`. Le symptôme trompe : `documentElement`
 et `body` ne débordent pas, seul le conteneur intermédiaire défile.
+
+**La forme courte `background` remet `background-image` à `none`.** Et un
+`!important` l'emporte sur un style en ligne : le bouton de profil de
+l'en-tête, dont l'avatar est un `background-image` posé en ligne par le
+client, perdait son image au survol. Écrire `background-color` dès qu'on ne
+veut que la couleur. Même piège pour `border` face à `border-color`.
+
+**Une classe de bouton peut être portée par un `div` imbriqué.** Toujours le
+bouton de profil : `paper-icon-button-light` est sur le `<button>` **et** sur
+le `div` de l'avatar qu'il contient. Un sélecteur par classe seule les vise
+donc tous les deux, et le survol s'appliquait en double — une teinte dans
+l'anneau de padding, une autre sur le rond. `button.paper-icon-button-light`
+les départage, l'avatar étant le seul `div` à porter cette classe.
+
+**La TV n'est pas un layout, c'est aussi une détection de lenteur.**
+`cardBuilder` distingue `.show-focus` de `.show-animation` par
+`!browser.slow && !browser.edge`, et Tizen est classé « slow ». Une règle
+écrite pour `.layout-tv` peut donc viser un état que la TV n'atteint jamais :
+c'est le cas du `scale(1.07)` de focus des cartes, dont le repli — un cadre
+de `.5em` — est ce qu'on voit réellement sur l'appareil. Vérifier laquelle
+des deux classes est posée avant de surcharger.
+
+**Rien ne marque une carte sélectionnée dans le DOM.**
+`.itemSelectionPanel` est posé sur *toutes* les cartes dès l'entrée en mode
+sélection, et le module de sélection ne tient qu'un tableau d'ID en
+JavaScript : aucune classe n'est ajoutée à la carte cochée. Le seul signal
+disponible est `input.chkItemSelect:checked`, plus bas dans l'arbre que ce
+qu'on veut peindre — donc `:has()`, à mettre sous `@supports selector(:has(*))`
+pour les navigateurs de TV antérieurs à Chromium 105.
 
 **Les `<` et `&` ne sont plus interdits.** Le CSS est stocké comme texte dans
 `branding.xml`, et une version antérieure de l'outillage les proscrivait pour

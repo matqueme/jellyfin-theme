@@ -1,6 +1,6 @@
 /* =====================================================================
    Theme Jellyfin — matqueme
-   Version 1.1.1 — Jellyfin 10.11.x
+   Version 1.2.0 — Jellyfin 10.11.x
 
    FICHIER CONSTRUIT — NE PAS EDITER.
    Genere par build.py depuis src/. Toute modification faite ici sera
@@ -1272,9 +1272,10 @@ body > .toast,
 
 /* --- Reglages -------------------------------------------------------- */
 :root {
-    --icon-scale: .85;        /* Phosphor remplit plus son cadre que Material */
-    --play-label: "Lecture";  /* garder les guillemets : valeur de content */
-    --play-label-size: .8em;
+  --icon-scale: 0.85; /* Phosphor remplit plus son cadre que Material */
+  --play-label: "Lecture"; /* garder les guillemets : valeur de content */
+  --play-label-size: 0.8em;
+  --btn-hover-bg: rgba(255, 255, 255, 0.1); /* survol des boutons secondaires */
 }
 
 /* ===== 02-cartes-survol.css ===== */
@@ -1282,7 +1283,7 @@ body > .toast,
 /* C'est Jellyfin qui le passe a scale(1.4) au survol. Rien d'autre n'est
    touche : le bouton garde son apparence d'origine. */
 .cardOverlayContainer > .cardOverlayFab-primary:hover {
-    transform: none !important;
+  transform: none !important;
 }
 
 /* ===== 03-page-item.css ===== */
@@ -1291,13 +1292,13 @@ body > .toast,
    classe hide (display:none !important) et ne la retire qu'une fois
    l'item lisible. */
 .mainDetailButtons .btnPlay:not(.hide) {
-    flex-direction: row !important;
-    max-width: none !important;
-    padding: .55em 1.05em !important;
-    border-radius: 999px !important;
-    background: rgba(var(--accent, 98, 121, 205), .95) !important;
-    color: #fff !important;
-    transition: background .15s !important;
+  flex-direction: row !important;
+  max-width: none !important;
+  padding: 0.55em 1.05em !important;
+  border-radius: 999px !important;
+  background: rgba(var(--accent, 98, 121, 205), 0.95) !important;
+  color: #fff !important;
+  transition: background 0.15s !important;
 }
 
 /* Ultrachromic pose .button-flat:hover { background: rgba(accent,.25) },
@@ -1309,34 +1310,32 @@ body > .toast,
    quel qu'il soit. */
 .mainDetailButtons .btnPlay:not(.hide):hover,
 .mainDetailButtons .btnPlay:not(.hide):focus {
-    background-color: rgb(var(--accent, 98, 121, 205)) !important;
-    background-image: linear-gradient(rgba(255, 255, 255, .28),
-                                      rgba(255, 255, 255, .28)) !important;
+  background-color: rgb(var(--accent, 98, 121, 205)) !important;
+  background-image: linear-gradient(
+    rgba(255, 255, 255, 0.28),
+    rgba(255, 255, 255, 0.28)
+  ) !important;
 }
 
 /* Icone et libelle cote a cote : Jellyfin les empile en colonne. */
 .mainDetailButtons .btnPlay:not(.hide) .detailButton-content {
-    flex-direction: row !important;
-    align-items: center !important;
-    gap: .4em !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 0.4em !important;
 }
 
 .mainDetailButtons .btnPlay:not(.hide) .detailButton-content::after {
-    content: var(--play-label) !important;
-    /* Pour suivre la langue de Jellyfin : content: attr(title) !important; */
-    font-size: var(--play-label-size);
-    font-weight: 700;
-    white-space: nowrap;
-}
-
-.mainDetailButtons .detailButton {
-    align-self: center !important;
+  content: var(--play-label) !important;
+  /* Pour suivre la langue de Jellyfin : content: attr(title) !important; */
+  font-size: var(--play-label-size);
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 /* Le libelle elargit la rangee : sur un telephone etroit elle deborderait
    au lieu de passer a la ligne. */
 .mainDetailButtons {
-    flex-wrap: wrap !important;
+  flex-wrap: wrap !important;
 }
 
 /* Telephone. Ultrachromic passe .mainDetailButtons a 155% sous 100em de
@@ -1346,24 +1345,24 @@ body > .toast,
    echelle raisonnable en dessous de 50em, sans toucher au bureau ni a la
    TV. Les boutons gardent une cible tactile d'environ 50px. */
 @media all and (max-width: 50em) {
-    .mainDetailButtons {
-        font-size: 110% !important;
-    }
-    :root {
-        --icon-scale: .8;
-    }
-    /* La rangee n'occupe que la colonne de droite, a cote de l'affiche :
+  .mainDetailButtons {
+    font-size: 110% !important;
+  }
+  :root {
+    --icon-scale: 0.8;
+  }
+  /* La rangee n'occupe que la colonne de droite, a cote de l'affiche :
        sans ce resserrage, le dernier bouton passe seul a la ligne. */
-    .mainDetailButtons .detailButton {
-        padding-left: .42em !important;
-        padding-right: .42em !important;
-    }
-    .mainDetailButtons .btnPlay:not(.hide) {
-        padding: .5em .72em !important;
-    }
-    .mainDetailButtons .btnPlay:not(.hide) .detailButton-content::after {
-        font-size: .7em;
-    }
+  .mainDetailButtons .detailButton {
+    padding-left: 0.42em !important;
+    padding-right: 0.42em !important;
+  }
+  .mainDetailButtons .btnPlay:not(.hide) {
+    padding: 0.5em 0.72em !important;
+  }
+  .mainDetailButtons .btnPlay:not(.hide) .detailButton-content::after {
+    font-size: 0.7em;
+  }
 }
 
 /* ===== 04-connexion.css ===== */
@@ -1379,46 +1378,46 @@ body > .toast,
    classe meme a !important egal, donc sans ce garde-fou la page de
    connexion resterait affichee par-dessus l'accueil. */
 #loginPage:not(.hide) {
-    display: flex !important;
-    min-height: 100vh;
-    padding: 1.5em !important;
-    box-sizing: border-box;
+  display: flex !important;
+  min-height: 100vh;
+  padding: 1.5em !important;
+  box-sizing: border-box;
 }
 
 /* margin auto plutot que align-items: center : centre sur les deux axes
    sans jamais rogner le haut si la carte depasse la hauteur de l'ecran,
    cas d'un telephone en paysage. */
 #loginPage .padded-bottom-page {
-    margin: auto !important;
-    width: 24em;
-    max-width: 100%;
-    padding: 2em 1.75em !important;
-    box-sizing: border-box;
+  margin: auto !important;
+  width: 24em;
+  max-width: 100%;
+  padding: 2em 1.75em !important;
+  box-sizing: border-box;
 }
 
 /* Le conteneur de mentions legales est vide mais garde un margin-top de
    2em, qui s'ajoute au vide du bas. */
 #loginPage .loginDisclaimer:empty {
-    display: none !important;
+  display: none !important;
 }
 #loginPage .loginDisclaimerContainer {
-    margin-top: 0 !important;
+  margin-top: 0 !important;
 }
 
 /* Marges symetriques haut et bas : le titre et le bloc de boutons ont
    chacun leur marge en style inline, qui s'ajoute au padding de la carte. */
 #loginPage .visualLoginForm h1 {
-    margin-top: 0 !important;
-    margin-bottom: .8em !important;
+  margin-top: 0 !important;
+  margin-bottom: 0.8em !important;
 }
 #loginPage .readOnlyContent {
-    margin: 1.2em auto 0 !important;
+  margin: 1.2em auto 0 !important;
 }
 
 /* Titres sur une seule ligne et centres, dans les deux formulaires. */
 #loginPage h1 {
-    font-size: 1.6em !important;
-    text-align: center !important;
+  font-size: 1.6em !important;
+  text-align: center !important;
 }
 
 /* Anneau accent au survol et au focus sur les portraits. Un box-shadow
@@ -1426,56 +1425,57 @@ body > .toast,
    l'image, l'anneau se dessine en dehors sans rien bouger. Le :focus
    couvre la navigation TV et clavier. */
 #divUsers .cardContent {
-    transition: box-shadow .15s !important;
+  transition: box-shadow 0.15s !important;
 }
 #divUsers .card:hover .cardContent,
 #divUsers .card:focus .cardContent {
-    box-shadow: 0 0 0 .18em rgb(var(--accent, 98, 121, 205)),
-                0 .3em 1em -.3em rgba(0, 0, 0, .8) !important;
+  box-shadow:
+    0 0 0 0.18em rgb(var(--accent, 98, 121, 205)),
+    0 0.3em 1em -0.3em rgba(0, 0, 0, 0.8) !important;
 }
 
 /* Connexion manuelle : Ultrachromic pousse le formulaire de 4em vers le
    bas, ce qui creusait un vide au-dessus du titre. */
 #loginPage .manualLoginForm {
-    padding-top: 0 !important;
+  padding-top: 0 !important;
 }
 #loginPage .manualLoginForm .padded-left {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 /* Champs : le fond noir d'Ultrachromic disparait sur la carte sombre.
    Une surface claire les fait lire comme des champs, l'accent marque
    celui qui a le focus. */
 #loginPage .emby-input {
-    background: rgba(255, 255, 255, .07) !important;
-    padding: .55em .7em !important;
+  background: rgba(255, 255, 255, 0.07) !important;
+  padding: 0.55em 0.7em !important;
 }
 #loginPage .emby-input:focus {
-    background: rgba(var(--accent, 98, 121, 205), .22) !important;
-    box-shadow: inset 0 0 0 .11em rgba(var(--accent, 98, 121, 205), .9) !important;
+  background: rgba(var(--accent, 98, 121, 205), 0.22) !important;
+  box-shadow: inset 0 0 0 0.11em rgba(var(--accent, 98, 121, 205), 0.9) !important;
 }
 
 /* Hierarchie des boutons : trois pleins accent identiques ne disaient pas
    quelle etait l'action principale. Seule la validation reste pleine. */
 #loginPage .raised.block {
-    margin: 0 0 .6em !important;
+  margin: 0 0 0.6em !important;
 }
 #loginPage .button-submit {
-    background: rgb(var(--accent, 98, 121, 205)) !important;
+  background: rgb(var(--accent, 98, 121, 205)) !important;
 }
 #loginPage .btnCancel,
 #loginPage .btnManual,
 #loginPage .btnQuick,
 #loginPage .btnSelectServer {
-    background: rgba(255, 255, 255, .08) !important;
-    color: #fff !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #fff !important;
 }
 #loginPage .btnCancel:hover,
 #loginPage .btnManual:hover,
 #loginPage .btnQuick:hover,
 #loginPage .btnSelectServer:hover {
-    background: rgba(255, 255, 255, .15) !important;
+  background: rgba(255, 255, 255, 0.15) !important;
 }
 
 /* ===== 05-onglets.css ===== */
@@ -1488,7 +1488,7 @@ body > .toast,
    propre valeur : elle depend du titre de page, des boutons visibles et,
    sur TV, d'un logo different. */
 :root {
-    --tabs-left: 11.5em;
+  --tabs-left: 11.5em;
 }
 
 /* Sur large ecran, Ultrachromic remonte la rangee sur la ligne du logo
@@ -1498,47 +1498,49 @@ body > .toast,
    participe plus au calcul de hauteur, et se cale a gauche.
    .headerTabs est deja un conteneur flex, inutile de redeclarer display. */
 @media all and (min-width: 50em) {
-    .skinHeader .headerTabs.sectionTabs {
-        position: absolute !important;
-        /* Centrage par top: 50% + translate plutot que top/bottom: 0 :
+  .skinHeader .headerTabs.sectionTabs {
+    position: absolute !important;
+    /* Centrage par top: 50% + translate plutot que top/bottom: 0 :
            etirer la rangee sur toute la hauteur de l'en-tete ne recentrait
            pas son contenu, et la pilule restait collee en haut sous 100em
            de large. Ici la rangee garde la hauteur de son contenu et se
            centre quelle que soit la hauteur de l'en-tete. */
-        top: 50% !important;
-        bottom: auto !important;
-        transform: translateY(-50%) !important;
-        left: var(--tabs-left) !important;
-        /* width: auto + right: auto pour que la boite se reduise a son
+    top: 50% !important;
+    bottom: auto !important;
+    transform: translateY(-50%) !important;
+    left: var(--tabs-left) !important;
+    /* width: auto + right: auto pour que la boite se reduise a son
            contenu. Sans ca elle heritait d'une largeur pleine et son
            justify-content: center recentrait les onglets a l'interieur :
            ils repartaient au milieu de l'ecran sous 100em de large. */
-        width: auto !important;
-        right: auto !important;
-        justify-content: flex-start !important;
-        margin: 0 !important;
-        align-items: center !important;
-    }
+    width: auto !important;
+    right: auto !important;
+    justify-content: flex-start !important;
+    margin: 0 !important;
+    align-items: center !important;
+  }
 }
 
 .skinHeader .headerTabs .emby-tab-button {
-    padding: .45em 1.15em !important;
-    margin: 0 .2em !important;
-    border-radius: 999px !important;
-    color: rgba(255, 255, 255, .68) !important;
-    font-weight: 500 !important;
-    transition: background-color .15s, color .15s !important;
+  padding: 0.45em 1.15em !important;
+  margin: 0 0.2em !important;
+  border-radius: 999px !important;
+  color: rgba(255, 255, 255, 0.68) !important;
+  font-weight: 500 !important;
+  transition:
+    background-color 0.15s,
+    color 0.15s !important;
 }
 
 .skinHeader .headerTabs .emby-tab-button:hover {
-    background-color: rgba(255, 255, 255, .10) !important;
-    color: #fff !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: #fff !important;
 }
 
 .skinHeader .headerTabs .emby-tab-button-active {
-    background-color: rgba(255, 255, 255, .18) !important;
-    color: #fff !important;
-    font-weight: 700 !important;
+  background-color: rgba(255, 255, 255, 0.18) !important;
+  color: #fff !important;
+  font-weight: 700 !important;
 }
 
 /* Focus a la telecommande. Jellyfin marque l'onglet vise par
@@ -1552,11 +1554,10 @@ body > .toast,
    en gris clair. Specificite 0,5,0 contre 0,3,0 : on l'emporte a
    !important egal. */
 .skinHeader .headerTabs .emby-tab-button.show-focus:focus {
-    transform: none !important;
-    background-color: rgba(var(--accent, 98, 121, 205), .95) !important;
-    color: #fff !important;
+  transform: none !important;
+  background-color: rgba(var(--accent, 98, 121, 205), 0.95) !important;
+  color: #fff !important;
 }
-
 
 /* Onglets deplaces dans la page par le script "Onglets dans la page"
    (extension JavaScript Injector). Le CSS ne peut pas reparenter un
@@ -1564,49 +1565,50 @@ body > .toast,
    body.tabs-in-page. Ces regles ne s'appliquent donc que si le script
    tourne ; sans lui, rien ne change. */
 body.tabs-in-page .skinHeader .headerTabs.sectionTabs {
-    display: none !important;
+  display: none !important;
 }
 
 /* L'en-tete perd sa deuxieme ligne : le decalage du contenu suit. */
 /* --header-h et --tabs-host-left sont mesurees et posees par le script :
    une valeur en dur se decalait des que l'en-tete changeait de hauteur. */
 body.tabs-in-page #indexPage {
-    margin-top: var(--header-h, 58px) !important;
+  margin-top: var(--header-h, 58px) !important;
 }
 
 .pageTabsHost {
-    display: flex;
-    gap: .35em;
-    align-items: center;
-    padding: .1em 0 .9em;
-    padding-left: var(--tabs-host-left, 0px);
+  display: flex;
+  gap: 0.35em;
+  align-items: center;
+  padding: 0.1em 0 0.9em;
+  padding-left: var(--tabs-host-left, 0px);
 }
 
 .pageTab {
-    /* inline-flex + line-height: 1 : en display: block, la hauteur de ligne
+  /* inline-flex + line-height: 1 : en display: block, la hauteur de ligne
        naturelle de la police decalait le libelle vers le bas dans la pilule. */
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-    border: 0;
-    cursor: pointer;
-    padding: .38em .95em;
-    border-radius: 999px;
-    background-color: transparent;
-    color: rgba(255, 255, 255, .68);
-    font-family: inherit;
-    font-size: 1em;
-    font-weight: 500;
-    transition: background-color .15s, color .15s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  border: 0;
+  cursor: pointer;
+  padding: 0.38em 0.95em;
+  border-radius: 999px;
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.68);
+  font-family: inherit;
+  font-size: 1em;
+  font-weight: 500;
+  transition:
+    background-color 0.15s,
+    color 0.15s;
 }
 
 .pageTab-active {
-    background-color: rgba(255, 255, 255, .18);
-    color: #fff;
-    font-weight: 700;
+  background-color: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  font-weight: 700;
 }
-
 
 /* --- 5. En-tete sur telephone ---------------------------------------- */
 /* L'en-tete faisait 123px de haut sur un ecran de 915, soit 13% de
@@ -1614,38 +1616,38 @@ body.tabs-in-page #indexPage {
    une deuxieme ligne. On resserre, et on remonte d'autant le decalage du
    contenu, sinon un vide apparait sous l'en-tete. */
 @media all and (max-width: 50em) {
-    .headerTabs.sectionTabs {
-        font-size: 90% !important;
-    }
-    .skinHeader .headerTabs .emby-tab-button {
-        padding: .38em .85em !important;
-    }
-    /* Sur deux lignes, la pilule touchait le bord bas de la navbar. */
-    .skinHeader .headerTabs.sectionTabs {
-        margin-bottom: .5em !important;
-    }
-    /* Le script cale le bord gauche de la pilule sur le texte des titres
+  .headerTabs.sectionTabs {
+    font-size: 90% !important;
+  }
+  .skinHeader .headerTabs .emby-tab-button {
+    padding: 0.38em 0.85em !important;
+  }
+  /* Sur deux lignes, la pilule touchait le bord bas de la navbar. */
+  .skinHeader .headerTabs.sectionTabs {
+    margin-bottom: 0.5em !important;
+  }
+  /* Le script cale le bord gauche de la pilule sur le texte des titres
        de section ; ce padding n'entre plus dans son calcul et peut donc
        etre change librement. */
-    .pageTab {
-        padding: .5em .9em;
-    }
-    #indexPage,
-    #moviesPage,
-    #tvRecommendedPage,
-    #musicRecommendedPage {
-        margin-top: 100px !important;
-    }
+  .pageTab {
+    padding: 0.5em 0.9em;
+  }
+  #indexPage,
+  #moviesPage,
+  #tvRecommendedPage,
+  #musicRecommendedPage {
+    margin-top: 100px !important;
+  }
 }
 
 /* ===== 06-tv.css ===== */
 /* --- 6. Corrections TV ----------------------------------------------- */
-/* Sur TV, Jellyfin dessine deja son propre cadre de focus :
-   .card.show-focus ... { border: .5em solid transparent } qui se colore
-   a l'accent. Mon anneau s'y ajoutait, d'ou le double liseré. Sur TV on
-   laisse faire Jellyfin ; l'anneau ne sert qu'a la souris. */
+/* Les portraits de la page de connexion recoivent un anneau accent en
+   box-shadow (section 3). Sur TV la carte a deja le sien, dessine par la
+   section 16 sur son .cardScalable : les deux se cumulaient en double
+   liseré. On garde celui de la TV, l'autre ne sert qu'a la souris. */
 .layout-tv #divUsers .card:focus .cardContent {
-    box-shadow: none !important;
+  box-shadow: none !important;
 }
 
 /* Logo de la page d'un film. Jellyfin masque volontairement ce logo sur
@@ -1658,11 +1660,10 @@ body.tabs-in-page #indexPage {
    Pour le masquer sur TV comme le prevoit Jellyfin, remplacer tout le
    bloc par  display: none !important; */
 .layout-tv #itemDetailPage .detailLogo {
-    margin-top: 0 !important;
-    margin-bottom: 1vh !important;
-    height: 10vh !important;
+  margin-top: 0 !important;
+  margin-bottom: 1vh !important;
+  height: 10vh !important;
 }
-
 
 /* Onglets cales apres le logo, en TV, sans mesure JavaScript.
    L'app Tizen embarque sa propre copie du client web : le plugin
@@ -1693,35 +1694,35 @@ body.tabs-in-page #indexPage {
    Media query alignee sur celle de la section 4 : sous 50em la rangee
    reste en dessous, comme sur telephone. */
 @media all and (min-width: 50em) {
-    .layout-tv .skinHeader {
-        flex-direction: row !important;
-        align-items: center !important;
-    }
-    .layout-tv .skinHeader .headerTop,
-    .layout-tv .skinHeader .headerLeft {
-        flex-grow: 0 !important;
-    }
-    .layout-tv .skinHeader .headerRight {
-        position: absolute !important;
-        right: .8em !important;
-        top: 50% !important;
-        transform: translateY(-50%) !important;
-    }
-    /* Plus haute specificite que la regle absolue de la section 4
+  .layout-tv .skinHeader {
+    flex-direction: row !important;
+    align-items: center !important;
+  }
+  .layout-tv .skinHeader .headerTop,
+  .layout-tv .skinHeader .headerLeft {
+    flex-grow: 0 !important;
+  }
+  .layout-tv .skinHeader .headerRight {
+    position: absolute !important;
+    right: 0.8em !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+  }
+  /* Plus haute specificite que la regle absolue de la section 4
        (0,4,0 contre 0,3,0), qui ne concerne donc plus que le bureau. */
-    .layout-tv .skinHeader .headerTabs.sectionTabs {
-        position: static !important;
-        transform: none !important;
-        left: auto !important;
-        top: auto !important;
-        width: auto !important;
-        margin: 0 !important;
-    }
-    /* Boite carree : l'icone la remplit, plus aucun vide a sa droite.
+  .layout-tv .skinHeader .headerTabs.sectionTabs {
+    position: static !important;
+    transform: none !important;
+    left: auto !important;
+    top: auto !important;
+    width: auto !important;
+    margin: 0 !important;
+  }
+  /* Boite carree : l'icone la remplit, plus aucun vide a sa droite.
        1.7em est la hauteur que Jellyfin donne a .pageTitle. */
-    .layout-tv .pageTitleWithDefaultLogo {
-        width: 1.7em !important;
-    }
+  .layout-tv .pageTitleWithDefaultLogo {
+    width: 1.7em !important;
+  }
 }
 
 /* ===== 07-icones.css ===== */
@@ -1846,110 +1847,310 @@ body.tabs-in-page #indexPage {
 .material-icons.undo,
 .material-icons.view_comfy,
 .material-icons.volume_up {
-    font-family: "Phosphor-Bold" !important;
-    transform: scale(var(--icon-scale));
+  font-family: "Phosphor-Bold" !important;
+  transform: scale(var(--icon-scale));
 }
 
-.material-icons.add:before { content: "\e3d4" !important; }  /* ph-plus */
-.material-icons.airplay:before { content: "\e004" !important; }  /* ph-airplay */
-.material-icons.album:before { content: "\ecac" !important; }  /* ph-vinyl-record */
-.material-icons.arrow_back:before { content: "\e058" !important; }  /* ph-arrow-left */
-.material-icons.arrow_forward:before { content: "\e06c" !important; }  /* ph-arrow-right */
-.material-icons.arrow_upward:before { content: "\e08e" !important; }  /* ph-arrow-up */
-.material-icons.audiotrack:before { content: "\e33c" !important; }  /* ph-music-note */
-.material-icons.autorenew:before { content: "\e094" !important; }  /* ph-arrows-clockwise */
-.material-icons.backspace:before { content: "\e0ae" !important; }  /* ph-backspace */
-.material-icons.book:before { content: "\e0e2" !important; }  /* ph-book */
-.material-icons.brightness_high:before { content: "\e472" !important; }  /* ph-sun */
-.material-icons.call_split:before { content: "\ed3c" !important; }  /* ph-arrows-split */
-.material-icons.cast:before { content: "\e58a" !important; }  /* ph-monitor-arrow-up */
-.material-icons.check:before { content: "\e182" !important; }  /* ph-check */
-.material-icons.chevron_left:before { content: "\e138" !important; }  /* ph-caret-left */
-.material-icons.chevron_right:before { content: "\e13a" !important; }  /* ph-caret-right */
-.material-icons.close:before { content: "\e4f6" !important; }  /* ph-x */
-.material-icons.closed_caption:before { content: "\e1a4" !important; }  /* ph-closed-captioning */
-.material-icons.cloud_download:before { content: "\e1ac" !important; }  /* ph-cloud-arrow-down */
-.material-icons.content_copy:before { content: "\e1ca" !important; }  /* ph-copy */
-.material-icons.dashboard:before { content: "\e464" !important; }  /* ph-squares-four */
-.material-icons.delete:before { content: "\e4a6" !important; }  /* ph-trash */
-.material-icons.devices_other:before { content: "\eba4" !important; }  /* ph-devices */
-.material-icons.download:before { content: "\e20c" !important; }  /* ph-download-simple */
-.material-icons.drag_handle:before { content: "\e794" !important; }  /* ph-dots-six */
-.material-icons.dvr:before { content: "\e58c" !important; }  /* ph-monitor-play */
-.material-icons.exit_to_app:before { content: "\e42a" !important; }  /* ph-sign-out */
-.material-icons.expand_more:before { content: "\e136" !important; }  /* ph-caret-down */
-.material-icons.explore:before { content: "\e1c8" !important; }  /* ph-compass */
-.material-icons.fast_forward:before { content: "\e6a6" !important; }  /* ph-fast-forward */
-.material-icons.fast_rewind:before { content: "\e6a8" !important; }  /* ph-rewind */
-.material-icons.favorite:before { content: "\e2a8" !important; }  /* ph-heart */
-.material-icons.fiber_manual_record:before { content: "\e3ee" !important; }  /* ph-record */
-.material-icons.fiber_smart_record:before { content: "\e0f2" !important; }  /* ph-broadcast */
-.material-icons.file_download:before { content: "\e20c" !important; }  /* ph-download-simple */
-.material-icons.filter_alt:before { content: "\e266" !important; }  /* ph-funnel */
-.material-icons.folder:before { content: "\e24a" !important; }  /* ph-folder */
-.material-icons.folder_open:before { content: "\e256" !important; }  /* ph-folder-open */
-.material-icons.forward_30:before { content: "\e19e" !important; }  /* ph-clock-clockwise */
-.material-icons.fullscreen:before { content: "\e1d0" !important; }  /* ph-corners-out */
-.material-icons.get_app:before { content: "\e20c" !important; }  /* ph-download-simple */
-.material-icons.groups:before { content: "\e68e" !important; }  /* ph-users-three */
-.material-icons.home:before { content: "\e2c2" !important; }  /* ph-house */
-.material-icons.info:before { content: "\e2ce" !important; }  /* ph-info */
-.material-icons.info_outline:before { content: "\e2ce" !important; }  /* ph-info */
-.material-icons.keyboard:before { content: "\e2d8" !important; }  /* ph-keyboard */
-.material-icons.keyboard_arrow_down:before { content: "\e136" !important; }  /* ph-caret-down */
-.material-icons.keyboard_arrow_left:before { content: "\e138" !important; }  /* ph-caret-left */
-.material-icons.keyboard_arrow_right:before { content: "\e13a" !important; }  /* ph-caret-right */
-.material-icons.keyboard_arrow_up:before { content: "\e13c" !important; }  /* ph-caret-up */
-.material-icons.keyboard_return:before { content: "\e044" !important; }  /* ph-arrow-elbow-down-left */
-.material-icons.live_tv:before { content: "\e754" !important; }  /* ph-television */
-.material-icons.local_movies:before { content: "\e792" !important; }  /* ph-film-strip */
-.material-icons.lock:before { content: "\e308" !important; }  /* ph-lock-simple */
-.material-icons.lyrics:before { content: "\e75c" !important; }  /* ph-microphone-stage */
-.material-icons.menu:before { content: "\e2f0" !important; }  /* ph-list */
-.material-icons.mode_edit:before { content: "\e3b4" !important; }  /* ph-pencil-simple */
-.material-icons.more_vert:before { content: "\e208" !important; }  /* ph-dots-three-vertical */
-.material-icons.movie:before { content: "\e8c2" !important; }  /* ph-film-slate */
-.material-icons.music_note:before { content: "\e33c" !important; }  /* ph-music-note */
-.material-icons.navigate_before:before { content: "\e138" !important; }  /* ph-caret-left */
-.material-icons.navigate_next:before { content: "\e13a" !important; }  /* ph-caret-right */
-.material-icons.pause:before { content: "\e39e" !important; }  /* ph-pause */
-.material-icons.pause_circle_filled:before { content: "\e3a0" !important; }  /* ph-pause-circle */
-.material-icons.person:before { content: "\e4c2" !important; }  /* ph-user */
-.material-icons.phonelink_lock:before { content: "\e2fe" !important; }  /* ph-lock-key */
-.material-icons.photo:before { content: "\e2ca" !important; }  /* ph-image */
-.material-icons.picture_in_picture_alt:before { content: "\e64c" !important; }  /* ph-picture-in-picture */
-.material-icons.play_arrow:before { content: "\e3d0" !important; }  /* ph-play */
-.material-icons.play_circle_filled:before { content: "\e3d2" !important; }  /* ph-play-circle */
-.material-icons.playlist_add:before { content: "\e6aa" !important; }  /* ph-playlist */
-.material-icons.preview:before { content: "\e220" !important; }  /* ph-eye */
-.material-icons.queue_music:before { content: "\e6ac" !important; }  /* ph-queue */
-.material-icons.redo:before { content: "\e08c" !important; }  /* ph-arrow-u-up-right */
-.material-icons.remove_circle:before { content: "\e32c" !important; }  /* ph-minus-circle */
-.material-icons.remove_red_eye:before { content: "\e220" !important; }  /* ph-eye */
-.material-icons.repeat:before { content: "\e3f6" !important; }  /* ph-repeat */
-.material-icons.repeat_one:before { content: "\e3f8" !important; }  /* ph-repeat-once */
-.material-icons.replay:before { content: "\e038" !important; }  /* ph-arrow-counter-clockwise */
-.material-icons.replay_10:before { content: "\e1a0" !important; }  /* ph-clock-counter-clockwise */
-.material-icons.save:before { content: "\e248" !important; }  /* ph-floppy-disk */
-.material-icons.search:before { content: "\e30c" !important; }  /* ph-magnifying-glass */
-.material-icons.settings:before { content: "\e270" !important; }  /* ph-gear */
-.material-icons.shuffle:before { content: "\e422" !important; }  /* ph-shuffle */
-.material-icons.skip_next:before { content: "\e5a6" !important; }  /* ph-skip-forward */
-.material-icons.skip_previous:before { content: "\e5a4" !important; }  /* ph-skip-back */
-.material-icons.sort_by_alpha:before { content: "\e444" !important; }  /* ph-sort-ascending */
-.material-icons.space_bar:before { content: "\e32a" !important; }  /* ph-minus */
-.material-icons.star:before { content: "\e46a" !important; }  /* ph-star */
-.material-icons.stop:before { content: "\e46c" !important; }  /* ph-stop */
-.material-icons.storage:before { content: "\e2a0" !important; }  /* ph-hard-drives */
-.material-icons.subtitles:before { content: "\e1a8" !important; }  /* ph-subtitles */
-.material-icons.text_decrease:before { content: "\e48a" !important; }  /* ph-text-t */
-.material-icons.text_increase:before { content: "\e48a" !important; }  /* ph-text-t */
-.material-icons.theaters:before { content: "\e8c0" !important; }  /* ph-film-reel */
-.material-icons.toc:before { content: "\e2f2" !important; }  /* ph-list-bullets */
-.material-icons.tv:before { content: "\eae6" !important; }  /* ph-television-simple */
-.material-icons.undo:before { content: "\e08a" !important; }  /* ph-arrow-u-up-left */
-.material-icons.view_comfy:before { content: "\e296" !important; }  /* ph-grid-four */
-.material-icons.volume_up:before { content: "\e44a" !important; }  /* ph-speaker-high */
+.material-icons.add:before {
+  content: "\e3d4" !important;
+} /* ph-plus */
+.material-icons.airplay:before {
+  content: "\e004" !important;
+} /* ph-airplay */
+.material-icons.album:before {
+  content: "\ecac" !important;
+} /* ph-vinyl-record */
+.material-icons.arrow_back:before {
+  content: "\e058" !important;
+} /* ph-arrow-left */
+.material-icons.arrow_forward:before {
+  content: "\e06c" !important;
+} /* ph-arrow-right */
+.material-icons.arrow_upward:before {
+  content: "\e08e" !important;
+} /* ph-arrow-up */
+.material-icons.audiotrack:before {
+  content: "\e33c" !important;
+} /* ph-music-note */
+.material-icons.autorenew:before {
+  content: "\e094" !important;
+} /* ph-arrows-clockwise */
+.material-icons.backspace:before {
+  content: "\e0ae" !important;
+} /* ph-backspace */
+.material-icons.book:before {
+  content: "\e0e2" !important;
+} /* ph-book */
+.material-icons.brightness_high:before {
+  content: "\e472" !important;
+} /* ph-sun */
+.material-icons.call_split:before {
+  content: "\ed3c" !important;
+} /* ph-arrows-split */
+.material-icons.cast:before {
+  content: "\e58a" !important;
+} /* ph-monitor-arrow-up */
+.material-icons.check:before {
+  content: "\e182" !important;
+} /* ph-check */
+.material-icons.chevron_left:before {
+  content: "\e138" !important;
+} /* ph-caret-left */
+.material-icons.chevron_right:before {
+  content: "\e13a" !important;
+} /* ph-caret-right */
+.material-icons.close:before {
+  content: "\e4f6" !important;
+} /* ph-x */
+.material-icons.closed_caption:before {
+  content: "\e1a4" !important;
+} /* ph-closed-captioning */
+.material-icons.cloud_download:before {
+  content: "\e1ac" !important;
+} /* ph-cloud-arrow-down */
+.material-icons.content_copy:before {
+  content: "\e1ca" !important;
+} /* ph-copy */
+.material-icons.dashboard:before {
+  content: "\e464" !important;
+} /* ph-squares-four */
+.material-icons.delete:before {
+  content: "\e4a6" !important;
+} /* ph-trash */
+.material-icons.devices_other:before {
+  content: "\eba4" !important;
+} /* ph-devices */
+.material-icons.download:before {
+  content: "\e20c" !important;
+} /* ph-download-simple */
+.material-icons.drag_handle:before {
+  content: "\e794" !important;
+} /* ph-dots-six */
+.material-icons.dvr:before {
+  content: "\e58c" !important;
+} /* ph-monitor-play */
+.material-icons.exit_to_app:before {
+  content: "\e42a" !important;
+} /* ph-sign-out */
+.material-icons.expand_more:before {
+  content: "\e136" !important;
+} /* ph-caret-down */
+.material-icons.explore:before {
+  content: "\e1c8" !important;
+} /* ph-compass */
+.material-icons.fast_forward:before {
+  content: "\e6a6" !important;
+} /* ph-fast-forward */
+.material-icons.fast_rewind:before {
+  content: "\e6a8" !important;
+} /* ph-rewind */
+.material-icons.favorite:before {
+  content: "\e2a8" !important;
+} /* ph-heart */
+.material-icons.fiber_manual_record:before {
+  content: "\e3ee" !important;
+} /* ph-record */
+.material-icons.fiber_smart_record:before {
+  content: "\e0f2" !important;
+} /* ph-broadcast */
+.material-icons.file_download:before {
+  content: "\e20c" !important;
+} /* ph-download-simple */
+.material-icons.filter_alt:before {
+  content: "\e266" !important;
+} /* ph-funnel */
+.material-icons.folder:before {
+  content: "\e24a" !important;
+} /* ph-folder */
+.material-icons.folder_open:before {
+  content: "\e256" !important;
+} /* ph-folder-open */
+.material-icons.forward_30:before {
+  content: "\e19e" !important;
+} /* ph-clock-clockwise */
+.material-icons.fullscreen:before {
+  content: "\e1d0" !important;
+} /* ph-corners-out */
+.material-icons.get_app:before {
+  content: "\e20c" !important;
+} /* ph-download-simple */
+.material-icons.groups:before {
+  content: "\e68e" !important;
+} /* ph-users-three */
+.material-icons.home:before {
+  content: "\e2c2" !important;
+} /* ph-house */
+.material-icons.info:before {
+  content: "\e2ce" !important;
+} /* ph-info */
+.material-icons.info_outline:before {
+  content: "\e2ce" !important;
+} /* ph-info */
+.material-icons.keyboard:before {
+  content: "\e2d8" !important;
+} /* ph-keyboard */
+.material-icons.keyboard_arrow_down:before {
+  content: "\e136" !important;
+} /* ph-caret-down */
+.material-icons.keyboard_arrow_left:before {
+  content: "\e138" !important;
+} /* ph-caret-left */
+.material-icons.keyboard_arrow_right:before {
+  content: "\e13a" !important;
+} /* ph-caret-right */
+.material-icons.keyboard_arrow_up:before {
+  content: "\e13c" !important;
+} /* ph-caret-up */
+.material-icons.keyboard_return:before {
+  content: "\e044" !important;
+} /* ph-arrow-elbow-down-left */
+.material-icons.live_tv:before {
+  content: "\e754" !important;
+} /* ph-television */
+.material-icons.local_movies:before {
+  content: "\e792" !important;
+} /* ph-film-strip */
+.material-icons.lock:before {
+  content: "\e308" !important;
+} /* ph-lock-simple */
+.material-icons.lyrics:before {
+  content: "\e75c" !important;
+} /* ph-microphone-stage */
+.material-icons.menu:before {
+  content: "\e2f0" !important;
+} /* ph-list */
+.material-icons.mode_edit:before {
+  content: "\e3b4" !important;
+} /* ph-pencil-simple */
+.material-icons.more_vert:before {
+  content: "\e208" !important;
+} /* ph-dots-three-vertical */
+.material-icons.movie:before {
+  content: "\e8c2" !important;
+} /* ph-film-slate */
+.material-icons.music_note:before {
+  content: "\e33c" !important;
+} /* ph-music-note */
+.material-icons.navigate_before:before {
+  content: "\e138" !important;
+} /* ph-caret-left */
+.material-icons.navigate_next:before {
+  content: "\e13a" !important;
+} /* ph-caret-right */
+.material-icons.pause:before {
+  content: "\e39e" !important;
+} /* ph-pause */
+.material-icons.pause_circle_filled:before {
+  content: "\e3a0" !important;
+} /* ph-pause-circle */
+.material-icons.person:before {
+  content: "\e4c2" !important;
+} /* ph-user */
+.material-icons.phonelink_lock:before {
+  content: "\e2fe" !important;
+} /* ph-lock-key */
+.material-icons.photo:before {
+  content: "\e2ca" !important;
+} /* ph-image */
+.material-icons.picture_in_picture_alt:before {
+  content: "\e64c" !important;
+} /* ph-picture-in-picture */
+.material-icons.play_arrow:before {
+  content: "\e3d0" !important;
+} /* ph-play */
+.material-icons.play_circle_filled:before {
+  content: "\e3d2" !important;
+} /* ph-play-circle */
+.material-icons.playlist_add:before {
+  content: "\e6aa" !important;
+} /* ph-playlist */
+.material-icons.preview:before {
+  content: "\e220" !important;
+} /* ph-eye */
+.material-icons.queue_music:before {
+  content: "\e6ac" !important;
+} /* ph-queue */
+.material-icons.redo:before {
+  content: "\e08c" !important;
+} /* ph-arrow-u-up-right */
+.material-icons.remove_circle:before {
+  content: "\e32c" !important;
+} /* ph-minus-circle */
+.material-icons.remove_red_eye:before {
+  content: "\e220" !important;
+} /* ph-eye */
+.material-icons.repeat:before {
+  content: "\e3f6" !important;
+} /* ph-repeat */
+.material-icons.repeat_one:before {
+  content: "\e3f8" !important;
+} /* ph-repeat-once */
+.material-icons.replay:before {
+  content: "\e038" !important;
+} /* ph-arrow-counter-clockwise */
+.material-icons.replay_10:before {
+  content: "\e1a0" !important;
+} /* ph-clock-counter-clockwise */
+.material-icons.save:before {
+  content: "\e248" !important;
+} /* ph-floppy-disk */
+.material-icons.search:before {
+  content: "\e30c" !important;
+} /* ph-magnifying-glass */
+.material-icons.settings:before {
+  content: "\e270" !important;
+} /* ph-gear */
+.material-icons.shuffle:before {
+  content: "\e422" !important;
+} /* ph-shuffle */
+.material-icons.skip_next:before {
+  content: "\e5a6" !important;
+} /* ph-skip-forward */
+.material-icons.skip_previous:before {
+  content: "\e5a4" !important;
+} /* ph-skip-back */
+.material-icons.sort_by_alpha:before {
+  content: "\e444" !important;
+} /* ph-sort-ascending */
+.material-icons.space_bar:before {
+  content: "\e32a" !important;
+} /* ph-minus */
+.material-icons.star:before {
+  content: "\e46a" !important;
+} /* ph-star */
+.material-icons.stop:before {
+  content: "\e46c" !important;
+} /* ph-stop */
+.material-icons.storage:before {
+  content: "\e2a0" !important;
+} /* ph-hard-drives */
+.material-icons.subtitles:before {
+  content: "\e1a8" !important;
+} /* ph-subtitles */
+.material-icons.text_decrease:before {
+  content: "\e48a" !important;
+} /* ph-text-t */
+.material-icons.text_increase:before {
+  content: "\e48a" !important;
+} /* ph-text-t */
+.material-icons.theaters:before {
+  content: "\e8c0" !important;
+} /* ph-film-reel */
+.material-icons.toc:before {
+  content: "\e2f2" !important;
+} /* ph-list-bullets */
+.material-icons.tv:before {
+  content: "\eae6" !important;
+} /* ph-television-simple */
+.material-icons.undo:before {
+  content: "\e08a" !important;
+} /* ph-arrow-u-up-left */
+.material-icons.view_comfy:before {
+  content: "\e296" !important;
+} /* ph-grid-four */
+.material-icons.volume_up:before {
+  content: "\e44a" !important;
+} /* ph-speaker-high */
 
 /* ===== 08-indicateurs.css ===== */
 /* --- 8. Indicateur "vu" flottant ------------------------------------- */
@@ -1961,23 +2162,23 @@ body.tabs-in-page #indexPage {
    On rend ici a la pastille son detachement et ses coins ronds. */
 .cardIndicators,
 .listItemIndicators {
-    right: .5em !important;
-    top: .5em !important;
+  right: 0.5em !important;
+  top: 0.5em !important;
 }
 
 .countIndicator,
 .playedIndicator {
-    border-radius: 999px !important;
+  border-radius: 999px !important;
 }
 
 .innerCardFooter {
-    border-radius: var(--rounding) !important;
+  border-radius: var(--rounding) !important;
 }
 
 .mediaSourceIndicator {
-    left: .5em;
-    top: .5em;
-    border-radius: var(--rounding) !important;
+  left: 0.5em;
+  top: 0.5em;
+  border-radius: var(--rounding) !important;
 }
 
 /* ===== 09-lecteur.css ===== */
@@ -1990,7 +2191,7 @@ body.tabs-in-page #indexPage {
    On masque les traits et pas leur conteneur : celui-ci est en position
    absolue et sert d'ancrage, le retirer ne gagne rien. */
 .sliderMarker {
-    display: none !important;
+  display: none !important;
 }
 
 /* --- 10. Barres de lecture arrondies --------------------------------- */
@@ -2009,7 +2210,7 @@ body.tabs-in-page #indexPage {
    sont des emby-slider. Pour n'arrondir que la progression, prefixer par
    .osdPositionSlider + .mdl-slider-background-flex-container. */
 .mdl-slider-background-flex {
-    border-radius: 1em !important;
+  border-radius: 1em !important;
 }
 
 /* ===== 10-carte-barre.css ===== */
@@ -2028,13 +2229,13 @@ body.tabs-in-page #indexPage {
 /* Le pied de carte redevient une bande en bas. Le border-radius que lui
    pose la section 8 devient sans effet : le fond est transparent. */
 .innerCardFooter.fullInnerCardFooter.innerCardFooterClear {
-    top: auto !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    margin: 0 !important;
-    background: transparent !important;
-    box-shadow: none !important;
+  top: auto !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 /* Geometrie de la barre : ce sont les trois valeurs a retoucher pour
@@ -2043,9 +2244,9 @@ body.tabs-in-page #indexPage {
    .innerCardFooter a 100% - et que toute mise en correspondance entre la
    barre et un bouton d'overlay tombe alors a cote de quelques pixels. */
 :root {
-    --card-bar-height: 6px;
-    --card-bar-gap: 8px;    /* detachement du bord bas : l'effet flottant */
-    --card-bar-inset: 13px; /* retrait lateral */
+  --card-bar-height: 6px;
+  --card-bar-gap: 8px; /* detachement du bord bas : l'effet flottant */
+  --card-bar-inset: 13px; /* retrait lateral */
 }
 
 /* Le !important sur height n'est pas decoratif : overlayprogress vise
@@ -2056,19 +2257,19 @@ body.tabs-in-page #indexPage {
    plafonne a la moitie de la hauteur : sur 6px de haut, la barre est une
    gelule quelle que soit la valeur. */
 .innerCardFooter .itemProgressBar {
-    height: var(--card-bar-height) !important;
-    margin: var(--card-bar-gap) var(--card-bar-inset) !important;
-    border-radius: var(--rounding) !important;
-    background: rgba(0, 0, 0, .35) !important;
-    backdrop-filter: blur(4px);
-    overflow: hidden;
+  height: var(--card-bar-height) !important;
+  margin: var(--card-bar-gap) var(--card-bar-inset) !important;
+  border-radius: var(--rounding) !important;
+  background: rgba(0, 0, 0, 0.35) !important;
+  backdrop-filter: blur(4px);
+  overflow: hidden;
 }
 
 /* overlayprogress laisse le remplissage a 35% d'opacite, ce qui convient a
    un voile plein ecran mais delave une barre de 6px. */
 .innerCardFooter .itemProgressBarForeground {
-    background-color: rgba(var(--accent, 98, 121, 205), .95) !important;
-    border-radius: var(--rounding) !important;
+  background-color: rgba(var(--accent, 98, 121, 205), 0.95) !important;
+  border-radius: var(--rounding) !important;
 }
 
 /* ===== 11-carte-boutons.css ===== */
@@ -2120,10 +2321,10 @@ body.tabs-in-page #indexPage {
    classes. Sans ce garde-fou, ces offsets en !important la decrocheraient
    de son centrage. */
 .layout-mobile .cardOverlayButton-br:not(.cardOverlayButton-centered) {
-    top: 0 !important;
-    bottom: auto !important;
-    left: 0 !important;
-    right: auto !important;
+  top: 0 !important;
+  bottom: auto !important;
+  left: 0 !important;
+  right: auto !important;
 }
 
 /* Le coin haut gauche n'etait occupe que par .mediaSourceIndicator, pose a
@@ -2132,7 +2333,7 @@ body.tabs-in-page #indexPage {
    n'a aucune raison d'y bouger. Elle ne parait que sur les items a sources
    multiples, la collision est donc rare - mais illisible quand elle a lieu. */
 .layout-mobile .mediaSourceIndicator {
-    left: 3em;
+  left: 3em;
 }
 
 /* ===== 12-carte-zone.css ===== */
@@ -2163,16 +2364,18 @@ body.tabs-in-page #indexPage {
    l'originale, donc departagee par l'ordre - annulation d'abord,
    retablissement ensuite. */
 
-/* Annulation des deux declencheurs trop larges. */
-.card:hover .cardOverlayContainer,
-.card-hoverable:hover .cardOverlayContainer,
-.cardBox:hover .cardOverlayContainer {
-    opacity: 0;
+/* Annulation des deux declencheurs trop larges, par leur ancetre commun.
+   .card-hoverable est porte par .card lui-meme, et .cardBox en est un
+   enfant : survoler l'un ou l'autre survole .card. Les trois selecteurs
+   pesent 0-3-0 et designent le meme jeu d'elements — celui du dessus
+   suffit, et les deux autres ne faisaient que nommer les regles visees. */
+.card:hover .cardOverlayContainer {
+  opacity: 0;
 }
 
 .cardBox:hover > .cardScalable .cardOverlayContainer {
-    box-shadow: none !important;
-    border: 0 solid transparent !important;
+  box-shadow: none !important;
+  border: 0 solid transparent !important;
 }
 
 /* Retablissement sur la seule affiche. Valeurs reprises telles quelles de
@@ -2180,23 +2383,24 @@ body.tabs-in-page #indexPage {
    :focus-within n'est pas touche, la navigation clavier et TV continue
    d'allumer l'overlay par la regle d'origine de Jellyfin.
 
-   Le liseré est bien une border, et il decale les icones de 2px a chaque
+   Le liseré est bien une border, et il decale les icones de 3px a chaque
    survol : border participe au modele de boite, et .cardOverlayContainer
-   etant cale sur ses quatre cotes, les 2px se prennent sur l'interieur.
+   etant cale sur ses quatre cotes, les 3px se prennent sur l'interieur.
    Connu et assume, l'effet etant a peine perceptible. Le correctif tient en
    deux lignes si l'envie revient - outline ne participe pas au modele de
    boite, donc ne decale rien :
-     outline: 2px solid rgb(var(--accent, 98, 121, 205)) !important;
-     outline-offset: -2px;
+     outline: 3px solid rgb(var(--accent, 98, 121, 205)) !important;
+     outline-offset: -3px;
    a poser ici en remplacement de la border, et sans rien d'autre a changer :
    la regle d'annulation ci-dessus neutralise deja la border dans tous les
    cas. */
 .cardBox > .cardScalable:hover .cardOverlayContainer {
-    opacity: 1;
-    box-shadow: 0 0 4px rgb(var(--accent, 98, 121, 205)),
-                0 0 8px rgb(var(--accent, 98, 121, 205)),
-                0 0 12px rgba(var(--accent, 98, 121, 205), .6) !important;
-    border: solid 2px rgb(var(--accent, 98, 121, 205)) !important;
+  opacity: 1;
+  box-shadow:
+    0 0 4px rgb(var(--accent, 98, 121, 205)),
+    0 0 8px rgb(var(--accent, 98, 121, 205)),
+    0 0 12px rgba(var(--accent, 98, 121, 205), 0.6) !important;
+  border: solid 3px rgb(var(--accent, 98, 121, 205)) !important;
 }
 
 /* ===== 13-carte-curseur.css ===== */
@@ -2216,11 +2420,11 @@ body.tabs-in-page #indexPage {
    l'heritage ne s'applique qu'aux enfants qui n'ont pas la leur.
    .cardContent et les boutons gardent donc les leurs. */
 .card {
-    cursor: default !important;
+  cursor: default !important;
 }
 
 .cardBox {
-    cursor: pointer !important;
+  cursor: pointer !important;
 }
 
 /* Le bandeau sous l'affiche ne doit pas etre main sur toute sa surface : il
@@ -2244,12 +2448,12 @@ body.tabs-in-page #indexPage {
    main y est legitime, il ne faut pas l'y retirer. */
 .cardBox > .cardText,
 .cardFooter > .cardText {
-    cursor: default !important;
+  cursor: default !important;
 }
 
 .cardBox > .cardText a,
 .cardFooter > .cardText a {
-    cursor: pointer !important;
+  cursor: pointer !important;
 }
 
 /* Reste une incoherence, assumee : un clic dans la gouttiere navigue
@@ -2295,8 +2499,8 @@ body.tabs-in-page #indexPage {
    cartes non visuelles exactement comme avant, et cette regle continue de
    couvrir les .visualCardBox, que colorful exclut. */
 .cardPadder {
-    background-color: #0000 !important;
-    box-shadow: none !important;
+  background-color: #0000 !important;
+  box-shadow: none !important;
 }
 
 /* ===== 15-barre-defilement.css ===== */
@@ -2325,5 +2529,405 @@ body.tabs-in-page #indexPage {
 #moviesPage,
 #tvRecommendedPage,
 #musicRecommendedPage {
-    overflow-x: hidden;
+  overflow-x: hidden;
+}
+
+/* ===== 16-tv-focus.css ===== */
+/* --- 16. Etats de focus sur TV ---------------------------------------- */
+/* Tout ce module ne vise que .layout-tv, pose par layoutManager sur
+   l'element racine. La souris et le tactile ne le voient jamais. */
+
+/* Pourquoi la TV n'a pas le zoom de focus du client.
+
+   cardBuilder ne pose .show-animation que sous
+       enableFocusTransform = !browser.slow && !browser.edge
+   et Tizen tombe dans "slow". Les deux regles de card.scss se lisent
+   alors a l'envers de ce qu'on attend :
+
+     .card.show-animation:focus > .cardBox      { transform: scale(1.07) }
+     .card.show-focus:not(.show-animation)
+         .cardBox:not(.visualCardBox) .cardScalable
+                                        { border: .5em solid transparent;
+                                          border-radius: .7em }
+
+   La premiere, le zoom, est le cas nominal — et c'est celle que la TV
+   n'obtient jamais. La seconde est le repli pour appareil lent, un cadre
+   de .5em que themes/dark/theme.css colore ensuite :
+
+     .card:focus .cardBox:not(.visualCardBox) .cardScalable
+                                        { border-color: #00a4dc !important }
+
+   D'ou le gros liseré, et son bleu : #00a4dc est l'accent par defaut de
+   Jellyfin, code en dur dans le theme sombre, sans rapport avec --accent.
+
+   On reprend les deux : le cadre devient un anneau fin a l'accent, et le
+   zoom que la TV aurait du avoir est rendu ici. */
+
+:root {
+  --tv-card-ring: 0.13em; /* epaisseur de l'anneau de focus des cartes */
+  --tv-card-zoom: 1.06; /* agrandissement de la carte visee */
+}
+
+/* Le cadre de repli, sur TOUTES les cartes, visees ou non : .show-focus
+   est pose par cardBuilder sur chaque carte des que layoutManager.tv, ce
+   n'est pas un etat. L'affiner ici agrandit donc les affiches de la
+   grille entiere, uniformement — aucun decalage au passage du focus,
+   puisque la boite ne change pas de taille selon l'etat.
+
+   Le rayon suit --rounding, que le preset fixe a 12px et que rounding.css
+   applique deja a .cardImageContainer et a .cardOverlayContainer. Un
+   anneau doit arrondir un peu plus que ce qu'il entoure, sinon il se
+   pince dans les angles : d'ou le calc.
+
+   Specificite 0,6,0 avec !important contre 0,6,0 sans : on l'emporte. */
+.layout-tv .card.show-focus .cardBox.visualCardBox,
+.layout-tv .card.show-focus .cardBox:not(.visualCardBox) .cardScalable {
+  border-width: var(--tv-card-ring, 0.13em) !important;
+  border-color: transparent !important;
+  border-radius: calc(
+    var(--rounding, 12px) + var(--tv-card-ring, 0.13em)
+  ) !important;
+  transition:
+    border-color 0.18s ease-out,
+    box-shadow 0.18s ease-out !important;
+}
+
+/* La carte visee. L'anneau prend l'accent, et l'ombre detache l'affiche du
+   fond — c'est elle qui fait lire la carte comme posee au-dessus des
+   autres, plus que le zoom lui-meme.
+   0,6,0 !important contre le 0,4,0 !important du theme sombre. */
+.layout-tv .card:focus .cardBox.visualCardBox,
+.layout-tv .card:focus .cardBox:not(.visualCardBox) .cardScalable {
+  border-color: rgb(var(--accent, 98, 121, 205)) !important;
+  box-shadow:
+    0 0.5em 1.5em rgba(0, 0, 0, 0.55),
+    0 0 1.2em rgba(var(--accent, 98, 121, 205), 0.5) !important;
+}
+
+/* Le zoom. Trois choses le rendaient impossible telles quelles :
+
+   1. .card:not(.show-animation) { contain: layout style paint }. Le
+      confinement de peinture rogne les descendants a la boite de la
+      carte : l'agrandissement etait decoupe pile a son bord. On retire le
+      seul mot-cle qui gene, et sur la seule carte visee — pas sur la
+      grille entiere, le confinement etant precisement ce qui garde une TZ
+      fluide sur une page de deux cents affiches.
+
+   2. .cardBox { transition: none }. Sans transition le zoom claque.
+
+   3. .scrollX { overflow-y: hidden } sur les rangees de l'accueil
+      rognerait le haut et le bas de la carte agrandie. Jellyfin l'a deja
+      prevu : .layout-tv .padded-top-focusscale { margin-top: -1.5em;
+      padding-top: 1.5em }, et sa jumelle en bas, portees par les rangees.
+      Le rembourrage entre dans la boite de rognage, la marge negative
+      annule son effet sur la mise en page : 1.5em de degagement gratuit,
+      auxquels s'ajoutent le margin de .4em de .cardBox. C'est ce qui
+      borne --tv-card-zoom : au-dela de 1.15 environ, la carte ressort du
+      degagement et se fait couper sur les rangees horizontales.
+
+   L'empilement, lui, est deja acquis : card.scss pose
+   .card:focus { position: relative !important; z-index: 10 !important },
+   la carte agrandie passe donc au-dessus de ses voisines. */
+.layout-tv .card > .cardBox {
+  transition: transform 0.18s ease-out !important;
+}
+
+.layout-tv .card:focus {
+  contain: layout style !important;
+}
+
+.layout-tv .card:focus > .cardBox {
+  transform: scale(var(--tv-card-zoom, 1.06)) !important;
+}
+
+/* --- Boutons de la page d'un film, hors Lecture ----------------------- */
+/* Meme langage que les icones de l'en-tete, que la TV traite ainsi :
+     .paper-icon-button-light.show-focus:focus { color: accent }
+   couleur seule, aucun fond. Les boutons de la rangee de detail sont des
+   .emby-button, qui recoivent au contraire un aplat :
+     themes/dark   .emby-button.show-focus:focus { background: #00a4dc }
+     accentlist    .emby-button.show-focus:focus
+                       { background: rgba(var(--accent),.5) !important }
+   On retire l'aplat et on passe l'accent sur le trait. Le scale(1.2) de
+   card.scss est conserve : c'est lui qui porte le retour de focus une
+   fois le fond parti, exactement comme le scale(1.3) des icones de
+   l'en-tete.
+
+   :not(.btnPlay) parce que le bouton Lecture porte lui aussi .detailButton
+   et garde sa pilule, traitee juste en dessous.
+   0,5,0 !important contre le 0,3,0 !important d'accentlist. */
+.layout-tv .mainDetailButtons .detailButton:not(.btnPlay):focus {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: rgb(var(--accent, 98, 121, 205)) !important;
+}
+
+/* --- Bouton Lecture vise --------------------------------------------- */
+/* La pilule est deja a l'accent au repos (section 2) : l'eclaircir un peu
+   ne se voyait pas d'un fauteuil. Une inversion a ete essayee — fond
+   blanc, trait a l'accent, sur le modele de
+     themes/dark  .layout-tv .emby-button.detailFloatingButton:focus
+                      { background-color: #f2f2f2; color: #00a4dc }
+   — et ecartee : deux aplats de couleur qui s'echangent font une rupture,
+   la ou le bouton doit simplement se signaler.
+
+   La pilule garde donc sa couleur, et c'est un anneau blanc qui porte le
+   focus. Le blanc n'est pas un choix par defaut : sur un fond deja a
+   l'accent, un anneau d'accent serait invisible, et le blanc est ce que
+   le theme emploie deja pour marquer un etat par-dessus une surface
+   coloree — pilule d'onglet actif, voile de survol de la section 17.
+
+   scale(1.06) et non le 1.2 de card.scss : la pilule est large, et
+   l'agrandir d'un cinquieme la faisait chevaucher le bouton voisin.
+   0,5,0 !important contre le 0,4,0 !important de la section 2. */
+.layout-tv .mainDetailButtons .btnPlay:not(.hide):focus {
+  background-color: rgb(var(--accent, 98, 121, 205)) !important;
+  background-image: none !important;
+  color: #fff !important;
+  box-shadow:
+    0 0 0 0.15em #fff,
+    0 0 1.6em rgba(var(--accent, 98, 121, 205), 0.65),
+    0 0.4em 1.2em rgba(0, 0, 0, 0.5) !important;
+  transform: scale(1.06) !important;
+  transition:
+    background-color 0.15s,
+    box-shadow 0.15s,
+    transform 0.15s !important;
+}
+
+/* ===== 17-boutons-survol.css ===== */
+/* --- 17. Survol des boutons d'action ---------------------------------- */
+/* Un seul langage de survol pour les boutons qui ne sont pas l'action
+   principale : les icones de l'en-tete, et la rangee de la page d'un film
+   a droite du bouton Lecture. Les deux recevaient un aplat a l'accent,
+   pose par deux regles differentes d'Ultrachromic :
+
+     type/colorful.css   .paper-icon-button-light:hover
+                             { background-color: rgba(var(--accent),.25)
+                               !important }        icones de l'en-tete
+     type/colorful.css   .button-flat:hover
+                             { background: rgba(var(--accent),.25) }
+     accentlist.css      .button-flat:hover
+                             { color: rgba(var(--accent)) !important }
+                                                   rangee de detail
+
+   Les boutons de la rangee sont bien des .button-flat : cardBuilder les
+   sort en  "button-flat btnPlaystate hide detailButton"  et l'element
+   personnalise emby-button y ajoute sa classe.
+
+   Sur l'en-tete, l'aplat s'accompagnait d'un temps de pose, et lui seul
+   expliquait la difference entre l'accueil et la page d'un film :
+
+     effects/glassy.css  .paper-icon-button-light:hover
+                             { backdrop-filter: blur(4px);
+                               will-change: backdrop-filter;
+                               transform: translateZ(0) }
+
+   Le survol cree une couche de composition ET demande un flou d'arriere-
+   plan au meme instant. Sur la page d'un film l'en-tete est
+   .semiTransparent, donc pose sur l'affiche de fond : il y a de la matiere
+   a flouter et le passage se voit. Sur l'accueil il surplombe un aplat
+   sombre, le flou ne change rien a l'image et la pastille d'accent a 25 %
+   sur du noir ne se remarque pas. Une regle unique, deux rendus.
+
+   Le voile retenu est celui que la rangee d'onglets porte deja
+   (section 4) : c'est ce qui rend la barre coherente d'une page a
+   l'autre, puis la barre coherente avec la page.
+
+   La TV n'entre pas ici : elle n'a pas de survol, et son focus est traite
+   en section 16 — icone a l'accent, sans aplat, comme le fait Jellyfin
+   pour les icones de l'en-tete en TV. La regle est la meme des deux
+   cotes : la rangee de detail se comporte comme l'en-tete, sur chaque
+   plateforme, avec le retour que cette plateforme sait rendre.
+
+   Portee limitee a .skinHeader, a .selectionCommandsPanel (le bandeau de
+   la section 18, que le client accroche a <body> et non a l'en-tete) et a
+   .mainDetailButtons :
+   .paper-icon-button-light et .button-flat sont les classes de toutes les
+   icones-boutons du client, y compris celles des cartes, des boites de
+   dialogue et du lecteur, ou l'aplat d'accent est a sa place.
+
+   Specificite 0,3,1 et 0,4,0 contre le 0,1,0 et le 0,2,0 d'Ultrachromic :
+   on l'emporte a !important egal, sans dependre de l'ordre. */
+
+/* Deux precautions, toutes deux imposees par le bouton de profil.
+
+   button. dans le selecteur : l'avatar est un div IMBRIQUE dans le
+   bouton, et ce div porte lui aussi paper-icon-button-light —
+     <button class="... paper-icon-button-light headerUserButton">
+       <div class="... paper-icon-button-light headerUserButtonRound"
+            style="background-image:url(...)">
+   Sans le type, les deux elements recoivent le voile : un seul dans
+   l'anneau de padding du bouton, deux des que la souris entre sur le
+   rond, donc une teinte qui change a l'interieur d'un meme bouton. Les
+   vrais boutons sont des <button>, l'avatar est le seul div a porter
+   cette classe : le type suffit a les departager.
+
+   background-color et non background : la forme courte remet
+   background-image a none, et un !important l'emporte sur un style en
+   ligne. L'avatar disparaissait donc au survol. Rien ici n'a besoin de la
+   forme courte — colorful.css pose sa couleur par la meme, mais
+   background-color seul la surcharge. */
+.skinHeader button.paper-icon-button-light:hover,
+.selectionCommandsPanel button.paper-icon-button-light:hover,
+.mainDetailButtons .detailButton:not(.btnPlay):hover {
+  background-color: var(--btn-hover-bg) !important;
+  color: #fff !important;
+  /* La couche de composition ne doit pas se creer au survol, sinon le
+       temps de pose reste meme une fois le flou retire. Sans effet sur la
+       rangee de detail, que glassy.css ne touche pas. */
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  will-change: auto !important;
+}
+
+/* ===== 18-selection.css ===== */
+/* --- 18. Bandeau de selection ----------------------------------------- */
+/* La barre qui recouvre l'en-tete des qu'on selectionne des items. Le
+   client la genere a la volee et l'accroche a <body>, hors de
+   .skinHeader :
+
+     <div class="selectionCommandsPanel">
+       <button class="btnCloseSelectionPanel ... paper-icon-button-light">
+       <h1 class="itemSelectionCount">
+       <button class="btnSelectionPanelOptions ... paper-icon-button-light">
+
+   position: fixed, cale sur top/left/right a 0, z-index 99999.
+
+   Deux choses la rendaient illisible :
+
+     themes/dark        .selectionCommandsPanel { background: #00a4dc }
+     type/colorful.css  .navMenuOption-selected, .selectionCommandsPanel
+                            { background: rgba(var(--accent), .8)
+                              !important }
+
+   Un aplat a 80 % pose sur une page qui defile : le contenu passe au
+   travers et le bandeau se confond avec ce qu'il recouvre, d'autant plus
+   sur une grille d'affiches claires. Et un aplat d'accent plein bord a
+   bord ne dit pas la meme chose que le reste du theme, ou l'accent
+   souligne — anneau de focus, pilule de lecture, onglet actif — mais ne
+   remplit jamais une surface entiere.
+
+   On reprend donc la surface des autres elements flottants du theme
+   (.dialog, .toast, .mainDrawer d'Ultrachromic : fond tres sombre et flou
+   d'arriere-plan), et l'accent redevient un liseré. */
+
+.selectionCommandsPanel {
+  /* Detache des trois bords. calc plutot que max : les valeurs de zone
+       sure s'ajoutent au retrait, elles ne s'y substituent pas — sur un
+       telephone a encoche il faut les deux, le bandeau etant desormais
+       une pastille et non plus une bande collee au bord. */
+  top: calc(env(safe-area-inset-top, 0px) + 0.7em) !important;
+  left: calc(env(safe-area-inset-left, 0px) + 0.7em) !important;
+  right: calc(env(safe-area-inset-right, 0px) + 0.7em) !important;
+
+  /* Le client reserve la zone sure dans son padding ; elle est reprise
+       ci-dessus, ce padding n'a plus lieu d'etre et faisait une barre de
+       trois centimetres de haut. */
+  padding: 0.3em 0.45em !important;
+
+  border-radius: 999px !important;
+  background: rgba(10, 10, 10, 0.95) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(var(--accent, 98, 121, 205), 0.55),
+    0 0.6em 1.8em rgba(0, 0, 0, 0.55) !important;
+}
+
+/* Meme idiome que effects/glassy.css : le flou n'arrive que la ou il est
+   pris en charge, et le fond s'allege d'autant. Sans lui le bandeau reste
+   lisible — c'est tout l'objet des 95 % ci-dessus. */
+@supports (backdrop-filter: blur(15px)) {
+  .selectionCommandsPanel {
+    background: rgba(10, 10, 10, 0.72) !important;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+  }
+}
+
+/* Le compteur est un <h1> : a la taille d'un titre de page, il imposait
+   a lui seul la hauteur du bandeau. */
+.selectionCommandsPanel .itemSelectionCount {
+  font-size: 1.05em !important;
+  font-weight: 600 !important;
+  margin: 0 0.4em !important;
+}
+
+/* --- Cartes en mode selection ----------------------------------------- */
+/* Point de depart indispensable : .itemSelectionPanel est pose sur
+   TOUTES les cartes des l'entree en mode selection, pas seulement sur
+   celles qui sont cochees. Le module de selection le cree par carte, avec
+   sa case a l'interieur, et l'accroche a .cardBox — qui recoit
+   .withMultiSelect, seule regle qui lui donne  position: relative,  donc
+   le panneau couvre l'affiche ET le bandeau de titre.
+
+   Corollaire, verifie dans le code du client : rien dans le DOM ne
+   distingue une carte cochee. Le module ne tient qu'un tableau d'ID en
+   JavaScript et bascule  input.checked ;  il ne pose aucune classe, ni
+   sur la carte, ni sur le panneau. Le seul signal disponible en CSS est
+   donc  .chkItemSelect:checked,  et il est PLUS BAS dans l'arbre que
+   l'element a peindre.
+
+   D'ou le decoupage en deux etages :
+
+     - ce que tout moteur sait faire : un voile neutre sur les cartes du
+       mode, et une case qu'on voit. C'est la case qui porte l'etat, et
+       elle seule le portait deja chez Jellyfin — sauf qu'a .14em de bord
+       en currentcolor sur une affiche claire, elle disparaissait.
+     - ce qui demande :has() : l'anneau d'accent sur la carte cochee,
+       c'est-a-dire remonter du champ coche a son ancetre.
+
+   Le second est mis sous @supports selector(:has(*)) : les navigateurs de
+   TV anterieurs a Chromium 105 ignorent alors le bloc entier au lieu
+   d'avaler une regle qu'ils ne savent pas analyser. Ils gardent le
+   premier etage, qui suffit a se reperer. */
+
+/* Le voile d'Ultrachromic teintait a l'accent les cartes du mode entier,
+   cochees ou non — l'accent ne voulait donc rien dire, et 25 % ne se
+   voyaient pas davantage. On le rend neutre, un peu plus dense que le
+   rgba(0,0,0,.3) de Jellyfin : il ne dit plus que "mode selection actif",
+   et laisse l'accent au seul etat coche. */
+.itemSelectionPanel {
+  background: rgba(0, 0, 0, 0.38) !important;
+}
+
+/* La case. Son conteneur .checkboxContainer n'est pas positionne : c'est
+   .itemSelectionPanel lui-meme, en position absolute, qui sert de
+   reference — top et left se lisent donc depuis le coin de la carte.
+   Le .5em reprend le calage des indicateurs de la section 8.
+   0,2,0 contre le 0,1,0 de .multiSelectCheckboxOutline, dont le
+   border-radius: 0 !important carrait la case. */
+.itemSelectionPanel .checkboxOutline {
+  top: 0.5em !important;
+  left: 0.5em !important;
+  border-width: 0.12em !important;
+  border-color: #fff !important;
+  border-radius: 999px !important;
+  background-color: rgba(0, 0, 0, 0.55) !important;
+  box-shadow: 0 0.15em 0.5em rgba(0, 0, 0, 0.6) !important;
+  transition: background-color 0.15s !important;
+}
+
+/* Cochee : la case se remplit d'accent, le blanc du bord et de l'icone
+   tenant le contraste sur n'importe quelle affiche. accentlist.css lui
+   donnait  border: .01em solid rgba(var(--accent),.5),  soit un trait
+   d'un demi-pixel a moitie transparent — invisible en pratique. */
+.itemSelectionPanel .emby-checkbox:checked + span + .checkboxOutline {
+  background-color: rgb(var(--selection, 98, 121, 205)) !important;
+  border-color: #fff !important;
+}
+
+/* fields_noborder.css repeint le glyphe a l'accent :
+     .checkboxIcon { color: rgba(var(--selection), 1) }
+   sur une case desormais remplie d'accent, il disparaissait dans son
+   propre fond. Le blanc de Jellyfin est le bon choix ici, dans les deux
+   etats : la case est sombre au repos, accent une fois cochee. */
+.itemSelectionPanel .checkboxIcon {
+  color: #fff !important;
+}
+
+@supports selector(:has(*)) {
+  .itemSelectionPanel:has(.chkItemSelect:checked) {
+    background: rgba(var(--selection, 98, 121, 205), 0.3) !important;
+    box-shadow: inset 0 0 0 0.16em rgb(var(--selection, 98, 121, 205)) !important;
+  }
 }

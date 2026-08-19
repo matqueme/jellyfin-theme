@@ -1,10 +1,10 @@
 /* --- 6. Corrections TV ----------------------------------------------- */
-/* Sur TV, Jellyfin dessine deja son propre cadre de focus :
-   .card.show-focus ... { border: .5em solid transparent } qui se colore
-   a l'accent. Mon anneau s'y ajoutait, d'ou le double liseré. Sur TV on
-   laisse faire Jellyfin ; l'anneau ne sert qu'a la souris. */
+/* Les portraits de la page de connexion recoivent un anneau accent en
+   box-shadow (section 3). Sur TV la carte a deja le sien, dessine par la
+   section 16 sur son .cardScalable : les deux se cumulaient en double
+   liseré. On garde celui de la TV, l'autre ne sert qu'a la souris. */
 .layout-tv #divUsers .card:focus .cardContent {
-    box-shadow: none !important;
+  box-shadow: none !important;
 }
 
 /* Logo de la page d'un film. Jellyfin masque volontairement ce logo sur
@@ -17,11 +17,10 @@
    Pour le masquer sur TV comme le prevoit Jellyfin, remplacer tout le
    bloc par  display: none !important; */
 .layout-tv #itemDetailPage .detailLogo {
-    margin-top: 0 !important;
-    margin-bottom: 1vh !important;
-    height: 10vh !important;
+  margin-top: 0 !important;
+  margin-bottom: 1vh !important;
+  height: 10vh !important;
 }
-
 
 /* Onglets cales apres le logo, en TV, sans mesure JavaScript.
    L'app Tizen embarque sa propre copie du client web : le plugin
@@ -52,33 +51,33 @@
    Media query alignee sur celle de la section 4 : sous 50em la rangee
    reste en dessous, comme sur telephone. */
 @media all and (min-width: 50em) {
-    .layout-tv .skinHeader {
-        flex-direction: row !important;
-        align-items: center !important;
-    }
-    .layout-tv .skinHeader .headerTop,
-    .layout-tv .skinHeader .headerLeft {
-        flex-grow: 0 !important;
-    }
-    .layout-tv .skinHeader .headerRight {
-        position: absolute !important;
-        right: .8em !important;
-        top: 50% !important;
-        transform: translateY(-50%) !important;
-    }
-    /* Plus haute specificite que la regle absolue de la section 4
+  .layout-tv .skinHeader {
+    flex-direction: row !important;
+    align-items: center !important;
+  }
+  .layout-tv .skinHeader .headerTop,
+  .layout-tv .skinHeader .headerLeft {
+    flex-grow: 0 !important;
+  }
+  .layout-tv .skinHeader .headerRight {
+    position: absolute !important;
+    right: 0.8em !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+  }
+  /* Plus haute specificite que la regle absolue de la section 4
        (0,4,0 contre 0,3,0), qui ne concerne donc plus que le bureau. */
-    .layout-tv .skinHeader .headerTabs.sectionTabs {
-        position: static !important;
-        transform: none !important;
-        left: auto !important;
-        top: auto !important;
-        width: auto !important;
-        margin: 0 !important;
-    }
-    /* Boite carree : l'icone la remplit, plus aucun vide a sa droite.
+  .layout-tv .skinHeader .headerTabs.sectionTabs {
+    position: static !important;
+    transform: none !important;
+    left: auto !important;
+    top: auto !important;
+    width: auto !important;
+    margin: 0 !important;
+  }
+  /* Boite carree : l'icone la remplit, plus aucun vide a sa droite.
        1.7em est la hauteur que Jellyfin donne a .pageTitle. */
-    .layout-tv .pageTitleWithDefaultLogo {
-        width: 1.7em !important;
-    }
+  .layout-tv .pageTitleWithDefaultLogo {
+    width: 1.7em !important;
+  }
 }

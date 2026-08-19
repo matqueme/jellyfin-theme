@@ -1,0 +1,149 @@
+/* --- 18. Bandeau de selection ----------------------------------------- */
+/* La barre qui recouvre l'en-tete des qu'on selectionne des items. Le
+   client la genere a la volee et l'accroche a <body>, hors de
+   .skinHeader :
+
+     <div class="selectionCommandsPanel">
+       <button class="btnCloseSelectionPanel ... paper-icon-button-light">
+       <h1 class="itemSelectionCount">
+       <button class="btnSelectionPanelOptions ... paper-icon-button-light">
+
+   position: fixed, cale sur top/left/right a 0, z-index 99999.
+
+   Deux choses la rendaient illisible :
+
+     themes/dark        .selectionCommandsPanel { background: #00a4dc }
+     type/colorful.css  .navMenuOption-selected, .selectionCommandsPanel
+                            { background: rgba(var(--accent), .8)
+                              !important }
+
+   Un aplat a 80 % pose sur une page qui defile : le contenu passe au
+   travers et le bandeau se confond avec ce qu'il recouvre, d'autant plus
+   sur une grille d'affiches claires. Et un aplat d'accent plein bord a
+   bord ne dit pas la meme chose que le reste du theme, ou l'accent
+   souligne — anneau de focus, pilule de lecture, onglet actif — mais ne
+   remplit jamais une surface entiere.
+
+   On reprend donc la surface des autres elements flottants du theme
+   (.dialog, .toast, .mainDrawer d'Ultrachromic : fond tres sombre et flou
+   d'arriere-plan), et l'accent redevient un liseré. */
+
+.selectionCommandsPanel {
+  /* Detache des trois bords. calc plutot que max : les valeurs de zone
+       sure s'ajoutent au retrait, elles ne s'y substituent pas — sur un
+       telephone a encoche il faut les deux, le bandeau etant desormais
+       une pastille et non plus une bande collee au bord. */
+  top: calc(env(safe-area-inset-top, 0px) + 0.7em) !important;
+  left: calc(env(safe-area-inset-left, 0px) + 0.7em) !important;
+  right: calc(env(safe-area-inset-right, 0px) + 0.7em) !important;
+
+  /* Le client reserve la zone sure dans son padding ; elle est reprise
+       ci-dessus, ce padding n'a plus lieu d'etre et faisait une barre de
+       trois centimetres de haut. */
+  padding: 0.3em 0.45em !important;
+
+  border-radius: 999px !important;
+  background: rgba(10, 10, 10, 0.95) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(var(--accent, 98, 121, 205), 0.55),
+    0 0.6em 1.8em rgba(0, 0, 0, 0.55) !important;
+}
+
+/* Meme idiome que effects/glassy.css : le flou n'arrive que la ou il est
+   pris en charge, et le fond s'allege d'autant. Sans lui le bandeau reste
+   lisible — c'est tout l'objet des 95 % ci-dessus. */
+@supports (backdrop-filter: blur(15px)) {
+  .selectionCommandsPanel {
+    background: rgba(10, 10, 10, 0.72) !important;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+  }
+}
+
+/* Le compteur est un <h1> : a la taille d'un titre de page, il imposait
+   a lui seul la hauteur du bandeau. */
+.selectionCommandsPanel .itemSelectionCount {
+  font-size: 1.05em !important;
+  font-weight: 600 !important;
+  margin: 0 0.4em !important;
+}
+
+/* --- Cartes en mode selection ----------------------------------------- */
+/* Point de depart indispensable : .itemSelectionPanel est pose sur
+   TOUTES les cartes des l'entree en mode selection, pas seulement sur
+   celles qui sont cochees. Le module de selection le cree par carte, avec
+   sa case a l'interieur, et l'accroche a .cardBox — qui recoit
+   .withMultiSelect, seule regle qui lui donne  position: relative,  donc
+   le panneau couvre l'affiche ET le bandeau de titre.
+
+   Corollaire, verifie dans le code du client : rien dans le DOM ne
+   distingue une carte cochee. Le module ne tient qu'un tableau d'ID en
+   JavaScript et bascule  input.checked ;  il ne pose aucune classe, ni
+   sur la carte, ni sur le panneau. Le seul signal disponible en CSS est
+   donc  .chkItemSelect:checked,  et il est PLUS BAS dans l'arbre que
+   l'element a peindre.
+
+   D'ou le decoupage en deux etages :
+
+     - ce que tout moteur sait faire : un voile neutre sur les cartes du
+       mode, et une case qu'on voit. C'est la case qui porte l'etat, et
+       elle seule le portait deja chez Jellyfin — sauf qu'a .14em de bord
+       en currentcolor sur une affiche claire, elle disparaissait.
+     - ce qui demande :has() : l'anneau d'accent sur la carte cochee,
+       c'est-a-dire remonter du champ coche a son ancetre.
+
+   Le second est mis sous @supports selector(:has(*)) : les navigateurs de
+   TV anterieurs a Chromium 105 ignorent alors le bloc entier au lieu
+   d'avaler une regle qu'ils ne savent pas analyser. Ils gardent le
+   premier etage, qui suffit a se reperer. */
+
+/* Le voile d'Ultrachromic teintait a l'accent les cartes du mode entier,
+   cochees ou non — l'accent ne voulait donc rien dire, et 25 % ne se
+   voyaient pas davantage. On le rend neutre, un peu plus dense que le
+   rgba(0,0,0,.3) de Jellyfin : il ne dit plus que "mode selection actif",
+   et laisse l'accent au seul etat coche. */
+.itemSelectionPanel {
+  background: rgba(0, 0, 0, 0.38) !important;
+}
+
+/* La case. Son conteneur .checkboxContainer n'est pas positionne : c'est
+   .itemSelectionPanel lui-meme, en position absolute, qui sert de
+   reference — top et left se lisent donc depuis le coin de la carte.
+   Le .5em reprend le calage des indicateurs de la section 8.
+   0,2,0 contre le 0,1,0 de .multiSelectCheckboxOutline, dont le
+   border-radius: 0 !important carrait la case. */
+.itemSelectionPanel .checkboxOutline {
+  top: 0.5em !important;
+  left: 0.5em !important;
+  border-width: 0.12em !important;
+  border-color: #fff !important;
+  border-radius: 999px !important;
+  background-color: rgba(0, 0, 0, 0.55) !important;
+  box-shadow: 0 0.15em 0.5em rgba(0, 0, 0, 0.6) !important;
+  transition: background-color 0.15s !important;
+}
+
+/* Cochee : la case se remplit d'accent, le blanc du bord et de l'icone
+   tenant le contraste sur n'importe quelle affiche. accentlist.css lui
+   donnait  border: .01em solid rgba(var(--accent),.5),  soit un trait
+   d'un demi-pixel a moitie transparent — invisible en pratique. */
+.itemSelectionPanel .emby-checkbox:checked + span + .checkboxOutline {
+  background-color: rgb(var(--selection, 98, 121, 205)) !important;
+  border-color: #fff !important;
+}
+
+/* fields_noborder.css repeint le glyphe a l'accent :
+     .checkboxIcon { color: rgba(var(--selection), 1) }
+   sur une case desormais remplie d'accent, il disparaissait dans son
+   propre fond. Le blanc de Jellyfin est le bon choix ici, dans les deux
+   etats : la case est sombre au repos, accent une fois cochee. */
+.itemSelectionPanel .checkboxIcon {
+  color: #fff !important;
+}
+
+@supports selector(:has(*)) {
+  .itemSelectionPanel:has(.chkItemSelect:checked) {
+    background: rgba(var(--selection, 98, 121, 205), 0.3) !important;
+    box-shadow: inset 0 0 0 0.16em rgb(var(--selection, 98, 121, 205)) !important;
+  }
+}

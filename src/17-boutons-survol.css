@@ -1,0 +1,84 @@
+/* --- 17. Survol des boutons d'action ---------------------------------- */
+/* Un seul langage de survol pour les boutons qui ne sont pas l'action
+   principale : les icones de l'en-tete, et la rangee de la page d'un film
+   a droite du bouton Lecture. Les deux recevaient un aplat a l'accent,
+   pose par deux regles differentes d'Ultrachromic :
+
+     type/colorful.css   .paper-icon-button-light:hover
+                             { background-color: rgba(var(--accent),.25)
+                               !important }        icones de l'en-tete
+     type/colorful.css   .button-flat:hover
+                             { background: rgba(var(--accent),.25) }
+     accentlist.css      .button-flat:hover
+                             { color: rgba(var(--accent)) !important }
+                                                   rangee de detail
+
+   Les boutons de la rangee sont bien des .button-flat : cardBuilder les
+   sort en  "button-flat btnPlaystate hide detailButton"  et l'element
+   personnalise emby-button y ajoute sa classe.
+
+   Sur l'en-tete, l'aplat s'accompagnait d'un temps de pose, et lui seul
+   expliquait la difference entre l'accueil et la page d'un film :
+
+     effects/glassy.css  .paper-icon-button-light:hover
+                             { backdrop-filter: blur(4px);
+                               will-change: backdrop-filter;
+                               transform: translateZ(0) }
+
+   Le survol cree une couche de composition ET demande un flou d'arriere-
+   plan au meme instant. Sur la page d'un film l'en-tete est
+   .semiTransparent, donc pose sur l'affiche de fond : il y a de la matiere
+   a flouter et le passage se voit. Sur l'accueil il surplombe un aplat
+   sombre, le flou ne change rien a l'image et la pastille d'accent a 25 %
+   sur du noir ne se remarque pas. Une regle unique, deux rendus.
+
+   Le voile retenu est celui que la rangee d'onglets porte deja
+   (section 4) : c'est ce qui rend la barre coherente d'une page a
+   l'autre, puis la barre coherente avec la page.
+
+   La TV n'entre pas ici : elle n'a pas de survol, et son focus est traite
+   en section 16 — icone a l'accent, sans aplat, comme le fait Jellyfin
+   pour les icones de l'en-tete en TV. La regle est la meme des deux
+   cotes : la rangee de detail se comporte comme l'en-tete, sur chaque
+   plateforme, avec le retour que cette plateforme sait rendre.
+
+   Portee limitee a .skinHeader, a .selectionCommandsPanel (le bandeau de
+   la section 18, que le client accroche a <body> et non a l'en-tete) et a
+   .mainDetailButtons :
+   .paper-icon-button-light et .button-flat sont les classes de toutes les
+   icones-boutons du client, y compris celles des cartes, des boites de
+   dialogue et du lecteur, ou l'aplat d'accent est a sa place.
+
+   Specificite 0,3,1 et 0,4,0 contre le 0,1,0 et le 0,2,0 d'Ultrachromic :
+   on l'emporte a !important egal, sans dependre de l'ordre. */
+
+/* Deux precautions, toutes deux imposees par le bouton de profil.
+
+   button. dans le selecteur : l'avatar est un div IMBRIQUE dans le
+   bouton, et ce div porte lui aussi paper-icon-button-light —
+     <button class="... paper-icon-button-light headerUserButton">
+       <div class="... paper-icon-button-light headerUserButtonRound"
+            style="background-image:url(...)">
+   Sans le type, les deux elements recoivent le voile : un seul dans
+   l'anneau de padding du bouton, deux des que la souris entre sur le
+   rond, donc une teinte qui change a l'interieur d'un meme bouton. Les
+   vrais boutons sont des <button>, l'avatar est le seul div a porter
+   cette classe : le type suffit a les departager.
+
+   background-color et non background : la forme courte remet
+   background-image a none, et un !important l'emporte sur un style en
+   ligne. L'avatar disparaissait donc au survol. Rien ici n'a besoin de la
+   forme courte — colorful.css pose sa couleur par la meme, mais
+   background-color seul la surcharge. */
+.skinHeader button.paper-icon-button-light:hover,
+.selectionCommandsPanel button.paper-icon-button-light:hover,
+.mainDetailButtons .detailButton:not(.btnPlay):hover {
+  background-color: var(--btn-hover-bg) !important;
+  color: #fff !important;
+  /* La couche de composition ne doit pas se creer au survol, sinon le
+       temps de pose reste meme une fois le flou retire. Sans effet sur la
+       rangee de detail, que glassy.css ne touche pas. */
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  will-change: auto !important;
+}

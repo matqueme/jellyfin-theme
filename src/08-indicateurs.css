@@ -7,21 +7,21 @@
    On rend ici a la pastille son detachement et ses coins ronds. */
 .cardIndicators,
 .listItemIndicators {
-    right: .5em !important;
-    top: .5em !important;
+  right: 0.5em !important;
+  top: 0.5em !important;
 }
 
 .countIndicator,
 .playedIndicator {
-    border-radius: 999px !important;
+  border-radius: 999px !important;
 }
 
 .innerCardFooter {
-    border-radius: var(--rounding) !important;
+  border-radius: var(--rounding) !important;
 }
 
 .mediaSourceIndicator {
-    left: .5em;
-    top: .5em;
-    border-radius: var(--rounding) !important;
+  left: 0.5em;
+  top: 0.5em;
+  border-radius: var(--rounding) !important;
 }
