@@ -28,7 +28,7 @@
 /* Annulation des deux declencheurs trop larges, par leur ancetre commun.
    .card-hoverable est porte par .card lui-meme, et .cardBox en est un
    enfant : survoler l'un ou l'autre survole .card. Les trois selecteurs
-   pesent 0-3-0 et designent le meme jeu d'elements — celui du dessus
+   pesent 0-3-0 et designent le meme jeu d'elements : celui du dessus
    suffit, et les deux autres ne faisaient que nommer les regles visees. */
 .card:hover .cardOverlayContainer {
   opacity: 0;

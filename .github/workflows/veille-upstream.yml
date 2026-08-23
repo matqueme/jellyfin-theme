@@ -51,7 +51,7 @@ jobs:
               raise SystemExit(0)
 
           # Ce qu'on utilise : les modules vendorises, plus les images qu'ils
-          # referencent — leur URL est epinglee sur le commit fige, donc un
+          # referencent : leur URL est epinglee sur le commit fige, donc un
           # changement amont ne nous atteint pas, mais reste bon a savoir.
           suivis = {str(p.relative_to(VENDOR)) for p in VENDOR.rglob("*.css")}
           for p in VENDOR.rglob("*.css"):
@@ -69,7 +69,7 @@ jobs:
 
           corps = [
               f"[{fige[:7]}...{tete[:7]}](https://github.com/{AMONT}/compare/{fige}...{tete})",
-              f" — {nb_commits} commit(s) amont.", "",
+              f", {nb_commits} commit(s) amont.", "",
               "## Modules utilises qui ont change", "",
           ]
           corps += [f"- `{f}`" for f in touches]
@@ -80,10 +80,10 @@ jobs:
               "",
               "| Si l'amont touche | Relire |",
               "|---|---|",
-              "| `effects/hoverglow.css` | `src/12-carte-zone.css` — reprend ses valeurs telles quelles |",
-              "| `overlayprogress.css` | `src/10-carte-barre.css` — corrige son etirement du pied de carte |",
-              "| `cornerindicator/` | `src/08-indicateurs.css` — variantes non empilables |",
-              "| `titlepage/` | `src/06-tv.css` — repositionne le logo que `title_banner-logo` reaffiche |",
+              "| `effects/hoverglow.css` | `src/12-carte-zone.css`, reprend ses valeurs telles quelles |",
+              "| `overlayprogress.css` | `src/10-carte-barre.css`, corrige son etirement du pied de carte |",
+              "| `cornerindicator/` | `src/08-indicateurs.css`, variantes non empilables |",
+              "| `titlepage/` | `src/06-tv.css`, repositionne le logo que `title_banner-logo` reaffiche |",
               "| `type/colorful.css` | definit `--accent`, consommee partout |",
               "", "## Pour accepter", "",
               "```bash", f"./update-vendor.sh {tete}",

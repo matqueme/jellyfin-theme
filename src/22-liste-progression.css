@@ -1,0 +1,45 @@
+/* --- 22. Progression des lignes de liste ------------------------------ */
+/* Meme composant que la barre des cartes, meme feuille amont, mais un
+   rendu different selon la page. overlayprogress.css etire la barre a
+   2000em de haut pour en faire un voile, et vise pour cela deux pages par
+   leur ID :
+
+     #itemDetailPage .itemProgressBar,
+     #indexPage .itemProgressBar { height: 2000em }
+
+   Sur les cartes, la section 11 rend a cette barre sa hauteur et la fait
+   flotter. Sur les lignes de liste - la liste des episodes d'une saison,
+   qui est justement sur #itemDetailPage - rien ne la rattrape :
+   .listItem porte overflow: hidden, le voile s'y arrete donc proprement
+   et remplit la ligne sur la largeur de la progression.
+
+   Resultat : le meme etat, "commence, pas fini", se lit en barre
+   flottante sur une vignette et en ligne a moitie teintee juste en
+   dessous. Et sur les autres pages, ou l'ID ne matche pas, la meme ligne
+   revient a la barre de .28em de Jellyfin : trois rendus pour un seul
+   etat.
+
+   On aligne la ligne de liste sur la carte, en reprenant telles quelles
+   les variables de la section 11 : une seule geometrie a regler pour les
+   deux.
+
+   Le !important n'est pas decoratif : le selecteur d'ID d'overlayprogress
+   pese 1,1,0 contre 0,1,0 ici. Sans lui, la hauteur de 2000em resterait.
+
+   La marge tient lieu de detachement : .listItemProgressBar est en
+   position absolute calee sur left/right/bottom, sa largeur se deduit des
+   deux cotes, et une marge la reduit d'autant. */
+.listItemProgressBar {
+  height: var(--card-bar-height, 6px) !important;
+  margin: 0 var(--card-bar-inset, 13px) var(--card-bar-gap, 8px) !important;
+  border-radius: var(--rounding, 12px) !important;
+  background: rgba(0, 0, 0, 0.35) !important;
+  overflow: hidden;
+}
+
+/* overlayprogress laisse le remplissage a 35 %, ce qui convient a un voile
+   plein et delave une barre de 6px. Meme valeur qu'en section 11. */
+.listItemProgressBar .itemProgressBarForeground {
+  background-color: rgba(var(--accent, 98, 121, 205), 0.95) !important;
+  border-radius: var(--rounding, 12px) !important;
+}

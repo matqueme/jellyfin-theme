@@ -4,7 +4,7 @@ name: publier
 #
 # VERSION est deja la source de verite : build.py l'estampille dans l'en-tete
 # de dist/theme.css, et c'est ce numero que porte l'URL jsDelivr du branding.
-# Le tag n'etait qu'une recopie manuelle de cette valeur — donc une occasion
+# Le tag n'etait qu'une recopie manuelle de cette valeur, donc une occasion
 # d'oubli, et un decalage possible entre le numero annonce par la feuille
 # servie et celui du tag qui la sert.
 #
@@ -79,7 +79,7 @@ jobs:
           git tag -a "v$VERSION" -m "v$VERSION - Jellyfin 10.11.x"
           git push origin "v$VERSION"
           gh release create "v$VERSION" \
-            --title "v$VERSION — Jellyfin 10.11.x" \
+            --title "v$VERSION - Jellyfin 10.11.x" \
             --notes-file notes.md
 
       - name: Resume

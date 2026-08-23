@@ -5,13 +5,13 @@
    declaration mais dans la cascade : la spec impose qu'un axe reste a
    visible face a un axe qui ne l'est pas se calcule en auto. Poser
    overflow-y ouvre donc aussi overflow-x, et le conteneur de page gagne
-   une barre horizontale des que son contenu depasse d'un pixel — celle
+   une barre horizontale des que son contenu depasse d'un pixel, celle
    qu'on voyait en bas de l'accueil.
 
    Jellyfin ne pose aucun overflow sur ses conteneurs de page : c'est le
    document qui defile, et l'axe horizontal n'est jamais ouvert. Les
    rangees de cartes portent chacune leur propre defileur, .scrollX, que
-   cette regle ne touche pas — on continue de defiler sur la ligne.
+   cette regle ne touche pas : on continue de defiler sur la ligne.
 
    Fermer l'axe ne masque donc aucun contenu : il n'y a rien a atteindre
    en defilant vers la droite. C'est retablir l'intention de l'amont.

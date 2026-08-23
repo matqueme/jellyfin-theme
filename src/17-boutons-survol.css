@@ -37,7 +37,7 @@
    l'autre, puis la barre coherente avec la page.
 
    La TV n'entre pas ici : elle n'a pas de survol, et son focus est traite
-   en section 16 — icone a l'accent, sans aplat, comme le fait Jellyfin
+   en section 16 : icone a l'accent, sans aplat, comme le fait Jellyfin
    pour les icones de l'en-tete en TV. La regle est la meme des deux
    cotes : la rangee de detail se comporte comme l'en-tete, sur chaque
    plateforme, avec le retour que cette plateforme sait rendre.
@@ -55,7 +55,7 @@
 /* Deux precautions, toutes deux imposees par le bouton de profil.
 
    button. dans le selecteur : l'avatar est un div IMBRIQUE dans le
-   bouton, et ce div porte lui aussi paper-icon-button-light —
+   bouton, et ce div porte lui aussi paper-icon-button-light :
      <button class="... paper-icon-button-light headerUserButton">
        <div class="... paper-icon-button-light headerUserButtonRound"
             style="background-image:url(...)">
@@ -68,7 +68,7 @@
    background-color et non background : la forme courte remet
    background-image a none, et un !important l'emporte sur un style en
    ligne. L'avatar disparaissait donc au survol. Rien ici n'a besoin de la
-   forme courte — colorful.css pose sa couleur par la meme, mais
+   forme courte : colorful.css pose sa couleur par la meme, mais
    background-color seul la surcharge. */
 .skinHeader button.paper-icon-button-light:hover,
 .selectionCommandsPanel button.paper-icon-button-light:hover,

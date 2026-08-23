@@ -21,7 +21,7 @@
    travers et le bandeau se confond avec ce qu'il recouvre, d'autant plus
    sur une grille d'affiches claires. Et un aplat d'accent plein bord a
    bord ne dit pas la meme chose que le reste du theme, ou l'accent
-   souligne — anneau de focus, pilule de lecture, onglet actif — mais ne
+   souligne (anneau de focus, pilule de lecture, onglet actif) mais ne
    remplit jamais une surface entiere.
 
    On reprend donc la surface des autres elements flottants du theme
@@ -30,7 +30,7 @@
 
 .selectionCommandsPanel {
   /* Detache des trois bords. calc plutot que max : les valeurs de zone
-       sure s'ajoutent au retrait, elles ne s'y substituent pas — sur un
+       sure s'ajoutent au retrait, elles ne s'y substituent pas : sur un
        telephone a encoche il faut les deux, le bandeau etant desormais
        une pastille et non plus une bande collee au bord. */
   top: calc(env(safe-area-inset-top, 0px) + 0.7em) !important;
@@ -51,7 +51,7 @@
 
 /* Meme idiome que effects/glassy.css : le flou n'arrive que la ou il est
    pris en charge, et le fond s'allege d'autant. Sans lui le bandeau reste
-   lisible — c'est tout l'objet des 95 % ci-dessus. */
+   lisible, c'est tout l'objet des 95 % ci-dessus. */
 @supports (backdrop-filter: blur(15px)) {
   .selectionCommandsPanel {
     background: rgba(10, 10, 10, 0.72) !important;
@@ -72,7 +72,7 @@
 /* Point de depart indispensable : .itemSelectionPanel est pose sur
    TOUTES les cartes des l'entree en mode selection, pas seulement sur
    celles qui sont cochees. Le module de selection le cree par carte, avec
-   sa case a l'interieur, et l'accroche a .cardBox — qui recoit
+   sa case a l'interieur, et l'accroche a .cardBox, qui recoit
    .withMultiSelect, seule regle qui lui donne  position: relative,  donc
    le panneau couvre l'affiche ET le bandeau de titre.
 
@@ -87,7 +87,7 @@
 
      - ce que tout moteur sait faire : un voile neutre sur les cartes du
        mode, et une case qu'on voit. C'est la case qui porte l'etat, et
-       elle seule le portait deja chez Jellyfin — sauf qu'a .14em de bord
+       elle seule le portait deja chez Jellyfin, sauf qu'a .14em de bord
        en currentcolor sur une affiche claire, elle disparaissait.
      - ce qui demande :has() : l'anneau d'accent sur la carte cochee,
        c'est-a-dire remonter du champ coche a son ancetre.
@@ -98,7 +98,7 @@
    premier etage, qui suffit a se reperer. */
 
 /* Le voile d'Ultrachromic teintait a l'accent les cartes du mode entier,
-   cochees ou non — l'accent ne voulait donc rien dire, et 25 % ne se
+   cochees ou non : l'accent ne voulait donc rien dire, et 25 % ne se
    voyaient pas davantage. On le rend neutre, un peu plus dense que le
    rgba(0,0,0,.3) de Jellyfin : il ne dit plus que "mode selection actif",
    et laisse l'accent au seul etat coche. */
@@ -108,7 +108,7 @@
 
 /* La case. Son conteneur .checkboxContainer n'est pas positionne : c'est
    .itemSelectionPanel lui-meme, en position absolute, qui sert de
-   reference — top et left se lisent donc depuis le coin de la carte.
+   reference : top et left se lisent donc depuis le coin de la carte.
    Le .5em reprend le calage des indicateurs de la section 8.
    0,2,0 contre le 0,1,0 de .multiSelectCheckboxOutline, dont le
    border-radius: 0 !important carrait la case. */
@@ -126,7 +126,7 @@
 /* Cochee : la case se remplit d'accent, le blanc du bord et de l'icone
    tenant le contraste sur n'importe quelle affiche. accentlist.css lui
    donnait  border: .01em solid rgba(var(--accent),.5),  soit un trait
-   d'un demi-pixel a moitie transparent — invisible en pratique. */
+   d'un demi-pixel a moitie transparent, invisible en pratique. */
 .itemSelectionPanel .emby-checkbox:checked + span + .checkboxOutline {
   background-color: rgb(var(--selection, 98, 121, 205)) !important;
   border-color: #fff !important;

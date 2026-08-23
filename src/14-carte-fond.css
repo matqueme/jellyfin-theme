@@ -6,7 +6,7 @@
    neutralise le fond et l'ombre du .cardPadder, l'element que Jellyfin
    empile sous l'affiche pour lui reserver son rapport d'aspect avant que
    l'image soit chargee. Sans elle, ce fond reapparait derriere chaque
-   vignette de chaque grille — un effet de bord qui n'a aucun rapport avec
+   vignette de chaque grille, un effet de bord qui n'a aucun rapport avec
    le motif de l'exclusion, d'ou sa reprise ici.
 
    Position dans la cascade : smallercast passait avant type/colorful.css,

@@ -1,0 +1,35 @@
+/* --- 21. Pastilles d'information des items ---------------------------- */
+/* La classification (12, PG-13...) et le marqueur de sous-titres sont les
+   deux seuls .mediaInfoText de la page d'un item ; le reste de la rangee
+   - annee, duree, resolution, codecs - est du texte nu. Ces deux-la
+   recoivent pourtant un aplat :
+
+     themes/dark  .mediaInfoText { background: rgba(170, 170, 190, .2);
+                                   color: #ddd }
+
+   Un gris bleute a 20 %, donc une couleur qui depend de ce qu'il y a
+   dessous : lisible sur le fond de page, delave sur une affiche claire.
+   Et une pastille pleine au milieu de texte nu attire l'oeil sur la
+   donnee la moins utile de la rangee.
+
+   Le theme dit deja comment marquer sans remplir : anneau de focus TV,
+   liseré du bandeau de selection, case de selection cochee. On applique
+   la meme grammaire ici - un contour, pas un fond - et la forme des
+   autres pastilles du theme, la gelule des sections 2 et 18.
+
+   Le blanc plutot que l'accent : cette pastille ne signale pas un etat ni
+   une action, elle range une information parmi d'autres. L'accent reste
+   au bouton Lecture, au focus et a la selection, ou il veut dire quelque
+   chose.
+
+   !important sur les seules declarations disputees : Jellyfin injecte ses
+   feuilles au fil de la navigation, donc apres le CSS personnalise, et
+   .mediaInfoText contre .mediaInfoText se departagerait par l'ordre. */
+.mediaInfoText {
+  background: rgba(0, 0, 0, 0) !important;
+  border: 0.09em solid rgba(255, 255, 255, 0.42);
+  border-radius: 999px !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  padding: 0.14em 0.62em;
+  font-weight: 600;
+}

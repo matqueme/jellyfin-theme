@@ -60,7 +60,7 @@ open(XML, "w", encoding="utf-8").write(new)
 # desechappe exactement en ce qu'on voulait ecrire.
 node = ET.parse(XML).getroot().find("CustomCss")
 if node is None or (node.text or "") != css:
-    sys.exit("contenu altere a l'ecriture — branding.xml.bak conserve")
+    sys.exit("contenu altere a l'ecriture, branding.xml.bak conserve")
 
 subprocess.run(["docker", "restart", CONTAINER], check=True, capture_output=True)
 

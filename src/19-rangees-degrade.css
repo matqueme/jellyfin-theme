@@ -1,0 +1,65 @@
+/* --- 19. Bords des rangees horizontales ------------------------------- */
+/* Une rangee de cartes - accueil, casting, "Plus comme ceci" - est un
+   conteneur qui defile, et c'est lui qui porte la gouttiere de page :
+
+     .padded-left   { padding-left:  max(env(safe-area-inset-left),  3.3%) }
+     .padded-right  { padding-right: max(env(safe-area-inset-right), 3.3%) }
+     .scrollX       { overflow-x: auto }
+
+   Un padding fait partie de la boite de rognage : l'overflow decoupe a la
+   boite de padding, donc au bord exterieur de la gouttiere. Tant que la
+   rangee n'a pas defile, le retrait se voit et les cartes s'alignent sur
+   le titre de section. Des le premier defilement, elles traversent la
+   gouttiere et viennent toucher le bord de l'ecran : la colonne de mise
+   en page, que le titre continue de respecter, n'existe plus.
+
+   Corriger par des marges plutot que par ce padding ferait rentrer le
+   bord de rognage sur l'alignement des cartes, et couperait net l'anneau
+   de focus TV de la premiere carte (section 16), qui deborde de sa boite.
+   On garde donc la geometrie de Jellyfin et on retire seulement de quoi
+   PEINDRE dans la gouttiere : un masque en degrade, fixe a la boite et
+   non au contenu, qui efface ce qui la traverse.
+
+   Le degre de fondu vaut exactement la gouttiere : a 3.3% l'opacite est
+   pleine, donc la premiere carte au repos est intacte, et seul son halo
+   de focus s'attenue en debordant - ce qui vaut mieux qu'une coupe nette.
+
+   Sous @supports : les navigateurs de TV qui ne connaissent pas mask-image
+   ignorent le bloc entier et retrouvent le comportement d'aujourd'hui,
+   plutot que d'avaler une declaration a moitie comprise.
+
+   Portee : il faut A LA FOIS le defilement et la gouttiere, sinon le
+   fondu mangerait du contenu au lieu d'en cacher. D'ou .scrollX joint a
+   .padded-left pour les rangees d'items, que cardBuilder sort toujours en
+   "itemsContainer scrollX hiddenScrollX padded-left padded-right", et
+   .emby-scroller seul, qui porte son retrait de 3.3% par sa propre regle,
+   sans classe. Les autres porteurs de .scrollX - grille du guide TV,
+   entetes de creneaux - n'ont pas de gouttiere et sont laisses
+   tranquilles. Les grilles .vertical-wrap portent bien .padded-left mais
+   pas .scrollX : elles ne defilent pas horizontalement, il n'y a rien a
+   masquer. */
+
+:root {
+  --row-fondu: 3.3%; /* largeur du fondu lateral des rangees */
+}
+
+@supports (mask-image: linear-gradient(to right, #000, transparent)) or
+  (-webkit-mask-image: linear-gradient(to right, #000, transparent)) {
+  .itemsContainer.scrollX.padded-left,
+  .emby-scroller.scrollX {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 var(--row-fondu, 3.3%),
+      #000 calc(100% - var(--row-fondu, 3.3%)),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 var(--row-fondu, 3.3%),
+      #000 calc(100% - var(--row-fondu, 3.3%)),
+      transparent 100%
+    );
+  }
+}

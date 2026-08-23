@@ -1,6 +1,6 @@
 /* --- Imports distants ------------------------------------------------
    Les seuls @import qui subsistent dans le fichier construit. Tout le
-   reste — Ultrachromic compris — est fusionne par build.py.
+   reste, Ultrachromic compris, est fusionne par build.py.
 
    Ils ne peuvent pas etre fusionnes : ce sont des feuilles de police, qui
    declarent des @font-face pointant vers des .woff2 par des URL relatives.

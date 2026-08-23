@@ -17,7 +17,7 @@ l'exécution ni aucune dépendance à un dépôt tiers qui bouge.
 Tableau de bord → Général → **CSS personnalisé**, une seule ligne :
 
 ```css
-@import url('https://cdn.jsdelivr.net/gh/matqueme/jellyfin-theme@v1.2.0/dist/theme.css');
+@import url('https://cdn.jsdelivr.net/gh/matqueme/jellyfin-theme@v1.3.0/dist/theme.css');
 ```
 
 Puis `Ctrl+F5` sur le client.
@@ -27,7 +27,7 @@ une règle est ignoré par le navigateur.
 
 > Le CSS de branding s'applique au client web et aux clients qui l'embarquent
 > (navigateur, application de bureau, Android TV en mode web). Les clients
-> natifs — Roku, l'app Android native — ne le lisent pas.
+> natifs, comme Roku ou l'app Android native, ne le lisent pas.
 
 ### Sans dépendance réseau
 
@@ -39,6 +39,7 @@ indésirable, `apply-local.sh` écrit le fichier directement dans le
 
 | Thème | Jellyfin | Ultrachromic |
 |---|---|---|
+| `v1.3.0` | 10.11.x | [`fa158a2`](https://github.com/CTalvio/Ultrachromic/tree/fa158a241cb24298c9996af3cf6460ae2f9d522f) |
 | `v1.2.0` | 10.11.x | [`fa158a2`](https://github.com/CTalvio/Ultrachromic/tree/fa158a241cb24298c9996af3cf6460ae2f9d522f) |
 | `v1.1.0` | 10.11.x | [`fa158a2`](https://github.com/CTalvio/Ultrachromic/tree/fa158a241cb24298c9996af3cf6460ae2f9d522f) |
 | `v1.0.0` | 10.11.x | [`fa158a2`](https://github.com/CTalvio/Ultrachromic/tree/fa158a241cb24298c9996af3cf6460ae2f9d522f) |
@@ -49,7 +50,7 @@ par le titre de chaque release.
 
 Le thème s'accroche aux classes internes du client web, que Jellyfin peut
 renommer d'une version mineure à l'autre. Une montée de Jellyfin en version
-mineure appelle donc une relecture — et, si le rendu casse, une branche
+mineure appelle donc une relecture ; et si le rendu casse, une branche
 `jellyfin-10.11` pour figer l'existant pendant que `main` part sur la suite.
 
 ## Réglages
@@ -61,13 +62,14 @@ Les valeurs prévues pour être retouchées, avec leur emplacement :
 | `--icon-scale` | [`src/01-reglages.css`](src/01-reglages.css) | Taille des icônes Phosphor, qui remplissent plus leur cadre que Material |
 | `--play-label` | [`src/01-reglages.css`](src/01-reglages.css) | Libellé du bouton Lecture. Garder les guillemets : c'est une valeur de `content` |
 | `--play-label-size` | [`src/01-reglages.css`](src/01-reglages.css) | Taille de ce libellé |
-| `--btn-hover-bg` | [`src/01-reglages.css`](src/01-reglages.css) | Survol des boutons secondaires — en-tête, rangée d'un film, bandeau de sélection |
+| `--btn-hover-bg` | [`src/01-reglages.css`](src/01-reglages.css) | Survol des boutons secondaires : en-tête, rangée d'un film, bandeau de sélection |
 | `--tabs-left` | [`src/05-onglets.css`](src/05-onglets.css) | Décalage des onglets d'en-tête. Repli seulement : le script les mesure et pose sa propre valeur |
 | `--card-bar-height` | [`src/10-carte-barre.css`](src/10-carte-barre.css) | Épaisseur de la barre de progression des cartes |
-| `--card-bar-gap` | [`src/10-carte-barre.css`](src/10-carte-barre.css) | Détachement du bord bas — c'est ce qui fait l'effet flottant |
+| `--card-bar-gap` | [`src/10-carte-barre.css`](src/10-carte-barre.css) | Détachement du bord bas, c'est ce qui fait l'effet flottant |
 | `--card-bar-inset` | [`src/10-carte-barre.css`](src/10-carte-barre.css) | Retrait latéral de cette barre |
 | `--tv-card-ring` | [`src/16-tv-focus.css`](src/16-tv-focus.css) | Épaisseur de l'anneau de focus des cartes en TV |
 | `--tv-card-zoom` | [`src/16-tv-focus.css`](src/16-tv-focus.css) | Agrandissement de la carte visée en TV. Au-delà de 1.15 environ, elle sort du dégagement des rangées et se fait couper |
+| `--row-fondu` | [`src/19-rangees-degrade.css`](src/19-rangees-degrade.css) | Largeur du fondu latéral des rangées. À garder égale à la gouttière de page de Jellyfin, `3.3%` |
 
 Pour repasser les icônes en trait fin : remplacer `bold` par `regular` dans
 l'`@import` de [`src/00-imports.css`](src/00-imports.css), et `Phosphor-Bold`
@@ -78,7 +80,7 @@ code sont identiques entre les deux graisses.
 
 ```
 src/
-  00-imports.css        polices distantes — les seuls @import qui survivent au build
+  00-imports.css        polices distantes, les seuls @import qui survivent au build
   01-reglages.css       variables de réglage
   02-cartes-survol.css  bouton play des cartes
   03-page-item.css      page d'un film : bouton Lecture en pilule
@@ -101,19 +103,19 @@ src/
   vendor.list           modules Ultrachromic chargés après le preset
   vendor.exclude        modules du preset volontairement écartés
 js/                     comportements non réalisables en CSS
-dist/theme.css          fichier construit — commité, c'est lui que sert le CDN
+dist/theme.css          fichier construit et commité : c'est lui que sert le CDN
 ```
 
 **L'ordre des modules est significatif.** Les préfixes numériques donnent
 l'ordre de concaténation, et donc la cascade. Plusieurs modules s'appuient
-sur le fait qu'ils passent après tel autre — renuméroter change le rendu.
+sur le fait qu'ils passent après tel autre : renuméroter change le rendu.
 
 ### Écarter un module d'Ultrachromic
 
 Le preset importe sa propre liste de modules, que `build.py` suit telle
 quelle. Pour en retirer un, l'inscrire dans
 [`src/vendor.exclude`](src/vendor.exclude) plutôt que de toucher à
-`src/vendor/` — une modification là-bas rendrait `update-vendor.sh`
+`src/vendor/` : une modification là-bas rendrait `update-vendor.sh`
 conflictuel à chaque resynchronisation.
 
 `build.py` refuse de construire si une entrée n'est jamais rencontrée : une
@@ -156,18 +158,18 @@ fichier attendu. Le chemin par défaut est `~/docker/jellyfin` ; sinon
 Injecte les scripts dans la configuration du plugin JavaScript Injector.
 Deux comportements ne sont pas réalisables en CSS :
 
-- `onglets-dans-la-page.js` — sur téléphone, déplace les onglets dans la page
+- `onglets-dans-la-page.js` : sur téléphone, déplace les onglets dans la page
   pour qu'ils défilent avec le contenu. Le CSS ne peut pas reparenter un
   élément, et les onglets sont dans un en-tête `position: fixed`. Il mesure
   aussi `--header-h` et `--tabs-host-left`, que `05-onglets.css` consomme.
-- `replace-sync-button.js` — remplace le bouton SyncPlay de l'en-tête par une
+- `replace-sync-button.js` : remplace le bouton SyncPlay de l'en-tête par une
   entrée dans le menu des préférences.
 
 Le CSS fonctionne sans eux : les règles concernées sont gardées par
 `body.tabs-in-page`, que seul le script pose.
 
 > Le plugin patche l'`index.html` servi par le serveur. L'app Tizen embarque
-> sa propre copie du client web et ne le reçoit jamais — seul `/Branding/Css`
+> sa propre copie du client web et ne le reçoit jamais : seul `/Branding/Css`
 > l'atteint. D'où le calage des onglets en TV fait entièrement en CSS, dans
 > `06-tv.css`.
 
@@ -176,7 +178,7 @@ Le CSS fonctionne sans eux : les règles concernées sont gardées par
 Le dépôt réclame `core.filemode false` : `drvfs` remonte tous les fichiers en
 777, et sans ce réglage git verrait des changements de permissions partout.
 Corollaire : `chmod +x` n'a plus aucun effet sur ce que git enregistre, et un
-script ajouté ici arrive en `100644` — donc non exécutable une fois cloné
+script ajouté ici arrive en `100644`, donc non exécutable une fois cloné
 sous Linux, ou sur un runner GitHub Actions. Pour tout nouveau script :
 
 ```bash
@@ -192,7 +194,7 @@ de fichiers. C'est le seul moyen quand `core.filemode` vaut `false`.
 
 Resynchronise `src/vendor/ultrachromic/`. Ne commite rien : le but est de
 lire le diff avant d'accepter. Ultrachromic n'a **ni tag ni release**, donc
-une URL sans version pointe sur le HEAD de `main` — vendoriser fige cette
+une URL sans version pointe sur le HEAD de `main` ; vendoriser fige cette
 cible mouvante, et ce script est le seul endroit où elle bouge.
 
 ## Publier une version
@@ -202,7 +204,7 @@ Le tag et la release sont créés par GitHub Actions à partir du fichier
 
 1. Éditer `VERSION` (ex. `1.2.0`) et ajouter la section correspondante dans
    `CHANGELOG.md`.
-2. `./build.py` — l'en-tête de `dist/theme.css` porte le nouveau numéro.
+2. `./build.py` : l'en-tête de `dist/theme.css` porte le nouveau numéro.
 3. Commiter, pousser sur `main`.
 
 Le workflow `publier` vérifie le build, refuse une version sans notes dans le
@@ -210,7 +212,7 @@ Le workflow `publier` vérifie le build, refuse une version sans notes dans le
 section. Il ne fait rien si le tag existe déjà : pousser plusieurs fois est
 sans effet.
 
-`VERSION` était déjà la source de vérité — `build.py` l'estampille dans le CSS
+`VERSION` était déjà la source de vérité : `build.py` l'estampille dans le CSS
 servi. Taguer à la main revenait à recopier ce numéro, donc à pouvoir
 l'oublier, ou à publier une feuille qui s'annonce en `1.1.0` sous un tag
 `v1.0.0`.
@@ -221,7 +223,7 @@ le branding : c'est la seule étape qui reste manuelle, côté Jellyfin.
 Les URL jsDelivr taguées sont **immuables et mises en cache définitivement** :
 pas de purge à faire, et un retour arrière consiste à remettre l'ancien tag.
 C'est la raison de préférer les tags à `@main`, dont le cache CDN tient de
-12 heures à 7 jours — un push suivi de « rien ne change » est le symptôme
+12 heures à 7 jours, et un push suivi de « rien ne change » en est le symptôme
 classique. Pour suivre `main` malgré tout, purger après chaque push :
 
 ```bash
@@ -245,7 +247,7 @@ construire sans lui.
 **Toujours écrire `var(--accent, 98, 121, 205)`.** `--accent` vient de
 `type/colorful.css`. Sans repli, `rgba(var(--accent), .95)` est une valeur
 invalide tant que la variable n'est pas définie, et la déclaration est
-purement ignorée — bouton transparent au lieu de coloré. La fusion réduit
+purement ignorée : bouton transparent au lieu de coloré. La fusion réduit
 beaucoup ce risque, mais les replis restent la bonne pratique.
 
 **Les variantes d'Ultrachromic ne s'empilent pas.** `indicator_corner` et
@@ -257,7 +259,7 @@ pas. C'est tout l'objet de `08-indicateurs.css`.
 **Poser `overflow-y` ouvre aussi `overflow-x`.** La spec impose qu'un axe
 resté à `visible` face à un axe qui ne l'est pas se calcule en `auto`. Un
 `overflow-y: scroll` sur un conteneur de page lui donne donc une barre
-horizontale dès qu'un pixel dépasse — c'était le cas de `#indexPage`, corrigé
+horizontale dès qu'un pixel dépasse, ce qui était le cas de `#indexPage`, corrigé
 en 1.1.1 par `15-barre-defilement.css`. Le symptôme trompe : `documentElement`
 et `body` ne débordent pas, seul le conteneur intermédiaire défile.
 
@@ -270,7 +272,7 @@ veut que la couleur. Même piège pour `border` face à `border-color`.
 **Une classe de bouton peut être portée par un `div` imbriqué.** Toujours le
 bouton de profil : `paper-icon-button-light` est sur le `<button>` **et** sur
 le `div` de l'avatar qu'il contient. Un sélecteur par classe seule les vise
-donc tous les deux, et le survol s'appliquait en double — une teinte dans
+donc tous les deux, et le survol s'appliquait en double : une teinte dans
 l'anneau de padding, une autre sur le rond. `button.paper-icon-button-light`
 les départage, l'avatar étant le seul `div` à porter cette classe.
 
@@ -278,8 +280,8 @@ les départage, l'avatar étant le seul `div` à porter cette classe.
 `cardBuilder` distingue `.show-focus` de `.show-animation` par
 `!browser.slow && !browser.edge`, et Tizen est classé « slow ». Une règle
 écrite pour `.layout-tv` peut donc viser un état que la TV n'atteint jamais :
-c'est le cas du `scale(1.07)` de focus des cartes, dont le repli — un cadre
-de `.5em` — est ce qu'on voit réellement sur l'appareil. Vérifier laquelle
+c'est le cas du `scale(1.07)` de focus des cartes, dont le repli, un cadre
+de `.5em`, est ce qu'on voit réellement sur l'appareil. Vérifier laquelle
 des deux classes est posée avant de surcharger.
 
 **Rien ne marque une carte sélectionnée dans le DOM.**
@@ -287,7 +289,7 @@ des deux classes est posée avant de surcharger.
 sélection, et le module de sélection ne tient qu'un tableau d'ID en
 JavaScript : aucune classe n'est ajoutée à la carte cochée. Le seul signal
 disponible est `input.chkItemSelect:checked`, plus bas dans l'arbre que ce
-qu'on veut peindre — donc `:has()`, à mettre sous `@supports selector(:has(*))`
+qu'on veut peindre : donc `:has()`, à mettre sous `@supports selector(:has(*))`
 pour les navigateurs de TV antérieurs à Chromium 105.
 
 **Les `<` et `&` ne sont plus interdits.** Le CSS est stocké comme texte dans
@@ -298,9 +300,9 @@ vérifie le déséchappement par relecture. Les media queries de la forme
 
 ## Crédits
 
-- [Ultrachromic](https://github.com/CTalvio/Ultrachromic) — CTalvio, licence MIT.
+- [Ultrachromic](https://github.com/CTalvio/Ultrachromic) : CTalvio, licence MIT.
   Vendorisé dans `src/vendor/`, voir [NOTICE](NOTICE).
-- [Phosphor Icons](https://phosphoricons.com) — licence MIT.
-- Police [Plus Jakarta Sans](https://fonts.google.com/specimen/Plus+Jakarta+Sans) — SIL OFL 1.1.
+- [Phosphor Icons](https://phosphoricons.com) : licence MIT.
+- Police [Plus Jakarta Sans](https://fonts.google.com/specimen/Plus+Jakarta+Sans) : SIL OFL 1.1.
 
 Code de ce dépôt sous licence [MIT](LICENSE).

@@ -2,7 +2,7 @@
 /* Le preset charge cornerindicator/indicator_corner.css. Les deux variantes
    sont ALTERNATIVES, pas empilables : indicator_corner colle la pastille
    dans l'angle avec des !important (right/top a 0, coins asymetriques),
-   qu'indicator_floating ne reprend pas — il ne pose que des fonds et des
+   qu'indicator_floating ne reprend pas : il ne pose que des fonds et des
    ombres, sans !important. L'import seul restait donc sans effet visible.
    On rend ici a la pastille son detachement et ses coins ronds. */
 .cardIndicators,

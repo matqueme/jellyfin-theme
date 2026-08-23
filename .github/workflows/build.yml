@@ -24,7 +24,7 @@ jobs:
 
   # Les URL taguees sont immuables cote jsDelivr : rien a purger pour elles.
   # Seul @main a besoin d'etre purge, son cache CDN tenant de 12 heures a
-  # 7 jours — sinon un push est suivi de "rien ne change" cote client.
+  # 7 jours, sinon un push est suivi de "rien ne change" cote client.
   purger:
     needs: verifier
     if: github.ref == 'refs/heads/main'

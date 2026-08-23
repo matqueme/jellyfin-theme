@@ -10,7 +10,7 @@ de construire que produire une feuille qui casse Jellyfin en silence.
 
 Pourquoi fusionner plutot que chainer des @import : le preset kaleidochromic
 importe 16 modules, qui en importent d'autres. Servi par @import, cet arbre
-se parcourt en serie — chaque feuille doit etre recue et analysee avant que
+se parcourt en serie : chaque feuille doit etre recue et analysee avant que
 la suivante soit decouverte. D'ou trois consequences, toutes vecues :
 
   - un flash d'interface non stylee au premier chargement, tres visible sur
@@ -151,10 +151,10 @@ def build() -> str:
                       + "".join(f"          {m}.css\n" for m in sorted(asm.skipped)))
 
     header = f"""/* =====================================================================
-   Theme Jellyfin — matqueme
-   Version {theme_version} — Jellyfin 10.11.x
+   Theme Jellyfin, par matqueme
+   Version {theme_version}, pour Jellyfin 10.11.x
 
-   FICHIER CONSTRUIT — NE PAS EDITER.
+   FICHIER CONSTRUIT : NE PAS EDITER.
    Genere par build.py depuis src/. Toute modification faite ici sera
    perdue au prochain build. Editer src/, puis relancer ./build.py.
 

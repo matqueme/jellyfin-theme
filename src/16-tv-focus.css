@@ -15,7 +15,7 @@
                                         { border: .5em solid transparent;
                                           border-radius: .7em }
 
-   La premiere, le zoom, est le cas nominal — et c'est celle que la TV
+   La premiere, le zoom, est le cas nominal, et c'est celle que la TV
    n'obtient jamais. La seconde est le repli pour appareil lent, un cadre
    de .5em que themes/dark/theme.css colore ensuite :
 
@@ -36,7 +36,7 @@
 /* Le cadre de repli, sur TOUTES les cartes, visees ou non : .show-focus
    est pose par cardBuilder sur chaque carte des que layoutManager.tv, ce
    n'est pas un etat. L'affiner ici agrandit donc les affiches de la
-   grille entiere, uniformement — aucun decalage au passage du focus,
+   grille entiere, uniformement : aucun decalage au passage du focus,
    puisque la boite ne change pas de taille selon l'etat.
 
    Le rayon suit --rounding, que le preset fixe a 12px et que rounding.css
@@ -58,7 +58,7 @@
 }
 
 /* La carte visee. L'anneau prend l'accent, et l'ombre detache l'affiche du
-   fond — c'est elle qui fait lire la carte comme posee au-dessus des
+   fond, et c'est elle qui fait lire la carte comme posee au-dessus des
    autres, plus que le zoom lui-meme.
    0,6,0 !important contre le 0,4,0 !important du theme sombre. */
 .layout-tv .card:focus .cardBox.visualCardBox,
@@ -74,7 +74,7 @@
    1. .card:not(.show-animation) { contain: layout style paint }. Le
       confinement de peinture rogne les descendants a la boite de la
       carte : l'agrandissement etait decoupe pile a son bord. On retire le
-      seul mot-cle qui gene, et sur la seule carte visee — pas sur la
+      seul mot-cle qui gene, et sur la seule carte visee, pas sur la
       grille entiere, le confinement etant precisement ce qui garde une TZ
       fluide sur une page de deux cents affiches.
 
@@ -129,18 +129,18 @@
 
 /* --- Bouton Lecture vise --------------------------------------------- */
 /* La pilule est deja a l'accent au repos (section 2) : l'eclaircir un peu
-   ne se voyait pas d'un fauteuil. Une inversion a ete essayee — fond
-   blanc, trait a l'accent, sur le modele de
+   ne se voyait pas d'un fauteuil. Une inversion a ete essayee,
+   fond blanc et trait a l'accent, sur le modele de
      themes/dark  .layout-tv .emby-button.detailFloatingButton:focus
                       { background-color: #f2f2f2; color: #00a4dc }
-   — et ecartee : deux aplats de couleur qui s'echangent font une rupture,
+   puis ecartee : deux aplats de couleur qui s'echangent font une rupture,
    la ou le bouton doit simplement se signaler.
 
    La pilule garde donc sa couleur, et c'est un anneau blanc qui porte le
    focus. Le blanc n'est pas un choix par defaut : sur un fond deja a
    l'accent, un anneau d'accent serait invisible, et le blanc est ce que
    le theme emploie deja pour marquer un etat par-dessus une surface
-   coloree — pilule d'onglet actif, voile de survol de la section 17.
+   coloree : pilule d'onglet actif, voile de survol de la section 17.
 
    scale(1.06) et non le 1.2 de card.scss : la pilule est large, et
    l'agrandir d'un cinquieme la faisait chevaucher le bouton voisin.
