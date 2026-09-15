@@ -105,11 +105,16 @@ refaits en MUI.
   hauteur en fait un cercle tant que le texte tient dedans, et le laisse
   s'allonger quand la pagination le remplit par une plage.
 
-- La lisibilite du compteur d'episodes. Le chiffre etait deja blanc, Jellyfin
-  le pose ; ce qui le diluait etait son fond, l'accent a 80 %, et l'ombre
-  portee qu'`indicator_floating.css` retire. Sur une jaquette claire il ne
-  restait aucun bord net. Opacite remontee a 95 % et lisere sombre rendu,
-  sans toucher a la teinte.
+- La lisibilite du compteur d'episodes, qui se lisait gris fonce alors que sa
+  couleur calculee est bien `rgb(255, 255, 255)`. La cause est une propriete
+  heritee : Ultrachromic pose `text-shadow: 0 0 4px rgba(0,0,0,.6)
+  !important` sur `body`, et `text-shadow` descend dans tout le document.
+  Devant une affiche, sur un titre, c'est ce qui le rend lisible ; sur le
+  chiffre d'une pastille haut de 11 px, une ombre noire floutee sur 4 px et
+  sans decalage deborde du glyphe et en noie l'interieur. Coupee sur les
+  pastilles, qui ont un fond plein et n'en ont aucun besoin. Le fond passe au
+  passage a 95 % d'opacite, avec un lisere sombre rendu — `indicator_floating.css`
+  retire celui que Jellyfin pose.
 
 - Les listes deroulantes ecrasees. Regression venue d'Ultrachromic, pas de
   Jellyfin : `fields_noborder.css` ecrase depuis peu le padding de

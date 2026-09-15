@@ -2207,6 +2207,25 @@ body > .toast,
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45) !important;
 }
 
+/* Et surtout : couper l'ombre de texte heritee.
+   Ultrachromic pose text-shadow: 0 0 4px rgba(0,0,0,.6) !important sur
+   body. text-shadow est une propriete heritee : cette ombre descend donc
+   dans tout le document. Sur un titre devant une affiche, c'est ce qui le
+   rend lisible. Sur le chiffre d'une pastille, haut de 11 px, une ombre
+   noire floutee sur 4 px et sans decalage deborde de partout et noie
+   l'interieur du glyphe : le chiffre est blanc — verifie, la couleur
+   calculee est bien rgb(255,255,255) — mais il se lit gris fonce.
+
+   Ces pastilles ont un fond plein qui assure deja le contraste ; l'ombre
+   n'y sert a rien. */
+.countIndicator,
+.playedIndicator,
+.mediaSourceIndicator,
+.missingIndicator,
+.unairedIndicator {
+  text-shadow: none !important;
+}
+
 /* ===== 09-lecteur.css ===== */
 /* --- 9. Marqueurs de chapitres dans la barre de lecture --------------- */
 /* Jellyfin pose un span.sliderMarker par chapitre dans le
