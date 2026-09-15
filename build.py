@@ -152,7 +152,7 @@ def build() -> str:
 
     header = f"""/* =====================================================================
    Theme Jellyfin, par matqueme
-   Version {theme_version}, pour Jellyfin 10.11.x
+   Version {theme_version}, pour Jellyfin 12.x
 
    FICHIER CONSTRUIT : NE PAS EDITER.
    Genere par build.py depuis src/. Toute modification faite ici sera

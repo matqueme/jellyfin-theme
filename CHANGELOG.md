@@ -4,6 +4,75 @@ Format : [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/).
 Versionnage sémantique, indépendant de celui de Jellyfin : la compatibilité
 est indiquée par le titre de chaque version.
 
+## [2.0.0] - 2026-09-15 - Jellyfin 12.x
+
+Portage sur Jellyfin 12, dont le layout **Modern** est desormais celui par
+defaut. Version majeure parce que la cible change, pas parce que le theme a
+ete refait : l'essentiel n'a pas bouge, et c'est le fait marquant de ce
+portage.
+
+### Contexte
+
+La 12 n'est pas un client neuf. Les pages d'item, de connexion, de liste, les
+preferences et la file d'attente sont toujours rendues par les controleurs
+d'avant, **y compris en Modern** : c'est explicite dans le source du client,
+`src/apps/modern/routes/legacyRoutes/`. Et les cartes, pourtant reecrites en
+composants React, emettent le meme vocabulaire de classes qu'en 10.11
+(`cardScalable`, `cardContent`, `cardText`, `innerCardFooter`,
+`cardOverlayButton`, `cardIndicators`). Enfin `layout-desktop`, `layout-mobile`
+et `layout-tv` sont toujours posees sur `<html>` par `layoutManager`, meme en
+Modern.
+
+Consequence : les modules 02 a 22 s'appliquent sans modification. Ce qui
+change, c'est l'habillage de l'en-tete, du tiroir et des barres d'outils,
+refaits en MUI.
+
+### Ajoute
+
+- `src/23-modern.css`. Habillage des quatre elements que la 12 rend en MUI :
+  en-tete, tiroir, entrees selectionnees, navigation des bibliotheques. Deux
+  appuis, choisis pour leur duree de vie :
+
+  - les **classes de composant MUI** (`.MuiAppBar-root`, `.MuiDrawer-paper`,
+    `.Mui-selected`, `.MuiButton-colorPrimary`), qui font partie de l'API
+    publique de MUI. C'est ce qui remplace les hachages `css-4yt2of`,
+    `css-17c09up` et `css-fknfom` qu'Ultrachromic vise encore : Emotion les
+    recalcule des que le style amont bouge, ils ne designaient deja plus rien
+    en 12.1 ;
+  - les **variables `--jf-*`** du theme de base, que la 12 a introduites et
+    que son source presente comme exposees pour les themes personnalises.
+    L'accent du preset y est branche, donc les composants MUI cessent de
+    revenir au bleu Jellyfin par defaut.
+
+  La navigation de bibliotheque reprend la pilule de `05-onglets.css`, aux
+  memes valeurs, pour que les deux layouts se ressemblent : gris clair pour
+  la vue courante, accent reserve au focus telecommande.
+
+- `--accent-canal` dans `src/01-reglages.css`. Meme couleur que `--accent`,
+  en composantes separees par des espaces : MUI attend cette syntaxe pour ses
+  variables `*Channel`, ou la notation en virgules est invalide.
+
+### Modifie
+
+- Ultrachromic resynchronise sur [`1398af2`](https://github.com/CTalvio/Ultrachromic/tree/1398af21b8fe120a972bd00942ad60a76a932647).
+  L'amont a corrige pour la 12 : l'affiche de la page d'item redevient
+  `position: relative` et accepte les transformations, le logo de titre est
+  scope en `.layout-desktop` et recoit un placement propre en TV, les champs
+  sans bordure retrouvent leur padding. Les modules dont dependent 08, 10, 11,
+  12 et 13 — `hoverglow`, `overlayprogress`, `cornerindicator` — sont
+  inchanges, verifie avant d'accepter le diff.
+
+- `build.py` annonce la cible 12.x dans l'en-tete du fichier construit.
+
+### A verifier
+
+- Le script `js/onglets-dans-la-page.js` clone la rangee d'onglets de
+  `.skinHeader` dans la page, sur telephone. En Modern, cette rangee existe
+  toujours mais son conteneur est `display: none` — le client la garde dans le
+  DOM parce que les vues legacy s'y adressent. Le clone reste donc possible et
+  probablement utile, la navigation Modern passant par un tiroir sur petit
+  ecran, mais le rendu n'a pas ete verifie a l'oeil.
+
 ## [1.3.0] - 2026-08-23 - Jellyfin 10.11.x
 
 ### Ajouté

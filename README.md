@@ -1,10 +1,14 @@
 # Thème Jellyfin
 
-Thème sombre pour Jellyfin 10.11, construit sur
+Thème sombre pour Jellyfin 12, construit sur
 [Ultrachromic](https://github.com/CTalvio/Ultrachromic) (preset `kaleidochromic`)
 avec les icônes [Phosphor](https://phosphoricons.com), et une soixantaine de
 surcharges maison : page d'item, page de connexion, onglets d'en-tête,
 barres de progression des cartes, corrections TV et téléphone.
+
+Visé pour le layout **Modern**, celui par défaut depuis la 12. Le Legacy reste
+couvert : l'essentiel du thème porte sur des pages que la 12 rend encore avec
+le code d'avant, y compris en Modern.
 
 Livré comme **un seul fichier** : `dist/theme.css`. Ultrachromic est vendorisé
 et fusionné à la construction, il n'y a donc aucune cascade d'`@import` à
@@ -17,7 +21,7 @@ l'exécution ni aucune dépendance à un dépôt tiers qui bouge.
 Tableau de bord → Général → **CSS personnalisé**, une seule ligne :
 
 ```css
-@import url('https://cdn.jsdelivr.net/gh/matqueme/jellyfin-theme@v1.3.0/dist/theme.css');
+@import url('https://cdn.jsdelivr.net/gh/matqueme/jellyfin-theme@v2.0.0/dist/theme.css');
 ```
 
 Puis `Ctrl+F5` sur le client.
@@ -39,6 +43,7 @@ indésirable, `apply-local.sh` écrit le fichier directement dans le
 
 | Thème | Jellyfin | Ultrachromic |
 |---|---|---|
+| `v2.0.0` | 12.x | [`1398af2`](https://github.com/CTalvio/Ultrachromic/tree/1398af21b8fe120a972bd00942ad60a76a932647) |
 | `v1.3.0` | 10.11.x | [`fa158a2`](https://github.com/CTalvio/Ultrachromic/tree/fa158a241cb24298c9996af3cf6460ae2f9d522f) |
 | `v1.2.0` | 10.11.x | [`fa158a2`](https://github.com/CTalvio/Ultrachromic/tree/fa158a241cb24298c9996af3cf6460ae2f9d522f) |
 | `v1.1.0` | 10.11.x | [`fa158a2`](https://github.com/CTalvio/Ultrachromic/tree/fa158a241cb24298c9996af3cf6460ae2f9d522f) |
@@ -51,7 +56,19 @@ par le titre de chaque release.
 Le thème s'accroche aux classes internes du client web, que Jellyfin peut
 renommer d'une version mineure à l'autre. Une montée de Jellyfin en version
 mineure appelle donc une relecture ; et si le rendu casse, une branche
-`jellyfin-10.11` pour figer l'existant pendant que `main` part sur la suite.
+`jellyfin-<version>` pour figer l'existant pendant que `main` part sur la suite.
+La branche `jellyfin-10.11` garde la dernière version d'avant la 12.
+
+Deux niveaux d'accroche coexistent depuis la 12, et ils ne vieillissent pas de
+la même façon :
+
+- les **classes du client** (`cardScalable`, `itemDetailPage`, `emby-button`…),
+  que la 12 a très largement conservées, y compris pour les cartes du layout
+  Modern, qui sont pourtant des composants React neufs ;
+- les **classes de composant MUI** (`.MuiAppBar-root`, `.Mui-selected`) et les
+  **variables `--jf-*`** du thème de base, pour l'en-tête, le tiroir et les
+  barres d'outils, refaits en React. Ne jamais viser les classes `css-xxxxxx`
+  qu'Emotion génère à côté : ce sont des hachages recalculés à chaque version.
 
 ## Réglages
 
@@ -63,6 +80,7 @@ Les valeurs prévues pour être retouchées, avec leur emplacement :
 | `--play-label` | [`src/01-reglages.css`](src/01-reglages.css) | Libellé du bouton Lecture. Garder les guillemets : c'est une valeur de `content` |
 | `--play-label-size` | [`src/01-reglages.css`](src/01-reglages.css) | Taille de ce libellé |
 | `--btn-hover-bg` | [`src/01-reglages.css`](src/01-reglages.css) | Survol des boutons secondaires : en-tête, rangée d'un film, bandeau de sélection |
+| `--accent-canal` | [`src/01-reglages.css`](src/01-reglages.css) | Accent du preset en syntaxe MUI, pour les composants React de la 12. Doit rester d'accord avec `--accent` |
 | `--tabs-left` | [`src/05-onglets.css`](src/05-onglets.css) | Décalage des onglets d'en-tête. Repli seulement : le script les mesure et pose sa propre valeur |
 | `--card-bar-height` | [`src/10-carte-barre.css`](src/10-carte-barre.css) | Épaisseur de la barre de progression des cartes |
 | `--card-bar-gap` | [`src/10-carte-barre.css`](src/10-carte-barre.css) | Détachement du bord bas, c'est ce qui fait l'effet flottant |

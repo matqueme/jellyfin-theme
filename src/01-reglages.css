@@ -12,4 +12,11 @@
   --play-label: "Lecture"; /* garder les guillemets : valeur de content */
   --play-label-size: 0.8em;
   --btn-hover-bg: rgba(255, 255, 255, 0.1); /* survol des boutons secondaires */
+
+  /* Meme couleur que --accent, en composantes separees par des espaces.
+     MUI attend cette syntaxe pour ses variables *Channel, avec lesquelles
+     il compose ses propres transparences ; --accent, en virgules, y est
+     invalide. Les deux doivent rester d'accord : si le preset change
+     d'accent, changer ici aussi. Voir 23-modern.css. */
+  --accent-canal: 98 121 205;
 }

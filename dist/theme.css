@@ -1,13 +1,13 @@
 /* =====================================================================
    Theme Jellyfin, par matqueme
-   Version 1.3.0, pour Jellyfin 10.11.x
+   Version 2.0.0, pour Jellyfin 12.x
 
    FICHIER CONSTRUIT : NE PAS EDITER.
    Genere par build.py depuis src/. Toute modification faite ici sera
    perdue au prochain build. Editer src/, puis relancer ./build.py.
 
    Base : Ultrachromic de CTalvio (MIT), vendorise et fusionne.
-          commit fa158a241cb24298c9996af3cf6460ae2f9d522f
+          commit 1398af21b8fe120a972bd00942ad60a76a932647
    Icones : Phosphor Bold 2.1.2 (MIT).
 
    Modules du preset volontairement exclus :
@@ -202,11 +202,18 @@ div[data-role="controlgroup"] a[data-role="button"] {
 .layout-mobile .itemBackdrop {
     margin-top: 4rem;
 }
-
-/*Stop covers from being scrolled on desktop*/
+/*
 .layout-desktop .detailImageContainer .card {
     position: fixed !important;
     top: 10% !important;
+}
+*/
+
+/* Allow cover to scroll AND allow transforms for Jellyfin 12 onwards*/
+.layout-desktop .detailImageContainer .card {
+  position: relative !important;
+  top: 0 !important;
+  z-index: 5 !important;
 }
 .layout-mobile .detailImageContainer .card {
     position: absolute !important;
@@ -758,12 +765,20 @@ div[data-role="controlgroup"] a[data-role="button"]:last-child {
     margin-bottom: 1.2em !important;
 }
 #loginPage {
-  background: url(https://raw.githubusercontent.com/CTalvio/Ultrachromic/fa158a241cb24298c9996af3cf6460ae2f9d522f/assets/background.png) !important;
+  background: url(https://raw.githubusercontent.com/CTalvio/Ultrachromic/1398af21b8fe120a972bd00942ad60a76a932647/assets/background.png) !important;
   background-size: cover !important;
 }
 
 /* ===== ultrachromic/fields/fields_noborder.css ===== */
 /*No borders, background highlights*/
+.emby-input,
+.emby-textarea {
+  padding: .4em .55em !important;
+}
+.emby-select {
+   padding: 0 1.9em 0 .35em !important;
+}
+
 .infoBanner {
     background: rgba(var(--selection), 0.15) !important;
 }
@@ -853,7 +868,7 @@ progress::-webkit-progress-bar {
 
 /*Login background*/
 #loginPage {
-  background: url(https://raw.githubusercontent.com/CTalvio/Ultrachromic/fa158a241cb24298c9996af3cf6460ae2f9d522f/assets/background.png) !important;
+  background: url(https://raw.githubusercontent.com/CTalvio/Ultrachromic/1398af21b8fe120a972bd00942ad60a76a932647/assets/background.png) !important;
   background-size: cover !important;
 }
 
@@ -1048,30 +1063,49 @@ progress {
 }
 
 /* ===== ultrachromic/titlepage/title_simple.css ===== */
-/*Tweak series/movie/album title screen*/
+/* Tweak series/movie/album title screen */
 
+/* Keep preferred content widths */
 .detailSectionContent {
-  max-width: 66em;
+    max-width: 66em;
 }
+
 .trackSelections {
-  max-width: 22em;
+    max-width: 22em;
 }
+
+/* Intentionally hide the logo */
 .detailLogo {
-  display: none;
-}
-.detailPagePrimaryContainer {
-  background: rgba(0,0,0,0) !important;
-}
-.layout-desktop .detailRibbon {
-  background: rgba(0,0,0,0) !important;
-}
-@media all and (min-width: 32em){
-  .itemBackdrop {
     display: none;
-  }
-	.layout-desktop .detailRibbon {
-    margin-top: 13vh;
-	}
+}
+
+/* Transparent backgrounds */
+.detailPagePrimaryContainer {
+    background: rgba(0,0,0,0) !important;
+}
+
+.layout-desktop .detailRibbon {
+    background: rgba(0,0,0,0) !important;
+}
+
+/* Remove the backdrop space on desktop only */
+.layout-desktop .itemBackdrop {
+    display: none !important;
+}
+
+.layout-desktop .pageContainer,
+.layout-desktop .mainDetailPage,
+.layout-desktop .detailPageWrapper,
+.layout-desktop #itemDetailPage,
+.layout-desktop .contentContainer,
+.layout-desktop .viewContainer,
+.layout-desktop .sectionContainer {
+    margin-top: 22vh !important;
+}
+
+.layout-desktop .detailImageContainer .card {
+    transform: translate(35px, -165px) scale(1) !important;
+    transform-origin: top left;
 }
 
 /* ===== ultrachromic/overlayprogress.css ===== */
@@ -1191,7 +1225,7 @@ body > .toast,
   padding-bottom: .5em;
 }
 
-#itemDetailPage .detailLogo {
+.layout-desktop #itemDetailPage .detailLogo {
     position: static;
     margin-left: 32.5%;
     display: block;
@@ -1201,6 +1235,32 @@ body > .toast,
     background-position: 0 50%;
     margin-top: -18vh;
     margin-bottom: 2vh;
+}
+
+.layout-tv #itemDetailPage .detailLogo {
+    display: block !important;
+    position: absolute !important;
+    top: 5vh !important;
+    left: 31vw !important;
+    width: 55vw !important;
+    height: 22vh !important;
+    margin: 0 !important;
+    background-position: left bottom !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    z-index: 10 !important;
+    pointer-events: none !important;
+    -webkit-filter: drop-shadow(0 0 10px rgba(2, 2, 2, 0.75));
+    filter: drop-shadow(0 0 10px rgba(2, 2, 2, 0.75));
+}
+
+.layout-tv #itemDetailPage .detailRibbon {
+    margin-top: 18vh !important;
+}
+
+.layout-tv #itemDetailPage .nameContainer .parentNameLast,
+.layout-tv #itemDetailPage .nameContainer .originalTitle {
+    display: none !important; 
 }
 
 .layout-mobile .detailLogo {
@@ -1276,6 +1336,13 @@ body > .toast,
   --play-label: "Lecture"; /* garder les guillemets : valeur de content */
   --play-label-size: 0.8em;
   --btn-hover-bg: rgba(255, 255, 255, 0.1); /* survol des boutons secondaires */
+
+  /* Meme couleur que --accent, en composantes separees par des espaces.
+     MUI attend cette syntaxe pour ses variables *Channel, avec lesquelles
+     il compose ses propres transparences ; --accent, en virgules, y est
+     invalide. Les deux doivent rester d'accord : si le preset change
+     d'accent, changer ici aussi. Voir 23-modern.css. */
+  --accent-canal: 98 121 205;
 }
 
 /* ===== 02-cartes-survol.css ===== */
@@ -3142,4 +3209,134 @@ body.tabs-in-page #indexPage {
 .listItemProgressBar .itemProgressBarForeground {
   background-color: rgba(var(--accent, 98, 121, 205), 0.95) !important;
   border-radius: var(--rounding, 12px) !important;
+}
+
+/* ===== 23-modern.css ===== */
+/* --- 23. Chrome Modern (MUI) -----------------------------------------
+   Jellyfin 12 rend l'en-tete, le tiroir et les barres d'outils en MUI
+   (React + Emotion). Le reste des pages garde le balisage d'avant : la
+   page d'item, la connexion, les listes et les preferences sont rendues
+   par les controleurs legacy meme en layout Modern. C'est ecrit dans le
+   source du client, src/apps/modern/routes/legacyRoutes/, et c'est ce qui
+   fait que les modules 02 a 22 continuent de s'appliquer tels quels.
+
+   Ce qui ne s'applique plus, c'est l'habillage de ces quatre elements
+   MUI. Ils n'ont pas de classe propre : Emotion leur genere un hash, du
+   type css-4yt2of, recalcule des que le style amont bouge. Ultrachromic
+   vise encore ces hashs de la 10.11 ; ils ne designent plus rien. On
+   reecrit donc ces regles ici sur les classes de composant MUI
+   (.MuiAppBar-root, .MuiDrawer-paper, .Mui-selected), qui font partie de
+   l'API publique de MUI et ne dependent pas du contenu du style.
+
+   Deuxieme appui, plus solide encore : en 12 tous les themes derivent
+   d'un theme de base construit sur des variables CSS --jf-*, dont le
+   source dit qu'elles sont exposees pour les themes personnalises. Quand
+   une variable existe, on la pose plutot que de surcharger la regle. */
+
+/* --- Palette : l'accent d'Ultrachromic devient celui de MUI -----------
+   Sans ca, les boutons, interrupteurs et etats selectionnes des elements
+   MUI restent sur le bleu Jellyfin par defaut, a cote d'une interface
+   passee a l'accent du preset. */
+:root {
+  --jf-palette-primary-main: rgb(var(--accent, 98, 121, 205));
+  --jf-palette-secondary-main: rgb(var(--accent, 98, 121, 205));
+  /* MUI attend ses variables *Channel en composantes separees par des
+     espaces, la ou --accent est en virgules : d'ou --accent-canal, pose
+     dans 01-reglages.css, qui porte la meme couleur dans l'autre syntaxe. */
+  --jf-palette-primary-mainChannel: var(--accent-canal);
+  /* L'en-tete reprend l'opacite que glassy.css donne deja aux surfaces
+     flottantes (dialogues, tiroir, toasts). */
+  --jf-palette-AppBar-defaultBg: rgba(0, 0, 0, 0.35);
+  --jf-palette-AppBar-transparentBg: rgba(0, 0, 0, 0.25);
+}
+
+/* --- En-tete ---------------------------------------------------------
+   Reprend le traitement que glassy.css appliquait a .skinHeader-withBackground
+   et au hash css-fknfom : flou d'arriere-plan, et promotion en couche
+   composee pour que le flou ne soit pas recalcule a chaque defilement. */
+@supports (backdrop-filter: blur(15px)) {
+  .MuiAppBar-root {
+    backdrop-filter: blur(15px);
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    will-change: backdrop-filter;
+  }
+}
+
+/* --- Tiroir ----------------------------------------------------------
+   L'ancien css-4yt2of : fond translucide et filet d'accent sur le bord
+   droit. L'opacite est alignee sur celle que glassy.css donne au
+   .mainDrawer legacy, pour que les deux layouts se ressemblent. */
+.MuiDrawer-paper {
+  background-color: rgba(0, 0, 0, 0.35);
+  border-right: 1px solid rgba(var(--accent, 98, 121, 205), 0.12);
+}
+
+@supports (backdrop-filter: blur(15px)) {
+  .MuiDrawer-paper {
+    backdrop-filter: blur(15px);
+  }
+}
+
+/* --- Element selectionne ---------------------------------------------
+   L'ancien css-17c09up.Mui-selected. MUI pose .Mui-selected sur l'entree
+   courante de tous ses menus et listes : une seule regle les couvre. */
+.MuiMenuItem-root.Mui-selected,
+.MuiListItemButton-root.Mui-selected,
+.MuiListItem-root.Mui-selected {
+  color: rgb(var(--accent, 98, 121, 205));
+  background-color: rgba(var(--accent, 98, 121, 205), 0.12);
+}
+
+/* --- Navigation des bibliotheques ------------------------------------
+   Le pendant Modern de 05-onglets.css. En 12 la rangee d'onglets de
+   l'en-tete a cede la place a des boutons MUI dans la barre du haut : on
+   leur redonne la meme pilule, avec les memes valeurs, pour que les deux
+   layouts soient interchangeables a l'oeil.
+   text-transform : MUI met ses boutons en capitales par defaut, ce qui
+   jure avec le reste de l'interface, qui ne l'est pas. */
+.MuiAppBar-root .MuiButton-root {
+  border-radius: 999px;
+  text-transform: none;
+  font-weight: 500;
+  padding: 0.35em 1em;
+  transition:
+    background-color 0.15s,
+    color 0.15s;
+}
+
+.MuiAppBar-root .MuiButton-colorInherit {
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.MuiAppBar-root .MuiButton-root:hover {
+  background-color: var(--btn-hover-bg);
+  color: #fff;
+}
+
+/* Vue courante. MUI la marque en passant le bouton en color="primary",
+   d'ou .MuiButton-colorPrimary ; .MuiButton-textPrimary est la meme
+   chose sur la variante texte, presente selon les versions de MUI. On
+   garde le gris clair de 05-onglets plutot que l'accent : l'accent est
+   reserve au focus telecommande, sinon les deux etats se confondent. */
+.MuiAppBar-root .MuiButton-colorPrimary,
+.MuiAppBar-root .MuiButton-textPrimary {
+  background-color: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  font-weight: 700;
+}
+
+/* Focus a la telecommande, comme .emby-tab-button.show-focus:focus en
+   legacy : pilule pleine d'accent, sans agrandissement. */
+.MuiAppBar-root .MuiButton-root.Mui-focusVisible {
+  background-color: rgba(var(--accent, 98, 121, 205), 0.95);
+  color: #fff;
+}
+
+/* --- Barre d'outils de bibliotheque ----------------------------------
+   La 12 a fusionne la barre d'outils de bibliotheque dans l'en-tete ; le
+   compteur d'elements y est une puce MUI, opaque par defaut, qui faisait
+   un pave clair dans un en-tete translucide. */
+.MuiAppBar-root .MuiChip-root {
+  background-color: rgba(255, 255, 255, 0.1);
 }
