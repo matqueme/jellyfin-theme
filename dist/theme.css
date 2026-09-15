@@ -2191,6 +2191,22 @@ body > .toast,
   border-radius: var(--rounding) !important;
 }
 
+/* --- Lisibilite du compteur d'episodes -------------------------------
+   Le chiffre est deja blanc : Jellyfin pose color: #fff sur
+   .countIndicator, et rien ici ne l'ecrase. Ce qui le rend difficile a
+   lire, c'est son fond — l'accent a 80 % — et le fait qu'indicator_floating
+   retire l'ombre portee que Jellyfin lui donnait. Sur une jaquette claire,
+   il ne reste plus de bord net entre la pastille et l'image, et le blanc
+   se dilue dans un fond qui laisse passer l'affiche.
+
+   On remonte donc l'opacite du fond et on rend un liseré sombre, sans
+   toucher a la couleur ni a la teinte : le chiffre se detache par
+   contraste, pas par changement d'accent. */
+.countIndicator {
+  background: rgba(var(--indicator), 0.95) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45) !important;
+}
+
 /* ===== 09-lecteur.css ===== */
 /* --- 9. Marqueurs de chapitres dans la barre de lecture --------------- */
 /* Jellyfin pose un span.sliderMarker par chapitre dans le
@@ -3276,12 +3292,54 @@ body > .toast,
   color: #fff;
 }
 
+/* --- Boutons groupes --------------------------------------------------
+   La barre de bibliotheque assemble ses boutons en MuiButtonGroup : lire
+   et lecture aleatoire d'un cote, filtre, tri et affichage de l'autre,
+   pagination en bout. MUI y dessine un groupe d'un seul tenant, dont
+   seuls les deux bouts sont arrondis, et separe ses membres par un bord
+   droit d'un pixel.
+
+   La pilule posee plus haut arrondissait chacun d'eux a 999px : le bord
+   de separation suivait cet arrondi et se voyait comme un arc de cercle
+   flottant a droite de chaque bouton. On ne redresse donc que les cotes
+   qui se touchent, en laissant les bouts du groupe a leur pilule. Passer
+   par les bouts plutot que remettre .MuiButtonGroup-grouped a plat evite
+   d'aplatir un groupe reduit a un seul bouton, qui n'est ni premier ni
+   dernier pour MUI. */
+.MuiAppBar-root .MuiButtonGroup-firstButton {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.MuiAppBar-root .MuiButtonGroup-lastButton {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.MuiAppBar-root .MuiButtonGroup-middleButton {
+  border-radius: 0;
+}
+
 /* --- Barre d'outils de bibliotheque ----------------------------------
    La 12 a fusionne la barre d'outils de bibliotheque dans l'en-tete ; le
    compteur d'elements y est une puce MUI, opaque par defaut, qui faisait
    un pave clair dans un en-tete translucide. */
 .MuiAppBar-root .MuiChip-root {
   background-color: rgba(255, 255, 255, 0.1);
+  /* MUI donne au chip une hauteur fixe et un padding lateral : sur un
+     compteur a un chiffre, la boite est plus large que haute et la pilule
+     rend un ovale. min-width egale a la hauteur en fait un cercle tant que
+     le texte tient dedans, et le laisse s'allonger au-dela — le compteur
+     devient une plage paginee, "1-20 sur 53", des que la pagination est
+     active. */
+  height: 2.2em;
+  min-width: 2.2em;
+  border-radius: 999px;
+}
+
+.MuiAppBar-root .MuiChip-label {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
 }
 
 /* --- Compensation de l'en-tete legacy --------------------------------

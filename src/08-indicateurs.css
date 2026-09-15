@@ -25,3 +25,19 @@
   top: 0.5em;
   border-radius: var(--rounding) !important;
 }
+
+/* --- Lisibilite du compteur d'episodes -------------------------------
+   Le chiffre est deja blanc : Jellyfin pose color: #fff sur
+   .countIndicator, et rien ici ne l'ecrase. Ce qui le rend difficile a
+   lire, c'est son fond — l'accent a 80 % — et le fait qu'indicator_floating
+   retire l'ombre portee que Jellyfin lui donnait. Sur une jaquette claire,
+   il ne reste plus de bord net entre la pastille et l'image, et le blanc
+   se dilue dans un fond qui laisse passer l'affiche.
+
+   On remonte donc l'opacite du fond et on rend un liseré sombre, sans
+   toucher a la couleur ni a la teinte : le chiffre se detache par
+   contraste, pas par changement d'accent. */
+.countIndicator {
+  background: rgba(var(--indicator), 0.95) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45) !important;
+}

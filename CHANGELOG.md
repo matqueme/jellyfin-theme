@@ -90,6 +90,27 @@ refaits en MUI.
   aucune AppBar MUI dans son arborescence, la condition sert de test de
   layout.
 
+- Les arcs de cercle flottant a droite des boutons de la barre de
+  bibliotheque. Celle-ci assemble ses boutons en `MuiButtonGroup`, ou MUI
+  dessine un groupe d'un seul tenant dont seuls les bouts sont arrondis, et
+  separe ses membres par un bord droit d'un pixel. La pilule de
+  `23-modern.css` arrondissait chacun d'eux a 999px : ce bord suivait la
+  courbe. Seuls les cotes qui se touchent sont desormais redresses, par
+  `MuiButtonGroup-firstButton`, `-lastButton` et `-middleButton` — passer par
+  les bouts plutot que remettre `-grouped` a plat evite d'aplatir un groupe
+  reduit a un seul bouton.
+
+- Le compteur d'elements de la barre, ovale sur un chiffre seul. MUI donne au
+  chip une hauteur fixe et un padding lateral ; une `min-width` egale a la
+  hauteur en fait un cercle tant que le texte tient dedans, et le laisse
+  s'allonger quand la pagination le remplit par une plage.
+
+- La lisibilite du compteur d'episodes. Le chiffre etait deja blanc, Jellyfin
+  le pose ; ce qui le diluait etait son fond, l'accent a 80 %, et l'ombre
+  portee qu'`indicator_floating.css` retire. Sur une jaquette claire il ne
+  restait aucun bord net. Opacite remontee a 95 % et lisere sombre rendu,
+  sans toucher a la teinte.
+
 - Les listes deroulantes ecrasees. Regression venue d'Ultrachromic, pas de
   Jellyfin : `fields_noborder.css` ecrase depuis peu le padding de
   `.emby-select` par `0 1.9em 0 .35em !important`. Plus aucun padding
