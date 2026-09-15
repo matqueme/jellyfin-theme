@@ -126,3 +126,26 @@
 .MuiAppBar-root .MuiChip-root {
   background-color: rgba(255, 255, 255, 0.1);
 }
+
+/* --- Compensation de l'en-tete legacy --------------------------------
+   Ultrachromic decale le haut des pages de liste pour degager l'en-tete
+   fixe de Jellyfin : 68px quand la barre tient sur une ligne, 130px quand
+   les onglets la font passer a deux. 05-onglets.css ajoute 100px de meme
+   nature sur telephone.
+
+   En Modern ces trois valeurs sont du vide. L'en-tete legacy est dans le
+   DOM mais son conteneur est en display: none, et la barre MUI est un
+   OffsetAppBar : le composant pose lui-meme un cale-pied de la hauteur
+   qu'il mesure, donc le contenu est deja decale de ce qu'il faut. Ce qui
+   restait etait un trou, de 130px sous 100em de large.
+
+   :has(.MuiAppBar-root) sert de test de layout : le Legacy n'a aucune
+   AppBar MUI dans son arborescence, seule la barre Modern en pose une.
+   La condition ne se limite pas a l'accueil, les quatre pages listees ici
+   recevant le meme traitement d'Ultrachromic. */
+:root:has(.MuiAppBar-root) #indexPage,
+:root:has(.MuiAppBar-root) #moviesPage,
+:root:has(.MuiAppBar-root) #tvRecommendedPage,
+:root:has(.MuiAppBar-root) #musicRecommendedPage {
+  margin-top: 0 !important;
+}

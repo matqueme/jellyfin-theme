@@ -2,10 +2,10 @@
 /* Cales a gauche apres le logo, facon Netflix, et etat selectionne en
    pilule : Jellyfin ne distingue l'onglet actif que par la graisse, ce
    qui se voit a peine.
-   --tabs-left n'est qu'un repli, le temps que le script "Onglets dans la
-   page" mesure le bord droit reel du contenu de .headerLeft et pose sa
-   propre valeur : elle depend du titre de page, des boutons visibles et,
-   sur TV, d'un logo different. */
+   --tabs-left cale la rangee apres le logo. Ces regles ne concernent que
+   le layout Legacy : en Modern, la 12 garde .skinHeader dans le DOM mais
+   son conteneur est en display: none, et la navigation passe par la barre
+   MUI, habillee par 23-modern.css. */
 :root {
   --tabs-left: 11.5em;
 }
@@ -78,57 +78,6 @@
   color: #fff !important;
 }
 
-/* Onglets deplaces dans la page par le script "Onglets dans la page"
-   (extension JavaScript Injector). Le CSS ne peut pas reparenter un
-   element : le script clone la rangee dans la zone qui defile et pose
-   body.tabs-in-page. Ces regles ne s'appliquent donc que si le script
-   tourne ; sans lui, rien ne change. */
-body.tabs-in-page .skinHeader .headerTabs.sectionTabs {
-  display: none !important;
-}
-
-/* L'en-tete perd sa deuxieme ligne : le decalage du contenu suit. */
-/* --header-h et --tabs-host-left sont mesurees et posees par le script :
-   une valeur en dur se decalait des que l'en-tete changeait de hauteur. */
-body.tabs-in-page #indexPage {
-  margin-top: var(--header-h, 58px) !important;
-}
-
-.pageTabsHost {
-  display: flex;
-  gap: 0.35em;
-  align-items: center;
-  padding: 0.1em 0 0.9em;
-  padding-left: var(--tabs-host-left, 0px);
-}
-
-.pageTab {
-  /* inline-flex + line-height: 1 : en display: block, la hauteur de ligne
-       naturelle de la police decalait le libelle vers le bas dans la pilule. */
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-  border: 0;
-  cursor: pointer;
-  padding: 0.38em 0.95em;
-  border-radius: 999px;
-  background-color: transparent;
-  color: rgba(255, 255, 255, 0.68);
-  font-family: inherit;
-  font-size: 1em;
-  font-weight: 500;
-  transition:
-    background-color 0.15s,
-    color 0.15s;
-}
-
-.pageTab-active {
-  background-color: rgba(255, 255, 255, 0.18);
-  color: #fff;
-  font-weight: 700;
-}
-
 /* --- 5. En-tete sur telephone ---------------------------------------- */
 /* L'en-tete faisait 123px de haut sur un ecran de 915, soit 13% de
    l'ecran : Ultrachromic passe les onglets a 110% et Jellyfin les met sur
@@ -144,12 +93,6 @@ body.tabs-in-page #indexPage {
   /* Sur deux lignes, la pilule touchait le bord bas de la navbar. */
   .skinHeader .headerTabs.sectionTabs {
     margin-bottom: 0.5em !important;
-  }
-  /* Le script cale le bord gauche de la pilule sur le texte des titres
-       de section ; ce padding n'entre plus dans son calcul et peut donc
-       etre change librement. */
-  .pageTab {
-    padding: 0.5em 0.9em;
   }
   #indexPage,
   #moviesPage,

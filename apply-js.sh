@@ -7,7 +7,7 @@
 # du même nom est remplacée ; les autres (écrites depuis le tableau de
 # bord) sont laissées intactes.
 #
-#   ./apply-js.sh js/onglets-dans-la-page.js
+#   ./apply-js.sh js/replace-sync-button.js
 #   JELLYFIN_DIR=/srv/jellyfin ./apply-js.sh js/*.js
 
 set -euo pipefail

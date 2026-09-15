@@ -48,6 +48,20 @@ refaits en MUI.
   memes valeurs, pour que les deux layouts se ressemblent : gris clair pour
   la vue courante, accent reserve au focus telecommande.
 
+- `src/25-icones-mui.css`. Les icones de la barre Modern sont des composants
+  SVG MUI : le dessin est dans le balisage et non dans une police, et le
+  `data-testid` qui les nommait est retire du build de production — verifie
+  dans le bundle servi. La methode de `07-icones.css`, qui remappe
+  `.material-icons.<nom>` sur Phosphor, ne peut donc pas s'y appliquer.
+  L'accroche retenue est la route du lien, stable et independante de la
+  langue : `appRouter` construit `#/movies?`, `#/tv?`, `#/music?` a partir du
+  type de collection. Le SVG est masque, le glyphe Phosphor pose en `::after`.
+  Diffusion et SyncPlay n'etant ni des liens ni porteurs d'identifiant,
+  ils passent par `aria-label`, donc par le francais ; dans une autre langue
+  ces deux icones restent en SVG et rien d'autre ne bouge.
+
+- `src/24-champs.css`. Voir « Corrige ».
+
 - `--accent-canal` dans `src/01-reglages.css`. Meme couleur que `--accent`,
   en composantes separees par des espaces : MUI attend cette syntaxe pour ses
   variables `*Channel`, ou la notation en virgules est invalide.
@@ -64,14 +78,35 @@ refaits en MUI.
 
 - `build.py` annonce la cible 12.x dans l'en-tete du fichier construit.
 
-### A verifier
+### Corrige
 
-- Le script `js/onglets-dans-la-page.js` clone la rangee d'onglets de
-  `.skinHeader` dans la page, sur telephone. En Modern, cette rangee existe
-  toujours mais son conteneur est `display: none` — le client la garde dans le
-  DOM parce que les vues legacy s'y adressent. Le clone reste donc possible et
-  probablement utile, la navigation Modern passant par un tiroir sur petit
-  ecran, mais le rendu n'a pas ete verifie a l'oeil.
+- Le trou en haut des pages de liste en Modern. Ultrachromic decale
+  `#indexPage` et consorts de 68px, ou 130px sous 100em de large, pour
+  degager l'en-tete fixe de Jellyfin ; `05-onglets.css` ajoutait 100px de
+  meme nature sur telephone. En Modern ces valeurs sont du vide : l'en-tete
+  legacy n'est plus affiche, et la barre MUI est un `OffsetAppBar`, qui pose
+  lui-meme un cale-pied de la hauteur qu'il mesure. Neutralise dans
+  `23-modern.css`, sous `:root:has(.MuiAppBar-root)` — le Legacy n'ayant
+  aucune AppBar MUI dans son arborescence, la condition sert de test de
+  layout.
+
+- Les listes deroulantes ecrasees. Regression venue d'Ultrachromic, pas de
+  Jellyfin : `fields_noborder.css` ecrase depuis peu le padding de
+  `.emby-select` par `0 1.9em 0 .35em !important`. Plus aucun padding
+  vertical, donc un champ a la hauteur de sa ligne de texte, et un libelle
+  entre dans la courbe de la pilule que `rounding.css` dessine autour.
+  `24-champs.css` retablit les valeurs de Jellyfin, avec 0.75em a gauche
+  pour tenir compte de cet arrondi.
+
+### Supprime
+
+- `js/onglets-dans-la-page.js` et les regles de `05-onglets.css` qui en
+  dependaient. Le script clonait la rangee d'onglets de l'en-tete dans la
+  zone qui defile, sur telephone, parce que le CSS ne peut pas reparenter un
+  element et que ces onglets vivaient dans un en-tete `position: fixed`. En
+  12 cet en-tete n'est plus affiche et la navigation passe par la barre MUI :
+  le script n'a plus d'objet. Retire aussi de la configuration du plugin
+  JavaScript Injector, ou `apply-js.sh` l'avait ecrit.
 
 ## [1.3.0] - 2026-08-23 - Jellyfin 10.11.x
 

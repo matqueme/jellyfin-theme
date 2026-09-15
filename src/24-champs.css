@@ -1,0 +1,30 @@
+/* --- 24. Champs : padding des listes deroulantes ---------------------
+   Correctif d'une regression venue d'Ultrachromic, pas de Jellyfin.
+
+   Jellyfin pose sur .emby-select un padding de 0.5em 1.9em 0.5em 0.5em :
+   0.5em en haut et en bas pour la hauteur du champ, 1.9em a droite pour
+   degager la fleche, que emby-select.js insere en frere absolu du select.
+
+   fields_noborder.css l'ecrase depuis peu par 0 1.9em 0 .35em !important :
+   plus aucun padding vertical, donc un champ ecrase sur la hauteur de la
+   ligne de texte, et un libelle colle au bord gauche de la pilule que
+   rounding.css dessine autour. On remet des valeurs tenables.
+
+   0.75em a gauche plutot que le 0.5em de Jellyfin : le fond du champ est
+   arrondi ici, et un texte cale a 0.5em entre dans la courbe. */
+[dir="ltr"] .emby-select {
+  padding: 0.5em 1.9em 0.5em 0.75em !important;
+}
+
+[dir="rtl"] .emby-select {
+  padding: 0.5em 0.75em 0.5em 1.9em !important;
+}
+
+/* Variante en ligne : Jellyfin la resserre a 0.3em, on garde ce rapport. */
+[dir="ltr"] .selectContainer-inline > .emby-select {
+  padding: 0.3em 1.9em 0.3em 0.75em !important;
+}
+
+[dir="rtl"] .selectContainer-inline > .emby-select {
+  padding: 0.3em 0.75em 0.3em 1.9em !important;
+}

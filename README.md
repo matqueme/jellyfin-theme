@@ -81,7 +81,7 @@ Les valeurs prévues pour être retouchées, avec leur emplacement :
 | `--play-label-size` | [`src/01-reglages.css`](src/01-reglages.css) | Taille de ce libellé |
 | `--btn-hover-bg` | [`src/01-reglages.css`](src/01-reglages.css) | Survol des boutons secondaires : en-tête, rangée d'un film, bandeau de sélection |
 | `--accent-canal` | [`src/01-reglages.css`](src/01-reglages.css) | Accent du preset en syntaxe MUI, pour les composants React de la 12. Doit rester d'accord avec `--accent` |
-| `--tabs-left` | [`src/05-onglets.css`](src/05-onglets.css) | Décalage des onglets d'en-tête. Repli seulement : le script les mesure et pose sa propre valeur |
+| `--tabs-left` | [`src/05-onglets.css`](src/05-onglets.css) | Décalage des onglets d'en-tête, layout Legacy seulement |
 | `--card-bar-height` | [`src/10-carte-barre.css`](src/10-carte-barre.css) | Épaisseur de la barre de progression des cartes |
 | `--card-bar-gap` | [`src/10-carte-barre.css`](src/10-carte-barre.css) | Détachement du bord bas, c'est ce qui fait l'effet flottant |
 | `--card-bar-inset` | [`src/10-carte-barre.css`](src/10-carte-barre.css) | Retrait latéral de cette barre |
@@ -174,17 +174,16 @@ fichier attendu. Le chemin par défaut est `~/docker/jellyfin` ; sinon
 ```
 
 Injecte les scripts dans la configuration du plugin JavaScript Injector.
-Deux comportements ne sont pas réalisables en CSS :
+Un comportement n'est pas réalisable en CSS :
 
-- `onglets-dans-la-page.js` : sur téléphone, déplace les onglets dans la page
-  pour qu'ils défilent avec le contenu. Le CSS ne peut pas reparenter un
-  élément, et les onglets sont dans un en-tête `position: fixed`. Il mesure
-  aussi `--header-h` et `--tabs-host-left`, que `05-onglets.css` consomme.
 - `replace-sync-button.js` : remplace le bouton SyncPlay de l'en-tête par une
   entrée dans le menu des préférences.
 
-Le CSS fonctionne sans eux : les règles concernées sont gardées par
-`body.tabs-in-page`, que seul le script pose.
+`onglets-dans-la-page.js` a été retiré en v2.0.0. Il clonait les onglets de
+l'en-tête dans la page, sur téléphone, parce qu'ils vivaient dans un en-tête
+`position: fixed` que le CSS ne peut pas reparenter. En 12, cet en-tête n'est
+plus affiché du tout et la navigation passe par la barre MUI : le script
+n'avait plus d'objet.
 
 > Le plugin patche l'`index.html` servi par le serveur. L'app Tizen embarque
 > sa propre copie du client web et ne le reçoit jamais : seul `/Branding/Css`

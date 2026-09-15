@@ -1550,10 +1550,10 @@ body > .toast,
 /* Cales a gauche apres le logo, facon Netflix, et etat selectionne en
    pilule : Jellyfin ne distingue l'onglet actif que par la graisse, ce
    qui se voit a peine.
-   --tabs-left n'est qu'un repli, le temps que le script "Onglets dans la
-   page" mesure le bord droit reel du contenu de .headerLeft et pose sa
-   propre valeur : elle depend du titre de page, des boutons visibles et,
-   sur TV, d'un logo different. */
+   --tabs-left cale la rangee apres le logo. Ces regles ne concernent que
+   le layout Legacy : en Modern, la 12 garde .skinHeader dans le DOM mais
+   son conteneur est en display: none, et la navigation passe par la barre
+   MUI, habillee par 23-modern.css. */
 :root {
   --tabs-left: 11.5em;
 }
@@ -1626,57 +1626,6 @@ body > .toast,
   color: #fff !important;
 }
 
-/* Onglets deplaces dans la page par le script "Onglets dans la page"
-   (extension JavaScript Injector). Le CSS ne peut pas reparenter un
-   element : le script clone la rangee dans la zone qui defile et pose
-   body.tabs-in-page. Ces regles ne s'appliquent donc que si le script
-   tourne ; sans lui, rien ne change. */
-body.tabs-in-page .skinHeader .headerTabs.sectionTabs {
-  display: none !important;
-}
-
-/* L'en-tete perd sa deuxieme ligne : le decalage du contenu suit. */
-/* --header-h et --tabs-host-left sont mesurees et posees par le script :
-   une valeur en dur se decalait des que l'en-tete changeait de hauteur. */
-body.tabs-in-page #indexPage {
-  margin-top: var(--header-h, 58px) !important;
-}
-
-.pageTabsHost {
-  display: flex;
-  gap: 0.35em;
-  align-items: center;
-  padding: 0.1em 0 0.9em;
-  padding-left: var(--tabs-host-left, 0px);
-}
-
-.pageTab {
-  /* inline-flex + line-height: 1 : en display: block, la hauteur de ligne
-       naturelle de la police decalait le libelle vers le bas dans la pilule. */
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-  border: 0;
-  cursor: pointer;
-  padding: 0.38em 0.95em;
-  border-radius: 999px;
-  background-color: transparent;
-  color: rgba(255, 255, 255, 0.68);
-  font-family: inherit;
-  font-size: 1em;
-  font-weight: 500;
-  transition:
-    background-color 0.15s,
-    color 0.15s;
-}
-
-.pageTab-active {
-  background-color: rgba(255, 255, 255, 0.18);
-  color: #fff;
-  font-weight: 700;
-}
-
 /* --- 5. En-tete sur telephone ---------------------------------------- */
 /* L'en-tete faisait 123px de haut sur un ecran de 915, soit 13% de
    l'ecran : Ultrachromic passe les onglets a 110% et Jellyfin les met sur
@@ -1692,12 +1641,6 @@ body.tabs-in-page #indexPage {
   /* Sur deux lignes, la pilule touchait le bord bas de la navbar. */
   .skinHeader .headerTabs.sectionTabs {
     margin-bottom: 0.5em !important;
-  }
-  /* Le script cale le bord gauche de la pilule sur le texte des titres
-       de section ; ce padding n'entre plus dans son calcul et peut donc
-       etre change librement. */
-  .pageTab {
-    padding: 0.5em 0.9em;
   }
   #indexPage,
   #moviesPage,
@@ -3339,4 +3282,162 @@ body.tabs-in-page #indexPage {
    un pave clair dans un en-tete translucide. */
 .MuiAppBar-root .MuiChip-root {
   background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* --- Compensation de l'en-tete legacy --------------------------------
+   Ultrachromic decale le haut des pages de liste pour degager l'en-tete
+   fixe de Jellyfin : 68px quand la barre tient sur une ligne, 130px quand
+   les onglets la font passer a deux. 05-onglets.css ajoute 100px de meme
+   nature sur telephone.
+
+   En Modern ces trois valeurs sont du vide. L'en-tete legacy est dans le
+   DOM mais son conteneur est en display: none, et la barre MUI est un
+   OffsetAppBar : le composant pose lui-meme un cale-pied de la hauteur
+   qu'il mesure, donc le contenu est deja decale de ce qu'il faut. Ce qui
+   restait etait un trou, de 130px sous 100em de large.
+
+   :has(.MuiAppBar-root) sert de test de layout : le Legacy n'a aucune
+   AppBar MUI dans son arborescence, seule la barre Modern en pose une.
+   La condition ne se limite pas a l'accueil, les quatre pages listees ici
+   recevant le meme traitement d'Ultrachromic. */
+:root:has(.MuiAppBar-root) #indexPage,
+:root:has(.MuiAppBar-root) #moviesPage,
+:root:has(.MuiAppBar-root) #tvRecommendedPage,
+:root:has(.MuiAppBar-root) #musicRecommendedPage {
+  margin-top: 0 !important;
+}
+
+/* ===== 24-champs.css ===== */
+/* --- 24. Champs : padding des listes deroulantes ---------------------
+   Correctif d'une regression venue d'Ultrachromic, pas de Jellyfin.
+
+   Jellyfin pose sur .emby-select un padding de 0.5em 1.9em 0.5em 0.5em :
+   0.5em en haut et en bas pour la hauteur du champ, 1.9em a droite pour
+   degager la fleche, que emby-select.js insere en frere absolu du select.
+
+   fields_noborder.css l'ecrase depuis peu par 0 1.9em 0 .35em !important :
+   plus aucun padding vertical, donc un champ ecrase sur la hauteur de la
+   ligne de texte, et un libelle colle au bord gauche de la pilule que
+   rounding.css dessine autour. On remet des valeurs tenables.
+
+   0.75em a gauche plutot que le 0.5em de Jellyfin : le fond du champ est
+   arrondi ici, et un texte cale a 0.5em entre dans la courbe. */
+[dir="ltr"] .emby-select {
+  padding: 0.5em 1.9em 0.5em 0.75em !important;
+}
+
+[dir="rtl"] .emby-select {
+  padding: 0.5em 0.75em 0.5em 1.9em !important;
+}
+
+/* Variante en ligne : Jellyfin la resserre a 0.3em, on garde ce rapport. */
+[dir="ltr"] .selectContainer-inline > .emby-select {
+  padding: 0.3em 1.9em 0.3em 0.75em !important;
+}
+
+[dir="rtl"] .selectContainer-inline > .emby-select {
+  padding: 0.3em 0.75em 0.3em 1.9em !important;
+}
+
+/* ===== 25-icones-mui.css ===== */
+/* --- 25. Icones de la barre Modern ------------------------------------
+   Pendant de 07-icones.css pour les elements que la 12 rend en React.
+
+   07 fonctionne parce que Jellyfin nomme ses icones par classe :
+   <span class="material-icons movie"> se remappe sur Phosphor en
+   reassignant font-family et content. MUI ne procede pas ainsi. Ses
+   icones sont des composants SVG : le dessin est dans le balisage, pas
+   dans une police, et rien ne distingue une icone d'une autre une fois
+   compilee. Le data-testid qui les nommait est retire du build de
+   production ; verifie dans le bundle servi par le serveur, il n'y en a
+   aucun.
+
+   L'accroche utilisable est donc ailleurs : ces icones sont dans des
+   liens, et l'URL de destination, elle, est stable et independante de la
+   langue. appRouter construit #/movies?..., #/tv?..., #/music?... a
+   partir du type de collection. On masque le SVG et on pose le glyphe
+   Phosphor en ::after du conteneur.
+
+   Corollaire a connaitre : une icone non listee ici garde son SVG MUI.
+   C'est voulu — mieux vaut une icone Material isolee qu'un bouton vide. */
+
+/* Reglages communs. Le ::after ne produit une boite que si une regle
+   ci-dessous lui donne un content : les boutons non traites ne sont pas
+   touches. La taille est en rem et non en em : les boutons de la barre
+   n'ont pas tous la meme taille de police, et l'icone doit rester egale
+   a elle-meme d'un bouton a l'autre. */
+.MuiAppBar-root .MuiButton-startIcon::after,
+.MuiAppBar-root .MuiIconButton-root::after {
+  font-family: "Phosphor-Bold";
+  font-size: 1.35rem;
+  line-height: 1;
+  transform: scale(var(--icon-scale));
+}
+
+/* --- Vues, reperees par leur route ----------------------------------- */
+.MuiAppBar-root a[href*="tab=1"] .MuiSvgIcon-root,
+.MuiAppBar-root a[href*="/movies?"] .MuiSvgIcon-root,
+.MuiAppBar-root a[href*="/tv?"] .MuiSvgIcon-root,
+.MuiAppBar-root a[href*="/music?"] .MuiSvgIcon-root,
+.MuiAppBar-root a[href*="/books?"] .MuiSvgIcon-root,
+.MuiAppBar-root a[href*="/homevideos?"] .MuiSvgIcon-root,
+.MuiAppBar-root a[href*="/livetv?"] .MuiSvgIcon-root,
+.MuiAppBar-root a[href*="/search"] .MuiSvgIcon-root {
+  display: none;
+}
+
+/* Favoris. Sa route est /home?tab=1 : c'est l'onglet Favoris de
+   l'accueil, pas une bibliotheque. */
+.MuiAppBar-root a[href*="tab=1"] .MuiButton-startIcon::after {
+  content: "\e2a8"; /* ph-heart */
+}
+
+.MuiAppBar-root a[href*="/movies?"] .MuiButton-startIcon::after {
+  content: "\e8c2"; /* ph-film-slate */
+}
+
+.MuiAppBar-root a[href*="/tv?"] .MuiButton-startIcon::after {
+  content: "\eae6"; /* ph-television-simple */
+}
+
+.MuiAppBar-root a[href*="/music?"] .MuiButton-startIcon::after {
+  content: "\e33c"; /* ph-music-note */
+}
+
+.MuiAppBar-root a[href*="/books?"] .MuiButton-startIcon::after {
+  content: "\e0e2"; /* ph-book */
+}
+
+.MuiAppBar-root a[href*="/homevideos?"] .MuiButton-startIcon::after {
+  content: "\e2ca"; /* ph-image */
+}
+
+.MuiAppBar-root a[href*="/livetv?"] .MuiButton-startIcon::after {
+  content: "\e754"; /* ph-television */
+}
+
+/* --- Recherche -------------------------------------------------------
+   Bouton-icone, donc sans .MuiButton-startIcon : le glyphe se pose sur
+   le bouton lui-meme. */
+.MuiAppBar-root a[href*="/search"]::after {
+  content: "\e30c"; /* ph-magnifying-glass */
+}
+
+/* --- Diffusion et SyncPlay -------------------------------------------
+   Ces deux-la ne sont pas des liens : ce sont des boutons qui ouvrent un
+   menu, sans route ni identifiant. Leur seul repere stable dans le DOM
+   est aria-label, qui est traduit. Les valeurs ci-dessous sont celles du
+   francais ; dans une autre langue, ces deux icones restent en SVG MUI
+   et rien d'autre ne change. */
+.MuiAppBar-root [aria-label="Diffuser sur l'appareil"] .MuiSvgIcon-root,
+.MuiAppBar-root [aria-label="SyncPlay"] .MuiSvgIcon-root {
+  display: none;
+}
+
+.MuiAppBar-root [aria-label="Diffuser sur l'appareil"]::after {
+  content: "\e58a"; /* ph-monitor-arrow-up */
+}
+
+.MuiAppBar-root [aria-label="SyncPlay"]::after {
+  content: "\e68e"; /* ph-users-three */
 }
