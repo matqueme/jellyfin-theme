@@ -65,8 +65,9 @@ Phosphor) restent chargées depuis un CDN.
 | `v1.3.0` | 10.11.x | [Ultrachromic `fa158a2`](https://github.com/CTalvio/Ultrachromic/tree/fa158a241cb24298c9996af3cf6460ae2f9d522f) |
 
 Le thème suit son propre semver ; la version de Jellyfin visée est une donnée
-de compatibilité, portée par ce tableau et par le titre de chaque release. La
-branche `jellyfin-10.11` garde la dernière version d'avant la 12.
+de compatibilité, portée par ce tableau et par le titre de chaque release.
+Chaque version reste disponible par son tag : pour Jellyfin 10.11, importer
+`@v1.3.0` à la place de la version courante dans l'URL d'installation.
 
 Le layout Legacy n'est plus visé depuis la v3. Il reste utilisable, mais son
 en-tête et son tiroir ne sont pas habillés.
