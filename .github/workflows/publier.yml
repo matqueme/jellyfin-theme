@@ -57,13 +57,25 @@ jobs:
 
           version = os.environ["VERSION"]
           texte = Path("CHANGELOG.md").read_text(encoding="utf-8")
-          m = re.search(rf"^## \[{re.escape(version)}\][^\n]*\n(.*?)(?=^## |\Z)",
+          m = re.search(rf"^## \[{re.escape(version)}\]([^\n]*)\n(.*?)(?=^## |\Z)",
                         texte, re.S | re.M)
-          if not m or not m.group(1).strip():
+          if not m or not m.group(2).strip():
               sys.exit(f"CHANGELOG.md n'a pas de section pour {version} : "
                        f"une version sans notes n'a pas a etre publiee")
-          Path("notes.md").write_text(m.group(1).strip() + "\n", encoding="utf-8")
-          print(f"notes extraites pour {version}")
+          Path("notes.md").write_text(m.group(2).strip() + "\n", encoding="utf-8")
+
+          # La compatibilite est le dernier segment du titre de section :
+          # « ## [3.1.0] - 2026-09-30 - Jellyfin 12.x, layout Modern ».
+          # Elle etait ecrite en dur ici, et publiait encore « 10.11.x »
+          # apres le passage a la 12.
+          segments = [x.strip() for x in m.group(1).split(" - ") if x.strip()]
+          compat = segments[-1] if segments and "Jellyfin" in segments[-1] else ""
+          if not compat:
+              sys.exit(f"le titre de section de {version} n'indique pas la "
+                       f"version de Jellyfin visee (« ... - Jellyfin 12.x »)")
+          with open(os.environ["GITHUB_ENV"], "a", encoding="utf-8") as env:
+              env.write(f"COMPAT={compat}\n")
+          print(f"notes extraites pour {version}, compatibilite : {compat}")
           PY
         env:
           VERSION: ${{ steps.etat.outputs.version }}
@@ -76,10 +88,10 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git tag -a "v$VERSION" -m "v$VERSION - Jellyfin 10.11.x"
+          git tag -a "v$VERSION" -m "v$VERSION - $COMPAT"
           git push origin "v$VERSION"
           gh release create "v$VERSION" \
-            --title "v$VERSION - Jellyfin 10.11.x" \
+            --title "v$VERSION - $COMPAT" \
             --notes-file notes.md
 
       - name: Resume
