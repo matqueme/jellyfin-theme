@@ -21,7 +21,7 @@ Livré en **un seul fichier** : `dist/theme.css`.
 Tableau de bord → Général → **CSS personnalisé**, une seule ligne :
 
 ```css
-@import url('https://cdn.jsdelivr.net/gh/matqueme/jellyfin-theme@v3.1.0/dist/theme.css');
+@import url('https://cdn.jsdelivr.net/gh/matqueme/jellyfin-theme@v3.1.1/dist/theme.css');
 ```
 
 Puis `Ctrl+F5` sur le client. L'`@import` doit rester la première chose du
@@ -49,7 +49,7 @@ tableau de bord.
 Si les clients doivent fonctionner sans accès à Internet, `apply-local.sh`
 écrit le fichier directement dans le `branding.xml` du serveur. Voir
 [Développement](#développement). Seules les polices (Plus Jakarta Sans,
-Phosphor) restent chargées depuis un CDN.
+Phosphor) et les SVG Phosphor des icônes MUI restent chargés depuis un CDN.
 
 > Le CSS de branding s'applique au client web et aux clients qui l'embarquent
 > (navigateur, application de bureau, Android TV en mode web). Les clients
@@ -59,6 +59,7 @@ Phosphor) restent chargées depuis un CDN.
 
 | Thème | Jellyfin | Base |
 |---|---|---|
+| `v3.1.1` | 12.x, layout Modern | aucune |
 | `v3.1.0` | 12.x, layout Modern | aucune |
 | `v3.0.0` | 12.x, layout Modern | aucune |
 | `v2.0.0` | 12.x | [Ultrachromic `1398af2`](https://github.com/CTalvio/Ultrachromic/tree/1398af21b8fe120a972bd00942ad60a76a932647) |
@@ -103,7 +104,9 @@ variables `*Channel`. Les deux doivent rester d'accord.
 Pour repasser les icônes en trait fin : remplacer `bold` par `regular` dans
 l'`@import` de [`src/00-imports.css`](src/00-imports.css), et `Phosphor-Bold`
 par `Phosphor` dans [`src/90-icones.css`](src/90-icones.css). Les points de
-code sont identiques entre les deux graisses.
+code sont identiques entre les deux graisses. Pour les icônes MUI, remplacer
+`bold` par `regular` dans l'URL `CORE` de
+[`tools/icones-mui.py`](tools/icones-mui.py) et le relancer.
 
 ## Structure
 
@@ -126,8 +129,10 @@ src/
   51-connexion.css      page de connexion
   60-lecteur.css        OSD, barres de lecture, lecture en cours, « À suivre »
   80-tv.css             navigation à la télécommande
-  90-icones.css         icônes Material remappées sur Phosphor
+  90-icones.css         icônes Material (police) remappées sur Phosphor
+  91-icones-mui.css     icônes SVG de MUI redessinées en Phosphor (généré)
   95-plugins.css        ce qu'ajoutent les plugins, mis au diapason
+tools/icones-mui.py     génère 91-icones-mui.css à partir de sa table
 js/                     comportements non réalisables en CSS
 dist/theme.css          fichier construit et commité : c'est lui que sert le CDN
 ```
@@ -258,6 +263,15 @@ construire sans lui.
 **Les liens de la fiche sont des boutons.** Étiquettes, liens externes,
 réalisateur : ce sont des `a.button-link.emby-button`. Toute règle posée sur
 `.emby-button` les atteint ; `50-page-item.css` les remet à plat.
+
+**Les icônes MUI se reconnaissent à leur `data-testid`.** MUI rend ses
+icônes en SVG, avec `data-testid="CastIcon"`, conservé en production. C'est
+la seule accroche qui ne dépende ni de la langue (`aria-label`) ni de l'état
+du composant : le bouton Diffusion devient un bouton à libellé quand une
+diffusion est en cours. `91-icones-mui.css` masque les tracés du SVG et le
+peint en `currentColor` à travers un masque Phosphor : taille et couleur
+restent celles de MUI. Une icône absente de la table de
+`tools/icones-mui.py` garde son dessin Material.
 
 **Une icône en ligature ne se remappe pas.** `90-icones.css` agit sur la
 classe (`.material-icons.play_arrow`). Une icône écrite en ligature, dont le

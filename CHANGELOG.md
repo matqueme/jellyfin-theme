@@ -4,6 +4,25 @@ Format : [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/).
 Versionnage sémantique, indépendant de celui de Jellyfin : la compatibilité
 est indiquée par le titre de chaque version.
 
+## [3.1.1] - 2026-09-30 - Jellyfin 12.x, layout Modern
+
+### Corrige
+
+- Icones MUI restees en Material a cote des icones Phosphor : Diffusion
+  et SyncPlay dans l'en-tete selon leur etat (le bouton Diffusion devient
+  un bouton a libelle pendant une diffusion, et n'etait reconnu que par
+  son `aria-label` francais), boutons des cartes de bibliotheque, menus
+  et dashboard. Les 130 icones SVG que MUI peut afficher sont reconnues a
+  leur `data-testid`, conserve en production, et redessinees en Phosphor
+  par masque : taille et couleur restent celles de MUI.
+
+### Ajoute
+
+- `src/91-icones-mui.css`, genere par `tools/icones-mui.py` a partir d'une
+  table icone MUI -> Phosphor. Une icone qui a un equivalent Material deja
+  remappe recoit le meme glyphe. Les cases a cocher, boutons radio et la
+  fleche des listes deroulantes restent dessines par leurs modules.
+
 ## [3.1.0] - 2026-09-30 - Jellyfin 12.x, layout Modern
 
 La base reste neutre, mais la couleur vient maintenant des affiches et des

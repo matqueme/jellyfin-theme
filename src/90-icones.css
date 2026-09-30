@@ -233,11 +233,12 @@
 .material-icons.volume_up:before { content: "\e44a" !important; }
 
 /* --- Icones de la barre MUI ------------------------------------------
-   MUI rend ses icones en SVG : le dessin est dans le balisage, et rien ne
-   distingue une icone d'une autre une fois compilee (le data-testid est
-   retire du build de production). L'accroche est l'URL de destination du
-   lien, stable et independante de la langue : on masque le SVG et on pose
-   le glyphe Phosphor en ::after. Une icone non listee garde son SVG. */
+   Les icones SVG de MUI sont redessinees par 91-icones-mui.css, d'apres
+   leur data-testid. Les liens de bibliotheque de la barre gardent ici un
+   glyphe choisi par type de bibliotheque (collections en pile, favoris en
+   coeur...), accroche a l'URL de destination du lien : le SVG est masque
+   et le glyphe pose en ::after. Ces regles l'emportent sur 91 : un SVG en
+   display: none n'est pas peint. */
 .MuiAppBar-root .MuiButton-startIcon::after,
 .MuiAppBar-root .MuiIconButton-root::after {
   font-family: "Phosphor-Bold";
@@ -268,14 +269,3 @@
 .MuiAppBar-root a[href*="/livetv?"] .MuiButton-startIcon::after { content: "\e754"; } /* television */
 .MuiAppBar-root a[href*="/boxsets?"] .MuiButton-startIcon::after { content: "\e466"; } /* stack : collections */
 .MuiAppBar-root a[href*="/search"]::after { content: "\e30c"; } /* magnifying-glass */
-
-/* Diffusion et SyncPlay ne sont pas des liens : leur seul repere stable
-   est aria-label, qui est traduit. Valeurs du francais ; dans une autre
-   langue ces deux icones restent en SVG MUI. */
-.MuiAppBar-root [aria-label="Diffuser sur l'appareil"] .MuiSvgIcon-root,
-.MuiAppBar-root [aria-label="SyncPlay"] .MuiSvgIcon-root {
-  display: none;
-}
-
-.MuiAppBar-root [aria-label="Diffuser sur l'appareil"]::after { content: "\e58a"; } /* monitor-arrow-up */
-.MuiAppBar-root [aria-label="SyncPlay"]::after { content: "\e68e"; } /* users-three */
