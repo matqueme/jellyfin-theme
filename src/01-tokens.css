@@ -72,6 +72,12 @@
   --glass-edge: inset 0 1px 0 rgb(255 255 255 / 0.09), inset 0 0 0 1px rgb(255 255 255 / 0.05);
   --backdrop-dim: blur(6px); /* ce qui est derriere un dialogue ouvert */
 
+  /* Page d'item sur ordinateur : l'image de fond reste nette en haut, et
+     le contenu la floute en passant dessus. */
+  --hero-height: max(400px, 52vh);
+  --hero-blur: blur(40px) saturate(1.7);
+  --hero-veil: rgb(11 11 12 / 0.55); /* --bg a 55 % */
+
   /* Rayons. */
   --r-xs: 6px; /* pastilles, cases a cocher */
   --r-sm: 10px; /* champs, elements de menu */

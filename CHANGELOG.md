@@ -21,6 +21,12 @@ fonds : le verre la laisse passer, les cartes bougent.
 - Page d'item : boutons ronds en verre sur l'image de fond ; lueur
   blanche au survol du bouton Lecture et des boutons principaux.
 - Connexion : panneau de verre sous un halo blanc.
+- Page d'item sur ordinateur : l'image de fond reste nette dans le haut
+  de la page (`--hero-height`), et le contenu la floute en passant dessus
+  (`--hero-blur`, `--hero-veil`), avec un fondu sous le titre. Le client
+  ne remplit la banniere `#itemBackdrop` qu'en layout mobile : c'est
+  l'image du fond fixe qui sert de hero. Ombre douce sur le titre et le
+  logo, qui debordent sur l'image.
 - Boutons : legere compression au clic.
 - Nouveaux tokens : `--glass-strong`, `--glass-edge`, `--backdrop-dim`,
   `--shadow-lift`, `--glow-primary`, `--ease-spring`, `--t-slow`,
@@ -40,6 +46,10 @@ fonds : le verre la laisse passer, les cartes bougent.
   survol generique des boutons-icones l'emportait sur elle.
 - Portraits de la page de connexion reduits a 24px : leur largeur en
   pourcentage etait calculee pour une grille pleine page.
+- Page d'item en fenetre etroite (sous ~1000px, layout ordinateur) : le
+  titre tombait a 0px de large, ecrase par la rangee de boutons. Les
+  boutons passent sous le titre sous 62.5em, et le titre peut passer a la
+  ligne. Sans image de fond, la zone du haut n'est plus un vide de 400px.
 
 ## [3.0.0] - 2026-09-25 - Jellyfin 12.x, layout Modern
 

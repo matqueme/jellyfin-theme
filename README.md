@@ -88,6 +88,7 @@ retoucher ce fichier.
 | `--glass`, `--glass-strong`, `--glass-blur`, `--glass-edge` | Verre : en-tête, tiroir, barre de lecture (`--glass`) ; menus, dialogues (`--glass-strong`). Le flou sature ce qui passe dessous, l'arête porte un reflet |
 | `--backdrop-dim` | Flou de la page derrière un dialogue ouvert |
 | `--shadow-float`, `--shadow-lift`, `--glow-primary` | Ombres de ce qui flotte et d'une carte soulevée ; lueur du bouton principal au survol |
+| `--hero-height`, `--hero-blur`, `--hero-veil` | Page d'item sur ordinateur : hauteur de l'image nette en haut, flou et voile du contenu qui passe dessus |
 | `--card-lift`, `--card-zoom`, `--press` | Survol des cartes (montée, zoom de l'image) et bouton enfoncé. Neutralisés sous `prefers-reduced-motion` |
 | `--r-xs` à `--r-lg`, `--r-pill` | Rayons : pastilles, champs, cartes, dialogues, boutons |
 | `--ring` | Anneau de focus et de survol des cartes |

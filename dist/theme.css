@@ -99,6 +99,12 @@
   --glass-edge: inset 0 1px 0 rgb(255 255 255 / 0.09), inset 0 0 0 1px rgb(255 255 255 / 0.05);
   --backdrop-dim: blur(6px); /* ce qui est derriere un dialogue ouvert */
 
+  /* Page d'item sur ordinateur : l'image de fond reste nette en haut, et
+     le contenu la floute en passant dessus. */
+  --hero-height: max(400px, 52vh);
+  --hero-blur: blur(40px) saturate(1.7);
+  --hero-veil: rgb(11 11 12 / 0.55); /* --bg a 55 % */
+
   /* Rayons. */
   --r-xs: 6px; /* pastilles, cases a cocher */
   --r-sm: 10px; /* champs, elements de menu */
@@ -2286,6 +2292,91 @@ a[data-role="button"]:focus {
   position: absolute;
 }
 
+/* --- Hero (ordinateur) -----------------------------------------------
+   Sur ordinateur, le client ne remplit pas #itemBackdrop : il ne le fait
+   qu'en layout mobile. La seule image du film est celle du fond fixe
+   (.backdropImage), que 10-base.css floute pour toute l'application.
+
+   Sur cette page, on la laisse nette : le haut de la page devient une
+   affiche en grand. Le contenu, lui, porte une couche de verre qui floute
+   l'image en passant dessus ; elle commence avant le titre et s'installe
+   en fondu, sans bord net. Au defilement, le contenu glisse sur l'image
+   et la floute, l'image ne bouge pas. */
+.layout-desktop:has(#itemDetailPage:not(.hide)) .backdropImage {
+  filter: saturate(1.1) brightness(0.85);
+  transform: none;
+}
+
+.layout-desktop:has(#itemDetailPage:not(.hide)) .backgroundContainer.withBackdrop {
+  background: linear-gradient(to bottom, rgb(var(--bg-canal) / 0.35), transparent 18%, transparent 35%, rgb(var(--bg-canal) / 0.45) 70%);
+}
+
+.layout-desktop #itemDetailPage .itemBackdrop {
+  height: var(--hero-height);
+}
+
+/* Sans image de fond (film qui n'en a pas, ou fenetre etroite : le
+   client n'en charge pas sous ~1000px), la zone ne serait qu'un grand
+   vide noir. On la reduit a un degagement sous l'en-tete. */
+.layout-desktop:not(:has(.backdropImage)) #itemDetailPage .itemBackdrop {
+  height: 9em;
+}
+
+/* Le fondu vers --bg de la banniere (plus haut) s'arretait sur un aplat
+   opaque, pile ou le verre du contenu commence : une ligne nette. Ici la
+   zone est vide, le verre fait la transition. */
+.layout-desktop #itemDetailPage .itemBackdrop::after {
+  display: none;
+}
+
+.layout-desktop #itemDetailPage .detailPageWrapperContainer {
+  background: transparent;
+  position: relative;
+}
+
+.layout-desktop #itemDetailPage .detailPageWrapperContainer > * {
+  position: relative;
+  z-index: 1;
+}
+
+.layout-desktop #itemDetailPage .detailPageWrapperContainer::before {
+  background: var(--hero-veil);
+  bottom: 0;
+  content: "";
+  left: 0;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14em);
+  mask-image: linear-gradient(to bottom, transparent, #000 14em);
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: -12em;
+  z-index: 0;
+}
+
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .layout-desktop #itemDetailPage .detailPageWrapperContainer::before {
+    -webkit-backdrop-filter: var(--hero-blur);
+    backdrop-filter: var(--hero-blur);
+  }
+}
+
+/* Le titre et ses informations debordent sur l'image nette : une ombre
+   large et diffuse, invisible sur un fond sombre, les garde lisibles sur
+   un visage ou un ciel. */
+.layout-desktop #itemDetailPage .detailRibbon {
+  text-shadow: 0 1px 2px rgb(0 0 0 / 0.5), 0 2px 18px rgb(0 0 0 / 0.55);
+}
+
+.layout-desktop #itemDetailPage .detailRibbon .mainDetailButtons {
+  text-shadow: none;
+}
+
+/* Le logo, pose sur une image nette : une ombre douce le detache d'un
+   ciel clair. */
+.layout-desktop #itemDetailPage .detailLogo {
+  filter: drop-shadow(0 4px 24px rgb(0 0 0 / 0.55));
+}
+
 /* La bande sous l'image de fond : le theme de base lui donne la couleur
    de l'en-tete, ce qui dessinait un aplat gris sur toute la largeur. */
 .detailRibbon {
@@ -2496,6 +2587,36 @@ h1.itemName {
 .detailsGroupItem .content,
 .detailsGroupItem .content .button-link {
   color: var(--text);
+}
+
+/* --- Fenetre etroite ------------------------------------------------
+   Le titre et les boutons partagent une rangee flex ou le bloc titre a
+   flex: 1 0 0 : c'est lui qui cede. Avec le bouton Lecture a libelle, la
+   rangee de boutons fait 330px, et le titre tombait a 190px vers 800px de
+   large, a 0 vers 400px (invisible, coupe par son overflow: hidden). Sous
+   62.5em, les boutons passent sous le titre. */
+@media (max-width: 62.5em) {
+  .layout-desktop #itemDetailPage .detailRibbon {
+    align-items: stretch;
+    flex-direction: column;
+    height: auto; /* le client la fixe, pensee pour une seule rangee */
+  }
+
+  .layout-desktop #itemDetailPage .detailRibbon .infoWrapper {
+    flex: none;
+  }
+
+  /* Le client coupe le titre sur une ligne ; ici il a la place de
+     passer a la ligne. */
+  .layout-desktop #itemDetailPage .detailRibbon .itemName {
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+  }
+
+  .layout-desktop #itemDetailPage .detailRibbon .mainDetailButtons {
+    margin-top: 0.9em;
+  }
 }
 
 /* --- Telephone ------------------------------------------------------ */
