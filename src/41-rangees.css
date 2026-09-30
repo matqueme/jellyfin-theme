@@ -12,15 +12,19 @@
    Le client pose le lien en inline-flex sans alignement, et donne au
    titre comme au chevron une marge basse de .35em, mais en em de corps
    differents (1.3em et 1.5em), plus un padding-top de .5em au chevron sur
-   mobile : le chevron tombait sous la ligne du texte. On centre les deux
-   sur l'axe, sans marge propre, et l'espacement passe sur le lien. Le
-   !important repond a celui du client (margin: 0 !important). */
+   mobile : le chevron tombait sous la ligne du texte. Centrer les boites
+   ne suffit pas : le resultat depend de la hauteur de ligne du titre, qui
+   change avec le layout. On aligne sur la ligne de base, qui ne depend que
+   de la police, puis on descend le glyphe de 0.14em, mesure a l'encre sur
+   les vraies pages : chevron centre sur la hauteur des capitales a 0.5px
+   pres, desktop et mobile. L'espacement passe sur le lien ; le !important
+   repond a celui du client (margin: 0 !important). */
 .sectionTitleTextButton {
   color: var(--text);
 }
 
 .sectionTitleTextButton.emby-button {
-  align-items: center;
+  align-items: baseline;
   margin-bottom: 0.45em !important;
 }
 
@@ -46,6 +50,8 @@
   line-height: 1;
   margin: 0 0 0 0.1em !important;
   padding-top: 0 !important;
+  position: relative;
+  top: 0.14em; /* top et non transform : transform porte l'echelle et le survol */
   transition:
     color var(--t-fast) var(--ease),
     transform var(--t-fast) var(--ease);

@@ -15,10 +15,27 @@ est indiquée par le titre de chaque version.
   et dashboard. Les 130 icones SVG que MUI peut afficher sont reconnues a
   leur `data-testid`, conserve en production, et redessinees en Phosphor
   par masque : taille et couleur restent celles de MUI.
+- En-tete jamais en verre : en 12 il porte toujours la variante
+  `MuiAppBar-colorTransparent`, que la v3.0 transformait en degrade sans
+  flou. Et le contenu ne passait jamais dessous : la page defile dans un
+  conteneur qui commence sous l'en-tete. Sur les pages a une barre
+  (accueil, recherche, listes, page d'item), ce conteneur remonte sous
+  l'en-tete et son contenu garde sa place : au defilement, les affiches
+  passent derriere le verre, qui les floute et prend leur couleur. Les
+  bibliotheques, dont la barre change de hauteur en mobile, gardent le
+  comportement du client.
+- Page d'item sur telephone : le client n'y charge pas l'image de fond
+  fixe, la page n'avait donc ni le fond colore du desktop ni d'image sous
+  l'en-tete. La banniere remonte sous l'en-tete et se prolonge sous le
+  contenu en ambiance floutee, avec un fondu depuis l'image nette.
+  Lecture passe sur toute la largeur, les boutons ronds dessous : sur une
+  rangee centree, le dernier passait seul a la ligne sous 412px. Ombre de
+  l'affiche reduite, elle retombait sur le bouton Lecture.
 - Chevron des titres de section (« Films, ajouts recents › ») : il
   tombait sous la ligne du texte, surtout sur mobile (marges du client en
-  em de corps differents, padding du titre en layout mobile). Centre sur
-  la hauteur des capitales, mesure a l'encre. Au survol, il grossissait
+  em de corps differents, padding du titre en layout mobile). Aligne sur
+  la ligne de base puis descendu de 0.14em : centre sur la hauteur des
+  capitales a 0.5px pres, mesure a l'encre sur les vraies pages. Au survol, il grossissait
   (son decalage annulait la reduction Phosphor) et une pilule voilee
   apparaissait derriere tout le titre : il glisse et s'eclaire seulement.
 - Meme conflit de transform ailleurs : la fleche des sections depliables

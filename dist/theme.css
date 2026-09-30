@@ -104,6 +104,7 @@
   --hero-height: max(400px, 52vh);
   --hero-blur: blur(40px) saturate(1.7);
   --hero-veil: rgb(11 11 12 / 0.55); /* --bg a 55 % */
+  --appbar-h: 48px; /* en-tete MUI a une barre, desktop comme mobile */
 
   /* Rayons. */
   --r-xs: 6px; /* pastilles, cases a cocher */
@@ -1703,15 +1704,21 @@ a[data-role="button"]:focus {
    .Mui-selected), qui font partie de l'API publique de MUI, et les
    variables --jf-* posees dans 02-palette-jf.css. */
 
-/* --- En-tete : verre ------------------------------------------------- */
-.MuiAppBar-root {
+/* --- En-tete : verre -------------------------------------------------
+   En 12, l'en-tete porte toujours color="transparent" (MuiAppBar-color
+   Transparent), sur toutes les pages : ce n'est pas une variante a
+   traiter a part. La v3.0 la transformait en degrade sans flou, et le
+   verre ne s'appliquait donc nulle part. Le selecteur double l'emporte
+   sur le fond transparent qu'Emotion injecte apres le theme. */
+.MuiAppBar-root.MuiAppBar-root {
   background-color: var(--glass-opaque);
+  background-image: none;
   border-bottom: 1px solid var(--line);
   box-shadow: none;
 }
 
 @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
-  .MuiAppBar-root {
+  .MuiAppBar-root.MuiAppBar-root {
     background-color: var(--glass);
     box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05);
     -webkit-backdrop-filter: var(--glass-blur);
@@ -1719,13 +1726,26 @@ a[data-role="button"]:focus {
   }
 }
 
-/* En-tete transparent (page d'item, lecteur) : pas de filet, et un
-   degrade pour que les icones restent lisibles sur l'image de fond. */
-.MuiAppBar-colorTransparent {
-  background: linear-gradient(rgb(0 0 0 / 0.55), transparent) !important;
-  border-bottom: 0;
-  -webkit-backdrop-filter: none !important;
-  backdrop-filter: none !important;
+/* --- Defiler sous l'en-tete -----------------------------------------
+   Le client place derriere l'en-tete fixe un bloc de meme hauteur, puis la
+   page, qui defile dans son propre conteneur (.mainAnimatedPage, absolu
+   dans <main>). Le contenu n'atteint donc jamais l'en-tete : il est coupe
+   net a son bord, et le verre n'a rien a flouter. Seule la page de film
+   desktop, dont l'image de fond est fixee derriere tout, le montrait.
+
+   On remonte le conteneur de la hauteur de l'en-tete et on rend cette
+   hauteur au contenu par un ::before : au repos rien ne bouge, au
+   defilement le contenu passe derriere le verre. Limite aux pages a une
+   seule barre (48px en desktop comme en mobile, mesure) : celle des
+   bibliotheques passe sur deux lignes en mobile et sa hauteur varie. */
+:root:not(:has(.MuiAppBar-root > .MuiToolbar-root + .MuiToolbar-root)) .mainAnimatedPage.libraryPage {
+  top: calc(-1 * var(--appbar-h));
+}
+
+:root:not(:has(.MuiAppBar-root > .MuiToolbar-root + .MuiToolbar-root)) .mainAnimatedPage.libraryPage::before {
+  content: "";
+  display: block;
+  height: var(--appbar-h);
 }
 
 /* --- Navigation des bibliotheques ------------------------------------
@@ -2236,15 +2256,19 @@ a[data-role="button"]:focus {
    Le client pose le lien en inline-flex sans alignement, et donne au
    titre comme au chevron une marge basse de .35em, mais en em de corps
    differents (1.3em et 1.5em), plus un padding-top de .5em au chevron sur
-   mobile : le chevron tombait sous la ligne du texte. On centre les deux
-   sur l'axe, sans marge propre, et l'espacement passe sur le lien. Le
-   !important repond a celui du client (margin: 0 !important). */
+   mobile : le chevron tombait sous la ligne du texte. Centrer les boites
+   ne suffit pas : le resultat depend de la hauteur de ligne du titre, qui
+   change avec le layout. On aligne sur la ligne de base, qui ne depend que
+   de la police, puis on descend le glyphe de 0.14em, mesure a l'encre sur
+   les vraies pages : chevron centre sur la hauteur des capitales a 0.5px
+   pres, desktop et mobile. L'espacement passe sur le lien ; le !important
+   repond a celui du client (margin: 0 !important). */
 .sectionTitleTextButton {
   color: var(--text);
 }
 
 .sectionTitleTextButton.emby-button {
-  align-items: center;
+  align-items: baseline;
   margin-bottom: 0.45em !important;
 }
 
@@ -2270,6 +2294,8 @@ a[data-role="button"]:focus {
   line-height: 1;
   margin: 0 0 0 0.1em !important;
   padding-top: 0 !important;
+  position: relative;
+  top: 0.14em; /* top et non transform : transform porte l'echelle et le survol */
   transition:
     color var(--t-fast) var(--ease),
     transform var(--t-fast) var(--ease);
@@ -2694,13 +2720,76 @@ h1.itemName {
   }
 }
 
-/* --- Telephone ------------------------------------------------------ */
-.layout-mobile .itemBackdrop {
-  margin-top: 0 !important;
+/* --- Telephone ------------------------------------------------------
+   En layout mobile, le client ne charge pas l'image de fond fixe : seule
+   la banniere porte l'image du film. Sans rien faire, la page n'avait ni
+   le fond colore du desktop, ni d'image derriere le verre de l'en-tete
+   (la banniere commencait sous lui). On repart de la banniere :
+   - elle remonte sous l'en-tete, qui la floute comme en desktop ;
+   - son ::before reprend son image (background: inherit), floutee et
+     assombrie, et la prolonge sous le contenu : c'est le fond d'ambiance.
+   La banniere devient un contexte d'empilement pour que ce ::before reste
+   au-dessus du fond de page ; le contenu, positionne, passe devant. */
+.layout-mobile #itemDetailPage .itemBackdrop {
+  box-sizing: content-box;
+  isolation: isolate;
+  margin-top: calc(-1 * var(--appbar-h)) !important;
+  padding-top: var(--appbar-h);
 }
 
-.layout-mobile .itemBackdrop::before {
-  display: none;
+.layout-mobile #itemDetailPage .itemBackdrop::before {
+  background: inherit;
+  background-position: center top;
+  background-size: cover;
+  content: "";
+  filter: blur(40px) saturate(1.7) brightness(0.5);
+  height: 140vh;
+  left: 0;
+  /* Il commence 6em avant le bas de la banniere et s'y installe en
+     fondu : l'image nette devient l'image floutee, sans raccord. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 6em, #000 45%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 6em, #000 45%, transparent);
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: calc(100% - 6em);
+  /* Le flou degage les bords : on deborde, mais vers le bas seulement.
+     Agrandi depuis son centre, ce calque de 140vh remontait de 64px sur
+     la banniere et y dessinait une bande sombre a bord net. */
+  transform: scale(1.1);
+  transform-origin: center top;
+}
+
+/* Le bas de la banniere se fond dans l'ambiance (le fondu du ::before) :
+   plus d'assombrissement en bas, qui s'arretait net au bord. Reste un
+   voile en haut, sous les icones de l'en-tete. */
+.layout-mobile #itemDetailPage .itemBackdrop::after {
+  background: linear-gradient(to bottom, rgb(var(--bg-canal) / 0.35), transparent 22%);
+}
+
+/* L'ombre de l'affiche, pensee pour le desktop (50px de flou vers le
+   bas), retombait sur le bouton Lecture place juste dessous. */
+.layout-mobile #itemDetailPage .detailImageContainer .card .cardScalable,
+.layout-mobile #itemDetailPage .detailImageContainer .cardBox > .cardScalable:hover {
+  box-shadow: 0 6px 16px -6px rgb(0 0 0 / 0.6), 0 0 0 1px var(--line);
+}
+
+.layout-mobile #itemDetailPage .detailPageWrapperContainer > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Actions : Lecture (ou Reprendre) sur toute la largeur, les boutons
+   ronds dessous, repartis. En une seule rangee centree, six boutons ne
+   tenaient qu'a 412px : plus etroit, le dernier passait seul a la ligne. */
+.layout-mobile #itemDetailPage .mainDetailButtons {
+  justify-content: center;
+}
+
+.layout-mobile #itemDetailPage .mainDetailButtons .btnPlay:not(.hide),
+.layout-mobile #itemDetailPage .mainDetailButtons .btnResume:not(.hide) {
+  flex: 1 0 100%;
+  height: 3.1em;
 }
 
 .layout-mobile h1.itemName {

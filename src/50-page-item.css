@@ -341,13 +341,76 @@ h1.itemName {
   }
 }
 
-/* --- Telephone ------------------------------------------------------ */
-.layout-mobile .itemBackdrop {
-  margin-top: 0 !important;
+/* --- Telephone ------------------------------------------------------
+   En layout mobile, le client ne charge pas l'image de fond fixe : seule
+   la banniere porte l'image du film. Sans rien faire, la page n'avait ni
+   le fond colore du desktop, ni d'image derriere le verre de l'en-tete
+   (la banniere commencait sous lui). On repart de la banniere :
+   - elle remonte sous l'en-tete, qui la floute comme en desktop ;
+   - son ::before reprend son image (background: inherit), floutee et
+     assombrie, et la prolonge sous le contenu : c'est le fond d'ambiance.
+   La banniere devient un contexte d'empilement pour que ce ::before reste
+   au-dessus du fond de page ; le contenu, positionne, passe devant. */
+.layout-mobile #itemDetailPage .itemBackdrop {
+  box-sizing: content-box;
+  isolation: isolate;
+  margin-top: calc(-1 * var(--appbar-h)) !important;
+  padding-top: var(--appbar-h);
 }
 
-.layout-mobile .itemBackdrop::before {
-  display: none;
+.layout-mobile #itemDetailPage .itemBackdrop::before {
+  background: inherit;
+  background-position: center top;
+  background-size: cover;
+  content: "";
+  filter: blur(40px) saturate(1.7) brightness(0.5);
+  height: 140vh;
+  left: 0;
+  /* Il commence 6em avant le bas de la banniere et s'y installe en
+     fondu : l'image nette devient l'image floutee, sans raccord. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 6em, #000 45%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 6em, #000 45%, transparent);
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: calc(100% - 6em);
+  /* Le flou degage les bords : on deborde, mais vers le bas seulement.
+     Agrandi depuis son centre, ce calque de 140vh remontait de 64px sur
+     la banniere et y dessinait une bande sombre a bord net. */
+  transform: scale(1.1);
+  transform-origin: center top;
+}
+
+/* Le bas de la banniere se fond dans l'ambiance (le fondu du ::before) :
+   plus d'assombrissement en bas, qui s'arretait net au bord. Reste un
+   voile en haut, sous les icones de l'en-tete. */
+.layout-mobile #itemDetailPage .itemBackdrop::after {
+  background: linear-gradient(to bottom, rgb(var(--bg-canal) / 0.35), transparent 22%);
+}
+
+/* L'ombre de l'affiche, pensee pour le desktop (50px de flou vers le
+   bas), retombait sur le bouton Lecture place juste dessous. */
+.layout-mobile #itemDetailPage .detailImageContainer .card .cardScalable,
+.layout-mobile #itemDetailPage .detailImageContainer .cardBox > .cardScalable:hover {
+  box-shadow: 0 6px 16px -6px rgb(0 0 0 / 0.6), 0 0 0 1px var(--line);
+}
+
+.layout-mobile #itemDetailPage .detailPageWrapperContainer > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Actions : Lecture (ou Reprendre) sur toute la largeur, les boutons
+   ronds dessous, repartis. En une seule rangee centree, six boutons ne
+   tenaient qu'a 412px : plus etroit, le dernier passait seul a la ligne. */
+.layout-mobile #itemDetailPage .mainDetailButtons {
+  justify-content: center;
+}
+
+.layout-mobile #itemDetailPage .mainDetailButtons .btnPlay:not(.hide),
+.layout-mobile #itemDetailPage .mainDetailButtons .btnResume:not(.hide) {
+  flex: 1 0 100%;
+  height: 3.1em;
 }
 
 .layout-mobile h1.itemName {

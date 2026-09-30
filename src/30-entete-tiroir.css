@@ -6,15 +6,21 @@
    .Mui-selected), qui font partie de l'API publique de MUI, et les
    variables --jf-* posees dans 02-palette-jf.css. */
 
-/* --- En-tete : verre ------------------------------------------------- */
-.MuiAppBar-root {
+/* --- En-tete : verre -------------------------------------------------
+   En 12, l'en-tete porte toujours color="transparent" (MuiAppBar-color
+   Transparent), sur toutes les pages : ce n'est pas une variante a
+   traiter a part. La v3.0 la transformait en degrade sans flou, et le
+   verre ne s'appliquait donc nulle part. Le selecteur double l'emporte
+   sur le fond transparent qu'Emotion injecte apres le theme. */
+.MuiAppBar-root.MuiAppBar-root {
   background-color: var(--glass-opaque);
+  background-image: none;
   border-bottom: 1px solid var(--line);
   box-shadow: none;
 }
 
 @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
-  .MuiAppBar-root {
+  .MuiAppBar-root.MuiAppBar-root {
     background-color: var(--glass);
     box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05);
     -webkit-backdrop-filter: var(--glass-blur);
@@ -22,13 +28,26 @@
   }
 }
 
-/* En-tete transparent (page d'item, lecteur) : pas de filet, et un
-   degrade pour que les icones restent lisibles sur l'image de fond. */
-.MuiAppBar-colorTransparent {
-  background: linear-gradient(rgb(0 0 0 / 0.55), transparent) !important;
-  border-bottom: 0;
-  -webkit-backdrop-filter: none !important;
-  backdrop-filter: none !important;
+/* --- Defiler sous l'en-tete -----------------------------------------
+   Le client place derriere l'en-tete fixe un bloc de meme hauteur, puis la
+   page, qui defile dans son propre conteneur (.mainAnimatedPage, absolu
+   dans <main>). Le contenu n'atteint donc jamais l'en-tete : il est coupe
+   net a son bord, et le verre n'a rien a flouter. Seule la page de film
+   desktop, dont l'image de fond est fixee derriere tout, le montrait.
+
+   On remonte le conteneur de la hauteur de l'en-tete et on rend cette
+   hauteur au contenu par un ::before : au repos rien ne bouge, au
+   defilement le contenu passe derriere le verre. Limite aux pages a une
+   seule barre (48px en desktop comme en mobile, mesure) : celle des
+   bibliotheques passe sur deux lignes en mobile et sa hauteur varie. */
+:root:not(:has(.MuiAppBar-root > .MuiToolbar-root + .MuiToolbar-root)) .mainAnimatedPage.libraryPage {
+  top: calc(-1 * var(--appbar-h));
+}
+
+:root:not(:has(.MuiAppBar-root > .MuiToolbar-root + .MuiToolbar-root)) .mainAnimatedPage.libraryPage::before {
+  content: "";
+  display: block;
+  height: var(--appbar-h);
 }
 
 /* --- Navigation des bibliotheques ------------------------------------
