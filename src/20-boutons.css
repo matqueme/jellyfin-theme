@@ -17,7 +17,14 @@
   transition:
     background-color var(--t-fast) var(--ease),
     color var(--t-fast) var(--ease),
-    box-shadow var(--t-fast) var(--ease);
+    box-shadow var(--t) var(--ease),
+    transform var(--t-fast) var(--ease);
+}
+
+/* Un bouton enfonce retrecit d'un rien : le clic se sent. */
+.emby-button:active:not(:disabled),
+.MuiButton-root:active {
+  transform: scale(var(--press));
 }
 
 .emby-button.block {
@@ -56,6 +63,12 @@ a[data-role="button"]:focus {
 .raised.button-submit:focus {
   background: var(--primary-hover);
   color: var(--on-primary);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .button-submit:hover {
+    box-shadow: var(--glow-primary);
+  }
 }
 
 /* Destructif. */
@@ -128,6 +141,13 @@ a[data-role="button"]:focus {
   box-shadow: none;
 }
 
+.MuiButton-root {
+  transition:
+    background-color var(--t-fast) var(--ease),
+    box-shadow var(--t) var(--ease),
+    transform var(--t-fast) var(--ease);
+}
+
 .MuiButton-containedPrimary,
 .MuiButton-containedSecondary {
   background-color: var(--primary);
@@ -137,6 +157,12 @@ a[data-role="button"]:focus {
 .MuiButton-containedPrimary:hover,
 .MuiButton-containedSecondary:hover {
   background-color: var(--primary-hover);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .MuiButton-containedPrimary.MuiButton-root:hover {
+    box-shadow: var(--glow-primary);
+  }
 }
 
 .MuiButton-containedInherit {

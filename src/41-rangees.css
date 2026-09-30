@@ -42,6 +42,18 @@
   }
 }
 
+/* De la place pour le survol. Une rangee defile en x, donc son
+   overflow-y calcule vaut hidden : la carte soulevee perdait le haut de
+   son anneau, et son ombre etait coupee net en bas. On agrandit la boite
+   de defilement vers le haut et le bas, et on rend l'espace par une marge
+   negative : la mise en page ne bouge pas, le survol a de l'air. */
+.emby-scroller.scrollX {
+  margin-bottom: -1.5em;
+  margin-top: -0.75em;
+  padding-bottom: 1.5em;
+  padding-top: 0.75em;
+}
+
 /* Sans quoi la derniere carte d'une rangee pouvait faire apparaitre une
    barre de defilement horizontale sur toute la page. */
 #indexPage,

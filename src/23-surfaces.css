@@ -2,7 +2,11 @@
    Menus, dialogues, feuilles d'actions, infobulles, notifications. Tous
    sur le meme fond (--bg-overlay), le meme filet, la meme ombre, et des
    elements de liste arrondis en retrait du bord, pour que le survol se
-   lise comme une pastille et pas comme une bande pleine largeur. */
+   lise comme une pastille et pas comme une bande pleine largeur.
+
+   Quand le navigateur sait flouter, ce fond devient du verre
+   (--glass-strong) : le bloc en fin de module le pose sur tous d'un
+   coup. --bg-overlay reste la valeur de repli. */
 
 /* --- Anciens composants --------------------------------------------- */
 .dialog {
@@ -239,4 +243,51 @@
 
 .MuiAccordion-root.Mui-expanded {
   margin: 0.5em 0;
+}
+
+/* --- Verre ------------------------------------------------------------
+   Plus opaque que celui de l'en-tete : on y lit des listes. Le pied de
+   formulaire a son propre verre : le formulaire defile dessous, il doit
+   s'y flouter et non s'y lire. */
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .dialog:not(.dialog-fullscreen),
+  .actionSheet,
+  .toast,
+  .upNextDialog,
+  .MuiMenu-paper,
+  .MuiPopover-paper,
+  .MuiAutocomplete-paper,
+  .MuiPickersPopper-paper,
+  .MuiDialog-paper:not(.MuiDialog-paperFullScreen),
+  .MuiTooltip-tooltip {
+    background-color: var(--glass-strong);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+  }
+
+  .dialog:not(.dialog-fullscreen),
+  .actionSheet,
+  .toast,
+  .upNextDialog,
+  .MuiMenu-paper,
+  .MuiPopover-paper,
+  .MuiAutocomplete-paper,
+  .MuiPickersPopper-paper,
+  .MuiDialog-paper:not(.MuiDialog-paperFullScreen) {
+    box-shadow: var(--glass-edge), var(--shadow-float);
+  }
+
+  .dialog:not(.dialog-fullscreen) .formDialogFooter:not(.formDialogFooter-clear) {
+    background: var(--glass-strong);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+  }
+
+  /* Ce qui est derriere un dialogue ouvert : assombri et legerement
+     floute, le dialogue passe au premier plan sans effacer la page. */
+  .dialogBackdropOpened,
+  .MuiBackdrop-root:not(.MuiBackdrop-invisible) {
+    -webkit-backdrop-filter: var(--backdrop-dim);
+    backdrop-filter: var(--backdrop-dim);
+  }
 }

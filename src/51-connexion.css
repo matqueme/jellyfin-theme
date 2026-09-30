@@ -1,7 +1,8 @@
 /* --- 51. Connexion -----------------------------------------------------
-   Page de choix d'utilisateur et formulaire manuel. Un panneau centre sur
-   le fond de page, sans image de fond : c'est la premiere chose que voit
-   un invite, elle doit etre nette et rapide a charger.
+   Page de choix d'utilisateur et formulaire manuel. Un panneau de verre
+   centre sous un halo blanc venu du haut, sans image de fond : c'est la
+   premiere chose que voit un invite, elle doit etre nette et rapide a
+   charger.
 
    Le :not(.hide) est obligatoire des qu'on impose un display : une fois
    connecte, Jellyfin masque la page en lui ajoutant .hide (display: none
@@ -9,6 +10,7 @@
    egal : sans ce garde, la page resterait affichee par-dessus l'accueil. */
 
 #loginPage:not(.hide) {
+  background: radial-gradient(ellipse 70% 55% at 50% 0%, rgb(255 255 255 / 0.07), transparent 70%);
   box-sizing: border-box;
   display: flex !important;
   min-height: 100vh;
@@ -19,8 +21,9 @@
    sans rogner le haut quand le panneau depasse l'ecran (telephone en
    paysage). */
 #loginPage .padded-bottom-page {
-  background: var(--bg-raised);
+  background: rgb(var(--bg-raised-canal) / 0.7);
   border: 1px solid var(--line);
+  box-shadow: var(--glass-edge), var(--shadow-float);
   border-radius: var(--r-lg);
   box-sizing: border-box;
   margin: auto !important;
@@ -62,10 +65,18 @@
   margin: 0 0 0.6em !important;
 }
 
+/* Largeur des portraits. Le client la donne en pourcentage, calcule pour
+   une grille pleine page (12,5 % sur grand ecran) : dans le panneau de
+   26em, il restait 24 px par portrait. */
+#divUsers .squareCard {
+  width: 6.5em;
+}
+
 /* Portraits : ronds, anneau blanc au survol et au focus. box-shadow et
    non border, pour ne rien decaler. */
 #divUsers .cardContent,
 #divUsers .cardImageContainer,
+#divUsers .cardPadder,
 #divUsers .cardScalable {
   border-radius: var(--r-pill);
 }

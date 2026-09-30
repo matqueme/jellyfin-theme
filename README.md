@@ -21,7 +21,7 @@ Livré en **un seul fichier** : `dist/theme.css`.
 Tableau de bord → Général → **CSS personnalisé**, une seule ligne :
 
 ```css
-@import url('https://cdn.jsdelivr.net/gh/matqueme/jellyfin-theme@v3.0.0/dist/theme.css');
+@import url('https://cdn.jsdelivr.net/gh/matqueme/jellyfin-theme@v3.1.0/dist/theme.css');
 ```
 
 Puis `Ctrl+F5` sur le client. L'`@import` doit rester la première chose du
@@ -59,6 +59,7 @@ Phosphor) restent chargées depuis un CDN.
 
 | Thème | Jellyfin | Base |
 |---|---|---|
+| `v3.1.0` | 12.x, layout Modern | aucune |
 | `v3.0.0` | 12.x, layout Modern | aucune |
 | `v2.0.0` | 12.x | [Ultrachromic `1398af2`](https://github.com/CTalvio/Ultrachromic/tree/1398af21b8fe120a972bd00942ad60a76a932647) |
 | `v1.3.0` | 10.11.x | [Ultrachromic `fa158a2`](https://github.com/CTalvio/Ultrachromic/tree/fa158a241cb24298c9996af3cf6460ae2f9d522f) |
@@ -84,7 +85,10 @@ retoucher ce fichier.
 | `--text`, `--text-2`, `--text-3` | Texte principal, secondaire, discret |
 | `--primary`, `--on-primary` | Action principale : blanc, texte noir |
 | `--danger`, `--success`, `--warning`, `--info` | Les seules couleurs franches, sémantiques |
-| `--glass`, `--glass-blur` | Verre de l'en-tête, du tiroir, de la barre de lecture |
+| `--glass`, `--glass-strong`, `--glass-blur`, `--glass-edge` | Verre : en-tête, tiroir, barre de lecture (`--glass`) ; menus, dialogues (`--glass-strong`). Le flou sature ce qui passe dessous, l'arête porte un reflet |
+| `--backdrop-dim` | Flou de la page derrière un dialogue ouvert |
+| `--shadow-float`, `--shadow-lift`, `--glow-primary` | Ombres de ce qui flotte et d'une carte soulevée ; lueur du bouton principal au survol |
+| `--card-lift`, `--card-zoom`, `--press` | Survol des cartes (montée, zoom de l'image) et bouton enfoncé. Neutralisés sous `prefers-reduced-motion` |
 | `--r-xs` à `--r-lg`, `--r-pill` | Rayons : pastilles, champs, cartes, dialogues, boutons |
 | `--ring` | Anneau de focus et de survol des cartes |
 | `--icon-scale` | Taille des icônes Phosphor, qui remplissent plus leur cadre que Material |

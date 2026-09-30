@@ -16,6 +16,7 @@
 @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
   .MuiAppBar-root {
     background-color: var(--glass);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05);
     -webkit-backdrop-filter: var(--glass-blur);
     backdrop-filter: var(--glass-blur);
   }
@@ -45,6 +46,7 @@
 
 .MuiAppBar-root .MuiButton-root:hover {
   background-color: var(--veil-1);
+  box-shadow: none;
   color: var(--text);
 }
 
@@ -106,16 +108,19 @@
   padding-bottom: 0.45em;
 }
 
-/* Tiroir temporaire (telephone, menu) : il flotte, donc verre. */
-.MuiDrawer-modal .MuiDrawer-paper {
-  background-color: var(--glass-opaque);
-}
-
+/* Verre, comme l'en-tete : le fond d'un film ou d'une serie passe
+   dessous et le teinte. Le tiroir temporaire (telephone, menu) flotte
+   au-dessus de la page, il prend le verre plus dense des menus. */
 @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
-  .MuiDrawer-modal .MuiDrawer-paper {
+  .MuiDrawer-paper {
     background-color: var(--glass);
     -webkit-backdrop-filter: var(--glass-blur);
     backdrop-filter: var(--glass-blur);
+  }
+
+  .MuiDrawer-modal .MuiDrawer-paper {
+    background-color: var(--glass-strong);
+    box-shadow: var(--glass-edge), var(--shadow-float);
   }
 }
 

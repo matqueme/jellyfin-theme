@@ -4,9 +4,10 @@
    variables. Retoucher le theme, c'est retoucher ce fichier.
 
    Parti pris : des surfaces neutres, sans teinte, et le blanc comme
-   couleur d'action. Le relief vient de la luminosite des surfaces et de
-   filets d'un pixel, pas d'ombres portees ni de lueurs. Les seules
-   couleurs franches sont semantiques : erreur, succes, avertissement.
+   couleur d'action. Le theme ne pose aucune couleur decorative : celle
+   qu'on voit vient des affiches et des fonds, que le verre laisse passer
+   en les saturant. Les seules couleurs franches du theme sont
+   semantiques : erreur, succes, avertissement.
 
    Les couleurs sont en canaux (« 244 244 245 ») quand un module doit en
    composer des transparences : rgb(var(--x) / .5). C'est la syntaxe que
@@ -60,10 +61,16 @@
   --info-canal: 143 179 255;
   --star: #f2c14e;
 
-  /* Verre : en-tete, tiroir, menus, barre de lecture. */
-  --glass: rgb(20 20 22 / 0.72);
+  /* Verre : en-tete, tiroir, menus, dialogues, barre de lecture. Assez
+     transparent et sature pour que la couleur de ce qui passe dessous
+     (une affiche, le fond d'un film) teinte la surface. Le reflet est un
+     filet clair sur l'arete haute, comme la lumiere sur une vitre. */
+  --glass: rgb(22 22 25 / 0.62);
+  --glass-strong: rgb(24 24 27 / 0.8); /* menus et dialogues : du texte a lire */
   --glass-opaque: rgb(20 20 22 / 0.96); /* sans backdrop-filter */
-  --glass-blur: blur(24px) saturate(1.4);
+  --glass-blur: blur(28px) saturate(1.8);
+  --glass-edge: inset 0 1px 0 rgb(255 255 255 / 0.09), inset 0 0 0 1px rgb(255 255 255 / 0.05);
+  --backdrop-dim: blur(6px); /* ce qui est derriere un dialogue ouvert */
 
   /* Rayons. */
   --r-xs: 6px; /* pastilles, cases a cocher */
@@ -77,13 +84,26 @@
   --ring: 0 0 0 2px var(--bg), 0 0 0 4px var(--primary);
   --ring-inset: inset 0 0 0 2px var(--primary);
 
-  /* Ombre unique, pour ce qui flotte au-dessus du contenu. */
+  /* Ombres : ce qui flotte au-dessus du contenu, et une carte soulevee. */
   --shadow-float: 0 12px 40px -8px rgb(0 0 0 / 0.6), 0 0 0 1px var(--line);
+  --shadow-lift: 0 18px 36px -14px rgb(0 0 0 / 0.8);
 
-  /* Mouvement. */
+  /* Lueur du bouton principal au survol : blanche et diffuse, la seule
+     du theme. */
+  --glow-primary: 0 6px 28px -6px rgb(255 255 255 / 0.4);
+
+  /* Mouvement. --ease-spring depasse legerement sa cible avant de s'y
+     poser : reserve a ce qui se souleve (cartes). */
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
   --t-fast: 0.12s;
   --t: 0.2s;
+  --t-slow: 0.35s;
+
+  /* Survol des cartes : l'affiche monte, l'image zoome dans son cadre. */
+  --card-lift: -6px;
+  --card-zoom: 1.06;
+  --press: 0.97; /* echelle d'un bouton enfonce */
 
   /* Icones Phosphor : elles remplissent plus leur cadre que Material. */
   --icon-scale: 0.85;
@@ -96,5 +116,13 @@
 @media (max-width: 50em) {
   :root {
     --icon-scale: 0.8;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --card-lift: 0px;
+    --card-zoom: 1;
+    --press: 1;
   }
 }

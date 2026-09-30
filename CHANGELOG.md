@@ -4,6 +4,43 @@ Format : [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/).
 Versionnage sémantique, indépendant de celui de Jellyfin : la compatibilité
 est indiquée par le titre de chaque version.
 
+## [3.1.0] - 2026-09-30 - Jellyfin 12.x, layout Modern
+
+La base reste neutre, mais la couleur vient maintenant des affiches et des
+fonds : le verre la laisse passer, les cartes bougent.
+
+### Ajoute
+
+- Verre plus present : flou de 28px sature a x1.8 et reflet sur l'arete
+  (`--glass-edge`), pose sur l'en-tete, le tiroir (permanent compris), les
+  menus, feuilles d'actions, dialogues, notifications et infobulles. La
+  page derriere un dialogue ouvert est legerement floutee.
+- Cartes : au survol l'affiche se souleve avec un leger rebond, son image
+  zoome dans le cadre, l'anneau blanc s'accompagne d'une ombre. Les
+  boutons du bas deviennent des pastilles de verre de taille fixe.
+- Page d'item : boutons ronds en verre sur l'image de fond ; lueur
+  blanche au survol du bouton Lecture et des boutons principaux.
+- Connexion : panneau de verre sous un halo blanc.
+- Boutons : legere compression au clic.
+- Nouveaux tokens : `--glass-strong`, `--glass-edge`, `--backdrop-dim`,
+  `--shadow-lift`, `--glow-primary`, `--ease-spring`, `--t-slow`,
+  `--card-lift`, `--card-zoom`, `--press`. Le mouvement est coupe sous
+  `prefers-reduced-motion`.
+
+### Corrige
+
+- Anneau, ombre et survol des cartes coupes net : le client pose
+  `contain: layout style paint` sur chaque carte, et le confinement de
+  peinture decoupe comme un `overflow: hidden`. Ramene a `layout style`.
+  Les rangees a defilement natif (`.scrollX`, tactile) recoivent une marge
+  verticale pour la meme raison.
+- Image de fond jamais visible : `.backgroundContainer` la recouvrait d'un
+  aplat opaque. Remplace par un voile degrade, et l'image est plus saturee.
+- Icone du bouton lecture des cartes invisible (blanc sur blanc) : le
+  survol generique des boutons-icones l'emportait sur elle.
+- Portraits de la page de connexion reduits a 24px : leur largeur en
+  pourcentage etait calculee pour une grille pleine page.
+
 ## [3.0.0] - 2026-09-25 - Jellyfin 12.x, layout Modern
 
 Reecriture complete. Plus de base tierce : Ultrachromic est retire, avec

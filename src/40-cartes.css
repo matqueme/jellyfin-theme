@@ -1,7 +1,11 @@
 /* --- 40. Cartes --------------------------------------------------------
-   Affiches, vignettes, bibliotheques. Coins a --r-md. Au survol, un anneau
-   blanc detache autour de l'affiche, et les boutons de l'overlay : pas de
-   lueur, pas de zoom. La barre de progression flotte en bas de l'image. */
+   Affiches, vignettes, bibliotheques. Coins a --r-md. Au survol, l'affiche
+   se souleve, son image zoome dans le cadre, et un anneau blanc detache
+   l'entoure. La barre de progression flotte en bas de l'image.
+
+   Le soulevement et l'anneau debordent de la carte : les rangees
+   defilantes, qui coupent tout ce qui sort de leur boite, recoivent la
+   place necessaire dans 41-rangees.css. */
 
 .cardImageContainer,
 .cardContent,
@@ -49,13 +53,46 @@
 }
 
 .cardScalable {
-  transition: box-shadow var(--t) var(--ease);
+  transition:
+    box-shadow var(--t) var(--ease),
+    transform var(--t-slow) var(--ease-spring);
+}
+
+/* Le client pose contain: layout style paint sur chaque carte. Le
+   confinement de peinture decoupe tout ce qui sort de la boite de la
+   carte, exactement comme un overflow: hidden : l'anneau, l'ombre et le
+   soulevement etaient coupes net. layout et style suffisent a isoler le
+   reflow, c'est pour eux que le client pose la regle. */
+.card:not(.show-animation) {
+  contain: layout style;
+}
+
+/* Le zoom se fait sur l'image, pas sur la carte : .cardContent la
+   decoupe a ses coins arrondis, le cadre ne bouge pas. */
+.cardContent .cardImageContainer {
+  transition: transform var(--t-slow) var(--ease);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .cardBox > .cardScalable:hover {
-    box-shadow: var(--ring);
+    box-shadow: var(--ring), var(--shadow-lift);
+    transform: translateY(var(--card-lift));
   }
+
+  .cardBox > .cardScalable:hover .cardContent .cardImageContainer {
+    transform: scale(var(--card-zoom));
+  }
+}
+
+/* Les cartes a pied (appareils, utilisateurs, extensions du tableau de
+   bord) : l'image est collee a son pied dans un meme cadre, elle ne peut
+   pas monter seule. Anneau sans soulevement. */
+.visualCardBox > .cardScalable:hover {
+  transform: none;
+}
+
+.visualCardBox > .cardScalable:hover .cardContent .cardImageContainer {
+  transform: none;
 }
 
 /* Voile de l'overlay : plus leger que celui du client, l'affiche doit
@@ -65,25 +102,81 @@
 }
 
 /* Bouton lecture central : disque blanc, icone noire, sans agrandissement
-   au survol (le client le passe a scale(1.4)). */
-.cardOverlayContainer > .cardOverlayFab-primary {
+   au survol (le client le passe a scale(1.4)). Il porte aussi les classes
+   des boutons-icones, dont le survol (:hover:not(:disabled), 20-boutons)
+   repasse la couleur au blanc : d'ou .paper-icon-button-light et le meme
+   :not() ici, pour l'emporter dans tous les etats. Les cartes MUI des
+   bibliotheques ont une icone SVG, les autres une icone de police. */
+.cardOverlayContainer > .cardOverlayFab-primary.paper-icon-button-light {
   background-color: rgb(var(--primary-canal) / 0.92);
+  box-shadow: 0 4px 16px -4px rgb(0 0 0 / 0.5);
   color: var(--on-primary);
+  transition:
+    background-color var(--t-fast) var(--ease),
+    box-shadow var(--t) var(--ease);
 }
 
-.cardOverlayContainer > .cardOverlayFab-primary:hover {
+.cardOverlayContainer > .cardOverlayFab-primary.paper-icon-button-light:hover:not(:disabled) {
   background-color: var(--primary-hover);
+  box-shadow: var(--glow-primary);
+  color: var(--on-primary);
   transform: none;
 }
 
-.cardOverlayButton,
-.cardOverlayButton.paper-icon-button-light {
-  color: rgb(255 255 255 / 0.85);
+.cardOverlayFab-primary .cardOverlayButtonIcon {
+  color: var(--on-primary);
 }
 
-.cardOverlayButton:hover,
-.cardOverlayButton.paper-icon-button-light:hover {
+/* Boutons du bas (vu, favori, menu) : petites pastilles de verre. Le
+   bouton lecture porte les memes classes : sans le :not(), ce blanc
+   l'emportait sur son icone noire et le disque paraissait vide. */
+.cardOverlayButton.paper-icon-button-light:not(.cardOverlayFab-primary) {
+  color: rgb(255 255 255 / 0.9);
+}
+
+.cardOverlayButton.paper-icon-button-light:not(.cardOverlayFab-primary):hover {
   color: #fff;
+}
+
+/* Taille fixe, en em du conteneur. Sur les anciennes cartes, vu et
+   favori sont des .emby-button et prenaient le padding des boutons a
+   libelle ; sur les cartes MUI, sizeSmall et sizeMedium donnent au menu
+   une police plus grande que ses voisins. font-size: inherit aligne les
+   trois, les icones sont dimensionnees a part. */
+.cardOverlayButton-br {
+  align-items: center;
+  gap: 0.3em;
+  padding: 0.45em;
+}
+
+.cardOverlayButton-br .cardOverlayButton {
+  align-items: center;
+  border-radius: var(--r-pill);
+  display: inline-flex;
+  font-size: inherit;
+  height: 2.3em;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  width: 2.3em;
+}
+
+.cardOverlayButton-br .cardOverlayButtonIcon,
+.cardOverlayButton-br .cardOverlayButton > .MuiSvgIcon-root {
+  font-size: 1.35em;
+}
+
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .cardOverlayContainer .cardOverlayButton-br .cardOverlayButton {
+    background-color: rgb(0 0 0 / 0.3);
+    box-shadow: var(--glass-edge);
+    -webkit-backdrop-filter: blur(10px) saturate(1.6);
+    backdrop-filter: blur(10px) saturate(1.6);
+  }
+
+  .cardOverlayContainer .cardOverlayButton-br .cardOverlayButton:hover {
+    background-color: rgb(255 255 255 / 0.2);
+  }
 }
 
 /* Curseur : une main sur l'affiche et les liens, une fleche ailleurs. Le

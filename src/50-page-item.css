@@ -31,10 +31,15 @@
   box-shadow: 0 20px 50px -12px rgb(0 0 0 / 0.75), 0 0 0 1px var(--line);
 }
 
-/* Pas d'anneau de survol sur l'affiche de la page : elle n'est pas une
-   carte cliquable comme les autres. */
+/* Ni anneau, ni soulevement, ni zoom sur l'affiche de la page : elle
+   n'est pas une carte cliquable comme les autres. */
 .detailImageContainer .cardBox > .cardScalable:hover {
   box-shadow: 0 20px 50px -12px rgb(0 0 0 / 0.75), 0 0 0 1px var(--line);
+  transform: none;
+}
+
+.detailImageContainer .cardBox > .cardScalable:hover .cardImageContainer {
+  transform: none;
 }
 
 /* --- Titre et informations ----------------------------------------- */
@@ -111,6 +116,27 @@ h1.itemName {
   color: var(--text);
 }
 
+/* Sur l'image de fond, les boutons ronds sont en verre : ils prennent la
+   couleur de ce qui passe derriere. */
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .mainDetailButtons .detailButton {
+    box-shadow: var(--glass-edge);
+    -webkit-backdrop-filter: blur(12px) saturate(1.6);
+    backdrop-filter: blur(12px) saturate(1.6);
+  }
+}
+
+.mainDetailButtons .detailButton {
+  transition:
+    background-color var(--t-fast) var(--ease),
+    box-shadow var(--t) var(--ease),
+    transform var(--t-fast) var(--ease);
+}
+
+.mainDetailButtons .detailButton:active {
+  transform: scale(var(--press));
+}
+
 .mainDetailButtons .detailButton-icon {
   font-size: 1.35em !important;
 }
@@ -131,6 +157,7 @@ h1.itemName {
 .mainDetailButtons .btnResume:not(.hide):hover,
 .mainDetailButtons .btnResume:not(.hide):focus {
   background: var(--primary-hover);
+  box-shadow: var(--glow-primary);
   color: var(--on-primary);
 }
 

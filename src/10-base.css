@@ -121,17 +121,23 @@ a.button-link {
 /* --- Fond ------------------------------------------------------------
    .backgroundContainer porte la couleur de page, et l'image de fond de
    l'item quand l'option est active. L'image est floutee et assombrie : un
-   fond qui situe, pas une deuxieme affiche derriere le texte. */
+   fond qui situe, pas une deuxieme affiche derriere le texte. Elle est
+   aussi saturee : c'est elle qui donne sa couleur a la page, et au verre
+   de l'en-tete et du tiroir. */
 .backgroundContainer {
   background-color: var(--bg);
 }
 
+/* Avec une image de fond, le conteneur passe devant elle : un aplat
+   opaque la masquait entierement. Un voile qui s'epaissit vers le bas a
+   la place, la couleur du film en haut, le texte lisible plus bas. */
 .backgroundContainer.withBackdrop {
+  background: linear-gradient(to bottom, rgb(var(--bg-canal) / 0.15), rgb(var(--bg-canal) / 0.65) 55%, rgb(var(--bg-canal) / 0.88));
   opacity: 1;
 }
 
 .backdropImage {
-  filter: blur(28px) saturate(1.1) brightness(0.35);
+  filter: blur(32px) saturate(1.9) brightness(0.65);
   transform: scale(1.08); /* le flou degage les bords, on les deborde */
 }
 
