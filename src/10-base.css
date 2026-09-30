@@ -92,30 +92,57 @@ a.button-link {
   color: var(--text);
 }
 
-/* --- Defilement ------------------------------------------------------ */
-* {
-  scrollbar-color: var(--veil-3) transparent;
-  scrollbar-width: thin;
+/* --- Defilement ------------------------------------------------------
+   A la souris, une barre fine et discrete. Sur un ecran tactile, aucune :
+   on defile au doigt, et styler ::-webkit-scrollbar y remplace la barre
+   native (fine, en surimpression, qui s'efface d'elle-meme) par une barre
+   fixe et permanente, sur la page comme sous chaque rangee de cartes. */
+@media (hover: hover) and (pointer: fine) {
+  /* Chrome ignore ::-webkit-scrollbar des que scrollbar-width ou
+     scrollbar-color est pose, et dessine alors sa barre standard, fleches
+     comprises : les proprietes standard sont reservees a Firefox, qui ne
+     connait pas le pseudo-element. */
+  @supports not selector(::-webkit-scrollbar) {
+    * {
+      scrollbar-color: var(--veil-3) transparent;
+      scrollbar-width: thin;
+    }
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--veil-3);
+    border: 2px solid transparent;
+    border-radius: var(--r-pill);
+    background-clip: padding-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(255 255 255 / 0.25);
+  }
+
+  ::-webkit-scrollbar-button,
+  ::-webkit-scrollbar-corner {
+    display: none;
+  }
 }
 
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
+@media (pointer: coarse) {
+  * {
+    scrollbar-width: none;
+  }
 
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--veil-3);
-  border: 2px solid transparent;
-  border-radius: var(--r-pill);
-  background-clip: padding-box;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: rgb(255 255 255 / 0.25);
+  ::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 /* --- Fond ------------------------------------------------------------

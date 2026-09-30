@@ -15,6 +15,22 @@ est indiquée par le titre de chaque version.
   et dashboard. Les 130 icones SVG que MUI peut afficher sont reconnues a
   leur `data-testid`, conserve en production, et redessinees en Phosphor
   par masque : taille et couleur restent celles de MUI.
+- Chevron des titres de section (« Films, ajouts recents › ») : il
+  tombait sous la ligne du texte, surtout sur mobile (marges du client en
+  em de corps differents, padding du titre en layout mobile). Centre sur
+  la hauteur des capitales, mesure a l'encre. Au survol, il grossissait
+  (son decalage annulait la reduction Phosphor) et une pilule voilee
+  apparaissait derriere tout le titre : il glisse et s'eclaire seulement.
+- Meme conflit de transform ailleurs : la fleche des sections depliables
+  ne se retournait plus une fois ouverte, et l'icone des cartes sans
+  image n'etait plus centree.
+- Barre de defilement : sur ecran tactile, styler `::-webkit-scrollbar`
+  remplacait la barre native, fine et temporaire, par une barre epaisse
+  et permanente, jusque sous chaque rangee de cartes. Elle est masquee au
+  tactile, ou l'on defile au doigt. A la souris, Chrome ignorait la barre
+  du theme (il la neutralise des que `scrollbar-width` est pose) et
+  dessinait la sienne, fleches comprises : `scrollbar-width` est reserve a
+  Firefox, Chrome recoit la pilule fine sans fleches.
 
 ### Ajoute
 

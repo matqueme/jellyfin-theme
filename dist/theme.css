@@ -375,30 +375,57 @@ a.button-link {
   color: var(--text);
 }
 
-/* --- Defilement ------------------------------------------------------ */
-* {
-  scrollbar-color: var(--veil-3) transparent;
-  scrollbar-width: thin;
+/* --- Defilement ------------------------------------------------------
+   A la souris, une barre fine et discrete. Sur un ecran tactile, aucune :
+   on defile au doigt, et styler ::-webkit-scrollbar y remplace la barre
+   native (fine, en surimpression, qui s'efface d'elle-meme) par une barre
+   fixe et permanente, sur la page comme sous chaque rangee de cartes. */
+@media (hover: hover) and (pointer: fine) {
+  /* Chrome ignore ::-webkit-scrollbar des que scrollbar-width ou
+     scrollbar-color est pose, et dessine alors sa barre standard, fleches
+     comprises : les proprietes standard sont reservees a Firefox, qui ne
+     connait pas le pseudo-element. */
+  @supports not selector(::-webkit-scrollbar) {
+    * {
+      scrollbar-color: var(--veil-3) transparent;
+      scrollbar-width: thin;
+    }
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--veil-3);
+    border: 2px solid transparent;
+    border-radius: var(--r-pill);
+    background-clip: padding-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(255 255 255 / 0.25);
+  }
+
+  ::-webkit-scrollbar-button,
+  ::-webkit-scrollbar-corner {
+    display: none;
+  }
 }
 
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
+@media (pointer: coarse) {
+  * {
+    scrollbar-width: none;
+  }
 
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--veil-3);
-  border: 2px solid transparent;
-  border-radius: var(--r-pill);
-  background-clip: padding-box;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: rgb(255 255 255 / 0.25);
+  ::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 /* --- Fond ------------------------------------------------------------
@@ -2205,19 +2232,67 @@ a[data-role="button"]:focus {
   font-weight: 600;
 }
 
-/* Le chevron des titres-liens (« Films, ajouts recents › »). */
+/* --- Titres-liens (« Films, ajouts recents › ») ----------------------
+   Le client pose le lien en inline-flex sans alignement, et donne au
+   titre comme au chevron une marge basse de .35em, mais en em de corps
+   differents (1.3em et 1.5em), plus un padding-top de .5em au chevron sur
+   mobile : le chevron tombait sous la ligne du texte. On centre les deux
+   sur l'axe, sans marge propre, et l'espacement passe sur le lien. Le
+   !important repond a celui du client (margin: 0 !important). */
 .sectionTitleTextButton {
   color: var(--text);
 }
 
-.sectionTitleTextButton .material-icons {
-  color: var(--text-3);
-  transition: transform var(--t-fast) var(--ease);
+.sectionTitleTextButton.emby-button {
+  align-items: center;
+  margin-bottom: 0.45em !important;
 }
 
-.sectionTitleTextButton:hover .material-icons {
+/* Selecteur renforce : la regle mobile du client
+   (.layout-mobile :not(.sectionTitleContainer-cards) > .sectionTitle-cards)
+   pese trois classes. */
+.sectionTitleTextButton.emby-button > .sectionTitle.sectionTitle-cards {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  padding-top: 0;
+}
+
+/* En mobile, le client donne au titre un padding-top de .5em (sa regle
+   vise un titre hors conteneur, et le lien en fait un) : la boite du
+   titre descendait sous le texte et le chevron, centre sur elle,
+   paraissait trop haut. Le degagement passe sur le lien. */
+.layout-mobile .sectionTitleTextButton.emby-button {
+  margin-top: 0.6em !important;
+}
+
+.sectionTitleTextButton > .material-icons {
+  color: var(--text-3);
+  line-height: 1;
+  margin: 0 0 0 0.1em !important;
+  padding-top: 0 !important;
+  transition:
+    color var(--t-fast) var(--ease),
+    transform var(--t-fast) var(--ease);
+}
+
+/* Survol : pas de pilule voilee derriere tout le titre (c'est un
+   .button-flat), le chevron s'eclaire et glisse. Le transform reprend
+   l'echelle des icones Phosphor (90-icones.css) : ecrire translateX seul
+   l'annulait, et le chevron grossissait au survol. */
+.sectionTitleTextButton.button-flat:hover,
+.sectionTitleTextButton.button-flat:focus {
+  background: transparent;
+}
+
+.sectionTitleTextButton:hover > .material-icons {
   color: var(--text);
-  transform: translateX(2px);
+  transform: translateX(3px) scale(var(--icon-scale));
+}
+
+.sectionTitleTextButton:focus-visible > .sectionTitle {
+  text-decoration: underline;
+  text-decoration-color: var(--text-3);
+  text-underline-offset: 0.2em;
 }
 
 /* Fleches de defilement : boutons ronds voiles. */
@@ -3060,6 +3135,23 @@ h1.itemName {
 .material-icons.volume_up {
   font-family: "Phosphor-Bold" !important;
   transform: scale(var(--icon-scale));
+}
+
+/* La reduction par transform remplace toute transformation que le client
+   pose sur une icone : la fleche des sections depliables ne se retournait
+   plus une fois ouverte, et les icones de remplacement des cartes sans
+   image n'etaient plus centrees. Chacune recompose la sienne avec
+   l'echelle. Meme piege pour tout transform ecrit sur une icone. */
+.material-icons.emby-collapse-expandIconExpanded {
+  transform: rotate(180deg) scale(var(--icon-scale));
+}
+
+.cardPadder .material-icons.cardImageIcon {
+  transform: translate(-50%, -50%) scale(var(--icon-scale));
+}
+
+.itemDetailGalleryLink.defaultCardBackground > .material-icons {
+  transform: translateY(-50%) scale(var(--icon-scale));
 }
 
 .material-icons.add:before { content: "\e3d4" !important; }

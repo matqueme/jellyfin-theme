@@ -126,6 +126,23 @@
   transform: scale(var(--icon-scale));
 }
 
+/* La reduction par transform remplace toute transformation que le client
+   pose sur une icone : la fleche des sections depliables ne se retournait
+   plus une fois ouverte, et les icones de remplacement des cartes sans
+   image n'etaient plus centrees. Chacune recompose la sienne avec
+   l'echelle. Meme piege pour tout transform ecrit sur une icone. */
+.material-icons.emby-collapse-expandIconExpanded {
+  transform: rotate(180deg) scale(var(--icon-scale));
+}
+
+.cardPadder .material-icons.cardImageIcon {
+  transform: translate(-50%, -50%) scale(var(--icon-scale));
+}
+
+.itemDetailGalleryLink.defaultCardBackground > .material-icons {
+  transform: translateY(-50%) scale(var(--icon-scale));
+}
+
 .material-icons.add:before { content: "\e3d4" !important; }
 .material-icons.airplay:before { content: "\e004" !important; }
 .material-icons.album:before { content: "\ecac" !important; }
