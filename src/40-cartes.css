@@ -1,0 +1,288 @@
+/* --- 40. Cartes --------------------------------------------------------
+   Affiches, vignettes, bibliotheques. Coins a --r-md. Au survol, un anneau
+   blanc detache autour de l'affiche, et les boutons de l'overlay : pas de
+   lueur, pas de zoom. La barre de progression flotte en bas de l'image. */
+
+.cardImageContainer,
+.cardContent,
+.cardOverlayContainer,
+.cardPadder,
+.blurhash-canvas,
+.cardScalable {
+  border-radius: var(--r-md);
+}
+
+/* Le fond de l'emplacement d'image, visible pendant le chargement et
+   derriere les affiches transparentes. */
+.cardBox:not(.visualCardBox) .cardPadder {
+  background-color: var(--veil-1);
+  box-shadow: none;
+}
+
+.cardPadder .cardImageIcon {
+  color: var(--text-3);
+}
+
+/* --- Texte sous l'affiche -------------------------------------------- */
+.cardText {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.cardText-secondary {
+  color: var(--text-2);
+  font-weight: 400;
+}
+
+/* --- Survol ----------------------------------------------------------
+   Deux declencheurs natifs sont trop larges : .card-hoverable allume
+   l'overlay depuis la marge de la carte, et .cardBox depuis le titre sous
+   l'affiche. On les coupe et on ramene tout sur .cardScalable, dont la
+   boite est exactement celle de l'image. :focus-within n'est pas touche,
+   le clavier et la telecommande gardent le comportement du client. */
+.card:hover .cardOverlayContainer {
+  opacity: 0;
+}
+
+.cardBox > .cardScalable:hover .cardOverlayContainer {
+  opacity: 1;
+}
+
+.cardScalable {
+  transition: box-shadow var(--t) var(--ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cardBox > .cardScalable:hover {
+    box-shadow: var(--ring);
+  }
+}
+
+/* Voile de l'overlay : plus leger que celui du client, l'affiche doit
+   rester lisible derriere les boutons. */
+.cardOverlayContainer {
+  background: linear-gradient(to top, rgb(0 0 0 / 0.6), rgb(0 0 0 / 0.1) 60%);
+}
+
+/* Bouton lecture central : disque blanc, icone noire, sans agrandissement
+   au survol (le client le passe a scale(1.4)). */
+.cardOverlayContainer > .cardOverlayFab-primary {
+  background-color: rgb(var(--primary-canal) / 0.92);
+  color: var(--on-primary);
+}
+
+.cardOverlayContainer > .cardOverlayFab-primary:hover {
+  background-color: var(--primary-hover);
+  transform: none;
+}
+
+.cardOverlayButton,
+.cardOverlayButton.paper-icon-button-light {
+  color: rgb(255 255 255 / 0.85);
+}
+
+.cardOverlayButton:hover,
+.cardOverlayButton.paper-icon-button-light:hover {
+  color: #fff;
+}
+
+/* Curseur : une main sur l'affiche et les liens, une fleche ailleurs. Le
+   client la pose sur toute la carte, marges comprises. */
+.card {
+  cursor: default;
+}
+
+.cardBox > .cardScalable,
+.cardText a {
+  cursor: pointer;
+}
+
+/* --- Indicateurs -----------------------------------------------------
+   Vu, nombre d'episodes non vus, sources multiples : pastilles blanches,
+   texte noir, detachees du coin. */
+.cardIndicators,
+.listItemIndicators {
+  gap: 0.3em;
+}
+
+.cardIndicators {
+  right: 0.5em;
+  top: 0.5em;
+}
+
+.countIndicator,
+.playedIndicator,
+.mediaSourceIndicator {
+  background: rgb(var(--primary-canal) / 0.95);
+  color: var(--on-primary);
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.45);
+  font-weight: 700;
+  text-shadow: none;
+}
+
+.countIndicator,
+.playedIndicator {
+  border-radius: var(--r-pill);
+}
+
+.mediaSourceIndicator {
+  border-radius: var(--r-xs);
+  left: 0.5em;
+  top: 0.5em;
+}
+
+.playedIndicator .material-icons,
+.countIndicator .material-icons {
+  color: var(--on-primary);
+}
+
+.missingIndicator,
+.unairedIndicator {
+  background: rgb(0 0 0 / 0.65);
+  border-radius: var(--r-xs);
+  color: var(--text);
+  text-shadow: none;
+}
+
+/* --- Barre de progression -------------------------------------------
+   Le pied de carte porte la barre ; on le ramene a une bande en bas, et
+   la barre flotte a quelques pixels des bords. Blanche sur un rail sombre
+   floute, pour rester lisible sur une affiche claire comme sombre. */
+.innerCardFooter.fullInnerCardFooter.innerCardFooterClear {
+  background: transparent;
+  bottom: 0;
+  top: auto;
+}
+
+.innerCardFooter .itemProgressBar,
+.listItemProgressBar {
+  background: rgb(0 0 0 / 0.45);
+  border-radius: var(--r-pill);
+  height: 5px;
+  margin: 0 10px 9px;
+  overflow: hidden;
+}
+
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .innerCardFooter .itemProgressBar {
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
+}
+
+.itemProgressBarForeground {
+  background-color: var(--primary);
+  border-radius: var(--r-pill);
+}
+
+/* Enregistrement en cours (TV) : la seule barre qui garde une couleur. */
+.itemProgressBarForeground-recording {
+  background-color: var(--danger);
+}
+
+/* --- Telephone : le bouton lecture des cartes -----------------------
+   Sur mobile le client pose un bouton lecture permanent en bas a droite
+   de la vignette (.cardOverlayButton-br porte alors par le bouton lui-
+   meme), pile sur le bout de la barre. On l'envoie en haut a gauche ; le
+   coin haut droit est pris par les indicateurs. La variante centree, qui
+   porte aussi la classe, n'est pas touchee. */
+.layout-mobile .cardOverlayButton-br:not(.cardOverlayButton-centered) {
+  bottom: auto;
+  left: 0;
+  right: auto;
+  top: 0;
+}
+
+.layout-mobile .mediaSourceIndicator {
+  left: 3em;
+}
+
+/* --- Selection multiple ---------------------------------------------- */
+.itemSelectionPanel {
+  background: rgb(0 0 0 / 0.35);
+  border: 0;
+  border-radius: var(--r-md);
+}
+
+.itemSelectionPanel .checkboxOutline {
+  background-color: rgb(0 0 0 / 0.5);
+  border: 1.5px solid #fff;
+  border-radius: var(--r-pill);
+  left: 0.5em;
+  top: 0.5em;
+  transform: none;
+}
+
+.itemSelectionPanel .emby-checkbox:checked + span + .checkboxOutline {
+  background-color: var(--primary);
+}
+
+@supports selector(:has(*)) {
+  .itemSelectionPanel:has(.chkItemSelect:checked) {
+    box-shadow: var(--ring-inset);
+  }
+}
+
+/* Barre de commandes de la selection : pilule de verre en haut. */
+.selectionCommandsPanel {
+  background: var(--glass-opaque) !important;
+  border-radius: var(--r-pill);
+  box-shadow: var(--shadow-float);
+  color: var(--text) !important;
+  left: calc(env(safe-area-inset-left, 0px) + 0.7em);
+  padding: 0.3em 0.5em;
+  right: calc(env(safe-area-inset-right, 0px) + 0.7em);
+  top: calc(env(safe-area-inset-top, 0px) + 0.7em);
+}
+
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .selectionCommandsPanel {
+    background: var(--glass) !important;
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+  }
+}
+
+.selectionCommandsPanel .paper-icon-button-light:not(:disabled) {
+  color: var(--text);
+}
+
+.selectionCommandsPanel .paper-icon-button-light:not(:disabled):hover,
+.selectionCommandsPanel .paper-icon-button-light:not(:disabled):focus {
+  background-color: var(--veil-2);
+}
+
+.selectionCommandsPanel .itemSelectionCount {
+  font-weight: 600;
+  margin: 0 0.4em;
+}
+
+/* --- Fonds par defaut ------------------------------------------------
+   Sans image, le client tire au sort l'une de cinq couleurs, toutes des
+   bleus Jellyfin (cartes sans affiche, appareils et utilisateurs du
+   dashboard). On les ramene a cinq gris voisins : la variation reste, la
+   couleur disparait. */
+.defaultCardBackground1 {
+  background-color: #1d1d21;
+}
+
+.defaultCardBackground2 {
+  background-color: #232328;
+}
+
+.defaultCardBackground3 {
+  background-color: #1a1a1e;
+}
+
+.defaultCardBackground4 {
+  background-color: #26262c;
+}
+
+.defaultCardBackground5 {
+  background-color: #202025;
+}
+
+.defaultCardBackground .cardImageIcon,
+.defaultCardBackground > .material-icons {
+  color: var(--text-3);
+}

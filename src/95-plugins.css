@@ -1,0 +1,66 @@
+/* --- 95. Plugins -------------------------------------------------------
+   Ce que les plugins installes sur le serveur ajoutent a l'interface, mis
+   au diapason. Ces regles ne font rien si le plugin est absent.
+
+   Jellyfin Enhanced (12.7) injecte ses propres feuilles, avec des
+   selecteurs a 0-3-0 et des !important. On passe devant par la
+   specificite (html body en tete) et l'ordre : notre feuille arrive
+   apres les siennes. */
+
+/* --- Etiquettes de qualite sur les cartes (4K, HDR10, HEVC, DTS...) --
+   Une couleur saturee par valeur, soit jusqu'a cinq aplats de couleurs
+   differentes sur chaque affiche. On les ramene a des etiquettes de verre
+   sombre, texte blanc ; la valeur suffit a les distinguer. Pour revenir
+   aux couleurs du plugin, supprimer ce bloc. */
+html body .quality-overlay-container .quality-overlay-label[data-quality],
+html body .quality-overlay-container .quality-overlay-label {
+  background: rgb(0 0 0 / 0.62) !important;
+  border: 1px solid rgb(255 255 255 / 0.14);
+  border-radius: var(--r-xs);
+  box-shadow: none;
+  color: #fff !important;
+  font-family: var(--font);
+  font-size: 0.68rem;
+  font-variant-caps: normal;
+  font-weight: 700;
+  padding: 1px 6px;
+}
+
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  html body .quality-overlay-container .quality-overlay-label[data-quality] {
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+}
+
+html body .quality-overlay-container {
+  gap: 3px;
+  left: 8px;
+  top: 8px;
+}
+
+/* --- Choix des saisons a demander (Jellyseerr) ---------------------- */
+.jellyseerr-season-modal .jellyseerr-season-content {
+  background: var(--bg-overlay) !important;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg) !important;
+}
+
+.jellyseerr-season-modal {
+  background: rgb(0 0 0 / 0.6) !important;
+}
+
+/* Onglets des favoris par marque-page. */
+.je-bookmark-tabs {
+  border-bottom-color: var(--line) !important;
+}
+
+.je-tab {
+  border-radius: var(--r-pill) !important;
+  color: var(--text-2) !important;
+}
+
+.je-tab.active {
+  background: var(--veil-2) !important;
+  color: var(--text) !important;
+}

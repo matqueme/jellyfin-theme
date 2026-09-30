@@ -1,0 +1,67 @@
+/* --- 41. Rangees et sections -------------------------------------------
+   Titres de section, rangees defilantes, fleches de defilement, selecteur
+   alphabetique. */
+
+.sectionTitleContainer .sectionTitle-cards,
+.sectionTitle-cards {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* Le chevron des titres-liens (« Films, ajouts recents › »). */
+.sectionTitleTextButton {
+  color: var(--text);
+}
+
+.sectionTitleTextButton .material-icons {
+  color: var(--text-3);
+  transition: transform var(--t-fast) var(--ease);
+}
+
+.sectionTitleTextButton:hover .material-icons {
+  color: var(--text);
+  transform: translateX(2px);
+}
+
+/* Fleches de defilement : boutons ronds voiles. */
+.emby-scrollbuttons-button {
+  background: var(--veil-1);
+  margin: 0 0.15em;
+}
+
+.emby-scrollbuttons-button:disabled {
+  background: transparent;
+}
+
+/* Fondu des bords des rangees : les cartes coupees par le bord de
+   l'ecran s'effacent au lieu de s'arreter net. */
+@supports (mask-image: linear-gradient(#000, #000)) or (-webkit-mask-image: linear-gradient(#000, #000)) {
+  .emby-scroller.scrollX {
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 3%, #000 97%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 3%, #000 97%, transparent 100%);
+  }
+}
+
+/* Sans quoi la derniere carte d'une rangee pouvait faire apparaitre une
+   barre de defilement horizontale sur toute la page. */
+#indexPage,
+#moviesPage,
+#tvRecommendedPage,
+#musicRecommendedPage {
+  overflow-x: hidden;
+}
+
+/* Selecteur alphabetique des bibliotheques. */
+.alphaPickerButton {
+  border-radius: var(--r-pill);
+  color: var(--text-3);
+}
+
+.alphaPickerButton:hover {
+  color: var(--text);
+}
+
+.alphaPickerButton-selected {
+  background-color: var(--veil-2);
+  color: var(--text);
+}

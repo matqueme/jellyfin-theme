@@ -1,0 +1,242 @@
+/* --- 23. Surfaces flottantes -------------------------------------------
+   Menus, dialogues, feuilles d'actions, infobulles, notifications. Tous
+   sur le meme fond (--bg-overlay), le meme filet, la meme ombre, et des
+   elements de liste arrondis en retrait du bord, pour que le survol se
+   lise comme une pastille et pas comme une bande pleine largeur. */
+
+/* --- Anciens composants --------------------------------------------- */
+.dialog {
+  background-color: var(--bg-overlay);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-float);
+}
+
+.dialog-fullscreen,
+.dialog-fixedSize {
+  border-radius: 0;
+}
+
+@media (min-width: 80em) and (min-height: 45em) {
+  .dialog-fixedSize:not(.dialog-fullscreen) {
+    border-radius: var(--r-lg);
+  }
+}
+
+/* L'arriere-plan des dialogues : Jellyfin le laisse transparent. */
+.dialogBackdropOpened {
+  background: rgb(0 0 0 / 0.55) !important;
+  opacity: 1 !important;
+}
+
+/* Entete et pied de formulaire : filets plutot qu'aplats. */
+.formDialogHeader:not(.formDialogHeader-clear) {
+  background: transparent;
+  border-bottom: 1px solid var(--line);
+}
+
+/* Opaque : le formulaire defile dessous. */
+.formDialogFooter:not(.formDialogFooter-clear) {
+  background: var(--bg-overlay);
+  border-top: 1px solid var(--line);
+}
+
+.formDialogHeaderTitle {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* Feuille d'actions : le menu « ... », les tris, les choix de piste. */
+.actionSheet {
+  background-color: var(--bg-overlay);
+  border-radius: var(--r-md) !important;
+  box-shadow: var(--shadow-float);
+}
+
+.actionSheetContent {
+  padding: 0.35em !important;
+}
+
+.actionSheetMenuItem {
+  border-radius: var(--r-sm);
+  padding: 0.55em 0.75em !important;
+  color: var(--text);
+}
+
+.actionSheetMenuItem:hover,
+.actionSheetMenuItem:focus {
+  background-color: var(--veil-1);
+}
+
+.actionSheetMenuItem .actionsheetMenuItemIcon {
+  color: var(--text-2);
+}
+
+.actionSheetTitle {
+  color: var(--text);
+  font-weight: 600;
+  padding: 0.5em 0.75em 0.25em;
+}
+
+.actionsheetDivider {
+  background: var(--line);
+  margin: 0.35em 0.5em;
+}
+
+/* Notifications. */
+.toast {
+  background: var(--bg-overlay);
+  border-radius: var(--r-sm);
+  box-shadow: var(--shadow-float);
+  color: var(--text);
+}
+
+/* Contenu depliable (.emby-collapse) : sections des preferences. */
+.emby-collapsible-button {
+  border-color: var(--line);
+}
+
+.collapseContent {
+  background-color: var(--bg-raised);
+  border-radius: 0 0 var(--r-md) var(--r-md);
+}
+
+/* --- MUI ------------------------------------------------------------- */
+/* MUI assombrit ou eclaircit ses Paper par un degrade d'elevation. On le
+   coupe : c'est --bg-raised ou --bg-overlay, rien entre les deux. */
+.MuiPaper-root {
+  background-image: none;
+}
+
+.MuiPaper-rounded {
+  border-radius: var(--r-md);
+}
+
+.MuiPaper-outlined {
+  border-color: var(--line);
+}
+
+.MuiMenu-paper,
+.MuiPopover-paper,
+.MuiAutocomplete-paper,
+.MuiPickersPopper-paper {
+  background-color: var(--bg-overlay);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-float);
+}
+
+.MuiMenu-list,
+.MuiAutocomplete-listbox {
+  padding: 0.35em;
+}
+
+.MuiMenuItem-root,
+.MuiAutocomplete-option {
+  border-radius: var(--r-sm);
+  min-height: 2.4em;
+}
+
+.MuiMenuItem-root:hover,
+.MuiAutocomplete-option.Mui-focused {
+  background-color: var(--veil-1);
+}
+
+.MuiMenuItem-root.Mui-selected,
+.MuiMenuItem-root.Mui-selected:hover,
+.MuiAutocomplete-option[aria-selected="true"] {
+  background-color: var(--veil-2);
+  color: var(--text);
+  font-weight: 600;
+}
+
+.MuiDivider-root {
+  border-color: var(--line);
+}
+
+.MuiDialog-paper {
+  background-color: var(--bg-overlay);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-float);
+}
+
+.MuiDialog-paperFullScreen {
+  border-radius: 0;
+}
+
+.MuiDialogTitle-root {
+  font-weight: 600;
+}
+
+.MuiDialogActions-root {
+  padding: 0.75em 1.25em 1.1em;
+  gap: 0.4em;
+}
+
+.MuiBackdrop-root:not(.MuiBackdrop-invisible) {
+  background-color: rgb(0 0 0 / 0.55);
+}
+
+.MuiTooltip-tooltip {
+  background-color: var(--bg-overlay);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xs);
+  color: var(--text);
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+.MuiTooltip-arrow {
+  color: var(--bg-overlay);
+}
+
+.MuiSnackbarContent-root {
+  border-radius: var(--r-sm);
+  box-shadow: var(--shadow-float);
+}
+
+/* Alertes : fond teinte a 8 %, texte blanc, icone dans la couleur. On
+   leur donne un filet de la meme teinte pour qu'elles se detachent. */
+.MuiAlert-root {
+  border-radius: var(--r-sm);
+}
+
+.MuiAlert-standardInfo {
+  border: 1px solid rgb(var(--info-canal) / 0.25);
+}
+
+.MuiAlert-standardSuccess {
+  border: 1px solid rgb(var(--success-canal) / 0.25);
+}
+
+.MuiAlert-standardWarning {
+  border: 1px solid rgb(var(--warning-canal) / 0.25);
+}
+
+.MuiAlert-standardError {
+  border: 1px solid rgb(var(--danger-canal) / 0.25);
+}
+
+/* Accordeons du dashboard : un bloc arrondi par groupe, sans l'ombre ni
+   le trait de separation superieur de MUI. */
+.MuiAccordion-root {
+  background-color: var(--bg-raised);
+  border: 1px solid var(--line);
+  box-shadow: none;
+}
+
+.MuiAccordion-root::before {
+  display: none;
+}
+
+.MuiAccordion-root:first-of-type {
+  border-top-left-radius: var(--r-md);
+  border-top-right-radius: var(--r-md);
+}
+
+.MuiAccordion-root:last-of-type {
+  border-bottom-left-radius: var(--r-md);
+  border-bottom-right-radius: var(--r-md);
+}
+
+.MuiAccordion-root.Mui-expanded {
+  margin: 0.5em 0;
+}

@@ -4,6 +4,54 @@ Format : [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/).
 Versionnage sémantique, indépendant de celui de Jellyfin : la compatibilité
 est indiquée par le titre de chaque version.
 
+## [3.0.0] - 2026-09-25 - Jellyfin 12.x, layout Modern
+
+Reecriture complete. Plus de base tierce : Ultrachromic est retire, avec
+toutes les regles qui existaient pour le corriger. Le theme est desormais un
+systeme de tokens et un module par famille de composants, applique a toute
+l'application, tableau de bord compris.
+
+### Direction
+
+- Surfaces neutres, sans teinte : l'accent bleu-violet de la v2 disparait.
+- Le blanc devient la couleur d'action : bouton Lecture, boutons principaux,
+  cases cochees, interrupteurs, barres de progression, element selectionne.
+- Relief par la luminosite des surfaces et des filets d'un pixel, sans
+  lueurs ni ombres portees colorees. Les seules couleurs franches sont
+  semantiques : erreur, succes, avertissement.
+
+### Ajoute
+
+- `src/01-tokens.css` : toutes les valeurs du theme (fonds, voiles, filets,
+  texte, couleurs semantiques, verre, rayons, anneau de focus, mouvement).
+- `src/02-palette-jf.css` : les tokens branches sur les variables `--jf-*`,
+  que lisent a la fois MUI et le theme de base du client.
+- Un module par famille de composants, chacun couvrant l'ancien composant
+  du client et son equivalent MUI : boutons, champs et listes deroulantes,
+  cases et interrupteurs, surfaces flottantes (menus, dialogues, feuilles
+  d'actions, infobulles, alertes), listes et tableaux, onglets et puces.
+- `js/theme-dashboard.js` : en 12, le CSS de branding n'est pas applique au
+  tableau de bord. Ce script, a installer par JavaScript Injector, y charge
+  la feuille servie sur `/Branding/Css`.
+- `src/95-plugins.css` : etiquettes de qualite de Jellyfin Enhanced ramenees
+  a des etiquettes de verre sombre, fenetre de choix des saisons Jellyseerr,
+  onglets des marque-pages.
+- Icones : `edit`, `image`, `refresh`, `video_library` et `tune` remappees
+  sur Phosphor, et l'icone Collections de la barre du haut (`#/boxsets`).
+
+### Retire
+
+- Ultrachromic (`src/vendor/`, `vendor.list`, `vendor.exclude`,
+  `update-vendor.sh`, workflow `veille-upstream`).
+- Le layout Legacy : onglets et en-tete `.skinHeader`, et les compensations
+  de hauteur qu'ils imposaient.
+- Les modules 02 a 25 de la v2, remplaces par les modules de composants.
+
+### Change
+
+- `build.py` ne fait plus que concatener `src/` et verifier le resultat.
+- Le fichier construit passe de 123 Ko a 83 Ko.
+
 ## [2.0.0] - 2026-09-15 - Jellyfin 12.x
 
 Portage sur Jellyfin 12, dont le layout **Modern** est desormais celui par

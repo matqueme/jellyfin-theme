@@ -1,22 +1,8 @@
-Ce depot redistribue du code tiers.
+Ce depot ne redistribue aucun code tiers depuis la v3.0.0.
 
---------------------------------------------------------------------------
-Ultrachromic
---------------------------------------------------------------------------
-Copyright (c) CTalvio
-Licence MIT : https://github.com/CTalvio/Ultrachromic
-
-Les fichiers de src/vendor/ultrachromic/ sont une copie non modifiee
-d'Ultrachromic, figee sur le commit indique dans
-src/vendor/ultrachromic/VERSION.
-
-Seule modification apportee, appliquee mecaniquement par update-vendor.sh :
-les URL d'images pointant vers la branche main du depot amont sont
-reecrites vers ce meme commit, afin que la copie soit reproductible.
-
-Ces fichiers sont fusionnes dans dist/theme.css par build.py. Ce fichier
-construit contient donc du code sous copyright CTalvio, redistribue sous
-licence MIT.
+Les versions 1.x et 2.x fusionnaient Ultrachromic (Copyright (c) CTalvio,
+licence MIT, https://github.com/CTalvio/Ultrachromic) dans dist/theme.css.
+La v3 est ecrite de zero et n'en contient plus rien.
 
 --------------------------------------------------------------------------
 Phosphor Icons
@@ -25,8 +11,8 @@ Copyright (c) 2023 Phosphor Icons
 Licence MIT : https://github.com/phosphor-icons/web
 
 Non redistribue : charge a l'execution depuis jsDelivr par un @import de
-src/00-imports.css. src/07-icones.css contient les points de code de 100
-glyphes, utilises pour reassocier les classes d'icones de Jellyfin.
+src/00-imports.css. src/90-icones.css contient les points de code des
+glyphes utilises pour reassocier les classes d'icones de Jellyfin.
 
 --------------------------------------------------------------------------
 Plus Jakarta Sans
@@ -34,5 +20,5 @@ Plus Jakarta Sans
 Copyright (c) Tokotype
 SIL Open Font License 1.1 : https://fonts.google.com/specimen/Plus+Jakarta+Sans
 
-Non redistribue : charge a l'execution depuis Google Fonts par l'@import
-que porte src/vendor/ultrachromic/jf_font.css.
+Non redistribue : charge a l'execution depuis Google Fonts par un @import
+de src/00-imports.css.

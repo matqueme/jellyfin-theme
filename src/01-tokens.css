@@ -1,0 +1,100 @@
+/* --- 01. Tokens --------------------------------------------------------
+   Toutes les valeurs du theme sont ici. Les modules suivants ne posent
+   jamais une couleur, un rayon ou une duree en dur : ils lisent ces
+   variables. Retoucher le theme, c'est retoucher ce fichier.
+
+   Parti pris : des surfaces neutres, sans teinte, et le blanc comme
+   couleur d'action. Le relief vient de la luminosite des surfaces et de
+   filets d'un pixel, pas d'ombres portees ni de lueurs. Les seules
+   couleurs franches sont semantiques : erreur, succes, avertissement.
+
+   Les couleurs sont en canaux (« 244 244 245 ») quand un module doit en
+   composer des transparences : rgb(var(--x) / .5). C'est la syntaxe que
+   MUI attend pour ses variables *Channel, ce qui permet de lui passer les
+   memes valeurs. */
+
+:root {
+  /* Police. Plus Jakarta Sans, deja celle de la v2 ; la pile de repli
+     garde des chiffres de largeur proche si Google Fonts ne repond pas. */
+  --font: "Plus Jakarta Sans", "Noto Sans", system-ui, sans-serif;
+
+  /* Fonds, du plus profond au plus haut. */
+  --bg: #0b0b0c;
+  --bg-canal: 11 11 12;
+  --bg-raised: #141416; /* panneaux poses sur la page : listes, tiroir */
+  --bg-raised-canal: 20 20 22;
+  --bg-overlay: #1b1b1e; /* ce qui flotte : menus, dialogues */
+  --bg-overlay-canal: 27 27 30;
+
+  /* Voiles blancs poses sur n'importe quel fond. Ce sont eux qui font les
+     champs, les boutons secondaires et les etats de survol : ils restent
+     justes sur une page, dans un menu ou devant une affiche floutee. */
+  --veil-1: rgb(255 255 255 / 0.06);
+  --veil-2: rgb(255 255 255 / 0.1);
+  --veil-3: rgb(255 255 255 / 0.15);
+
+  /* Filets. */
+  --line: rgb(255 255 255 / 0.08);
+  --line-strong: rgb(255 255 255 / 0.16);
+
+  /* Texte. */
+  --text: #f4f4f5;
+  --text-canal: 244 244 245;
+  --text-2: rgb(244 244 245 / 0.64);
+  --text-3: rgb(244 244 245 / 0.42);
+
+  /* Action principale : du blanc, texte noir. */
+  --primary: #f4f4f5;
+  --primary-canal: 244 244 245;
+  --primary-hover: #ffffff;
+  --on-primary: #0b0b0c;
+
+  /* Semantique. Desaturees pour ne pas crier sur un fond presque noir. */
+  --danger: #ef5d68;
+  --danger-canal: 239 93 104;
+  --success: #45c08a;
+  --success-canal: 69 192 138;
+  --warning: #eeb44f;
+  --warning-canal: 238 180 79;
+  --info: #8fb3ff;
+  --info-canal: 143 179 255;
+  --star: #f2c14e;
+
+  /* Verre : en-tete, tiroir, menus, barre de lecture. */
+  --glass: rgb(20 20 22 / 0.72);
+  --glass-opaque: rgb(20 20 22 / 0.96); /* sans backdrop-filter */
+  --glass-blur: blur(24px) saturate(1.4);
+
+  /* Rayons. */
+  --r-xs: 6px; /* pastilles, cases a cocher */
+  --r-sm: 10px; /* champs, elements de menu */
+  --r-md: 14px; /* cartes, menus */
+  --r-lg: 20px; /* dialogues */
+  --r-pill: 999px; /* boutons */
+
+  /* Focus. Un anneau blanc detache du bord par un anneau de la couleur du
+     fond : visible sur une surface claire comme sur une affiche. */
+  --ring: 0 0 0 2px var(--bg), 0 0 0 4px var(--primary);
+  --ring-inset: inset 0 0 0 2px var(--primary);
+
+  /* Ombre unique, pour ce qui flotte au-dessus du contenu. */
+  --shadow-float: 0 12px 40px -8px rgb(0 0 0 / 0.6), 0 0 0 1px var(--line);
+
+  /* Mouvement. */
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --t-fast: 0.12s;
+  --t: 0.2s;
+
+  /* Icones Phosphor : elles remplissent plus leur cadre que Material. */
+  --icon-scale: 0.85;
+
+  /* Libelle du bouton Lecture de la page d'item. Garder les guillemets :
+     c'est une valeur de content. */
+  --play-label: "Lecture";
+}
+
+@media (max-width: 50em) {
+  :root {
+    --icon-scale: 0.8;
+  }
+}

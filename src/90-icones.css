@@ -1,0 +1,281 @@
+/* --- 90. Icones : Material Icons remplacees par Phosphor Bold ---------
+   Le client rend ses icones par classe, avec une regle interne du type
+   .material-icons.play_arrow:before { content: "..." }. Reassigner
+   font-family et content suffit. Le !important sur content n'est pas
+   decoratif : le client injecte ses feuilles au fil de la navigation,
+   donc apres la notre.
+
+   La reduction passe par transform et non par font-size, fixe par des
+   dizaines de regles, souvent en !important. Regler --icon-scale dans
+   01-tokens.css.
+
+   Seules les classes listees sont remappees : une icone non listee garde
+   Material Icons et reste lisible. Les icones ecrites en ligature, dont le
+   nom est le texte de la balise (<span class="material-icons">key</span>,
+   courant dans les plugins), ne peuvent pas l'etre : aucun selecteur ne
+   porte sur le texte d'un element. Pour ajouter une icone, une ligne dans
+   la liste du haut et une regle en bas ; les points de code sont ceux de
+   Phosphor 2.1.2 (phosphoricons.com, onglet « Web font »). */
+
+.material-icons.add,
+.material-icons.airplay,
+.material-icons.album,
+.material-icons.arrow_back,
+.material-icons.arrow_forward,
+.material-icons.arrow_upward,
+.material-icons.audiotrack,
+.material-icons.autorenew,
+.material-icons.backspace,
+.material-icons.book,
+.material-icons.brightness_high,
+.material-icons.call_split,
+.material-icons.cast,
+.material-icons.check,
+.material-icons.chevron_left,
+.material-icons.chevron_right,
+.material-icons.close,
+.material-icons.closed_caption,
+.material-icons.cloud_download,
+.material-icons.content_copy,
+.material-icons.dashboard,
+.material-icons.delete,
+.material-icons.devices_other,
+.material-icons.download,
+.material-icons.drag_handle,
+.material-icons.dvr,
+.material-icons.edit,
+.material-icons.exit_to_app,
+.material-icons.expand_more,
+.material-icons.explore,
+.material-icons.fast_forward,
+.material-icons.fast_rewind,
+.material-icons.favorite,
+.material-icons.fiber_manual_record,
+.material-icons.fiber_smart_record,
+.material-icons.file_download,
+.material-icons.filter_alt,
+.material-icons.folder,
+.material-icons.folder_open,
+.material-icons.forward_30,
+.material-icons.fullscreen,
+.material-icons.get_app,
+.material-icons.groups,
+.material-icons.home,
+.material-icons.image,
+.material-icons.info,
+.material-icons.info_outline,
+.material-icons.keyboard,
+.material-icons.keyboard_arrow_down,
+.material-icons.keyboard_arrow_left,
+.material-icons.keyboard_arrow_right,
+.material-icons.keyboard_arrow_up,
+.material-icons.keyboard_return,
+.material-icons.live_tv,
+.material-icons.local_movies,
+.material-icons.lock,
+.material-icons.lyrics,
+.material-icons.menu,
+.material-icons.mode_edit,
+.material-icons.more_vert,
+.material-icons.movie,
+.material-icons.music_note,
+.material-icons.navigate_before,
+.material-icons.navigate_next,
+.material-icons.pause,
+.material-icons.pause_circle_filled,
+.material-icons.person,
+.material-icons.phonelink_lock,
+.material-icons.photo,
+.material-icons.picture_in_picture_alt,
+.material-icons.play_arrow,
+.material-icons.play_circle_filled,
+.material-icons.playlist_add,
+.material-icons.preview,
+.material-icons.queue_music,
+.material-icons.redo,
+.material-icons.refresh,
+.material-icons.remove_circle,
+.material-icons.remove_red_eye,
+.material-icons.repeat,
+.material-icons.repeat_one,
+.material-icons.replay,
+.material-icons.replay_10,
+.material-icons.save,
+.material-icons.search,
+.material-icons.settings,
+.material-icons.shuffle,
+.material-icons.skip_next,
+.material-icons.skip_previous,
+.material-icons.sort_by_alpha,
+.material-icons.space_bar,
+.material-icons.star,
+.material-icons.stop,
+.material-icons.storage,
+.material-icons.subtitles,
+.material-icons.text_decrease,
+.material-icons.text_increase,
+.material-icons.theaters,
+.material-icons.toc,
+.material-icons.tune,
+.material-icons.tv,
+.material-icons.undo,
+.material-icons.video_library,
+.material-icons.view_comfy,
+.material-icons.volume_up {
+  font-family: "Phosphor-Bold" !important;
+  transform: scale(var(--icon-scale));
+}
+
+.material-icons.add:before { content: "\e3d4" !important; }
+.material-icons.airplay:before { content: "\e004" !important; }
+.material-icons.album:before { content: "\ecac" !important; }
+.material-icons.arrow_back:before { content: "\e058" !important; }
+.material-icons.arrow_forward:before { content: "\e06c" !important; }
+.material-icons.arrow_upward:before { content: "\e08e" !important; }
+.material-icons.audiotrack:before { content: "\e33c" !important; }
+.material-icons.autorenew:before { content: "\e094" !important; }
+.material-icons.backspace:before { content: "\e0ae" !important; }
+.material-icons.book:before { content: "\e0e2" !important; }
+.material-icons.brightness_high:before { content: "\e472" !important; }
+.material-icons.call_split:before { content: "\ed3c" !important; }
+.material-icons.cast:before { content: "\e58a" !important; }
+.material-icons.check:before { content: "\e182" !important; }
+.material-icons.chevron_left:before { content: "\e138" !important; }
+.material-icons.chevron_right:before { content: "\e13a" !important; }
+.material-icons.close:before { content: "\e4f6" !important; }
+.material-icons.closed_caption:before { content: "\e1a4" !important; }
+.material-icons.cloud_download:before { content: "\e1ac" !important; }
+.material-icons.content_copy:before { content: "\e1ca" !important; }
+.material-icons.dashboard:before { content: "\e464" !important; }
+.material-icons.delete:before { content: "\e4a6" !important; }
+.material-icons.devices_other:before { content: "\eba4" !important; }
+.material-icons.download:before { content: "\e20c" !important; }
+.material-icons.drag_handle:before { content: "\e794" !important; }
+.material-icons.dvr:before { content: "\e58c" !important; }
+.material-icons.edit:before { content: "\e3b4" !important; }
+.material-icons.exit_to_app:before { content: "\e42a" !important; }
+.material-icons.expand_more:before { content: "\e136" !important; }
+.material-icons.explore:before { content: "\e1c8" !important; }
+.material-icons.fast_forward:before { content: "\e6a6" !important; }
+.material-icons.fast_rewind:before { content: "\e6a8" !important; }
+.material-icons.favorite:before { content: "\e2a8" !important; }
+.material-icons.fiber_manual_record:before { content: "\e3ee" !important; }
+.material-icons.fiber_smart_record:before { content: "\e0f2" !important; }
+.material-icons.file_download:before { content: "\e20c" !important; }
+.material-icons.filter_alt:before { content: "\e266" !important; }
+.material-icons.folder:before { content: "\e24a" !important; }
+.material-icons.folder_open:before { content: "\e256" !important; }
+.material-icons.forward_30:before { content: "\e19e" !important; }
+.material-icons.fullscreen:before { content: "\e1d0" !important; }
+.material-icons.get_app:before { content: "\e20c" !important; }
+.material-icons.groups:before { content: "\e68e" !important; }
+.material-icons.home:before { content: "\e2c2" !important; }
+.material-icons.image:before { content: "\e2ca" !important; }
+.material-icons.info:before { content: "\e2ce" !important; }
+.material-icons.info_outline:before { content: "\e2ce" !important; }
+.material-icons.keyboard:before { content: "\e2d8" !important; }
+.material-icons.keyboard_arrow_down:before { content: "\e136" !important; }
+.material-icons.keyboard_arrow_left:before { content: "\e138" !important; }
+.material-icons.keyboard_arrow_right:before { content: "\e13a" !important; }
+.material-icons.keyboard_arrow_up:before { content: "\e13c" !important; }
+.material-icons.keyboard_return:before { content: "\e044" !important; }
+.material-icons.live_tv:before { content: "\e754" !important; }
+.material-icons.local_movies:before { content: "\e792" !important; }
+.material-icons.lock:before { content: "\e308" !important; }
+.material-icons.lyrics:before { content: "\e75c" !important; }
+.material-icons.menu:before { content: "\e2f0" !important; }
+.material-icons.mode_edit:before { content: "\e3b4" !important; }
+.material-icons.more_vert:before { content: "\e208" !important; }
+.material-icons.movie:before { content: "\e8c2" !important; }
+.material-icons.music_note:before { content: "\e33c" !important; }
+.material-icons.navigate_before:before { content: "\e138" !important; }
+.material-icons.navigate_next:before { content: "\e13a" !important; }
+.material-icons.pause:before { content: "\e39e" !important; }
+.material-icons.pause_circle_filled:before { content: "\e3a0" !important; }
+.material-icons.person:before { content: "\e4c2" !important; }
+.material-icons.phonelink_lock:before { content: "\e2fe" !important; }
+.material-icons.photo:before { content: "\e2ca" !important; }
+.material-icons.picture_in_picture_alt:before { content: "\e64c" !important; }
+.material-icons.play_arrow:before { content: "\e3d0" !important; }
+.material-icons.play_circle_filled:before { content: "\e3d2" !important; }
+.material-icons.playlist_add:before { content: "\e6aa" !important; }
+.material-icons.preview:before { content: "\e220" !important; }
+.material-icons.queue_music:before { content: "\e6ac" !important; }
+.material-icons.redo:before { content: "\e08c" !important; }
+.material-icons.refresh:before { content: "\e036" !important; }
+.material-icons.remove_circle:before { content: "\e32c" !important; }
+.material-icons.remove_red_eye:before { content: "\e220" !important; }
+.material-icons.repeat:before { content: "\e3f6" !important; }
+.material-icons.repeat_one:before { content: "\e3f8" !important; }
+.material-icons.replay:before { content: "\e038" !important; }
+.material-icons.replay_10:before { content: "\e1a0" !important; }
+.material-icons.save:before { content: "\e248" !important; }
+.material-icons.search:before { content: "\e30c" !important; }
+.material-icons.settings:before { content: "\e270" !important; }
+.material-icons.shuffle:before { content: "\e422" !important; }
+.material-icons.skip_next:before { content: "\e5a6" !important; }
+.material-icons.skip_previous:before { content: "\e5a4" !important; }
+.material-icons.sort_by_alpha:before { content: "\e444" !important; }
+.material-icons.space_bar:before { content: "\e32a" !important; }
+.material-icons.star:before { content: "\e46a" !important; }
+.material-icons.stop:before { content: "\e46c" !important; }
+.material-icons.storage:before { content: "\e2a0" !important; }
+.material-icons.subtitles:before { content: "\e1a8" !important; }
+.material-icons.text_decrease:before { content: "\e48a" !important; }
+.material-icons.text_increase:before { content: "\e48a" !important; }
+.material-icons.theaters:before { content: "\e8c0" !important; }
+.material-icons.toc:before { content: "\e2f2" !important; }
+.material-icons.tune:before { content: "\e434" !important; }
+.material-icons.tv:before { content: "\eae6" !important; }
+.material-icons.undo:before { content: "\e08a" !important; }
+.material-icons.video_library:before { content: "\e792" !important; }
+.material-icons.view_comfy:before { content: "\e296" !important; }
+.material-icons.volume_up:before { content: "\e44a" !important; }
+
+/* --- Icones de la barre MUI ------------------------------------------
+   MUI rend ses icones en SVG : le dessin est dans le balisage, et rien ne
+   distingue une icone d'une autre une fois compilee (le data-testid est
+   retire du build de production). L'accroche est l'URL de destination du
+   lien, stable et independante de la langue : on masque le SVG et on pose
+   le glyphe Phosphor en ::after. Une icone non listee garde son SVG. */
+.MuiAppBar-root .MuiButton-startIcon::after,
+.MuiAppBar-root .MuiIconButton-root::after {
+  font-family: "Phosphor-Bold";
+  font-size: 1.35rem;
+  line-height: 1;
+  transform: scale(var(--icon-scale));
+}
+
+.MuiAppBar-root a[href*="tab=1"] .MuiSvgIcon-root,
+.MuiAppBar-root a[href*="/movies?"] .MuiSvgIcon-root,
+.MuiAppBar-root a[href*="/tv?"] .MuiSvgIcon-root,
+.MuiAppBar-root a[href*="/music?"] .MuiSvgIcon-root,
+.MuiAppBar-root a[href*="/books?"] .MuiSvgIcon-root,
+.MuiAppBar-root a[href*="/homevideos?"] .MuiSvgIcon-root,
+.MuiAppBar-root a[href*="/livetv?"] .MuiSvgIcon-root,
+.MuiAppBar-root a[href*="/boxsets?"] .MuiSvgIcon-root,
+.MuiAppBar-root a[href*="/search"] .MuiSvgIcon-root {
+  display: none;
+}
+
+/* Favoris : /home?tab=1, l'onglet Favoris de l'accueil. */
+.MuiAppBar-root a[href*="tab=1"] .MuiButton-startIcon::after { content: "\e2a8"; } /* heart */
+.MuiAppBar-root a[href*="/movies?"] .MuiButton-startIcon::after { content: "\e8c2"; } /* film-slate */
+.MuiAppBar-root a[href*="/tv?"] .MuiButton-startIcon::after { content: "\eae6"; } /* television-simple */
+.MuiAppBar-root a[href*="/music?"] .MuiButton-startIcon::after { content: "\e33c"; } /* music-note */
+.MuiAppBar-root a[href*="/books?"] .MuiButton-startIcon::after { content: "\e0e2"; } /* book */
+.MuiAppBar-root a[href*="/homevideos?"] .MuiButton-startIcon::after { content: "\e2ca"; } /* image */
+.MuiAppBar-root a[href*="/livetv?"] .MuiButton-startIcon::after { content: "\e754"; } /* television */
+.MuiAppBar-root a[href*="/boxsets?"] .MuiButton-startIcon::after { content: "\e466"; } /* stack : collections */
+.MuiAppBar-root a[href*="/search"]::after { content: "\e30c"; } /* magnifying-glass */
+
+/* Diffusion et SyncPlay ne sont pas des liens : leur seul repere stable
+   est aria-label, qui est traduit. Valeurs du francais ; dans une autre
+   langue ces deux icones restent en SVG MUI. */
+.MuiAppBar-root [aria-label="Diffuser sur l'appareil"] .MuiSvgIcon-root,
+.MuiAppBar-root [aria-label="SyncPlay"] .MuiSvgIcon-root {
+  display: none;
+}
+
+.MuiAppBar-root [aria-label="Diffuser sur l'appareil"]::after { content: "\e58a"; } /* monitor-arrow-up */
+.MuiAppBar-root [aria-label="SyncPlay"]::after { content: "\e68e"; } /* users-three */

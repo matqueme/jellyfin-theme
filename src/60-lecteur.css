@@ -1,0 +1,115 @@
+/* --- 60. Lecteur -------------------------------------------------------
+   OSD video, barre de lecture en cours, file d'attente, « A suivre ». */
+
+/* --- Curseurs (position, volume) ------------------------------------
+   Structure d'un emby-slider :
+     .mdl-slider-background-flex         rail, overflow: hidden
+       .mdl-slider-background-lower      portion lue
+       .mdl-slider-background-upper      portion en tampon
+   Arrondir le rail suffit : les remplissages sont decoupes a sa forme. */
+.mdl-slider-background-flex {
+  background: var(--veil-3);
+  border-radius: var(--r-pill);
+}
+
+.mdl-slider-background-lower {
+  background-color: var(--primary) !important;
+}
+
+.mdl-slider-background-upper {
+  background-color: rgb(255 255 255 / 0.3) !important;
+}
+
+.mdl-slider::-webkit-slider-thumb {
+  background: var(--primary) !important;
+  box-shadow: none !important;
+}
+
+.mdl-slider::-moz-range-thumb {
+  background: var(--primary) !important;
+  box-shadow: none !important;
+}
+
+/* Marqueurs de chapitres : des traits de 2px qui hachent la barre. Les
+   chapitres viennent des metadonnees du fichier et aucun reglage serveur
+   ne les coupe. On masque les traits, pas leur conteneur, qui sert
+   d'ancrage. */
+.sliderMarker {
+  display: none !important;
+}
+
+/* Bulle de temps au-dessus du curseur. */
+.sliderBubble {
+  background: var(--bg-overlay);
+  border-radius: var(--r-xs);
+  box-shadow: var(--shadow-float);
+}
+
+/* --- OSD video ------------------------------------------------------ */
+.videoOsdBottom {
+  background: linear-gradient(to top, rgb(0 0 0 / 0.75), transparent) !important;
+}
+
+.videoOsdBottom .osdTextContainer,
+.videoOsdBottom .osdTitle {
+  color: var(--text);
+}
+
+.videoOsdBottom .osdMediaInfo,
+.videoOsdBottom .osdSecondaryMediaInfo {
+  color: var(--text-2);
+}
+
+.videoOsdBottom .btnPause {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+.videoOsdBottom .btnPause:hover {
+  background: var(--primary-hover);
+  color: var(--on-primary);
+}
+
+/* --- Barre de lecture en cours -------------------------------------- */
+.nowPlayingBar {
+  background: var(--glass-opaque);
+  border-top: 1px solid var(--line);
+}
+
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .nowPlayingBar {
+    background: var(--glass);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+  }
+}
+
+.nowPlayingBarTop .mdl-slider-background-flex {
+  border-radius: 0;
+}
+
+.nowPlayingImage {
+  border-radius: var(--r-xs);
+}
+
+.nowPlayingBarSecondaryText {
+  color: var(--text-2);
+}
+
+/* File d'attente et page « lecture en cours ». */
+.nowPlayingPlaylist,
+.playlistSectionButton {
+  background: var(--bg);
+}
+
+/* « A suivre » en fin d'episode. */
+.upNextDialog {
+  background: var(--bg-overlay);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-float);
+}
+
+.upNextDialog-countdownText {
+  color: var(--text);
+  font-weight: 700;
+}

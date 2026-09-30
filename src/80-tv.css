@@ -1,0 +1,77 @@
+/* --- 80. Telecommande --------------------------------------------------
+   En navigation directionnelle, le client pose .show-focus et annonce
+   l'element vise par un zoom (x1.2 a x1.3) sans autre changement : sur
+   une rangee de boutons ou d'onglets en flex, l'element grossi deborde
+   sur ses voisins et se lit mal de loin.
+
+   Ici, l'element vise est rempli de blanc, texte noir, sans zoom : la
+   difference se voit a trois metres. Seules les cartes gardent un leger
+   agrandissement, avec l'anneau blanc de 40-cartes.css. .show-focus n'est
+   pose que par la navigation directionnelle : la souris n'est pas
+   concernee. */
+
+:root {
+  --tv-card-zoom: 1.05;
+}
+
+.emby-button.show-focus:focus,
+.paper-icon-button-light.show-focus:focus,
+.emby-tab-button.show-focus:focus,
+.listItem.show-focus:focus,
+.actionSheetMenuItem.show-focus:focus {
+  background: var(--primary) !important;
+  color: var(--on-primary) !important;
+  transform: none !important;
+}
+
+.emby-tab-button.show-focus:focus {
+  border-radius: var(--r-pill);
+}
+
+.emby-select-focusscale:focus,
+.emby-input:focus {
+  transform: none;
+}
+
+/* Cartes. contain: layout style isole le reflow du zoom a la carte. */
+.layout-tv .card > .cardBox {
+  transition: transform var(--t) var(--ease);
+}
+
+.layout-tv .card:focus {
+  contain: layout style;
+}
+
+.layout-tv .card:focus > .cardBox {
+  transform: scale(var(--tv-card-zoom));
+}
+
+.layout-tv .card:focus .cardScalable,
+.layout-tv .card:focus .cardBox.visualCardBox {
+  box-shadow: var(--ring), 0 16px 40px -10px rgb(0 0 0 / 0.7);
+}
+
+/* Le client dessine son propre cadre de focus sur les cartes : une
+   bordure de 0.3em, en couleur d'accent. L'anneau le remplace. */
+.layout-tv .card.show-focus:focus .cardBox,
+.layout-tv .card.show-focus:focus .cardScalable {
+  border-color: transparent !important;
+}
+
+/* Page d'item : le logo n'a pas de place prevue en TV. */
+.layout-tv #itemDetailPage .detailLogo {
+  height: 10vh;
+  margin: 0 0 1vh;
+}
+
+/* Portraits de la connexion : pas d'ombre en plus de l'anneau. */
+.layout-tv #divUsers .card:focus .cardContent {
+  box-shadow: none;
+}
+
+/* MUI : l'element vise recoit .Mui-focusVisible. */
+.layout-tv .MuiButtonBase-root.Mui-focusVisible {
+  background: var(--primary) !important;
+  color: var(--on-primary) !important;
+  box-shadow: none;
+}

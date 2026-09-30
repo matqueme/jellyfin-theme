@@ -1,0 +1,221 @@
+/* --- 50. Page d'item ---------------------------------------------------
+   Film, serie, saison, episode, collection, personne. La 12 la rend
+   encore avec le controleur d'avant, meme en layout Modern.
+
+   Composition : l'image de fond se fond dans la page par un degrade, sans
+   bande de couleur entre les deux ; titre fort, informations en gris, et
+   une rangee d'actions ou seule la lecture est un bouton plein. */
+
+/* --- Image de fond -------------------------------------------------- */
+.itemBackdrop::after {
+  background: linear-gradient(to bottom, rgb(var(--bg-canal) / 0) 35%, var(--bg));
+  content: "";
+  inset: 0;
+  position: absolute;
+}
+
+/* La bande sous l'image de fond : le theme de base lui donne la couleur
+   de l'en-tete, ce qui dessinait un aplat gris sur toute la largeur. */
+.detailRibbon {
+  background: transparent !important;
+}
+
+/* --- Affiche -------------------------------------------------------- */
+.detailImageContainer .card .cardScalable,
+.detailImageContainer .card .cardContent,
+.detailImageContainer .card .cardImageContainer {
+  border-radius: var(--r-md);
+}
+
+.detailImageContainer .card .cardScalable {
+  box-shadow: 0 20px 50px -12px rgb(0 0 0 / 0.75), 0 0 0 1px var(--line);
+}
+
+/* Pas d'anneau de survol sur l'affiche de la page : elle n'est pas une
+   carte cliquable comme les autres. */
+.detailImageContainer .cardBox > .cardScalable:hover {
+  box-shadow: 0 20px 50px -12px rgb(0 0 0 / 0.75), 0 0 0 1px var(--line);
+}
+
+/* --- Titre et informations ----------------------------------------- */
+.itemName.parentNameLast,
+h1.itemName {
+  color: var(--text);
+  font-size: 2.3em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.itemName.originalTitle {
+  color: var(--text-2);
+  font-size: 1.05em;
+  font-weight: 500;
+}
+
+/* Nom de la serie au-dessus d'une saison ou d'un episode : meme corps
+   que le titre, en gris, pour que le titre de la saison reste premier. */
+.parentName {
+  color: var(--text-2);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.itemMiscInfo {
+  align-items: center;
+  color: var(--text-2);
+  gap: 0.15em 0;
+}
+
+.itemMiscInfo .mediaInfoItem {
+  margin-right: 1em;
+}
+
+.starIcon {
+  color: var(--star);
+}
+
+.tagline {
+  color: var(--text);
+  font-size: 1.15em;
+  font-weight: 600;
+}
+
+.overview {
+  color: var(--text-2);
+  line-height: 1.6;
+  max-width: 62em;
+}
+
+/* --- Actions --------------------------------------------------------
+   Lecture : pilule blanche avec libelle. Les autres : boutons ronds
+   voiles, de taille egale, icone seule. */
+.mainDetailButtons {
+  flex-wrap: wrap;
+  gap: 0.6em;
+}
+
+.mainDetailButtons .detailButton {
+  background: var(--veil-2);
+  border-radius: var(--r-pill);
+  color: var(--text);
+  height: 2.9em;
+  justify-content: center;
+  padding: 0 !important;
+  width: 2.9em;
+}
+
+.mainDetailButtons .detailButton:hover,
+.mainDetailButtons .detailButton:focus {
+  background: var(--veil-3);
+  color: var(--text);
+}
+
+.mainDetailButtons .detailButton-icon {
+  font-size: 1.35em !important;
+}
+
+/* Le :not(.hide) est indispensable : Jellyfin rend ce bouton avec la
+   classe hide (display: none !important) et ne la retire qu'une fois
+   l'item lisible. */
+.mainDetailButtons .btnPlay:not(.hide),
+.mainDetailButtons .btnResume:not(.hide) {
+  background: var(--primary);
+  color: var(--on-primary);
+  padding: 0 1.4em 0 1.1em !important;
+  width: auto;
+}
+
+.mainDetailButtons .btnPlay:not(.hide):hover,
+.mainDetailButtons .btnPlay:not(.hide):focus,
+.mainDetailButtons .btnResume:not(.hide):hover,
+.mainDetailButtons .btnResume:not(.hide):focus {
+  background: var(--primary-hover);
+  color: var(--on-primary);
+}
+
+.mainDetailButtons .btnPlay .detailButton-content,
+.mainDetailButtons .btnResume .detailButton-content {
+  flex-direction: row;
+  gap: 0.4em;
+}
+
+.mainDetailButtons .btnPlay .detailButton-content::after {
+  content: var(--play-label);
+  font-size: 1em;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Etats actifs : vu, favori. Le client passe l'icone en rouge ou en
+   couleur d'accent ; on garde le blanc et on remplit le bouton. */
+.mainDetailButtons .btnUserRating .ratingbutton-icon-withrating,
+.mainDetailButtons .btnPlaystate .playstatebutton-icon-played {
+  color: var(--on-primary);
+}
+
+.mainDetailButtons .btnUserRating:has(.ratingbutton-icon-withrating),
+.mainDetailButtons .btnPlaystate:has(.playstatebutton-icon-played) {
+  background: var(--primary);
+}
+
+/* --- Pistes, genres, etiquettes, equipe ---------------------------- */
+.trackSelections .selectContainer .selectLabel,
+.detailsGroupItem .label {
+  color: var(--text-2);
+}
+
+/* Les liens de la fiche (etiquettes, liens externes, realisateur,
+   genres) sont des .emby-button : ils recuperaient le padding et la
+   pilule des boutons. On les remet a plat, en texte. */
+.button-link.emby-button {
+  background: none;
+  border-radius: 0;
+  font-weight: 500;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+}
+
+.button-link.emby-button:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--text-3);
+  text-underline-offset: 0.2em;
+}
+
+.itemTags,
+.itemExternalLinks {
+  color: var(--text-2);
+  line-height: 1.8;
+}
+
+.itemTags .button-link,
+.itemExternalLinks .button-link {
+  color: var(--text-2);
+}
+
+.detailsGroupItem .content,
+.detailsGroupItem .content .button-link {
+  color: var(--text);
+}
+
+/* --- Telephone ------------------------------------------------------ */
+.layout-mobile .itemBackdrop {
+  margin-top: 0 !important;
+}
+
+.layout-mobile .itemBackdrop::before {
+  display: none;
+}
+
+.layout-mobile h1.itemName {
+  font-size: 1.6em;
+}
+
+.layout-mobile .detailImageContainer .card {
+  filter: none;
+}
+
+.layout-mobile .mainDetailButtons {
+  gap: 0.5em;
+}

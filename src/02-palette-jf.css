@@ -1,0 +1,118 @@
+/* --- 02. Palette Jellyfin ----------------------------------------------
+   Le premier levier, et le plus large. En 12, le client construit son
+   theme MUI en mode variables CSS, prefixe --jf, et le theme de base
+   (themes/_base/theme.css) colore aussi les anciens composants
+   (.emby-input, .button-submit, .listItem, .toast...) a partir des memes
+   variables. Poser ces variables habille donc d'un coup le dashboard, les
+   elements MUI et une bonne part du balisage d'avant.
+
+   Specificite : MUI les declare sur « :root, [data-theme="dark"] » et
+   insere sa feuille a l'execution, apres la notre. :root[data-theme] pese
+   0-2-0 contre 0-1-0 : on l'emporte sans !important, et quel que soit le
+   theme choisi dans les preferences, puisque l'attribut est toujours la.
+
+   Seules les variables reellement lues par un composant rendu sont
+   posees. Les variables *Channel suivent leur couleur : MUI s'en sert
+   pour composer ses transparences, rgba(var(--x-mainChannel) / .2). */
+
+:root[data-theme] {
+  /* Action : blanc. primary et secondary sont confondues, le client se
+     sert de secondary pour le focus des anciens composants. */
+  --jf-palette-primary-main: var(--primary);
+  --jf-palette-primary-light: var(--primary-hover);
+  --jf-palette-primary-dark: #d4d4d8;
+  --jf-palette-primary-contrastText: var(--on-primary);
+  --jf-palette-primary-mainChannel: var(--primary-canal);
+  --jf-palette-primary-lightChannel: 255 255 255;
+  --jf-palette-primary-darkChannel: 212 212 216;
+  --jf-palette-primary-contrastTextChannel: var(--bg-canal);
+  --jf-palette-secondary-main: var(--primary);
+  --jf-palette-secondary-light: var(--primary-hover);
+  --jf-palette-secondary-dark: #d4d4d8;
+  --jf-palette-secondary-contrastText: var(--on-primary);
+  --jf-palette-secondary-mainChannel: var(--primary-canal);
+
+  /* Semantique. */
+  --jf-palette-error-main: var(--danger);
+  --jf-palette-error-light: var(--danger);
+  --jf-palette-error-dark: #c9444f;
+  --jf-palette-error-contrastText: #fff;
+  --jf-palette-error-mainChannel: var(--danger-canal);
+  --jf-palette-success-main: var(--success);
+  --jf-palette-success-dark: #2f9468;
+  --jf-palette-success-mainChannel: var(--success-canal);
+  --jf-palette-warning-main: var(--warning);
+  --jf-palette-warning-dark: #c98f2a;
+  --jf-palette-warning-mainChannel: var(--warning-canal);
+  --jf-palette-info-main: var(--info);
+  --jf-palette-info-dark: #5f86d6;
+  --jf-palette-info-mainChannel: var(--info-canal);
+  --jf-palette-starIcon-main: var(--star);
+
+  /* Fonds et texte. */
+  --jf-palette-background-default: var(--bg);
+  --jf-palette-background-defaultChannel: var(--bg-canal);
+  --jf-palette-background-paper: var(--bg-raised);
+  --jf-palette-background-paperChannel: var(--bg-raised-canal);
+  --jf-palette-background-defaultImage: none;
+  --jf-palette-text-primary: var(--text);
+  --jf-palette-text-primaryChannel: var(--text-canal);
+  --jf-palette-text-secondary: var(--text-2);
+  --jf-palette-text-disabled: var(--text-3);
+  --jf-palette-text-icon: var(--text-2);
+  --jf-palette-divider: var(--line);
+  --jf-palette-common-white: var(--primary);
+
+  /* Etats. selectedOpacity sert aux elements selectionnes des listes MUI
+     et au survol des .paper-icon-button-light : un voile, pas un aplat. */
+  --jf-palette-action-hover: var(--veil-1);
+  --jf-palette-action-selected: var(--veil-2);
+  --jf-palette-action-focus: var(--veil-2);
+  --jf-palette-action-selectedOpacity: 0.1;
+  --jf-palette-action-disabled: var(--text-3);
+  --jf-palette-action-disabledBackground: var(--veil-1);
+
+  /* Composants. */
+  --jf-palette-AppBar-defaultBg: var(--glass);
+  --jf-palette-AppBar-transparentBg: transparent;
+  --jf-palette-AppBar-gradient: none;
+  --jf-palette-AppBar-darkBg: var(--glass);
+  --jf-palette-SnackbarContent-bg: var(--bg-overlay);
+  --jf-palette-SnackbarContent-color: var(--text);
+  --jf-palette-Button-inheritContainedBg: var(--veil-2);
+  --jf-palette-Button-inheritContainedHoverBg: var(--veil-3);
+  --jf-palette-FilledInput-bg: var(--veil-1);
+  --jf-palette-FilledInput-hoverBg: var(--veil-2);
+  --jf-palette-FilledInput-disabledBg: transparent;
+  --jf-palette-FilledInput-borderColor: var(--line);
+  --jf-palette-Avatar-defaultBg: var(--veil-3);
+  --jf-palette-Chip-defaultBorder: var(--line-strong);
+  --jf-palette-Chip-defaultIconColor: var(--text-2);
+  --jf-palette-TableCell-border: var(--line);
+  --jf-palette-Tooltip-bg: var(--bg-overlay);
+  --jf-palette-LinearProgress-primaryBg: var(--veil-2);
+  --jf-palette-Slider-primaryTrack: var(--veil-3);
+  --jf-palette-Switch-defaultColor: #a1a1aa;
+  --jf-palette-Switch-primaryDisabledColor: var(--veil-3);
+  --jf-palette-Alert-infoStandardBg: rgb(var(--info-canal) / 0.08);
+  --jf-palette-Alert-successStandardBg: rgb(var(--success-canal) / 0.08);
+  --jf-palette-Alert-warningStandardBg: rgb(var(--warning-canal) / 0.08);
+  --jf-palette-Alert-errorStandardBg: rgb(var(--danger-canal) / 0.08);
+  --jf-palette-Alert-infoColor: var(--text);
+  --jf-palette-Alert-successColor: var(--text);
+  --jf-palette-Alert-warningColor: var(--text);
+  --jf-palette-Alert-errorColor: var(--text);
+  --jf-palette-Alert-infoFilledBg: var(--bg-overlay);
+  --jf-palette-Alert-infoFilledColor: var(--text);
+  --jf-palette-Alert-errorFilledBg: var(--danger);
+  --jf-palette-Alert-successFilledBg: var(--success);
+  --jf-palette-Alert-warningFilledBg: var(--warning);
+  --jf-palette-Alert-warningFilledColor: var(--on-primary);
+
+  /* Forme : MUI multiplie ce rayon par composant, on le pose au niveau
+     des champs. */
+  --jf-shape-borderRadius: var(--r-sm);
+  --jf-card-borderRadius: var(--r-md);
+
+  color-scheme: dark;
+}

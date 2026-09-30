@@ -1,0 +1,125 @@
+/* --- 22. Cases a cocher, boutons radio, interrupteurs -----------------
+   Coche en blanc plein, marque en noir. Interrupteur : rail voile, curseur
+   gris ; active, rail blanc translucide et curseur blanc. Aucune ombre sur
+   les curseurs. */
+
+/* --- Anciens composants --------------------------------------------- */
+.checkboxOutline {
+  border: 1.5px solid var(--line-strong);
+  border-radius: var(--r-xs);
+  background: var(--veil-1);
+  height: 1.5em;
+  width: 1.5em;
+  top: 50%;
+  transform: translateY(-50%);
+  transition:
+    background-color var(--t-fast) var(--ease),
+    border-color var(--t-fast) var(--ease);
+}
+
+.emby-checkbox-label:hover .checkboxOutline {
+  border-color: var(--text-3);
+}
+
+.emby-checkbox:checked + span + .checkboxOutline {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.emby-checkbox:checked + span + .checkboxOutline .checkboxIcon {
+  color: var(--on-primary);
+  font-size: 1.05em;
+}
+
+.emby-checkbox:focus-visible + span + .checkboxOutline {
+  box-shadow: var(--ring);
+}
+
+.emby-checkbox-label {
+  padding-left: 2.2em;
+}
+
+.checkboxLabel {
+  color: var(--text);
+}
+
+/* Interrupteur des anciennes pages (mdl-switch). */
+.mdl-switch__track {
+  background: var(--veil-3);
+  height: 1.1em;
+  border-radius: var(--r-pill);
+}
+
+.mdl-switch__thumb {
+  background: #a1a1aa;
+  box-shadow: none;
+  top: -0.17em;
+}
+
+.mdl-switch__input:checked + .mdl-switch__label + .mdl-switch__trackContainer > .mdl-switch__track {
+  background: rgb(var(--primary-canal) / 0.45);
+}
+
+.mdl-switch__input:checked + .mdl-switch__label + .mdl-switch__trackContainer > .mdl-switch__thumb {
+  background: var(--primary);
+  box-shadow: none;
+}
+
+.mdl-switch__input:checked:focus + .mdl-switch__label + .mdl-switch__trackContainer .mdl-switch__focus-helper,
+.mdl-switch__input:focus + .mdl-switch__label + .mdl-switch__trackContainer .mdl-switch__focus-helper {
+  background-color: transparent;
+  box-shadow: 0 0 0 1.1em var(--veil-1);
+}
+
+/* --- MUI ------------------------------------------------------------- */
+.MuiCheckbox-root,
+.MuiRadio-root {
+  color: var(--text-3);
+}
+
+.MuiCheckbox-root.Mui-checked,
+.MuiCheckbox-root.MuiCheckbox-indeterminate,
+.MuiRadio-root.Mui-checked {
+  color: var(--primary);
+}
+
+.MuiSwitch-thumb {
+  box-shadow: none;
+}
+
+.MuiSwitch-track {
+  background-color: var(--veil-3);
+  opacity: 1;
+}
+
+.MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track {
+  background-color: rgb(var(--primary-canal) / 0.45);
+  opacity: 1;
+}
+
+.MuiSwitch-switchBase.Mui-checked {
+  color: var(--primary);
+}
+
+.MuiFormControlLabel-label {
+  color: var(--text);
+}
+
+/* Curseurs (volume, reglages de sous-titres). */
+.MuiSlider-root {
+  color: var(--primary);
+}
+
+.MuiSlider-rail {
+  background-color: var(--veil-3);
+  opacity: 1;
+}
+
+.MuiSlider-thumb {
+  box-shadow: none;
+}
+
+.MuiSlider-thumb:hover,
+.MuiSlider-thumb.Mui-focusVisible {
+  box-shadow: 0 0 0 6px var(--veil-2);
+}

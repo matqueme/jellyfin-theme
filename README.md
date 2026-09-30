@@ -1,18 +1,18 @@
 # Thème Jellyfin
 
-Thème sombre pour Jellyfin 12, construit sur
-[Ultrachromic](https://github.com/CTalvio/Ultrachromic) (preset `kaleidochromic`)
-avec les icônes [Phosphor](https://phosphoricons.com), et une soixantaine de
-surcharges maison : page d'item, page de connexion, onglets d'en-tête,
-barres de progression des cartes, corrections TV et téléphone.
+Thème sombre pour Jellyfin 12, layout **Modern**. Surfaces neutres, blanc
+comme couleur d'action, icônes [Phosphor](https://phosphoricons.com), police
+Plus Jakarta Sans. Il couvre toute l'application : navigation, page d'item,
+connexion, préférences, dialogues et menus, lecteur, layout TV, et le
+tableau de bord d'administration.
 
-Visé pour le layout **Modern**, celui par défaut depuis la 12. Le Legacy reste
-couvert : l'essentiel du thème porte sur des pages que la 12 rend encore avec
-le code d'avant, y compris en Modern.
+Écrit de zéro depuis la v3 : plus de base tierce ni de règles qui en
+corrigent d'autres. Les valeurs sont des **tokens** définis à un seul
+endroit, et chaque famille de composants (bouton, champ, liste déroulante,
+case à cocher, liste, menu, dialogue…) est dessinée une seule fois, avec les
+mêmes valeurs pour les anciens composants du client et pour ceux de MUI.
 
-Livré comme **un seul fichier** : `dist/theme.css`. Ultrachromic est vendorisé
-et fusionné à la construction, il n'y a donc aucune cascade d'`@import` à
-l'exécution ni aucune dépendance à un dépôt tiers qui bouge.
+Livré en **un seul fichier** : `dist/theme.css`.
 
 <img width="2549" height="1314" alt="image" src="https://github.com/user-attachments/assets/d4ca6f8c-034c-45df-bc63-41bbb013c3ff" />
 
@@ -21,130 +21,138 @@ l'exécution ni aucune dépendance à un dépôt tiers qui bouge.
 Tableau de bord → Général → **CSS personnalisé**, une seule ligne :
 
 ```css
-@import url('https://cdn.jsdelivr.net/gh/matqueme/jellyfin-theme@v2.0.0/dist/theme.css');
+@import url('https://cdn.jsdelivr.net/gh/matqueme/jellyfin-theme@v3.0.0/dist/theme.css');
 ```
 
-Puis `Ctrl+F5` sur le client.
+Puis `Ctrl+F5` sur le client. L'`@import` doit rester la première chose du
+champ : un `@import` placé après une règle est ignoré par le navigateur.
 
-L'`@import` doit rester la première chose du champ : un `@import` placé après
-une règle est ignoré par le navigateur.
+### Tableau de bord
+
+En 12, le client n'applique le CSS de branding **qu'à l'application
+utilisateur** : le composant qui pose la balise `<style>` n'est pas monté
+dans le layout du tableau de bord. Pour que l'administration suive le thème,
+installer [`js/theme-dashboard.js`](js/theme-dashboard.js) avec le plugin
+JavaScript Injector :
+
+```bash
+./apply-js.sh js/theme-dashboard.js
+```
+
+Le script ne contient pas le thème : sur les pages `#/dashboard`, il charge
+la feuille que le serveur sert déjà sur `/Branding/Css`, et la retire en
+sortant. Mettre à jour le CSS de branding suffit donc à mettre à jour le
+tableau de bord.
+
+### Sans dépendance réseau
+
+Si les clients doivent fonctionner sans accès à Internet, `apply-local.sh`
+écrit le fichier directement dans le `branding.xml` du serveur. Voir
+[Développement](#développement). Seules les polices (Plus Jakarta Sans,
+Phosphor) restent chargées depuis un CDN.
 
 > Le CSS de branding s'applique au client web et aux clients qui l'embarquent
 > (navigateur, application de bureau, Android TV en mode web). Les clients
 > natifs, comme Roku ou l'app Android native, ne le lisent pas.
 
-### Sans dépendance réseau
-
-Si les clients doivent fonctionner sans accès à Internet, ou si le CDN est
-indésirable, `apply-local.sh` écrit le fichier directement dans le
-`branding.xml` du serveur. Voir [Développement](#développement).
-
 ## Compatibilité
 
-| Thème | Jellyfin | Ultrachromic |
+| Thème | Jellyfin | Base |
 |---|---|---|
-| `v2.0.0` | 12.x | [`1398af2`](https://github.com/CTalvio/Ultrachromic/tree/1398af21b8fe120a972bd00942ad60a76a932647) |
-| `v1.3.0` | 10.11.x | [`fa158a2`](https://github.com/CTalvio/Ultrachromic/tree/fa158a241cb24298c9996af3cf6460ae2f9d522f) |
-| `v1.2.0` | 10.11.x | [`fa158a2`](https://github.com/CTalvio/Ultrachromic/tree/fa158a241cb24298c9996af3cf6460ae2f9d522f) |
-| `v1.1.0` | 10.11.x | [`fa158a2`](https://github.com/CTalvio/Ultrachromic/tree/fa158a241cb24298c9996af3cf6460ae2f9d522f) |
-| `v1.0.0` | 10.11.x | [`fa158a2`](https://github.com/CTalvio/Ultrachromic/tree/fa158a241cb24298c9996af3cf6460ae2f9d522f) |
+| `v3.0.0` | 12.x, layout Modern | aucune |
+| `v2.0.0` | 12.x | [Ultrachromic `1398af2`](https://github.com/CTalvio/Ultrachromic/tree/1398af21b8fe120a972bd00942ad60a76a932647) |
+| `v1.3.0` | 10.11.x | [Ultrachromic `fa158a2`](https://github.com/CTalvio/Ultrachromic/tree/fa158a241cb24298c9996af3cf6460ae2f9d522f) |
 
 Le thème suit son propre semver ; la version de Jellyfin visée est une donnée
-de compatibilité, pas un numéro de version. Elle est portée par ce tableau et
-par le titre de chaque release.
+de compatibilité, portée par ce tableau et par le titre de chaque release. La
+branche `jellyfin-10.11` garde la dernière version d'avant la 12.
 
-Le thème s'accroche aux classes internes du client web, que Jellyfin peut
-renommer d'une version mineure à l'autre. Une montée de Jellyfin en version
-mineure appelle donc une relecture ; et si le rendu casse, une branche
-`jellyfin-<version>` pour figer l'existant pendant que `main` part sur la suite.
-La branche `jellyfin-10.11` garde la dernière version d'avant la 12.
-
-Deux niveaux d'accroche coexistent depuis la 12, et ils ne vieillissent pas de
-la même façon :
-
-- les **classes du client** (`cardScalable`, `itemDetailPage`, `emby-button`…),
-  que la 12 a très largement conservées, y compris pour les cartes du layout
-  Modern, qui sont pourtant des composants React neufs ;
-- les **classes de composant MUI** (`.MuiAppBar-root`, `.Mui-selected`) et les
-  **variables `--jf-*`** du thème de base, pour l'en-tête, le tiroir et les
-  barres d'outils, refaits en React. Ne jamais viser les classes `css-xxxxxx`
-  qu'Emotion génère à côté : ce sont des hachages recalculés à chaque version.
+Le layout Legacy n'est plus visé depuis la v3. Il reste utilisable, mais son
+en-tête et son tiroir ne sont pas habillés.
 
 ## Réglages
 
-Les valeurs prévues pour être retouchées, avec leur emplacement :
+Tout est dans [`src/01-tokens.css`](src/01-tokens.css). Les modules ne posent
+jamais une couleur, un rayon ou une durée en dur : retoucher le thème, c'est
+retoucher ce fichier.
 
-| Variable | Fichier | Effet |
-|---|---|---|
-| `--icon-scale` | [`src/01-reglages.css`](src/01-reglages.css) | Taille des icônes Phosphor, qui remplissent plus leur cadre que Material |
-| `--play-label` | [`src/01-reglages.css`](src/01-reglages.css) | Libellé du bouton Lecture. Garder les guillemets : c'est une valeur de `content` |
-| `--play-label-size` | [`src/01-reglages.css`](src/01-reglages.css) | Taille de ce libellé |
-| `--btn-hover-bg` | [`src/01-reglages.css`](src/01-reglages.css) | Survol des boutons secondaires : en-tête, rangée d'un film, bandeau de sélection |
-| `--accent-canal` | [`src/01-reglages.css`](src/01-reglages.css) | Accent du preset en syntaxe MUI, pour les composants React de la 12. Doit rester d'accord avec `--accent` |
-| `--tabs-left` | [`src/05-onglets.css`](src/05-onglets.css) | Décalage des onglets d'en-tête, layout Legacy seulement |
-| `--card-bar-height` | [`src/10-carte-barre.css`](src/10-carte-barre.css) | Épaisseur de la barre de progression des cartes |
-| `--card-bar-gap` | [`src/10-carte-barre.css`](src/10-carte-barre.css) | Détachement du bord bas, c'est ce qui fait l'effet flottant |
-| `--card-bar-inset` | [`src/10-carte-barre.css`](src/10-carte-barre.css) | Retrait latéral de cette barre |
-| `--tv-card-ring` | [`src/16-tv-focus.css`](src/16-tv-focus.css) | Épaisseur de l'anneau de focus des cartes en TV |
-| `--tv-card-zoom` | [`src/16-tv-focus.css`](src/16-tv-focus.css) | Agrandissement de la carte visée en TV. Au-delà de 1.15 environ, elle sort du dégagement des rangées et se fait couper |
-| `--row-fondu` | [`src/19-rangees-degrade.css`](src/19-rangees-degrade.css) | Largeur du fondu latéral des rangées. À garder égale à la gouttière de page de Jellyfin, `3.3%` |
+| Token | Rôle |
+|---|---|
+| `--bg`, `--bg-raised`, `--bg-overlay` | Fonds : page, panneaux posés sur la page, ce qui flotte (menus, dialogues) |
+| `--veil-1` à `--veil-3` | Voiles blancs : champs, boutons secondaires, survols. Justes sur n'importe quel fond |
+| `--line`, `--line-strong` | Filets d'un pixel |
+| `--text`, `--text-2`, `--text-3` | Texte principal, secondaire, discret |
+| `--primary`, `--on-primary` | Action principale : blanc, texte noir |
+| `--danger`, `--success`, `--warning`, `--info` | Les seules couleurs franches, sémantiques |
+| `--glass`, `--glass-blur` | Verre de l'en-tête, du tiroir, de la barre de lecture |
+| `--r-xs` à `--r-lg`, `--r-pill` | Rayons : pastilles, champs, cartes, dialogues, boutons |
+| `--ring` | Anneau de focus et de survol des cartes |
+| `--icon-scale` | Taille des icônes Phosphor, qui remplissent plus leur cadre que Material |
+| `--play-label` | Libellé du bouton Lecture. Garder les guillemets : c'est une valeur de `content` |
+
+Les couleurs utilisées en transparence existent aussi en canaux
+(`--primary-canal: 244 244 245`), la syntaxe qu'attend MUI pour ses
+variables `*Channel`. Les deux doivent rester d'accord.
 
 Pour repasser les icônes en trait fin : remplacer `bold` par `regular` dans
 l'`@import` de [`src/00-imports.css`](src/00-imports.css), et `Phosphor-Bold`
-par `Phosphor` dans [`src/07-icones.css`](src/07-icones.css). Les points de
+par `Phosphor` dans [`src/90-icones.css`](src/90-icones.css). Les points de
 code sont identiques entre les deux graisses.
 
 ## Structure
 
 ```
 src/
-  00-imports.css        polices distantes, les seuls @import qui survivent au build
-  01-reglages.css       variables de réglage
-  02-cartes-survol.css  bouton play des cartes
-  03-page-item.css      page d'un film : bouton Lecture en pilule
-  04-connexion.css      page de connexion
-  05-onglets.css        onglets Accueil / Favoris, en-tête téléphone
-  06-tv.css             corrections propres au layout TV
-  07-icones.css         100 icônes Material remappées sur Phosphor
-  08-indicateurs.css    indicateur « vu » détaché du coin
-  09-lecteur.css        marqueurs de chapitres, barres arrondies
-  10-carte-barre.css    barre de progression des cartes
-  11-carte-boutons.css  boutons d'overlay
-  12-carte-zone.css     zone de survol calée sur l'affiche
-  13-carte-curseur.css  curseur main calé sur la carte visible
-  14-carte-fond.css     fond d'attente des affiches
-  15-barre-defilement.css  axe horizontal refermé sur les conteneurs de page
-  16-tv-focus.css       focus TV : cartes, boutons d'un film, bouton Lecture
-  17-boutons-survol.css survol partagé des boutons secondaires
-  18-selection.css      bandeau de sélection, cartes en mode sélection
-  vendor/ultrachromic/  Ultrachromic figé sur un commit (32 Ko)
-  vendor.list           modules Ultrachromic chargés après le preset
-  vendor.exclude        modules du preset volontairement écartés
+  00-imports.css        polices distantes, les seuls @import du fichier construit
+  01-tokens.css         toutes les valeurs du thème
+  02-palette-jf.css     tokens branchés sur les variables --jf-* du client et de MUI
+  10-base.css           fond, police, texte, liens, défilement, focus
+  20-boutons.css        principal, secondaire, discret, destructif, icônes, groupes
+  21-champs.css         champs de saisie et listes déroulantes
+  22-cases.css          cases à cocher, boutons radio, interrupteurs, curseurs
+  23-surfaces.css       menus, dialogues, feuilles d'actions, infobulles, alertes
+  24-listes.css         listes, tableaux, cartes MUI, pagination, chargement
+  25-onglets-puces.css  onglets, puces, badges
+  30-entete-tiroir.css  en-tête MUI, navigation des bibliothèques, tiroir
+  40-cartes.css         affiches : survol, indicateurs, progression, sélection
+  41-rangees.css        titres de section, rangées, sélecteur alphabétique
+  50-page-item.css      page d'un film, d'une série, d'une saison
+  51-connexion.css      page de connexion
+  60-lecteur.css        OSD, barres de lecture, lecture en cours, « À suivre »
+  80-tv.css             navigation à la télécommande
+  90-icones.css         icônes Material remappées sur Phosphor
+  95-plugins.css        ce qu'ajoutent les plugins, mis au diapason
 js/                     comportements non réalisables en CSS
 dist/theme.css          fichier construit et commité : c'est lui que sert le CDN
 ```
 
 **L'ordre des modules est significatif.** Les préfixes numériques donnent
-l'ordre de concaténation, et donc la cascade. Plusieurs modules s'appuient
-sur le fait qu'ils passent après tel autre : renuméroter change le rendu.
+l'ordre de concaténation, donc la cascade : les tokens d'abord, les
+composants génériques ensuite, puis les pages, qui peuvent les spécialiser.
 
-### Écarter un module d'Ultrachromic
+### Deux familles de composants
 
-Le preset importe sa propre liste de modules, que `build.py` suit telle
-quelle. Pour en retirer un, l'inscrire dans
-[`src/vendor.exclude`](src/vendor.exclude) plutôt que de toucher à
-`src/vendor/` : une modification là-bas rendrait `update-vendor.sh`
-conflictuel à chaque resynchronisation.
+La 12 mélange deux générations de composants, et le thème les aligne l'une
+sur l'autre, module par module :
 
-`build.py` refuse de construire si une entrée n'est jamais rencontrée : une
-exclusion qui ne s'applique à rien serait indiscernable d'une exclusion qui
-marche. Le fichier construit porte en en-tête la liste de ce qui a réellement
-été omis.
+- les **anciens** (`.emby-button`, `.emby-input`, `.emby-select`,
+  `.actionSheet`, `.listItem`…), sur les pages que la 12 rend encore avec ses
+  contrôleurs d'avant, **y compris en Modern** : page d'item, connexion,
+  listes, une partie des préférences ;
+- les **MUI** : en-tête, tiroir, barres d'outils de bibliothèque, préférences
+  d'affichage, tableau de bord.
 
-Vérifier ce que le module faisait **d'autre** avant de l'écarter : plusieurs
-modules d'Ultrachromic mêlent des règles sans rapport avec leur nom.
-`smallercast.css` portait ainsi une règle `.cardPadder` globale, qu'il a fallu
-reprendre dans `14-carte-fond.css`.
+Deux leviers, dans cet ordre :
+
+1. les **variables `--jf-*`** (`02-palette-jf.css`). Le client construit son
+   thème MUI en variables CSS, et son thème de base colore aussi les anciens
+   composants à partir des mêmes variables. Les poser habille une bonne part
+   de l'application d'un coup ;
+2. les **classes de composant** : `.emby-*` d'un côté, `.MuiButton-root`,
+   `.MuiFilledInput-root`, `.Mui-selected`… de l'autre. Elles font partie de
+   l'API publique de MUI. Ne jamais viser les classes `css-xxxxxx`
+   qu'Emotion génère à côté : ce sont des hachages recalculés à chaque
+   version.
 
 `dist/theme.css` est un fichier construit : ne jamais l'éditer, il est
 réécrit à chaque build. jsDelivr sert depuis l'arbre git, d'où sa présence
@@ -156,7 +164,7 @@ dans les commits.
 ./build.py
 ```
 
-Fusionne tout dans `dist/theme.css`, puis vérifie le résultat. Les
+Concatène `src/` dans `dist/theme.css`, puis vérifie le résultat. Les
 vérifications sont bloquantes : accolades équilibrées, aucun `@import` après
 une règle, et tout `display` en `!important` gardé par `:not(.hide)`.
 
@@ -173,87 +181,67 @@ fichier attendu. Le chemin par défaut est `~/docker/jellyfin` ; sinon
 ./apply-js.sh js/*.js
 ```
 
-Injecte les scripts dans la configuration du plugin JavaScript Injector.
-Un comportement n'est pas réalisable en CSS :
+Injecte les scripts dans la configuration du plugin JavaScript Injector :
 
+- `theme-dashboard.js` : applique le thème au tableau de bord (voir
+  [Installation](#tableau-de-bord)) ;
 - `replace-sync-button.js` : remplace le bouton SyncPlay de l'en-tête par une
   entrée dans le menu des préférences.
 
-`onglets-dans-la-page.js` a été retiré en v2.0.0. Il clonait les onglets de
-l'en-tête dans la page, sur téléphone, parce qu'ils vivaient dans un en-tête
-`position: fixed` que le CSS ne peut pas reparenter. En 12, cet en-tête n'est
-plus affiché du tout et la navigation passe par la barre MUI : le script
-n'avait plus d'objet.
-
 > Le plugin patche l'`index.html` servi par le serveur. L'app Tizen embarque
 > sa propre copie du client web et ne le reçoit jamais : seul `/Branding/Css`
-> l'atteint. D'où le calage des onglets en TV fait entièrement en CSS, dans
-> `06-tv.css`.
+> l'atteint. Tout ce qui concerne la TV est donc fait en CSS.
 
 ### Sur un lecteur Windows monté dans WSL
 
 Le dépôt réclame `core.filemode false` : `drvfs` remonte tous les fichiers en
 777, et sans ce réglage git verrait des changements de permissions partout.
-Corollaire : `chmod +x` n'a plus aucun effet sur ce que git enregistre, et un
-script ajouté ici arrive en `100644`, donc non exécutable une fois cloné
-sous Linux, ou sur un runner GitHub Actions. Pour tout nouveau script :
+Corollaire : `chmod +x` n'a plus aucun effet sur ce que git enregistre. Pour
+tout nouveau script :
 
 ```bash
 git update-index --chmod=+x mon-script.sh
 ```
-
-`--chmod` écrit le mode directement dans l'index, sans consulter le système
-de fichiers. C'est le seul moyen quand `core.filemode` vaut `false`.
-
-```bash
-./update-vendor.sh [sha]
-```
-
-Resynchronise `src/vendor/ultrachromic/`. Ne commite rien : le but est de
-lire le diff avant d'accepter. Ultrachromic n'a **ni tag ni release**, donc
-une URL sans version pointe sur le HEAD de `main` ; vendoriser fige cette
-cible mouvante, et ce script est le seul endroit où elle bouge.
 
 ## Publier une version
 
 Le tag et la release sont créés par GitHub Actions à partir du fichier
 `VERSION`. Il n'y a rien à taguer à la main :
 
-1. Éditer `VERSION` (ex. `1.2.0`) et ajouter la section correspondante dans
-   `CHANGELOG.md`.
+1. Éditer `VERSION` et ajouter la section correspondante dans `CHANGELOG.md`.
 2. `./build.py` : l'en-tête de `dist/theme.css` porte le nouveau numéro.
 3. Commiter, pousser sur `main`.
 
 Le workflow `publier` vérifie le build, refuse une version sans notes dans le
 `CHANGELOG`, crée le tag `vX.Y.Z` puis la release dont les notes sont cette
-section. Il ne fait rien si le tag existe déjà : pousser plusieurs fois est
-sans effet.
-
-`VERSION` était déjà la source de vérité : `build.py` l'estampille dans le CSS
-servi. Taguer à la main revenait à recopier ce numéro, donc à pouvoir
-l'oublier, ou à publier une feuille qui s'annonce en `1.1.0` sous un tag
-`v1.0.0`.
-
-Le résumé d'exécution du workflow affiche la ligne d'`@import` à coller dans
-le branding : c'est la seule étape qui reste manuelle, côté Jellyfin.
+section. Il ne fait rien si le tag existe déjà.
 
 Les URL jsDelivr taguées sont **immuables et mises en cache définitivement** :
 pas de purge à faire, et un retour arrière consiste à remettre l'ancien tag.
-C'est la raison de préférer les tags à `@main`, dont le cache CDN tient de
-12 heures à 7 jours, et un push suivi de « rien ne change » en est le symptôme
-classique. Pour suivre `main` malgré tout, purger après chaque push :
+Pour suivre `main` malgré tout, purger après chaque push :
 
 ```bash
 curl -s https://purge.jsdelivr.net/gh/matqueme/jellyfin-theme@main/dist/theme.css
 ```
 
-Le workflow GitHub Actions le fait automatiquement, et vérifie à chaque push
-que `dist/` correspond bien à `src/`.
-
 ## Pièges
 
 Écrits après les avoir rencontrés. Chacun se manifeste en silence, sans erreur
 console.
+
+**Le tableau de bord ne reçoit pas le CSS de branding.** Voir
+[Installation](#tableau-de-bord). Sans `theme-dashboard.js`, l'administration
+reste sur le thème par défaut, bleu Jellyfin compris.
+
+**Les variables `--jf-*` se posent sur `:root[data-theme]`, pas sur `:root`.**
+MUI les déclare sur `:root, [data-theme="dark"]` et insère sa feuille à
+l'exécution, après la nôtre : à spécificité égale, les siennes gagnent.
+`:root[data-theme]` pèse 0-2-0 et passe devant, quel que soit le thème choisi
+dans les préférences.
+
+**MUI compile sa police en dur.** Les variables `--jf-font-*` existent mais
+les composants ne les lisent pas : la police est reposée composant par
+composant dans `10-base.css`.
 
 **Tout `display` en `!important` doit être gardé par `:not(.hide)`.** Jellyfin
 masque ses pages avec `.hide { display: none !important }`. Un sélecteur d'ID
@@ -261,65 +249,45 @@ l'emporte sur une classe à `!important` égal : sans ce garde-fou, la page de
 connexion restait affichée par-dessus l'accueil. `build.py` refuse de
 construire sans lui.
 
-**Toujours écrire `var(--accent, 98, 121, 205)`.** `--accent` vient de
-`type/colorful.css`. Sans repli, `rgba(var(--accent), .95)` est une valeur
-invalide tant que la variable n'est pas définie, et la déclaration est
-purement ignorée : bouton transparent au lieu de coloré. La fusion réduit
-beaucoup ce risque, mais les replis restent la bonne pratique.
+**Les liens de la fiche sont des boutons.** Étiquettes, liens externes,
+réalisateur : ce sont des `a.button-link.emby-button`. Toute règle posée sur
+`.emby-button` les atteint ; `50-page-item.css` les remet à plat.
 
-**Les variantes d'Ultrachromic ne s'empilent pas.** `indicator_corner` et
-`indicator_floating`, `title_simple` et `title_banner-logo` sont des
-alternatives. Le preset en charge déjà une ; ajouter l'autre par-dessus ne la
-remplace pas, car la première pose des `!important` que la seconde ne reprend
-pas. C'est tout l'objet de `08-indicateurs.css`.
+**Une icône en ligature ne se remappe pas.** `90-icones.css` agit sur la
+classe (`.material-icons.play_arrow`). Une icône écrite en ligature, dont le
+nom est le texte de la balise (`<span class="material-icons">key</span>`,
+courant dans les plugins), reste en Material : aucun sélecteur ne porte sur
+le texte d'un élément.
 
-**Poser `overflow-y` ouvre aussi `overflow-x`.** La spec impose qu'un axe
-resté à `visible` face à un axe qui ne l'est pas se calcule en `auto`. Un
-`overflow-y: scroll` sur un conteneur de page lui donne donc une barre
-horizontale dès qu'un pixel dépasse, ce qui était le cas de `#indexPage`, corrigé
-en 1.1.1 par `15-barre-defilement.css`. Le symptôme trompe : `documentElement`
-et `body` ne débordent pas, seul le conteneur intermédiaire défile.
+**Le layout se choisit sur le user-agent.** En « Mode d'affichage : Auto »,
+un navigateur de bureau réduit à 390 px reste en `layout-desktop`. Pour
+tester le rendu téléphone, il faut un user-agent mobile, pas seulement une
+fenêtre étroite.
 
-**La forme courte `background` remet `background-image` à `none`.** Et un
-`!important` l'emporte sur un style en ligne : le bouton de profil de
-l'en-tête, dont l'avatar est un `background-image` posé en ligne par le
-client, perdait son image au survol. Écrire `background-color` dès qu'on ne
-veut que la couleur. Même piège pour `border` face à `border-color`.
-
-**Une classe de bouton peut être portée par un `div` imbriqué.** Toujours le
-bouton de profil : `paper-icon-button-light` est sur le `<button>` **et** sur
-le `div` de l'avatar qu'il contient. Un sélecteur par classe seule les vise
-donc tous les deux, et le survol s'appliquait en double : une teinte dans
-l'anneau de padding, une autre sur le rond. `button.paper-icon-button-light`
-les départage, l'avatar étant le seul `div` à porter cette classe.
+**La forme courte `background` remet `background-image` à `none`.** Le bouton
+de profil de l'en-tête, dont l'avatar est un `background-image` posé en
+ligne, perdait son image au survol. Écrire `background-color` dès qu'on ne
+veut que la couleur.
 
 **La TV n'est pas un layout, c'est aussi une détection de lenteur.**
 `cardBuilder` distingue `.show-focus` de `.show-animation` par
-`!browser.slow && !browser.edge`, et Tizen est classé « slow ». Une règle
-écrite pour `.layout-tv` peut donc viser un état que la TV n'atteint jamais :
-c'est le cas du `scale(1.07)` de focus des cartes, dont le repli, un cadre
-de `.5em`, est ce qu'on voit réellement sur l'appareil. Vérifier laquelle
-des deux classes est posée avant de surcharger.
+`!browser.slow && !browser.edge`, et Tizen est classé « slow ». Vérifier
+laquelle des deux classes est posée avant de surcharger un état de focus.
 
-**Rien ne marque une carte sélectionnée dans le DOM.**
-`.itemSelectionPanel` est posé sur *toutes* les cartes dès l'entrée en mode
-sélection, et le module de sélection ne tient qu'un tableau d'ID en
-JavaScript : aucune classe n'est ajoutée à la carte cochée. Le seul signal
-disponible est `input.chkItemSelect:checked`, plus bas dans l'arbre que ce
-qu'on veut peindre : donc `:has()`, à mettre sous `@supports selector(:has(*))`
-pour les navigateurs de TV antérieurs à Chromium 105.
+**Rien ne marque une carte sélectionnée dans le DOM.** Le seul signal est
+`input.chkItemSelect:checked`, plus bas dans l'arbre que ce qu'on veut
+peindre : donc `:has()`, sous `@supports selector(:has(*))` pour les
+navigateurs de TV antérieurs à Chromium 105.
 
-**Les `<` et `&` ne sont plus interdits.** Le CSS est stocké comme texte dans
-`branding.xml`, et une version antérieure de l'outillage les proscrivait pour
-ne pas casser le XML. `apply-local.sh` échappe désormais correctement, et
-vérifie le déséchappement par relecture. Les media queries de la forme
-`@media (width < 50em)` sont donc utilisables.
+**Les `<` et `&` sont permis.** Le CSS est stocké comme texte dans
+`branding.xml` ; `apply-local.sh` échappe et vérifie le déséchappement par
+relecture.
 
 ## Crédits
 
-- [Ultrachromic](https://github.com/CTalvio/Ultrachromic) : CTalvio, licence MIT.
-  Vendorisé dans `src/vendor/`, voir [NOTICE](NOTICE).
 - [Phosphor Icons](https://phosphoricons.com) : licence MIT.
 - Police [Plus Jakarta Sans](https://fonts.google.com/specimen/Plus+Jakarta+Sans) : SIL OFL 1.1.
+- Les versions 1.x et 2.x reposaient sur [Ultrachromic](https://github.com/CTalvio/Ultrachromic),
+  de CTalvio (MIT). La v3 n'en contient plus rien.
 
 Code de ce dépôt sous licence [MIT](LICENSE).

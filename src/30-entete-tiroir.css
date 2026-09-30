@@ -1,0 +1,137 @@
+/* --- 30. En-tete et tiroir ---------------------------------------------
+   En 12, l'en-tete, le tiroir et les barres d'outils de bibliotheque sont
+   des composants MUI. Ils n'ont pas de classe propre : Emotion leur genere
+   un hachage (css-xxxxxx) recalcule a chaque version. On ne vise donc que
+   les classes de composant MUI (.MuiAppBar-root, .MuiDrawer-paper,
+   .Mui-selected), qui font partie de l'API publique de MUI, et les
+   variables --jf-* posees dans 02-palette-jf.css. */
+
+/* --- En-tete : verre ------------------------------------------------- */
+.MuiAppBar-root {
+  background-color: var(--glass-opaque);
+  border-bottom: 1px solid var(--line);
+  box-shadow: none;
+}
+
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .MuiAppBar-root {
+    background-color: var(--glass);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+  }
+}
+
+/* En-tete transparent (page d'item, lecteur) : pas de filet, et un
+   degrade pour que les icones restent lisibles sur l'image de fond. */
+.MuiAppBar-colorTransparent {
+  background: linear-gradient(rgb(0 0 0 / 0.55), transparent) !important;
+  border-bottom: 0;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+/* --- Navigation des bibliotheques ------------------------------------
+   Boutons de la barre du haut : texte gris, pilule voilee au survol, vue
+   courante en voile plus dense et texte blanc. Le client marque la vue
+   courante en passant le bouton en color="primary" : on neutralise le
+   plein blanc que 20-boutons donne a cette couleur, ici ce serait un
+   bouton d'action au milieu de la navigation. */
+.MuiAppBar-root .MuiButton-root {
+  background-color: transparent;
+  color: var(--text-2);
+  font-weight: 600;
+  padding: 0.35em 0.95em;
+}
+
+.MuiAppBar-root .MuiButton-root:hover {
+  background-color: var(--veil-1);
+  color: var(--text);
+}
+
+.MuiAppBar-root .MuiButton-colorPrimary,
+.MuiAppBar-root .MuiButton-textPrimary,
+.MuiAppBar-root .MuiButton-containedPrimary {
+  background-color: var(--veil-2);
+  color: var(--text);
+}
+
+/* Barre d'outils de bibliotheque (lecture, aleatoire, filtres, tri,
+   affichage) : boutons voiles, qui restent lisibles comme des actions. */
+.MuiAppBar-root .MuiButtonGroup-root .MuiButton-root,
+.MuiAppBar-root .MuiToolbar-root + .MuiToolbar-root .MuiButton-root {
+  background-color: var(--veil-1);
+  color: var(--text);
+}
+
+.MuiAppBar-root .MuiButtonGroup-root .MuiButton-root:hover,
+.MuiAppBar-root .MuiToolbar-root + .MuiToolbar-root .MuiButton-root:hover {
+  background-color: var(--veil-2);
+}
+
+/* Compteur d'elements : cercle tant qu'il tient, pilule au-dela (il
+   devient « 1-20 sur 53 » quand la pagination est active). */
+.MuiAppBar-root .MuiChip-root {
+  background-color: var(--veil-1);
+  border: 1px solid var(--line);
+  color: var(--text-2);
+  height: 2.1em;
+  min-width: 2.1em;
+}
+
+.MuiAppBar-root .MuiChip-label {
+  padding-left: 0.55em;
+  padding-right: 0.55em;
+}
+
+/* Avatar utilisateur : pas d'aplat de couleur. */
+.MuiAppBar-root .MuiAvatar-root {
+  background-color: var(--veil-3);
+  color: var(--text);
+}
+
+/* --- Tiroir ---------------------------------------------------------- */
+.MuiDrawer-paper {
+  background-color: var(--bg-raised);
+  border-right: 1px solid var(--line) !important;
+}
+
+.MuiDrawer-paper .MuiList-root {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+.MuiDrawer-paper .MuiListItemButton-root {
+  margin-bottom: 1px;
+  padding-top: 0.45em;
+  padding-bottom: 0.45em;
+}
+
+/* Tiroir temporaire (telephone, menu) : il flotte, donc verre. */
+.MuiDrawer-modal .MuiDrawer-paper {
+  background-color: var(--glass-opaque);
+}
+
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .MuiDrawer-modal .MuiDrawer-paper {
+    background-color: var(--glass);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+  }
+}
+
+/* Element courant du tiroir et des menus MUI. */
+.MuiDrawer-paper .Mui-selected,
+.MuiDrawer-paper .Mui-selected:hover {
+  background-color: var(--veil-2);
+  color: var(--text);
+}
+
+/* --- En-tete de l'ancien layout --------------------------------------
+   Le layout Legacy n'est plus vise. Mais quelques pages (lecteur video,
+   connexion) montent encore l'ancien en-tete, meme en Modern : on lui
+   donne le meme verre pour que la transition ne se voie pas. */
+.skinHeader-withBackground {
+  background-color: var(--glass);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+}

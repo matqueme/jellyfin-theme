@@ -1,0 +1,244 @@
+/* --- 20. Boutons -------------------------------------------------------
+   Trois niveaux, identiques dans les deux familles de composants :
+
+     principal    plein blanc, texte noir      .button-submit, MuiButton contained
+     secondaire   voile blanc, texte blanc     .raised, MuiButton contained inherit
+     discret      transparent, voile au survol .button-flat, MuiButton text
+
+   plus le destructif, plein rouge, et les boutons-icones, ronds.
+   Tous en pilule. Aucun ne grossit au survol ni au focus souris : le zoom
+   est reserve a la telecommande (80-tv.css). */
+
+/* --- Anciens composants --------------------------------------------- */
+.emby-button {
+  border-radius: var(--r-pill);
+  font-weight: 600;
+  padding: 0.7em 1.25em;
+  transition:
+    background-color var(--t-fast) var(--ease),
+    color var(--t-fast) var(--ease),
+    box-shadow var(--t-fast) var(--ease);
+}
+
+.emby-button.block {
+  padding: 0.8em 1.25em;
+}
+
+/* Secondaire. Le theme de base passe .raised et .fab en blanc plein au
+   focus, avec leur texte gris clair : illisible. */
+.raised,
+.fab,
+a[data-role="button"] {
+  background: var(--veil-2);
+  color: var(--text);
+}
+
+.raised:hover,
+.fab:hover,
+a[data-role="button"]:hover,
+.raised:focus,
+.fab:focus,
+a[data-role="button"]:focus {
+  background: var(--veil-3);
+  color: var(--text);
+}
+
+/* Principal. */
+.button-submit,
+.raised.button-submit {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+.button-submit:hover,
+.button-submit:focus,
+.raised.button-submit:hover,
+.raised.button-submit:focus {
+  background: var(--primary-hover);
+  color: var(--on-primary);
+}
+
+/* Destructif. */
+.button-delete,
+.raised.button-delete {
+  background: var(--danger);
+  color: #fff;
+}
+
+.button-delete:hover,
+.button-delete:focus {
+  background: #f37680;
+  color: #fff;
+}
+
+/* Discret. Le theme de base colore son texte en primary au survol : du
+   blanc sur du blanc casse, invisible. Un voile a la place. */
+.button-flat {
+  color: var(--text);
+}
+
+.button-flat:hover,
+.button-flat:focus {
+  background: var(--veil-1);
+  color: var(--text);
+}
+
+.fab {
+  padding: 0.6em;
+}
+
+/* Boutons-icones. Le voile de survol vient de la palette
+   (--jf-palette-action-selectedOpacity), la couleur reste celle du texte :
+   le theme de base la passait en primary. */
+.paper-icon-button-light {
+  transition:
+    background-color var(--t-fast) var(--ease),
+    color var(--t-fast) var(--ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .paper-icon-button-light:hover:not(:disabled) {
+    background-color: var(--veil-2);
+    color: var(--text);
+  }
+}
+
+.paper-icon-button-light:active:not(:disabled) {
+  background-color: var(--veil-3);
+  color: var(--text);
+}
+
+/* --- MUI -------------------------------------------------------------
+   Le client pose variant="contained" par defaut sur tous les MuiButton :
+   c'est la variante principale partout, y compris la ou elle ne devrait
+   pas l'etre. On ne peut pas la corriger bouton par bouton ; on garde le
+   blanc pour contained, et le voile pour contained color="inherit", que
+   le client utilise pour ses actions secondaires. */
+.MuiButton-root {
+  border-radius: var(--r-pill);
+  box-shadow: none;
+  font-weight: 600;
+  padding-left: 1.1em;
+  padding-right: 1.1em;
+  text-transform: none;
+}
+
+.MuiButton-root:hover,
+.MuiButton-root:active {
+  box-shadow: none;
+}
+
+.MuiButton-containedPrimary,
+.MuiButton-containedSecondary {
+  background-color: var(--primary);
+  color: var(--on-primary);
+}
+
+.MuiButton-containedPrimary:hover,
+.MuiButton-containedSecondary:hover {
+  background-color: var(--primary-hover);
+}
+
+.MuiButton-containedInherit {
+  background-color: var(--veil-2);
+  color: var(--text);
+}
+
+.MuiButton-containedInherit:hover {
+  background-color: var(--veil-3);
+}
+
+.MuiButton-containedError {
+  background-color: var(--danger);
+  color: #fff;
+}
+
+.MuiButton-outlined {
+  border-color: var(--line-strong);
+  color: var(--text);
+}
+
+.MuiButton-outlined:hover {
+  border-color: var(--text-3);
+  background-color: var(--veil-1);
+}
+
+.MuiButton-text {
+  color: var(--text);
+}
+
+.MuiButton-text:hover {
+  background-color: var(--veil-1);
+}
+
+.MuiButton-root.Mui-disabled {
+  background-color: var(--veil-1);
+  color: var(--text-3);
+}
+
+.MuiButton-text.Mui-disabled,
+.MuiButton-outlined.Mui-disabled {
+  background-color: transparent;
+}
+
+/* Groupes : seuls les bouts gardent la pilule, les cotes qui se touchent
+   sont droits, separes par un filet. */
+.MuiButtonGroup-root {
+  border-radius: var(--r-pill);
+  box-shadow: none;
+}
+
+.MuiButtonGroup-grouped:not(:last-of-type) {
+  border-right-color: var(--line-strong);
+}
+
+.MuiButtonGroup-firstButton {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.MuiButtonGroup-lastButton {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.MuiButtonGroup-middleButton {
+  border-radius: 0;
+}
+
+.MuiIconButton-root {
+  color: inherit;
+  transition: background-color var(--t-fast) var(--ease);
+}
+
+.MuiIconButton-root:hover {
+  background-color: var(--veil-2);
+}
+
+/* Boutons a bascule : segment de controle, l'actif en blanc. */
+.MuiToggleButtonGroup-root {
+  background: var(--veil-1);
+  border-radius: var(--r-pill);
+  padding: 3px;
+  gap: 2px;
+}
+
+.MuiToggleButton-root {
+  border: 0;
+  border-radius: var(--r-pill) !important;
+  color: var(--text-2);
+  text-transform: none;
+  font-weight: 600;
+  padding: 0.35em 0.9em;
+}
+
+.MuiToggleButton-root:hover {
+  background: var(--veil-1);
+  color: var(--text);
+}
+
+.MuiToggleButton-root.Mui-selected,
+.MuiToggleButton-root.Mui-selected:hover {
+  background: var(--primary);
+  color: var(--on-primary);
+}

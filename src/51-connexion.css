@@ -1,0 +1,84 @@
+/* --- 51. Connexion -----------------------------------------------------
+   Page de choix d'utilisateur et formulaire manuel. Un panneau centre sur
+   le fond de page, sans image de fond : c'est la premiere chose que voit
+   un invite, elle doit etre nette et rapide a charger.
+
+   Le :not(.hide) est obligatoire des qu'on impose un display : une fois
+   connecte, Jellyfin masque la page en lui ajoutant .hide (display: none
+   !important). Un selecteur d'ID l'emporte sur une classe a !important
+   egal : sans ce garde, la page resterait affichee par-dessus l'accueil. */
+
+#loginPage:not(.hide) {
+  box-sizing: border-box;
+  display: flex !important;
+  min-height: 100vh;
+  padding: 1.5em !important;
+}
+
+/* margin: auto plutot que align-items: center : centre sur les deux axes
+   sans rogner le haut quand le panneau depasse l'ecran (telephone en
+   paysage). */
+#loginPage .padded-bottom-page {
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-sizing: border-box;
+  margin: auto !important;
+  max-width: 100%;
+  padding: 2em 1.75em !important;
+  width: 26em;
+}
+
+#loginPage h1 {
+  font-size: 1.5em !important;
+  margin: 0 0 1em !important;
+  text-align: center;
+}
+
+#loginPage .manualLoginForm {
+  padding-top: 0 !important;
+}
+
+#loginPage .manualLoginForm .padded-left {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+#loginPage .loginDisclaimer:empty {
+  display: none !important;
+}
+
+#loginPage .loginDisclaimerContainer {
+  color: var(--text-2);
+  margin-top: 1em !important;
+}
+
+#loginPage .readOnlyContent {
+  margin: 1.25em auto 0 !important;
+}
+
+#loginPage .raised.block,
+#loginPage .emby-button.block {
+  margin: 0 0 0.6em !important;
+}
+
+/* Portraits : ronds, anneau blanc au survol et au focus. box-shadow et
+   non border, pour ne rien decaler. */
+#divUsers .cardContent,
+#divUsers .cardImageContainer,
+#divUsers .cardScalable {
+  border-radius: var(--r-pill);
+}
+
+#divUsers .cardScalable {
+  transition: box-shadow var(--t-fast) var(--ease);
+}
+
+#divUsers .card:hover .cardScalable,
+#divUsers .card:focus .cardScalable {
+  box-shadow: var(--ring);
+}
+
+#divUsers .cardText {
+  font-weight: 600;
+}

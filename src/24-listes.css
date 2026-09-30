@@ -1,0 +1,184 @@
+/* --- 24. Listes, tableaux, cartes de contenu ---------------------------
+   Les blocs poses sur la page : --bg-raised, filet, --r-md. Les lignes a
+   l'interieur sont arrondies en retrait, comme dans les menus. */
+
+/* --- Anciens composants --------------------------------------------- */
+.paperList {
+  background-color: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  overflow: hidden;
+}
+
+.paperList-clear {
+  border: 0;
+}
+
+.listItem {
+  border-radius: var(--r-sm);
+  transition: background-color var(--t-fast) var(--ease);
+}
+
+.listItem:hover {
+  background-color: var(--veil-1);
+}
+
+.listItem:focus {
+  background-color: var(--veil-2);
+  border-radius: var(--r-sm);
+}
+
+/* Les listes a filets (episodes, pistes) : les filets passent en --line,
+   et le survol arrondi n'a de sens que sans filet. */
+.listItem-border {
+  border-color: var(--line);
+  border-radius: 0;
+}
+
+.listItemBodyText {
+  color: var(--text);
+}
+
+.listItemImage {
+  border-radius: var(--r-xs);
+}
+
+.visualCardBox {
+  background-color: var(--bg-raised);
+  border: 1px solid var(--line);
+}
+
+/* --- MUI : listes ---------------------------------------------------- */
+.MuiListItemButton-root {
+  border-radius: var(--r-sm);
+}
+
+.MuiListItemButton-root:hover {
+  background-color: var(--veil-1);
+}
+
+.MuiListItemButton-root.Mui-selected,
+.MuiListItemButton-root.Mui-selected:hover {
+  background-color: var(--veil-2);
+}
+
+.MuiListItemButton-root.Mui-selected .MuiListItemText-primary {
+  font-weight: 600;
+}
+
+.MuiListItemIcon-root {
+  color: var(--text-2);
+}
+
+.Mui-selected .MuiListItemIcon-root {
+  color: var(--text);
+}
+
+.MuiListItemText-secondary {
+  color: var(--text-2);
+}
+
+.MuiListSubheader-root {
+  background: transparent;
+  color: var(--text-3);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  line-height: 2.6;
+  text-transform: uppercase;
+}
+
+/* --- MUI : cartes ---------------------------------------------------- */
+.MuiCard-root {
+  background-color: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  box-shadow: none;
+}
+
+.MuiCardActionArea-root:hover .MuiCardActionArea-focusHighlight {
+  opacity: 0.04;
+}
+
+/* --- MUI : tableaux -------------------------------------------------- */
+.MuiTableContainer-root {
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+}
+
+.MuiTableContainer-root > .MuiTable-root {
+  border-collapse: separate;
+}
+
+.MuiTableCell-root {
+  border-bottom-color: var(--line);
+}
+
+.MuiTableCell-head {
+  background-color: var(--bg-raised);
+  color: var(--text-2);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.MuiTableBody-root .MuiTableRow-root:last-child > .MuiTableCell-root {
+  border-bottom: 0;
+}
+
+.MuiTableRow-hover:hover {
+  background-color: var(--veil-1) !important;
+}
+
+.MuiTableRow-root.Mui-selected,
+.MuiTableRow-root.Mui-selected:hover {
+  background-color: var(--veil-2);
+}
+
+.MuiTableSortLabel-root.Mui-active,
+.MuiTableSortLabel-root.Mui-active .MuiTableSortLabel-icon {
+  color: var(--text) !important;
+}
+
+.MuiTablePagination-root {
+  color: var(--text-2);
+}
+
+/* --- Pagination ------------------------------------------------------ */
+.MuiPaginationItem-root {
+  border-radius: var(--r-pill);
+}
+
+.MuiPaginationItem-root.Mui-selected,
+.MuiPaginationItem-root.Mui-selected:hover {
+  background-color: var(--primary);
+  color: var(--on-primary);
+}
+
+/* --- Chargement ------------------------------------------------------ */
+.MuiLinearProgress-root {
+  border-radius: var(--r-pill);
+  background-color: var(--veil-2);
+}
+
+.MuiLinearProgress-bar {
+  border-radius: var(--r-pill);
+}
+
+.MuiCircularProgress-root {
+  color: var(--primary);
+}
+
+.MuiSkeleton-root {
+  background-color: var(--veil-1);
+}
+
+.MuiSkeleton-rounded {
+  border-radius: var(--r-md);
+}
+
+.progressring-spiner,
+.mdl-spinner__layer {
+  border-color: var(--primary) !important;
+}

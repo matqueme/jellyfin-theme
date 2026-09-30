@@ -1,0 +1,150 @@
+/* --- 10. Base ----------------------------------------------------------
+   Fond, police, texte, liens, barres de defilement, selection. Ce qui est
+   commun a toutes les pages, anciennes comme MUI. */
+
+html {
+  background-color: var(--bg);
+  color: var(--text-2);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* La police sur tout ce qui ne l'herite pas : les controles de formulaire
+   ont leur propre police par defaut dans tous les navigateurs. */
+body,
+button,
+input,
+select,
+textarea,
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font);
+}
+
+/* MUI compile sa police en dur dans chaque composant, sans passer par
+   les variables --jf-font-* : il faut la reposer sur chacun. */
+.MuiTypography-root,
+.MuiButtonBase-root,
+.MuiInputBase-root,
+.MuiFormLabel-root,
+.MuiFormHelperText-root,
+.MuiFormControlLabel-label,
+.MuiTableCell-root,
+.MuiChip-root,
+.MuiAlert-root,
+.MuiTooltip-tooltip,
+.MuiListSubheader-root,
+.MuiSnackbarContent-root,
+.MuiPickersLayout-root {
+  font-family: var(--font);
+}
+
+h1,
+h2,
+h3,
+h4,
+.sectionTitle,
+.pageTitle,
+.MuiTypography-h1,
+.MuiTypography-h2,
+.MuiTypography-h3,
+.MuiTypography-h4,
+.MuiTypography-h5,
+.MuiTypography-h6 {
+  color: var(--text);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.sectionTitle-cards {
+  font-size: 1.3em;
+}
+
+.fieldDescription,
+.secondaryText,
+.cardText-secondary,
+.listItem .secondary {
+  color: var(--text-2);
+}
+
+/* Liens de texte : blancs et soulignes, pas de couleur de lien. Les liens
+   habilles en bouton (.emby-button) gardent leur propre style. */
+a:not(.emby-button):not(.MuiButtonBase-root):not(.cardImageContainer):not(.itemAction) {
+  color: inherit;
+}
+
+.button-link,
+a.button-link {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--text-3);
+  text-underline-offset: 0.2em;
+}
+
+.button-link:hover {
+  text-decoration-color: currentColor;
+}
+
+::selection {
+  background: rgb(var(--primary-canal) / 0.25);
+  color: var(--text);
+}
+
+/* --- Defilement ------------------------------------------------------ */
+* {
+  scrollbar-color: var(--veil-3) transparent;
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--veil-3);
+  border: 2px solid transparent;
+  border-radius: var(--r-pill);
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(255 255 255 / 0.25);
+}
+
+/* --- Fond ------------------------------------------------------------
+   .backgroundContainer porte la couleur de page, et l'image de fond de
+   l'item quand l'option est active. L'image est floutee et assombrie : un
+   fond qui situe, pas une deuxieme affiche derriere le texte. */
+.backgroundContainer {
+  background-color: var(--bg);
+}
+
+.backgroundContainer.withBackdrop {
+  opacity: 1;
+}
+
+.backdropImage {
+  filter: blur(28px) saturate(1.1) brightness(0.35);
+  transform: scale(1.08); /* le flou degage les bords, on les deborde */
+}
+
+/* --- Focus clavier ---------------------------------------------------
+   Les anciens composants s'annoncent au focus par un zoom (.show-focus),
+   que 80-tv.css reprend pour la telecommande. A la souris et au clavier,
+   un anneau suffit, et c'est le meme partout. */
+:focus-visible {
+  outline: none;
+}
+
+.emby-button:focus-visible,
+.paper-icon-button-light:focus-visible,
+.MuiButtonBase-root.Mui-focusVisible {
+  box-shadow: var(--ring);
+}

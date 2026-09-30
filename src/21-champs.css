@@ -1,0 +1,213 @@
+/* --- 21. Champs et listes deroulantes ----------------------------------
+   Un seul dessin pour tout ce qui se remplit : fond voile, filet d'un
+   pixel, coins a --r-sm. Au focus le filet passe au blanc et un halo
+   discret l'epaissit, sans decaler le contenu.
+
+   Deux familles a aligner :
+   - les anciens, .emby-input / .emby-textarea / .emby-select, sur les
+     pages que la 12 rend encore avec ses controleurs d'avant ;
+   - les MUI, en variante « filled » par defaut (MuiFormControl dans le
+     theme du client) : dashboard, preferences d'affichage. MUI y dessine
+     un soulignement anime, retire ici au profit du filet. */
+
+/* --- Anciens composants --------------------------------------------- */
+.emby-input,
+.emby-textarea,
+.emby-select-withcolor {
+  background: var(--veil-1);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  color: var(--text);
+  transition:
+    border-color var(--t-fast) var(--ease),
+    background-color var(--t-fast) var(--ease),
+    box-shadow var(--t-fast) var(--ease);
+}
+
+.emby-input,
+.emby-textarea {
+  padding: 0.6em 0.8em;
+}
+
+.emby-textarea {
+  font-family: ui-monospace, "Cascadia Code", Menlo, monospace;
+  font-size: 0.9em;
+  line-height: 1.5;
+}
+
+/* La fleche est un frere en position absolue, d'ou 2.2em a droite. */
+[dir="ltr"] .emby-select-withcolor {
+  padding: 0.6em 2.2em 0.6em 0.8em;
+}
+
+[dir="rtl"] .emby-select-withcolor {
+  padding: 0.6em 0.8em 0.6em 2.2em;
+}
+
+[dir="ltr"] .selectContainer-inline > .emby-select-withcolor {
+  padding: 0.35em 2em 0.35em 0.75em;
+}
+
+[dir="rtl"] .selectContainer-inline > .emby-select-withcolor {
+  padding: 0.35em 0.75em 0.35em 2em;
+}
+
+.emby-input:hover,
+.emby-textarea:hover,
+.emby-select-withcolor:hover {
+  background: var(--veil-2);
+}
+
+.emby-input:focus,
+.emby-textarea:focus,
+.emby-select-withcolor:focus {
+  background: var(--veil-2);
+  border-color: var(--primary) !important; /* le theme de base l'impose */
+  box-shadow: 0 0 0 3px rgb(var(--primary-canal) / 0.12);
+}
+
+/* Les options du menu natif prennent le fond du select, voile compris,
+   donc transparent : sans fond propre, Chrome les affiche en blanc. */
+.emby-select-withcolor > option,
+.emby-select-withcolor > optgroup {
+  background: var(--bg-overlay);
+  color: var(--text);
+}
+
+.selectArrowContainer {
+  color: var(--text-2);
+}
+
+.inputLabel,
+.selectLabel,
+.textareaLabel,
+.inputLabelUnfocused,
+.textareaLabelUnfocused {
+  color: var(--text-2);
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+.inputLabelFocused,
+.selectLabelFocused,
+.textareaLabelFocused {
+  color: var(--text);
+}
+
+.fieldDescription {
+  font-size: 0.88em;
+  line-height: 1.5;
+}
+
+/* Les selects de pistes de la page d'item (Video, Audio, Sous-titres) :
+   sans cadre, en ligne avec leur libelle ; on leur donne la forme d'une
+   pastille cliquable pour qu'ils se lisent comme des controles. */
+.trackSelections .selectContainer .detailTrackSelect {
+  background: var(--veil-1);
+  border: 1px solid transparent;
+  border-radius: var(--r-pill);
+  padding: 0.25em 2em 0.25em 0.8em;
+}
+
+.trackSelections .selectContainer .detailTrackSelect:hover {
+  background: var(--veil-2);
+}
+
+.trackSelections .selectContainer .detailTrackSelect[disabled] {
+  background: none !important;
+  padding-left: 0.8em;
+}
+
+.trackSelections .selectContainer .selectArrowContainer {
+  right: 0.6em;
+}
+
+/* --- MUI ------------------------------------------------------------- */
+.MuiFilledInput-root {
+  background-color: var(--veil-1);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  transition:
+    border-color var(--t-fast) var(--ease),
+    background-color var(--t-fast) var(--ease),
+    box-shadow var(--t-fast) var(--ease);
+}
+
+.MuiFilledInput-root:hover {
+  background-color: var(--veil-2);
+}
+
+.MuiFilledInput-root.Mui-focused {
+  background-color: var(--veil-2);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgb(var(--primary-canal) / 0.12);
+}
+
+.MuiFilledInput-root.Mui-error {
+  border-color: var(--danger);
+}
+
+.MuiFilledInput-root.Mui-disabled {
+  background-color: transparent;
+  border-style: dashed;
+}
+
+/* Le soulignement de MUI : deux pseudo-elements, repos et focus. */
+.MuiFilledInput-root::before,
+.MuiFilledInput-root::after {
+  display: none;
+}
+
+.MuiOutlinedInput-root {
+  border-radius: var(--r-sm);
+}
+
+.MuiOutlinedInput-notchedOutline {
+  border-color: var(--line-strong);
+}
+
+.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: var(--text-3);
+}
+
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: var(--primary);
+  border-width: 1px;
+}
+
+/* Variante « standard » (soulignee) : rare, mais presente dans les
+   selecteurs de date. On garde le trait, en gris puis blanc. */
+.MuiInput-underline::before {
+  border-bottom-color: var(--line-strong);
+}
+
+.MuiInput-underline::after {
+  border-bottom-color: var(--primary);
+}
+
+.MuiInputLabel-root {
+  color: var(--text-2);
+}
+
+.MuiInputLabel-root.Mui-focused {
+  color: var(--text);
+}
+
+.MuiFormHelperText-root {
+  color: var(--text-2);
+  margin-left: 0.2em;
+}
+
+.MuiSelect-icon,
+.MuiNativeSelect-icon {
+  color: var(--text-2);
+}
+
+.MuiInputAdornment-root {
+  color: var(--text-2);
+}
+
+/* Autocomplete : les puces des valeurs choisies. */
+.MuiAutocomplete-tag {
+  border-radius: var(--r-pill);
+}

@@ -1,16 +1,12 @@
-/* --- Imports distants ------------------------------------------------
-   Les seuls @import qui subsistent dans le fichier construit. Tout le
-   reste, Ultrachromic compris, est fusionne par build.py.
+/* --- 00. Imports distants ---------------------------------------------
+   Les deux seules feuilles qui ne sont pas dans ce depot : des polices.
+   Elles ne peuvent pas etre fusionnees, leurs @font-face pointent vers des
+   .woff2 par des URL relatives a leur propre emplacement.
 
-   Ils ne peuvent pas etre fusionnes : ce sont des feuilles de police, qui
-   declarent des @font-face pointant vers des .woff2 par des URL relatives.
-   Les recopier ici casserait la resolution de ces URL.
+   build.py les remonte en tete du fichier construit : un @import place
+   apres une regle est ignore par le navigateur.
 
-   build.py les remonte en tete du fichier construit, quelle que soit leur
-   place ici : un @import place apres une regle est ignore par le
-   navigateur. Le meme traitement s'applique a l'import Google Fonts que
-   porte vendor/ultrachromic/jf_font.css.
-
-   Version de Phosphor epinglee : une mise a jour changerait les points de
-   code, donc les icones de 07-icones.css. */
+   Versions epinglees : une mise a jour de Phosphor changerait les points
+   de code, donc les icones de 90-icones.css. */
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
 @import url("https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/bold/style.css");

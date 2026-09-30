@@ -1,0 +1,132 @@
+/* --- 25. Onglets, puces, badges ----------------------------------------
+   Onglets : pilules. L'onglet actif est un voile, le texte des autres est
+   en gris ; pas de trait de soulignement, ni ancien ni MUI. Puces : voile
+   et filet. Badges : pastille blanche, chiffre noir. */
+
+/* --- Anciens onglets -------------------------------------------------
+   Pages de bibliotheque (Films / Suggestions / Collections...), guide TV,
+   pages de preferences. */
+.emby-tabs-slider {
+  display: flex;
+  gap: 0.25em;
+}
+
+.emby-tab-button {
+  border-radius: var(--r-pill);
+  color: var(--text-2);
+  font-weight: 600;
+  padding: 0.5em 1.1em;
+  transition:
+    background-color var(--t-fast) var(--ease),
+    color var(--t-fast) var(--ease);
+}
+
+.emby-tab-button:hover {
+  background-color: var(--veil-1);
+  color: var(--text);
+}
+
+.emby-tab-button-active,
+.emby-tab-button-active:hover {
+  background-color: var(--veil-2);
+  color: var(--text);
+}
+
+/* Le trait anime sous l'onglet actif. */
+.emby-tab-button-selection-bar,
+.emby-tabs-slider .emby-tab-button::after {
+  display: none !important;
+}
+
+/* --- Onglets MUI (dashboard, preferences) ---------------------------- */
+.MuiTabs-indicator {
+  display: none;
+}
+
+.MuiTab-root {
+  border-radius: var(--r-pill);
+  color: var(--text-2);
+  font-weight: 600;
+  min-height: 2.4em;
+  margin: 0.4em 0.15em;
+  padding: 0.4em 1em;
+  text-transform: none;
+}
+
+.MuiTab-root:hover {
+  background-color: var(--veil-1);
+  color: var(--text);
+}
+
+.MuiTab-root.Mui-selected {
+  background-color: var(--veil-2);
+  color: var(--text);
+}
+
+/* --- Puces ----------------------------------------------------------- */
+.MuiChip-root {
+  border-radius: var(--r-pill);
+  font-weight: 500;
+}
+
+.MuiChip-filled {
+  background-color: var(--veil-2);
+  color: var(--text);
+}
+
+.MuiChip-outlined {
+  border-color: var(--line-strong);
+}
+
+.MuiChip-clickable:hover {
+  background-color: var(--veil-3);
+}
+
+.MuiChip-colorPrimary.MuiChip-filled {
+  background-color: var(--primary);
+  color: var(--on-primary);
+}
+
+.MuiChip-colorSuccess.MuiChip-filled {
+  background-color: rgb(var(--success-canal) / 0.16);
+  color: var(--success);
+}
+
+.MuiChip-colorError.MuiChip-filled {
+  background-color: rgb(var(--danger-canal) / 0.16);
+  color: var(--danger);
+}
+
+.MuiChip-colorWarning.MuiChip-filled {
+  background-color: rgb(var(--warning-canal) / 0.16);
+  color: var(--warning);
+}
+
+/* Etiquettes d'info de la page d'item (FR-TP, HDR, duree...). */
+.mediaInfoText {
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-xs);
+  color: var(--text-2);
+  font-weight: 600;
+  padding: 0.1em 0.5em;
+}
+
+/* --- Badges ---------------------------------------------------------- */
+.MuiBadge-badge {
+  font-weight: 700;
+}
+
+.MuiBadge-colorPrimary {
+  background-color: var(--primary);
+  color: var(--on-primary);
+}
+
+.MuiAvatar-root {
+  font-weight: 600;
+}
+
+.MuiAvatar-colorDefault {
+  background-color: var(--veil-3);
+  color: var(--text);
+}
