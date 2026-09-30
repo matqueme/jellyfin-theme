@@ -1,6 +1,6 @@
 /* =====================================================================
    Theme Jellyfin, par matqueme
-   Version 3.1.1, pour Jellyfin 12.x, layout Modern
+   Version 3.1.2, pour Jellyfin 12.x, layout Modern
 
    FICHIER CONSTRUIT : NE PAS EDITER.
    Genere par build.py depuis src/. Toute modification faite ici sera
@@ -3031,8 +3031,18 @@ h1.itemName {
    pose que par la navigation directionnelle : la souris n'est pas
    concernee. */
 
-:root {
+/* :root.layout-tv plutot que .layout-tv : meme poids que le :root de
+   01-tokens.css, et 80 vient apres. */
+:root.layout-tv {
   --tv-card-zoom: 1.05;
+
+  /* Un anneau de 2px ne se voit pas a trois metres. */
+  --ring: 0 0 0 3px var(--bg), 0 0 0 6px var(--primary);
+
+  /* Pas de verre floute sur TV : voir « Verre et flou » plus bas. Le verre
+     devient un aplat presque opaque, comme sans backdrop-filter. */
+  --glass: var(--glass-opaque);
+  --glass-strong: var(--glass-opaque);
 }
 
 .emby-button.show-focus:focus,
@@ -3041,8 +3051,21 @@ h1.itemName {
 .listItem.show-focus:focus,
 .actionSheetMenuItem.show-focus:focus {
   background: var(--primary) !important;
+  box-shadow: none !important; /* l'anneau de 10-base, en plus du plein, se dedoublait */
   color: var(--on-primary) !important;
   transform: none !important;
+}
+
+/* Le plein blanc ne suffit pas : le libelle d'une ligne de parametres
+   (.listItemBodyText), les textes secondaires et les icones ont leur
+   propre couleur, et restaient blancs sur blanc. Tout ce qui est dans
+   l'element vise prend sa couleur. */
+.emby-button.show-focus:focus *,
+.paper-icon-button-light.show-focus:focus *,
+.emby-tab-button.show-focus:focus *,
+.listItem.show-focus:focus *,
+.actionSheetMenuItem.show-focus:focus * {
+  color: inherit !important;
 }
 
 .emby-tab-button.show-focus:focus {
@@ -3073,10 +3096,14 @@ h1.itemName {
 }
 
 /* Le client dessine son propre cadre de focus sur les cartes : une
-   bordure de 0.3em, en couleur d'accent. L'anneau le remplace. */
-.layout-tv .card.show-focus:focus .cardBox,
-.layout-tv .card.show-focus:focus .cardScalable {
-  border-color: transparent !important;
+   bordure de 0.5em, transparente au repos, en couleur d'accent au focus,
+   posee sur toutes les cartes .show-focus (pas seulement la carte visee).
+   La rendre transparente ne suffisait pas : les 13px restaient, et le fond
+   de la page s'y voyait comme un gros cadre noir entre l'affiche et
+   l'anneau. On la retire : l'anneau la remplace. */
+.layout-tv .card.show-focus .cardBox.visualCardBox,
+.layout-tv .card.show-focus .cardBox:not(.visualCardBox) .cardScalable {
+  border-width: 0 !important;
 }
 
 /* Page d'item : le logo n'a pas de place prevue en TV. */
@@ -3095,6 +3122,122 @@ h1.itemName {
   background: var(--primary) !important;
   color: var(--on-primary) !important;
   box-shadow: none;
+}
+
+/* --- En-tete ---------------------------------------------------------
+   En TV, l'ancien en-tete (.skinHeader) est en position: relative et
+   defile avec la page. Les onglets y remontent dans la ligne du haut par
+   une marge de -4.3em, calculee pour les grands onglets du client : avec
+   nos pilules, moins hautes, l'en-tete retombait a 63px pour 118px de
+   contenu, et son contain: paint rognait le logo, les icones et l'heure.
+   Les onglets sortent du flux et se centrent sur la ligne du haut, qui
+   donne seule sa hauteur a l'en-tete.
+
+   Pas de verre : rien ne passe dessous, il ne flouterait que le fond. */
+.layout-tv .skinHeader-withBackground {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+.layout-tv .skinHeader > .headerTabs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  margin: 0;
+  transform: translateX(-50%);
+}
+
+/* --- Verre et flou ---------------------------------------------------
+   Les TV n'ont pas le processeur graphique d'un ordinateur : un
+   backdrop-filter, recalcule a chaque image du defilement sur tout ce
+   qui passe dessous, saccade ou s'affiche par blocs. Les couleurs du
+   verre passent en aplat (voir :root.layout-tv), et ceci coupe tous les
+   backdrop-filter, par token ou ecrits en dur. Le flou de l'image
+   de fond, lui, reste : voir plus bas. */
+.layout-tv *,
+.layout-tv *::before,
+.layout-tv *::after {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Image de fond : floutee comme ailleurs (10-base.css). Un filter sur
+   l'image n'est calcule qu'une fois par image, au fondu ; c'est le
+   backdrop-filter, recalcule a chaque image du defilement, qui coute.
+
+   Page d'item : le client TV masque .itemBackdrop, le bandeau des autres
+   layouts. Comme sur ordinateur (50-page-item.css), l'image de fond y
+   reste nette et fait l'affiche en grand. Sans le verre du contenu, que
+   la TV n'a pas, un degrade assombrit la ou le texte se lit : a gauche,
+   ou sont l'affiche et le debut des lignes, et vers le bas. */
+.layout-tv:has(#itemDetailPage:not(.hide)) .backdropImage {
+  filter: saturate(1.1) brightness(0.8);
+  transform: none;
+}
+
+.layout-tv:has(#itemDetailPage:not(.hide)) .backgroundContainer.withBackdrop {
+  background:
+    linear-gradient(to right, rgb(var(--bg-canal) / 0.55), rgb(var(--bg-canal) / 0.2) 60%, transparent),
+    linear-gradient(to bottom, rgb(var(--bg-canal) / 0.3), transparent 25%, rgb(var(--bg-canal) / 0.55) 60%, rgb(var(--bg-canal) / 0.9));
+}
+
+/* Au defilement, le resume et la distribution passent sur l'image nette.
+   L'ordinateur les pose sur du verre ; ici un voile sans flou, porte par
+   le contenu, qui s'installe en fondu sous les boutons : le haut de la
+   page reste une affiche, la suite se lit. */
+.layout-tv #itemDetailPage .detailPageWrapperContainer {
+  background: transparent;
+  position: relative;
+}
+
+.layout-tv #itemDetailPage .detailPageWrapperContainer > * {
+  position: relative;
+  z-index: 1;
+}
+
+.layout-tv #itemDetailPage .detailPageWrapperContainer::before {
+  background: rgb(var(--bg-canal) / 0.72);
+  bottom: 0;
+  content: "";
+  left: 0;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 8em, #000 22em);
+  mask-image: linear-gradient(to bottom, transparent 8em, #000 22em);
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 0;
+}
+
+/* Le titre, les informations et le resume passent sur l'image nette :
+   l'ombre large de la version ordinateur les garde lisibles. */
+.layout-tv #itemDetailPage .detailPagePrimaryContainer,
+.layout-tv #itemDetailPage .detailPageSecondaryContainer {
+  text-shadow: 0 1px 2px rgb(0 0 0 / 0.5), 0 2px 18px rgb(0 0 0 / 0.6);
+}
+
+.layout-tv #itemDetailPage .mainDetailButtons {
+  text-shadow: none;
+}
+
+/* --- Defilement ------------------------------------------------------
+   41-rangees.css coupe le debordement horizontal de l'accueil et des
+   pages de recommandations par overflow-x: hidden, qui passe l'autre axe
+   en auto : la page devient son propre conteneur de defilement. Sur
+   ordinateur, c'est ce qui fait passer le contenu sous l'en-tete en verre.
+   Mais le client 10.11 embarque par les apps TV fait defiler la fenetre,
+   et son en-tete doit partir avec la page : il restait fige au-dessus du
+   contenu. clip coupe pareil sans creer de conteneur de defilement. */
+.layout-tv #indexPage,
+.layout-tv #moviesPage,
+.layout-tv #tvRecommendedPage,
+.layout-tv #musicRecommendedPage {
+  overflow-x: clip;
 }
 
 /* ===== 90-icones.css ===== */

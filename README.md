@@ -21,7 +21,7 @@ Livré en **un seul fichier** : `dist/theme.css`.
 Tableau de bord → Général → **CSS personnalisé**, une seule ligne :
 
 ```css
-@import url('https://cdn.jsdelivr.net/gh/matqueme/jellyfin-theme@v3.1.1/dist/theme.css');
+@import url('https://cdn.jsdelivr.net/gh/matqueme/jellyfin-theme@v3.1.2/dist/theme.css');
 ```
 
 Puis `Ctrl+F5` sur le client. L'`@import` doit rester la première chose du
@@ -54,11 +54,18 @@ Phosphor) et les SVG Phosphor des icônes MUI restent chargés depuis un CDN.
 > Le CSS de branding s'applique au client web et aux clients qui l'embarquent
 > (navigateur, application de bureau, Android TV en mode web). Les clients
 > natifs, comme Roku ou l'app Android native, ne le lisent pas.
+>
+> L'app Samsung (Tizen) lit bien le CSS de branding, mais elle embarque son
+> propre client web, figé à sa compilation (10.11 pour l'app 1.1.0), en
+> layout TV : ce n'est pas le client 12 du serveur. `src/80-tv.css` couvre
+> ce cas : pas de verre flouté (trop lourd pour une TV), hero net sur la page
+> d'item, en-tête et focus adaptés.
 
 ## Compatibilité
 
 | Thème | Jellyfin | Base |
 |---|---|---|
+| `v3.1.2` | 12.x, layout Modern (+ app Samsung, client 10.11) | aucune |
 | `v3.1.1` | 12.x, layout Modern | aucune |
 | `v3.1.0` | 12.x, layout Modern | aucune |
 | `v3.0.0` | 12.x, layout Modern | aucune |

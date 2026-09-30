@@ -4,6 +4,39 @@ Format : [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/).
 Versionnage sémantique, indépendant de celui de Jellyfin : la compatibilité
 est indiquée par le titre de chaque version.
 
+## [3.1.2] - 2026-09-30 - Jellyfin 12.x, layout Modern
+
+### Corrige
+
+Application Samsung (Tizen) : elle n'utilise pas le client du serveur mais
+embarque le sien, un client 10.11 en layout TV. Verifie en servant le
+client 10.11.11 avec un user-agent Tizen 9.
+
+- Gros cadre noir entre l'affiche et l'anneau blanc de la carte visee : le
+  client pose une bordure transparente de 0.5em sur toutes les cartes
+  `.show-focus`, et le fond de la page s'y voyait. Elle est retiree,
+  l'anneau la remplace ; il passe a 3px + 3px en TV pour se voir de loin.
+- En-tete rogne (logo, icones et heure coupes en bas) : les onglets y
+  remontent par une marge de -4.3em calculee pour les grands onglets du
+  client, et l'en-tete retombait a 63px pour 118px de contenu. Les onglets
+  sortent du flux et se centrent sur la ligne du haut.
+- En-tete fige au-dessus du contenu au defilement : le `overflow-x: hidden`
+  de l'accueil faisait de la page son propre conteneur de defilement, alors
+  que le client 10.11 fait defiler la fenetre. En TV, `overflow-x: clip`.
+- Verre sans flou en TV (en-tete, dialogues, pastilles) : un
+  `backdrop-filter`, recalcule a chaque image du defilement, saccade ou
+  s'affiche par blocs sur une TV. Il devient un aplat presque opaque, et
+  l'en-tete, qui defile avec la page, est transparent. Le fond d'ecran
+  garde son flou : un `filter` sur l'image n'est calcule qu'une fois.
+- Page d'item sans image en TV : le client TV masque le bandeau
+  (`.itemBackdrop`). Comme sur ordinateur, l'image de fond y reste nette
+  et fait l'affiche en grand, sous un degrade ; le contenu porte un voile
+  sans flou qui s'installe en fondu sous les boutons.
+- Onglet vise : l'anneau de focus se dedoublait par-dessus le plein blanc.
+- Parametres illisibles a la telecommande : la ligne visee passait en
+  plein blanc, mais son libelle et ses textes secondaires restaient
+  blancs. Tout le contenu de l'element vise prend son texte noir.
+
 ## [3.1.1] - 2026-09-30 - Jellyfin 12.x, layout Modern
 
 ### Corrige
