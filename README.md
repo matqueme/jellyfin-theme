@@ -9,29 +9,10 @@ tableau de bord d'administration.
 Un seul fichier CSS, une seule ligne à coller : `dist/theme.css`.
 
 <p align="center">
-  <img src="docs/images/accueil.png" alt="Accueil" width="100%">
+  <img src="docs/images/apercu.webp" alt="Aperçu du thème : cartes, menus, lecteur, bibliothèque, page d'item, TV, mobile et tableau de bord" width="100%">
 </p>
 
-<table>
-  <tr>
-    <td width="50%"><img src="docs/images/page-item.png" alt="Page d'un film"><br><sub><b>Page d'item</b> : hero net, verre flouté</sub></td>
-    <td width="50%"><img src="docs/images/bibliotheque.png" alt="Bibliothèque"><br><sub><b>Bibliothèque</b> : cartes, indicateurs, sélecteur alphabétique</sub></td>
-  </tr>
-  <tr>
-    <td><img src="docs/images/lecteur.png" alt="Lecteur"><br><sub><b>Lecteur</b> : barre de lecture et OSD</sub></td>
-    <td><img src="docs/images/connexion.png" alt="Connexion"><br><sub><b>Connexion</b></sub></td>
-  </tr>
-  <tr>
-    <td><img src="docs/images/dashboard.png" alt="Tableau de bord"><br><sub><b>Tableau de bord</b> d'administration</sub></td>
-    <td><img src="docs/images/preferences.png" alt="Préférences"><br><sub><b>Préférences</b> : champs, listes, cases</sub></td>
-  </tr>
-  <tr>
-    <td><img src="docs/images/tv.png" alt="Layout TV"><br><sub><b>Layout TV</b> : navigation à la télécommande</sub></td>
-    <td align="center"><img src="docs/images/mobile.png" alt="Mobile" height="420"><br><sub><b>Mobile</b> : page d'item</sub></td>
-  </tr>
-</table>
-
-<sub>Captures prises avec de faux films, sans aucun contenu protégé.</sub>
+<sub>Captures prises sur un serveur Jellyfin 12.1 de test. Affiches et visuels : © leurs ayants droit, via TMDb.</sub>
 
 ## Installation
 
