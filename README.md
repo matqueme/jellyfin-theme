@@ -8,24 +8,30 @@ tableau de bord d'administration.
 
 Un seul fichier CSS, une seule ligne à coller : `dist/theme.css`.
 
-<!-- APERCU : captures de la v3 à déposer dans docs/images/, puis décommenter
-
 <p align="center">
   <img src="docs/images/accueil.png" alt="Accueil" width="100%">
 </p>
 
-| | |
-|---|---|
-| <img src="docs/images/page-item.png" alt="Page d'un film"> | <img src="docs/images/bibliotheque.png" alt="Bibliothèque"> |
-| **Page d'item** : hero net, verre flouté | **Bibliothèque** : cartes, survol, indicateurs |
-| <img src="docs/images/lecteur.png" alt="Lecteur"> | <img src="docs/images/connexion.png" alt="Connexion"> |
-| **Lecteur** : OSD, « À suivre » | **Connexion** |
-| <img src="docs/images/mobile.png" alt="Mobile"> | <img src="docs/images/tv.png" alt="Layout TV"> |
-| **Mobile** | **TV** (Samsung / Tizen) |
-| <img src="docs/images/dashboard.png" alt="Tableau de bord"> | <img src="docs/images/preferences.png" alt="Préférences"> |
-| **Tableau de bord** d'administration | **Préférences** : champs, listes, interrupteurs |
+<table>
+  <tr>
+    <td width="50%"><img src="docs/images/page-item.png" alt="Page d'un film"><br><sub><b>Page d'item</b> : hero net, verre flouté</sub></td>
+    <td width="50%"><img src="docs/images/bibliotheque.png" alt="Bibliothèque"><br><sub><b>Bibliothèque</b> : cartes, indicateurs, sélecteur alphabétique</sub></td>
+  </tr>
+  <tr>
+    <td><img src="docs/images/lecteur.png" alt="Lecteur"><br><sub><b>Lecteur</b> : barre de lecture et OSD</sub></td>
+    <td><img src="docs/images/connexion.png" alt="Connexion"><br><sub><b>Connexion</b></sub></td>
+  </tr>
+  <tr>
+    <td><img src="docs/images/dashboard.png" alt="Tableau de bord"><br><sub><b>Tableau de bord</b> d'administration</sub></td>
+    <td><img src="docs/images/preferences.png" alt="Préférences"><br><sub><b>Préférences</b> : champs, listes, cases</sub></td>
+  </tr>
+  <tr>
+    <td><img src="docs/images/tv.png" alt="Layout TV"><br><sub><b>Layout TV</b> : navigation à la télécommande</sub></td>
+    <td align="center"><img src="docs/images/mobile.png" alt="Mobile" height="420"><br><sub><b>Mobile</b> : page d'item</sub></td>
+  </tr>
+</table>
 
--->
+<sub>Captures prises avec de faux films, sans aucun contenu protégé.</sub>
 
 ## Installation
 
