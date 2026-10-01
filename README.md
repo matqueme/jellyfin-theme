@@ -8,9 +8,35 @@ tableau de bord d'administration.
 
 Un seul fichier CSS, une seule ligne à coller : `dist/theme.css`.
 
-<p align="center">
-  <img src="docs/images/apercu.webp" alt="Aperçu du thème : cartes, menus, lecteur, bibliothèque, page d'item, TV, mobile et tableau de bord" width="100%">
-</p>
+## Aperçu
+
+### Accueil
+
+Les rangées, l'en-tête en verre, des cartes qui se soulèvent au survol.
+
+![Accueil](docs/images/accueil.webp)
+
+### Page d'un film
+
+Hero net, boutons ronds, fiche lisible.
+
+![Page d'un film](docs/images/page-item.webp)
+
+### Bibliothèque
+
+Cartes, pastilles « vu », barre de progression, index alphabétique.
+
+![Bibliothèque](docs/images/bibliotheque.webp)
+
+### Menus, filtres, connexion et préférences
+
+Un seul dessin pour les anciens composants du client et pour ceux de MUI.
+
+![Menu, filtres, connexion et préférences](docs/images/composants.webp)
+
+### Mobile et TV
+
+![Page d'un film sur mobile, accueil en layout TV](docs/images/mobile-tv.webp)
 
 <sub>Captures prises sur un serveur Jellyfin 12.1 de test. Affiches et visuels : © leurs ayants droit, via TMDb.</sub>
 
