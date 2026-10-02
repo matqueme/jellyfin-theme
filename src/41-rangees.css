@@ -117,6 +117,16 @@
   overflow-x: hidden;
 }
 
+/* Premiere rangee d'une bibliotheque : la page defile sous la barre, qui
+   rogne ce qui la depasse. Au survol une carte monte de --card-lift (6px) et
+   son anneau deborde de 4px : le client ne laisse que 11px (0.75rem) entre
+   la barre et la grille, 1px de moins que ce que demande le survol, et le
+   haut de la carte etait coupe. L'accueil n'a pas ce defaut, ses rangees ont deja
+   leur propre marge. */
+.libraryPage .itemsContainer.vertical-wrap {
+  padding-top: 1.25rem;
+}
+
 /* Barre de la bibliotheque : titre, fleche et compteur centres a l'encre.
    Les boites sont centrees (mesure : 0.00px d'ecart) mais Plus Jakarta Sans
    pose sa ligne de base un peu bas dans la sienne : a 4x, le texte « Movies »

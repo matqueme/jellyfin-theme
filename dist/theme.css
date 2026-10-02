@@ -1,6 +1,6 @@
 /* =====================================================================
    Theme Jellyfin, par matqueme
-   Version 3.1.3, pour Jellyfin 12.x, layout Modern
+   Version 3.1.4, pour Jellyfin 12.x, layout Modern
 
    FICHIER CONSTRUIT : NE PAS EDITER.
    Genere par build.py depuis src/. Toute modification faite ici sera
@@ -2394,6 +2394,16 @@ a[data-role="button"]:focus {
 #tvRecommendedPage,
 #musicRecommendedPage {
   overflow-x: hidden;
+}
+
+/* Premiere rangee d'une bibliotheque : la page defile sous la barre, qui
+   rogne ce qui la depasse. Au survol une carte monte de --card-lift (6px) et
+   son anneau deborde de 4px : le client ne laisse que 11px (0.75rem) entre
+   la barre et la grille, 1px de moins que ce que demande le survol, et le
+   haut de la carte etait coupe. L'accueil n'a pas ce defaut, ses rangees ont deja
+   leur propre marge. */
+.libraryPage .itemsContainer.vertical-wrap {
+  padding-top: 1.25rem;
 }
 
 /* Barre de la bibliotheque : titre, fleche et compteur centres a l'encre.

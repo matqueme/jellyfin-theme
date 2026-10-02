@@ -7,6 +7,16 @@ title of each version.
 The history up to 3.1.2 was originally written in French and translated
 afterwards. File names under `src/` are French, and appear as they are.
 
+## [3.1.4] - 2026-10-02 - Jellyfin 12.x, Modern layout
+
+### Fixed
+
+- Hover of the first row of a library: the card rises by 6px and its ring
+  overflows by 4px, but the page scrolls under the toolbar, which clips
+  whatever goes past it, and the client only leaves 11px between the two: the
+  top of the hovered card was cut off. The grid now starts 1.25rem below the
+  toolbar. The home page was not affected.
+
 ## [3.1.3] - 2026-10-02 - Jellyfin 12.x, Modern layout
 
 ### Fixed
