@@ -7,6 +7,31 @@ title of each version.
 The history up to 3.1.2 was originally written in French and translated
 afterwards. File names under `src/` are French, and appear as they are.
 
+## [3.2.0] - 2026-10-02 - Jellyfin 12.x, Modern layout
+
+### Changed
+
+- Episode rows (season and collection pages), redesigned:
+  - The thumbnails touched each other and had the corners of `.listItemImage`.
+    They now have a gap and the 14px radius of the cards, and the row has a
+    rounded hover background (20px) that wraps the thumbnail.
+  - The thumbnail is smaller on desktop: 15.75vw (236px at 1500px) instead of
+    19.5vw (293px), same proportions. Below 64em the client's own sizes apply.
+  - Play button: the client draws a dark disc with a grey triangle that turns
+    cyan and grows on hover, which is neither the theme's colour nor its
+    motion. At rest it is a dark disc with a white icon; when the thumbnail is
+    hovered it becomes the white disc with a black icon of the cards' play
+    button, without growing.
+
+### Fixed
+
+- On desktop, only the small play button started an episode, although the
+  whole thumbnail reacted to hover (the client wires no action on the
+  thumbnail there). The button's `::before` now covers the whole thumbnail, so
+  a click anywhere on it plays the episode. The button has no
+  `backdrop-filter` for that: it would make the button the containing block of
+  the `::before`.
+
 ## [3.1.9] - 2026-10-02 - Jellyfin 12.x, Modern layout
 
 ### Changed

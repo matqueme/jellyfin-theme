@@ -1,6 +1,6 @@
 /* =====================================================================
    Theme Jellyfin, par matqueme
-   Version 3.1.9, pour Jellyfin 12.x, layout Modern
+   Version 3.2.0, pour Jellyfin 12.x, layout Modern
 
    FICHIER CONSTRUIT : NE PAS EDITER.
    Genere par build.py depuis src/. Toute modification faite ici sera
@@ -1432,6 +1432,94 @@ a[data-role="button"]:focus {
 
 .listItemImage {
   border-radius: var(--r-xs);
+}
+
+/* Lignes d'episodes (saison, collection) : une vignette large et un bouton
+   lecture. Les vignettes se touchaient et leurs coins etaient ceux de
+   .listItemImage ; elles ont maintenant l'espace et l'arrondi des cartes, et
+   la ligne un fond de survol arrondi qui les enveloppe. */
+.listItem-largeImage {
+  border-radius: var(--r-lg);
+  margin-bottom: 0.4em;
+  padding: 0.6em;
+}
+
+.listItemImage-large {
+  border-radius: var(--r-md);
+  box-shadow: 0 10px 24px -14px rgb(0 0 0 / 0.8);
+}
+
+/* Plus petite sur ordinateur : a 19.5vw (293px a 1500px) elle prenait plus
+   de place que le texte. Meme proportions que le client (13 pour 19.5). Sous
+   64em le client reprend la main (22vw). */
+@media (min-width: 64.0625em) {
+  .listItemImage-large {
+    height: 10.5vw;
+    width: 15.75vw;
+  }
+}
+
+/* Bouton lecture de la vignette. Le client en fait un disque sombre a
+   triangle gris, qui passe au bleu et grossit au survol : ni la couleur ni
+   le mouvement ne sont ceux du theme. Au repos, une pastille de verre comme
+   celles des cartes ; quand la vignette est survolee, le disque blanc a
+   icone noire du bouton lecture des cartes, sans agrandissement.
+
+   Sur ordinateur le client ne branche aucune action sur la vignette : seul
+   le bouton lance l'episode, alors que toute la vignette reagit au survol.
+   Le ::before du bouton couvre la vignette entiere (.listItemImage est en
+   position: relative, le bouton est remis en static pour cela) : un clic
+   n'importe ou dessus est un clic sur le bouton. Pas de backdrop-filter sur
+   le bouton : il en ferait le bloc conteneur du ::before, qui ne couvrirait
+   plus que lui. Le disque est donc un voile sombre, sans flou. */
+.listItemImage .listItemImageButton {
+  align-items: center;
+  background-color: rgb(0 0 0 / 0.5);
+  border-radius: 50%;
+  box-shadow: var(--glass-edge);
+  color: #fff;
+  font-size: 1rem !important;
+  height: 3rem;
+  justify-content: center;
+  padding: 0;
+  position: static; /* paper-icon-button-light le pose en relative : le ::before se calerait sur lui */
+  transform: none;
+  transition:
+    background-color var(--t-fast) var(--ease),
+    box-shadow var(--t) var(--ease),
+    color var(--t-fast) var(--ease);
+  width: 3rem;
+}
+
+.listItemImage .listItemImageButton::before {
+  content: "";
+  cursor: pointer;
+  inset: 0;
+  position: absolute;
+}
+
+.listItemImage .listItemImageButton .listItemImageButton-icon {
+  font-size: 1.6rem;
+  padding: 0;
+}
+
+.listItemImage:hover .listItemImageButton.paper-icon-button-light:not(:disabled),
+.listItem .listItemImageButton.paper-icon-button-light:hover:not(:disabled) {
+  background-color: rgb(var(--primary-canal) / 0.92);
+  box-shadow: 0 4px 16px -4px rgb(0 0 0 / 0.5);
+  color: var(--on-primary);
+  transform: none;
+}
+
+@media (max-width: 50em) {
+  .listItemImage .listItemImageButton {
+    height: 2.4rem;
+    width: 2.4rem;
+  }
+
+  .listItemImage .listItemImageButton .listItemImageButton-icon {
+    font-size: 1.3rem;
+  }
 }
 
 .visualCardBox {

@@ -46,7 +46,7 @@ One design for the client's legacy components and for MUI's.
 Dashboard → General → **Custom CSS**, a single line:
 
 ```css
-@import url('https://cdn.jsdelivr.net/gh/matqueme/jellyfin-theme@v3.1.9/dist/theme.css');
+@import url('https://cdn.jsdelivr.net/gh/matqueme/jellyfin-theme@v3.2.0/dist/theme.css');
 ```
 
 Then `Ctrl+F5` in the client. The `@import` must stay the first thing in the
@@ -93,7 +93,7 @@ Phosphor) and the Phosphor SVGs used for MUI icons are still loaded from a CDN.
 
 | Theme | Jellyfin | Base |
 |---|---|---|
-| `v3.1.2` to `v3.1.9` | 12.x, Modern layout (+ Samsung app, 10.11 client) | none |
+| `v3.1.2` to `v3.2.0` | 12.x, Modern layout (+ Samsung app, 10.11 client) | none |
 | `v3.0.0` to `v3.1.1` | 12.x, Modern layout | none |
 | `v2.0.0` | 12.x | [Ultrachromic `1398af2`](https://github.com/CTalvio/Ultrachromic/tree/1398af21b8fe120a972bd00942ad60a76a932647) |
 | `v1.3.0` | 10.11.x | [Ultrachromic `fa158a2`](https://github.com/CTalvio/Ultrachromic/tree/fa158a241cb24298c9996af3cf6460ae2f9d522f) |
