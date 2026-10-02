@@ -7,6 +7,27 @@ title of each version.
 The history up to 3.1.2 was originally written in French and translated
 afterwards. File names under `src/` are French, and appear as they are.
 
+## [3.1.5] - 2026-10-02 - Jellyfin 12.x, Modern layout
+
+### Fixed
+
+- Uneven side margins in libraries: the client keeps the 7.5% right padding it
+  reserved for the A to Z index (`padded-right-withalphapicker`) even when the
+  index is hidden, against 3.3% on the left. The grid now has 3.3% on both
+  sides.
+- Active "played" and "favorite" buttons on the item page had no hover: their
+  white fill was written after, and with the same weight as, the icon buttons'
+  hover rule. They now dim to 78% on hover (60% when pressed), on pointer
+  devices only.
+- Same buttons on TV: the active fill was the same solid white as the focused
+  button, so the two could not be told apart. The active button is now a veil
+  with a white outline and a white icon; the focused one stays solid.
+- Cast row of the item page on TV: the first card touched the edge of its
+  scroller, whose `overflow: hidden` clipped the ring and the zoom of the
+  focused card. On TV the client slides this row with a transform (no
+  `scrollX` class), so the box is now widened by 1.25rem on each side and the
+  space given back as padding; the edge fade is removed there.
+
 ## [3.1.4] - 2026-10-02 - Jellyfin 12.x, Modern layout
 
 ### Fixed

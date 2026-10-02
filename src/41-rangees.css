@@ -149,6 +149,17 @@
   display: none !important;
 }
 
+/* ...mais le client garde la colonne qu'il lui reservait : la grille a
+   7.5 % de marge a droite (padded-right-withalphapicker) contre 3.3 % a
+   gauche (padded-left). On remet la meme marge des deux cotes. */
+:root[dir="ltr"] .padded-right-withalphapicker {
+  padding-right: max(env(safe-area-inset-right), 3.3%);
+}
+
+:root[dir="rtl"] .padded-right-withalphapicker {
+  padding-left: max(env(safe-area-inset-left), 3.3%);
+}
+
 /* Selecteur alphabetique des bibliotheques. */
 .alphaPickerButton {
   border-radius: var(--r-pill);

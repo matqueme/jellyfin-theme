@@ -47,7 +47,7 @@ Un seul dessin pour les anciens composants du client et pour ceux de MUI.
 Tableau de bord → Général → **CSS personnalisé**, une seule ligne :
 
 ```css
-@import url('https://cdn.jsdelivr.net/gh/matqueme/jellyfin-theme@v3.1.4/dist/theme.css');
+@import url('https://cdn.jsdelivr.net/gh/matqueme/jellyfin-theme@v3.1.5/dist/theme.css');
 ```
 
 Puis `Ctrl+F5` sur le client. L'`@import` doit rester la première chose du
@@ -94,7 +94,7 @@ Phosphor) et les SVG Phosphor des icônes MUI restent chargés depuis un CDN.
 
 | Thème | Jellyfin | Base |
 |---|---|---|
-| `v3.1.2` à `v3.1.4` | 12.x, layout Modern (+ app Samsung, client 10.11) | aucune |
+| `v3.1.2` à `v3.1.5` | 12.x, layout Modern (+ app Samsung, client 10.11) | aucune |
 | `v3.0.0` à `v3.1.1` | 12.x, layout Modern | aucune |
 | `v2.0.0` | 12.x | [Ultrachromic `1398af2`](https://github.com/CTalvio/Ultrachromic/tree/1398af21b8fe120a972bd00942ad60a76a932647) |
 | `v1.3.0` | 10.11.x | [Ultrachromic `fa158a2`](https://github.com/CTalvio/Ultrachromic/tree/fa158a241cb24298c9996af3cf6460ae2f9d522f) |

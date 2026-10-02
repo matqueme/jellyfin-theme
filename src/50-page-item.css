@@ -271,6 +271,23 @@ h1.itemName {
   background: var(--primary);
 }
 
+/* Le remplissage blanc avait la specificite du survol des boutons-icones
+   (20-boutons) et venait apres : le survol ne changeait plus rien. Le bouton
+   actif s'attenue au survol (le blanc plein est l'etat « allume », le voile
+   dit « tu es dessus »), davantage a l'appui. Tactile exclu : le survol y
+   reste colle apres un toucher. */
+@media (hover: hover) and (pointer: fine) {
+  .mainDetailButtons .btnUserRating:has(.ratingbutton-icon-withrating):hover,
+  .mainDetailButtons .btnPlaystate:has(.playstatebutton-icon-played):hover {
+    background: rgb(var(--primary-canal) / 0.78);
+  }
+}
+
+.mainDetailButtons .btnUserRating:has(.ratingbutton-icon-withrating):active,
+.mainDetailButtons .btnPlaystate:has(.playstatebutton-icon-played):active {
+  background: rgb(var(--primary-canal) / 0.6);
+}
+
 /* --- Pistes, genres, etiquettes, equipe ---------------------------- */
 .trackSelections .selectContainer .selectLabel,
 .detailsGroupItem .label {

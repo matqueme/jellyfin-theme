@@ -218,3 +218,39 @@
 .layout-tv #musicRecommendedPage {
   overflow-x: clip;
 }
+
+/* Etats actifs de la page d'item (vu, favori). Sur la fiche, ils sont
+   remplis de blanc (50-page-item), exactement comme le bouton vise a la
+   telecommande : on ne savait plus lequel etait actif et lequel etait
+   survole. Ici l'actif au repos est un voile cerne d'un filet blanc, icone
+   blanche ; le vise reste plein. */
+.layout-tv .mainDetailButtons .btnUserRating:has(.ratingbutton-icon-withrating):not(:focus),
+.layout-tv .mainDetailButtons .btnPlaystate:has(.playstatebutton-icon-played):not(:focus) {
+  background: var(--veil-3);
+  box-shadow: inset 0 0 0 2px rgb(var(--primary-canal) / 0.7);
+}
+
+.layout-tv .mainDetailButtons .btnUserRating:not(:focus) .ratingbutton-icon-withrating,
+.layout-tv .mainDetailButtons .btnPlaystate:not(:focus) .playstatebutton-icon-played {
+  color: var(--text);
+}
+
+/* Rangees sans marge propre (acteurs de la fiche, .no-padding) : la
+   premiere carte touche le bord de la boite de defilement, dont
+   l'overflow: hidden coupait l'anneau et le zoom de la carte visee. On
+   elargit la boite de 1.25rem de chaque cote et on rend l'espace en
+   padding : la mise en page ne bouge pas. Pas de .scrollX dans le selecteur :
+   sur TV le client fait glisser la rangee par transform dans une boite en
+   overflow: hidden, sans cette classe. Le fondu des bords (41-rangees) est
+   retire ici, il estompait justement cette carte. */
+.layout-tv .emby-scroller.no-padding {
+  -webkit-mask-image: none;
+  margin-left: -1.25rem;
+  margin-right: -1.25rem;
+  mask-image: none;
+}
+
+.layout-tv .emby-scroller.no-padding > .scrollSlider {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
