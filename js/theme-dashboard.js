@@ -28,7 +28,10 @@
     }
 
     function surDashboard() {
-        return /^#\/dashboard/.test(location.hash);
+        // Prefixes des pages d'administration du client 12 (les pages de
+        // plugins, comme celle de JavaScript Injector, sont sous
+        // /configurationpage et non sous /dashboard).
+        return /^#\/(dashboard|metadata|configurationpage)(\/|\?|$)/.test(location.hash);
     }
 
     function appliquer() {

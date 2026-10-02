@@ -7,6 +7,14 @@ title of each version.
 The history up to 3.1.2 was originally written in French and translated
 afterwards. File names under `src/` are French, and appear as they are.
 
+## [3.2.1] - 2026-10-02 - Jellyfin 12.x, Modern layout
+
+### Fixed
+
+- The theme was missing on the plugin configuration pages (`#/configurationpage?...`)
+  and on `#/metadata`. `js/theme-dashboard.js` only recognised `#/dashboard`;
+  it now covers the three prefixes of the client's admin pages.
+
 ## [3.2.0] - 2026-10-02 - Jellyfin 12.x, Modern layout
 
 ### Changed
