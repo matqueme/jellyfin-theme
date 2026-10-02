@@ -22,7 +22,7 @@ editing that file.
 | `--r-xs` to `--r-lg`, `--r-pill` | Radii: chips, fields, cards, dialogs, buttons |
 | `--ring` | Focus ring, and hover ring of cards |
 | `--icon-scale` | Size of Phosphor icons, which fill their box more than Material's |
-| `--play-label` | Label of the Play button. Keep the quotes: it is a `content` value |
+| `--play-label` | Label of the Play button, written by the theme. `"Play"` by default, `"Lecture"` when the interface is in French (`:root:lang(fr)`). Keep the quotes: it is a `content` value |
 
 Colors used with transparency also exist as channels
 (`--primary-canal: 244 244 245`), the syntax MUI expects for its `*Channel`

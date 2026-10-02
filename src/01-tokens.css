@@ -116,7 +116,13 @@
   --icon-scale: 0.85;
 
   /* Libelle du bouton Lecture de la page d'item. Garder les guillemets :
-     c'est une valeur de content. */
+     c'est une valeur de content. Le theme l'ecrit lui-meme : « Play » par
+     defaut, « Lecture » quand l'interface est en francais (:lang(fr), posee
+     sur <html> par le client). */
+  --play-label: "Play";
+}
+
+:root:lang(fr) {
   --play-label: "Lecture";
 }
 

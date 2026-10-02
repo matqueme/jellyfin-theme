@@ -117,6 +117,28 @@
   overflow-x: hidden;
 }
 
+/* Barre de la bibliotheque : titre, fleche et compteur centres a l'encre.
+   Les boites sont centrees (mesure : 0.00px d'ecart) mais Plus Jakarta Sans
+   pose sa ligne de base un peu bas dans la sienne : a 4x, le texte « Movies »
+   etait 0.75px sous le centre de sa pastille, la fleche 0.4px. On remonte chacun de cet ecart. Les chiffres du compteur
+   (0.4px) ne sont pas touches : le navigateur cale le texte sur le pixel, et
+   tout decalage fractionnaire les envoyait trop haut. */
+.MuiButton-root > .MuiTypography-h2 {
+  position: relative;
+  top: -0.03em;
+}
+
+.MuiButton-root > .MuiButton-endIcon {
+  transform: translateY(-0.4px);
+}
+
+/* Selecteur alphabetique des bibliotheques : masque. Il prend une colonne
+   de la page, deborde de l'ecran sur certains telephones, et sert peu : la
+   recherche et le tri font le meme travail. */
+.alphaPicker-fixed-right {
+  display: none !important;
+}
+
 /* Selecteur alphabetique des bibliotheques. */
 .alphaPickerButton {
   border-radius: var(--r-pill);

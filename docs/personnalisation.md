@@ -22,7 +22,7 @@ retoucher ce fichier.
 | `--r-xs` à `--r-lg`, `--r-pill` | Rayons : pastilles, champs, cartes, dialogues, boutons |
 | `--ring` | Anneau de focus et de survol des cartes |
 | `--icon-scale` | Taille des icônes Phosphor, qui remplissent plus leur cadre que Material |
-| `--play-label` | Libellé du bouton Lecture. Garder les guillemets : c'est une valeur de `content` |
+| `--play-label` | Libellé du bouton Lecture, écrit par le thème. `"Play"` par défaut, `"Lecture"` quand l'interface est en français (`:root:lang(fr)`). Garder les guillemets : c'est une valeur de `content` |
 
 Les couleurs utilisées en transparence existent aussi en canaux
 (`--primary-canal: 244 244 245`), la syntaxe qu'attend MUI pour ses

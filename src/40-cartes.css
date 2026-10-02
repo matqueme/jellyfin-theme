@@ -268,6 +268,28 @@
   border-radius: var(--r-pill);
 }
 
+/* Cartes de bibliotheque (MUI) : meme barre que ci-dessus. Le client lui
+   donne un rail blanc a 10 % colle aux bords et sa couleur bleue en dur
+   (#00a4dc), ce qui la rendait differente de celle de l'accueil. */
+.itemLinearProgress {
+  background-color: rgb(0 0 0 / 0.45);
+  bottom: 9px;
+  height: 5px;
+  left: 10px;
+  right: 10px;
+}
+
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .itemLinearProgress {
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
+}
+
+.itemLinearProgress .MuiLinearProgress-bar {
+  background-color: var(--primary);
+}
+
 /* Enregistrement en cours (TV) : la seule barre qui garde une couleur. */
 .itemProgressBarForeground-recording {
   background-color: var(--danger);

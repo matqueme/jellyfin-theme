@@ -7,6 +7,34 @@ title of each version.
 The history up to 3.1.2 was originally written in French and translated
 afterwards. File names under `src/` are French, and appear as they are.
 
+## [3.1.3] - 2026-10-02 - Jellyfin 12.x, Modern layout
+
+### Fixed
+
+- Progress bar of library cards: it was blue (the client hard-codes
+  `#00a4dc` on its MUI progress bar) on a thin white rail stuck to the edges
+  of the poster, unlike the one on the home page. It now uses the same
+  design: white bar on a dark blurred rail, 5px high, set off from the edges.
+- Menus stuck to their trigger: MUI places a menu right under its button, so
+  the profile menu and the library's view menu (Movies, Suggestions…) touched
+  the edge of the button. They now sit 0.75rem lower.
+
+- Library title ("Movies ▾"): the text and the arrow sat low in their pill.
+  The boxes are centered, but Plus Jakarta Sans puts its baseline low in its
+  line box: measured on the ink at 4x, the text was 0.75px under the center of
+  the pill and the arrow 0.4px. Both are moved back up. On a phone (2x and 3x
+  screens) they are now within one screen pixel of the center.
+
+- Play button label always in French: the theme writes it itself
+  (`--play-label`) and it read "Lecture" whatever the interface language. It is
+  now "Play", and "Lecture" when the interface is in French.
+
+### Removed
+
+- The A to Z index on the right of libraries (`.alphaPicker-fixed-right`). It
+  took a column of the page, overflowed the screen on some phones, and adds
+  little next to search and sorting.
+
 ## [3.1.2] - 2026-09-30 - Jellyfin 12.x, Modern layout
 
 ### Fixed

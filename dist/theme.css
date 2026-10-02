@@ -1,6 +1,6 @@
 /* =====================================================================
    Theme Jellyfin, par matqueme
-   Version 3.1.2, pour Jellyfin 12.x, layout Modern
+   Version 3.1.3, pour Jellyfin 12.x, layout Modern
 
    FICHIER CONSTRUIT : NE PAS EDITER.
    Genere par build.py depuis src/. Toute modification faite ici sera
@@ -143,7 +143,13 @@
   --icon-scale: 0.85;
 
   /* Libelle du bouton Lecture de la page d'item. Garder les guillemets :
-     c'est une valeur de content. */
+     c'est une valeur de content. Le theme l'ecrit lui-meme : « Play » par
+     defaut, « Lecture » quand l'interface est en francais (:lang(fr), posee
+     sur <html> par le client). */
+  --play-label: "Play";
+}
+
+:root:lang(fr) {
   --play-label: "Lecture";
 }
 
@@ -1211,6 +1217,13 @@ a[data-role="button"]:focus {
   box-shadow: var(--shadow-float);
 }
 
+/* Un menu ne se colle pas a son declencheur : MUI le place au pixel pres
+   sous le bouton, ce qui le fait toucher le bord du bouton et sa pilule. */
+.MuiMenu-paper,
+.MuiPopover-paper {
+  margin-top: 0.75rem;
+}
+
 .MuiMenu-list,
 .MuiAutocomplete-listbox {
   padding: 0.35em;
@@ -2129,6 +2142,28 @@ a[data-role="button"]:focus {
   border-radius: var(--r-pill);
 }
 
+/* Cartes de bibliotheque (MUI) : meme barre que ci-dessus. Le client lui
+   donne un rail blanc a 10 % colle aux bords et sa couleur bleue en dur
+   (#00a4dc), ce qui la rendait differente de celle de l'accueil. */
+.itemLinearProgress {
+  background-color: rgb(0 0 0 / 0.45);
+  bottom: 9px;
+  height: 5px;
+  left: 10px;
+  right: 10px;
+}
+
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .itemLinearProgress {
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
+}
+
+.itemLinearProgress .MuiLinearProgress-bar {
+  background-color: var(--primary);
+}
+
 /* Enregistrement en cours (TV) : la seule barre qui garde une couleur. */
 .itemProgressBarForeground-recording {
   background-color: var(--danger);
@@ -2359,6 +2394,28 @@ a[data-role="button"]:focus {
 #tvRecommendedPage,
 #musicRecommendedPage {
   overflow-x: hidden;
+}
+
+/* Barre de la bibliotheque : titre, fleche et compteur centres a l'encre.
+   Les boites sont centrees (mesure : 0.00px d'ecart) mais Plus Jakarta Sans
+   pose sa ligne de base un peu bas dans la sienne : a 4x, le texte « Movies »
+   etait 0.75px sous le centre de sa pastille, la fleche 0.4px. On remonte chacun de cet ecart. Les chiffres du compteur
+   (0.4px) ne sont pas touches : le navigateur cale le texte sur le pixel, et
+   tout decalage fractionnaire les envoyait trop haut. */
+.MuiButton-root > .MuiTypography-h2 {
+  position: relative;
+  top: -0.03em;
+}
+
+.MuiButton-root > .MuiButton-endIcon {
+  transform: translateY(-0.4px);
+}
+
+/* Selecteur alphabetique des bibliotheques : masque. Il prend une colonne
+   de la page, deborde de l'ecran sur certains telephones, et sert peu : la
+   recherche et le tri font le meme travail. */
+.alphaPicker-fixed-right {
+  display: none !important;
 }
 
 /* Selecteur alphabetique des bibliotheques. */
