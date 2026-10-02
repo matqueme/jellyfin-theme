@@ -7,6 +7,16 @@ title of each version.
 The history up to 3.1.2 was originally written in French and translated
 afterwards. File names under `src/` are French, and appear as they are.
 
+## [3.1.9] - 2026-10-02 - Jellyfin 12.x, Modern layout
+
+### Changed
+
+- Smaller profile picture in the header: 40px, against 22px for the icons next
+  to it (in 46px buttons), so it dominated the bar. It is now 30px, in a 46px
+  button like the others to keep the same hit area and spacing; a negative
+  margin gives back the 8px of padding on the right so the picture's edge
+  stays on the page's.
+
 ## [3.1.8] - 2026-10-02 - Jellyfin 12.x, Modern layout
 
 ### Changed
