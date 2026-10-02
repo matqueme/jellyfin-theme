@@ -1,6 +1,8 @@
 # Développement
 
-Guide pour contribuer ou modifier le thème. Pour l'utiliser seulement, le [README](../README.md) suffit.
+[English](development.md) · **Français**
+
+Guide pour contribuer ou modifier le thème. Pour l'utiliser seulement, le [README](../README.fr.md) suffit.
 
 ## Structure
 
@@ -89,7 +91,7 @@ fichier attendu. Le chemin par défaut est `~/docker/jellyfin` ; sinon
 Injecte les scripts dans la configuration du plugin JavaScript Injector :
 
 - `theme-dashboard.js` : applique le thème au tableau de bord (voir
-  [Installation](../README.md#tableau-de-bord)) ;
+  [Installation](../README.fr.md#tableau-de-bord)) ;
 - `replace-sync-button.js` : remplace le bouton SyncPlay de l'en-tête par une
   entrée dans le menu des préférences.
 
@@ -135,7 +137,7 @@ curl -s https://purge.jsdelivr.net/gh/matqueme/jellyfin-theme@main/dist/theme.cs
 console.
 
 **Le tableau de bord ne reçoit pas le CSS de branding.** Voir
-[Installation](../README.md#tableau-de-bord). Sans `theme-dashboard.js`, l'administration
+[Installation](../README.fr.md#tableau-de-bord). Sans `theme-dashboard.js`, l'administration
 reste sur le thème par défaut, bleu Jellyfin compris.
 
 **Les variables `--jf-*` se posent sur `:root[data-theme]`, pas sur `:root`.**

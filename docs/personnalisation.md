@@ -1,5 +1,7 @@
 # Personnalisation
 
+[English](customization.md) · **Français**
+
 Tout est dans [`../src/01-tokens.css`](../src/01-tokens.css). Les modules ne posent
 jamais une couleur, un rayon ou une durée en dur : retoucher le thème, c'est
 retoucher ce fichier.

@@ -1,124 +1,128 @@
-# Thème Jellyfin
+# Jellyfin Theme
 
-Thème sombre pour Jellyfin 12, layout **Modern**. Surfaces neutres, blanc
-comme couleur d'action, verre flouté, icônes [Phosphor](https://phosphoricons.com),
-police Plus Jakarta Sans. Il couvre toute l'application : navigation, page
-d'item, connexion, préférences, dialogues et menus, lecteur, layout TV, et le
-tableau de bord d'administration.
+**English** · [Français](README.fr.md)
 
-Un seul fichier CSS, une seule ligne à coller : `dist/theme.css`.
+A dark theme for Jellyfin 12, **Modern** layout. Neutral surfaces, white as
+the action color, frosted glass, [Phosphor](https://phosphoricons.com) icons,
+Plus Jakarta Sans. It covers the whole app: navigation, item page, login,
+preferences, dialogs and menus, player, TV layout, and the admin dashboard.
 
-## Aperçu
+One CSS file, one line to paste: `dist/theme.css`.
 
-### Accueil
+## Preview
 
-Les rangées, l'en-tête en verre, des cartes qui se soulèvent au survol.
+### Home
 
-![Accueil](docs/images/accueil.webp)
+Rows, a glass header, cards that lift on hover.
 
-### Page d'un film
+![Home](docs/images/accueil.webp)
 
-Hero net, boutons ronds, fiche lisible.
+### Item page
 
-![Page d'un film](docs/images/page-item.webp)
+Sharp hero, round buttons, a readable details sheet.
 
-### Bibliothèque
+![Item page](docs/images/page-item.webp)
 
-Cartes, pastilles « vu », barre de progression, index alphabétique.
+### Library
 
-![Bibliothèque](docs/images/bibliotheque.webp)
+Cards, "watched" badges, progress bars, alphabet index.
 
-### Menus, filtres, connexion et préférences
+![Library](docs/images/bibliotheque.webp)
 
-Un seul dessin pour les anciens composants du client et pour ceux de MUI.
+### Menus, filters, login and preferences
 
-![Menu, filtres, connexion et préférences](docs/images/composants.webp)
+One design for the client's legacy components and for MUI's.
 
-### Mobile et TV
+![Menu, filters, login and preferences](docs/images/composants.webp)
 
-![Page d'un film sur mobile, accueil en layout TV](docs/images/mobile-tv.webp)
+### Mobile and TV
 
-<sub>Captures prises sur un serveur Jellyfin 12.1 de test. Affiches et visuels : © leurs ayants droit, via TMDb.</sub>
+![Item page on mobile, home in TV layout](docs/images/mobile-tv.webp)
+
+<sub>Screenshots taken on a test Jellyfin 12.1 server (UI language: French). Posters and artwork: © their respective owners, via TMDb.</sub>
 
 ## Installation
 
-Tableau de bord → Général → **CSS personnalisé**, une seule ligne :
+Dashboard → General → **Custom CSS**, a single line:
 
 ```css
 @import url('https://cdn.jsdelivr.net/gh/matqueme/jellyfin-theme@v3.1.2/dist/theme.css');
 ```
 
-Puis `Ctrl+F5` sur le client. L'`@import` doit rester la première chose du
-champ : un `@import` placé après une règle est ignoré par le navigateur.
+Then `Ctrl+F5` in the client. The `@import` must stay the first thing in the
+field: the browser ignores an `@import` placed after a rule.
 
-### Tableau de bord
+For the blurred artwork behind pages (as in the screenshots), turn on
+**Backdrops** in each user's display preferences.
 
-En 12, le client n'applique le CSS de branding **qu'à l'application
-utilisateur** : le composant qui pose la balise `<style>` n'est pas monté
-dans le layout du tableau de bord. Pour que l'administration suive le thème,
-installer [`js/theme-dashboard.js`](js/theme-dashboard.js) avec le plugin
-JavaScript Injector :
+### Dashboard
+
+In 12, the client applies the branding CSS **to the user app only**: the
+component that injects the `<style>` tag is not mounted in the dashboard
+layout. To have the admin area follow the theme, install
+[`js/theme-dashboard.js`](js/theme-dashboard.js) with the JavaScript Injector
+plugin:
 
 ```bash
 ./apply-js.sh js/theme-dashboard.js
 ```
 
-Le script ne contient pas le thème : sur les pages `#/dashboard`, il charge
-la feuille que le serveur sert déjà sur `/Branding/Css`, et la retire en
-sortant. Mettre à jour le CSS de branding suffit donc à mettre à jour le
-tableau de bord.
+The script does not contain the theme: on `#/dashboard` pages it loads the
+stylesheet the server already serves at `/Branding/Css`, and removes it when
+leaving. Updating the branding CSS is therefore enough to update the
+dashboard.
 
-### Sans dépendance réseau
+### Without network access
 
-Si les clients doivent fonctionner sans accès à Internet, `apply-local.sh`
-écrit le fichier directement dans le `branding.xml` du serveur. Voir
-[Développement](docs/developpement.md). Seules les polices (Plus Jakarta Sans,
-Phosphor) et les SVG Phosphor des icônes MUI restent chargés depuis un CDN.
+If clients must work without Internet access, `apply-local.sh` writes the file
+straight into the server's `branding.xml`. See
+[Development](docs/development.md). Only the fonts (Plus Jakarta Sans,
+Phosphor) and the Phosphor SVGs used for MUI icons are still loaded from a CDN.
 
-> Le CSS de branding s'applique au client web et aux clients qui l'embarquent
-> (navigateur, application de bureau, Android TV en mode web). Les clients
-> natifs, comme Roku ou l'app Android native, ne le lisent pas.
+> Branding CSS applies to the web client and to clients that embed it
+> (browser, desktop app, Android TV in web mode). Native clients, such as Roku
+> or the native Android app, do not read it.
 >
-> L'app Samsung (Tizen) lit bien le CSS de branding, mais elle embarque son
-> propre client web, figé à sa compilation (10.11 pour l'app 1.1.0), en
-> layout TV : ce n'est pas le client 12 du serveur. `src/80-tv.css` couvre
-> ce cas : pas de verre flouté (trop lourd pour une TV), hero net sur la page
-> d'item, en-tête et focus adaptés.
+> The Samsung (Tizen) app does read the branding CSS, but it embeds its own web
+> client, frozen at build time (10.11 for app 1.1.0), in TV layout: it is not
+> the server's 12 client. `src/80-tv.css` covers that case: no frosted glass
+> (too heavy for a TV), a sharp hero on the item page, adapted header and
+> focus.
 
-## Compatibilité
+## Compatibility
 
-| Thème | Jellyfin | Base |
+| Theme | Jellyfin | Base |
 |---|---|---|
-| `v3.1.2` | 12.x, layout Modern (+ app Samsung, client 10.11) | aucune |
-| `v3.0.0` à `v3.1.1` | 12.x, layout Modern | aucune |
+| `v3.1.2` | 12.x, Modern layout (+ Samsung app, 10.11 client) | none |
+| `v3.0.0` to `v3.1.1` | 12.x, Modern layout | none |
 | `v2.0.0` | 12.x | [Ultrachromic `1398af2`](https://github.com/CTalvio/Ultrachromic/tree/1398af21b8fe120a972bd00942ad60a76a932647) |
 | `v1.3.0` | 10.11.x | [Ultrachromic `fa158a2`](https://github.com/CTalvio/Ultrachromic/tree/fa158a241cb24298c9996af3cf6460ae2f9d522f) |
 
-Le thème suit son propre semver ; la version de Jellyfin visée est une donnée
-de compatibilité, portée par ce tableau et par le titre de chaque release.
-Chaque version reste disponible par son tag : pour Jellyfin 10.11, importer
-`@v1.3.0` à la place de la version courante dans l'URL d'installation.
+The theme follows its own semver; the targeted Jellyfin version is
+compatibility data, carried by this table and by each release's title. Every
+version stays available through its tag: for Jellyfin 10.11, import `@v1.3.0`
+instead of the current version in the installation URL.
 
-Le layout Legacy n'est plus visé depuis la v3. Il reste utilisable, mais son
-en-tête et son tiroir ne sont pas habillés.
+The Legacy layout has not been targeted since v3. It remains usable, but its
+header and drawer are not themed.
 
-## Personnaliser
+## Customize
 
-Toutes les valeurs (fonds, texte, rayons, verre, survol des cartes, taille des
-icônes, libellé du bouton Lecture…) sont des tokens, définis à un seul endroit :
-[`src/01-tokens.css`](src/01-tokens.css). Voir
-[docs/personnalisation.md](docs/personnalisation.md) pour la liste.
+All values (backgrounds, text, radii, glass, card hover, icon size, the Play
+button label…) are tokens, defined in a single place:
+[`src/01-tokens.css`](src/01-tokens.css). See
+[docs/customization.md](docs/customization.md) for the list.
 
-## Contribuer
+## Contribute
 
-Structure des modules, build, publication d'une version et pièges rencontrés :
-[docs/developpement.md](docs/developpement.md).
+Module structure, build, releasing a version and the pitfalls found along the
+way: [docs/development.md](docs/development.md).
 
-## Crédits
+## Credits
 
-- [Phosphor Icons](https://phosphoricons.com) : licence MIT.
-- Police [Plus Jakarta Sans](https://fonts.google.com/specimen/Plus+Jakarta+Sans) : SIL OFL 1.1.
-- Les versions 1.x et 2.x reposaient sur [Ultrachromic](https://github.com/CTalvio/Ultrachromic),
-  de CTalvio (MIT). La v3 n'en contient plus rien.
+- [Phosphor Icons](https://phosphoricons.com): MIT license.
+- [Plus Jakarta Sans](https://fonts.google.com/specimen/Plus+Jakarta+Sans) font: SIL OFL 1.1.
+- Versions 1.x and 2.x were built on [Ultrachromic](https://github.com/CTalvio/Ultrachromic),
+  by CTalvio (MIT). v3 contains none of it.
 
-Code de ce dépôt sous licence [MIT](LICENSE).
+Code in this repository is under the [MIT](LICENSE) license.
