@@ -159,3 +159,16 @@
   -webkit-backdrop-filter: var(--glass-blur);
   backdrop-filter: var(--glass-blur);
 }
+
+/* --- Logo Jellyfin ----------------------------------------------------
+   Le logo du client (en-tete, tiroir, ecran de chargement, titre de l'app
+   TV) est un degrade violet-bleu : la seule couleur de marque d'un theme
+   dont la couleur vient des affiches. Il passe en blanc plein ; le creux
+   entre les deux formes est transparent, le dessin reste lisible. Seul le
+   logo par defaut est touche : un logo personnalise (branding) garde ses
+   couleurs. */
+img[src*="icon-transparent"],
+.splashLogo,
+.pageTitleWithDefaultLogo {
+  filter: brightness(0) invert(1);
+}

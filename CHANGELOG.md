@@ -7,6 +7,17 @@ title of each version.
 The history up to 3.1.2 was originally written in French and translated
 afterwards. File names under `src/` are French, and appear as they are.
 
+## [3.1.6] - 2026-10-02 - Jellyfin 12.x, Modern layout
+
+### Changed
+
+- Jellyfin logo in white: the client's default logo (header, drawer, loading
+  screen, title of the TV app) is a purple-blue gradient, the last brand colour
+  in a theme whose colour comes from the posters. It is now plain white
+  (`brightness(0) invert(1)`); the gap between the two shapes is transparent,
+  so the drawing stays readable. A custom logo set in the branding keeps its
+  colours. The favicon and the TV app icon are outside the theme's reach.
+
 ## [3.1.5] - 2026-10-02 - Jellyfin 12.x, Modern layout
 
 ### Fixed
