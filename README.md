@@ -39,7 +39,7 @@ One design for the client's legacy components and for MUI's.
 
 ![Item page on mobile, home in TV layout](docs/images/mobile-tv.webp)
 
-<sub>Screenshots taken on a test Jellyfin 12.1 server (UI language: French). Posters and artwork: © their respective owners, via TMDb.</sub>
+<sub>Screenshots taken on a test Jellyfin 12.1 server (English UI). Posters and artwork: © their respective owners, via TMDb.</sub>
 
 ## Installation
 

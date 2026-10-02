@@ -40,7 +40,7 @@ Un seul dessin pour les anciens composants du client et pour ceux de MUI.
 
 ![Page d'un film sur mobile, accueil en layout TV](docs/images/mobile-tv.webp)
 
-<sub>Captures prises sur un serveur Jellyfin 12.1 de test. Affiches et visuels : © leurs ayants droit, via TMDb.</sub>
+<sub>Captures prises sur un serveur Jellyfin 12.1 de test, interface en anglais. Affiches et visuels : © leurs ayants droit, via TMDb.</sub>
 
 ## Installation
 

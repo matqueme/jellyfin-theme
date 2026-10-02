@@ -1,538 +1,515 @@
-# Journal des versions
+# Changelog
 
-Format : [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/).
-Versionnage sémantique, indépendant de celui de Jellyfin : la compatibilité
-est indiquée par le titre de chaque version.
+Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
+Semantic versioning, independent of Jellyfin's: compatibility is stated in the
+title of each version.
 
-## [3.1.2] - 2026-09-30 - Jellyfin 12.x, layout Modern
+The history up to 3.1.2 was originally written in French and translated
+afterwards. File names under `src/` are French, and appear as they are.
 
-### Corrige
+## [3.1.2] - 2026-09-30 - Jellyfin 12.x, Modern layout
 
-Application Samsung (Tizen) : elle n'utilise pas le client du serveur mais
-embarque le sien, un client 10.11 en layout TV. Verifie en servant le
-client 10.11.11 avec un user-agent Tizen 9.
+### Fixed
 
-- Gros cadre noir entre l'affiche et l'anneau blanc de la carte visee : le
-  client pose une bordure transparente de 0.5em sur toutes les cartes
-  `.show-focus`, et le fond de la page s'y voyait. Elle est retiree,
-  l'anneau la remplace ; il passe a 3px + 3px en TV pour se voir de loin.
-- En-tete rogne (logo, icones et heure coupes en bas) : les onglets y
-  remontent par une marge de -4.3em calculee pour les grands onglets du
-  client, et l'en-tete retombait a 63px pour 118px de contenu. Les onglets
-  sortent du flux et se centrent sur la ligne du haut.
-- En-tete fige au-dessus du contenu au defilement : le `overflow-x: hidden`
-  de l'accueil faisait de la page son propre conteneur de defilement, alors
-  que le client 10.11 fait defiler la fenetre. En TV, `overflow-x: clip`.
-- Verre sans flou en TV (en-tete, dialogues, pastilles) : un
-  `backdrop-filter`, recalcule a chaque image du defilement, saccade ou
-  s'affiche par blocs sur une TV. Il devient un aplat presque opaque, et
-  l'en-tete, qui defile avec la page, est transparent. Le fond d'ecran
-  garde son flou : un `filter` sur l'image n'est calcule qu'une fois.
-- Page d'item sans image en TV : le client TV masque le bandeau
-  (`.itemBackdrop`). Comme sur ordinateur, l'image de fond y reste nette
-  et fait l'affiche en grand, sous un degrade ; le contenu porte un voile
-  sans flou qui s'installe en fondu sous les boutons.
-- Onglet vise : l'anneau de focus se dedoublait par-dessus le plein blanc.
-- Parametres illisibles a la telecommande : la ligne visee passait en
-  plein blanc, mais son libelle et ses textes secondaires restaient
-  blancs. Tout le contenu de l'element vise prend son texte noir.
+Samsung (Tizen) app: it does not use the server's client but embeds its own,
+a 10.11 client in TV layout. Checked by serving the 10.11.11 client with a
+Tizen 9 user-agent.
 
-## [3.1.1] - 2026-09-30 - Jellyfin 12.x, layout Modern
+- Big black frame between the poster and the white ring of the focused card:
+  the client puts a transparent 0.5em border on every `.show-focus` card, and
+  the page background showed through it. It is removed, the ring replaces it;
+  the ring goes to 3px + 3px on TV so it reads from afar.
+- Cropped header (logo, icons and clock cut off at the bottom): the tabs are
+  pulled up into it by a -4.3em margin computed for the client's large tabs,
+  and the header collapsed to 63px for 118px of content. The tabs now leave
+  the flow and center on the top line.
+- Header frozen above the content when scrolling: the home page's
+  `overflow-x: hidden` made the page its own scroll container, whereas the
+  10.11 client scrolls the window. On TV, `overflow-x: clip`.
+- Glass without blur on TV (header, dialogs, chips): a `backdrop-filter`,
+  recomputed on every scroll frame, stutters or renders in blocks on a TV. It
+  becomes a nearly opaque flat fill, and the header, which scrolls with the
+  page, is transparent. The wallpaper keeps its blur: a `filter` on the image
+  is only computed once.
+- Item page without an image on TV: the TV client hides the banner
+  (`.itemBackdrop`). As on desktop, the background image stays sharp there and
+  serves as the large poster, under a gradient; the content carries a
+  blur-free veil that fades in under the buttons.
+- Focused tab: the focus ring was doubled on top of the solid white.
+- Settings unreadable with the remote: the focused row turned solid white, but
+  its label and secondary texts stayed white. All the content of the focused
+  element now takes black text.
 
-### Corrige
+## [3.1.1] - 2026-09-30 - Jellyfin 12.x, Modern layout
 
-- Icones MUI restees en Material a cote des icones Phosphor : Diffusion
-  et SyncPlay dans l'en-tete selon leur etat (le bouton Diffusion devient
-  un bouton a libelle pendant une diffusion, et n'etait reconnu que par
-  son `aria-label` francais), boutons des cartes de bibliotheque, menus
-  et dashboard. Les 130 icones SVG que MUI peut afficher sont reconnues a
-  leur `data-testid`, conserve en production, et redessinees en Phosphor
-  par masque : taille et couleur restent celles de MUI.
-- En-tete jamais en verre : en 12 il porte toujours la variante
-  `MuiAppBar-colorTransparent`, que la v3.0 transformait en degrade sans
-  flou. Et le contenu ne passait jamais dessous : la page defile dans un
-  conteneur qui commence sous l'en-tete. Sur les pages a une barre
-  (accueil, recherche, listes, page d'item), ce conteneur remonte sous
-  l'en-tete et son contenu garde sa place : au defilement, les affiches
-  passent derriere le verre, qui les floute et prend leur couleur. Les
-  bibliotheques, dont la barre change de hauteur en mobile, gardent le
-  comportement du client.
-- Page d'item sur telephone : le client n'y charge pas l'image de fond
-  fixe, la page n'avait donc ni le fond colore du desktop ni d'image sous
-  l'en-tete. La banniere remonte sous l'en-tete et se prolonge sous le
-  contenu en ambiance floutee, avec un fondu depuis l'image nette.
-  Lecture passe sur toute la largeur, les boutons ronds dessous : sur une
-  rangee centree, le dernier passait seul a la ligne sous 412px. Ombre de
-  l'affiche reduite, elle retombait sur le bouton Lecture.
-- Chevron des titres de section (« Films, ajouts recents › ») : il
-  tombait sous la ligne du texte, surtout sur mobile (marges du client en
-  em de corps differents, padding du titre en layout mobile). Aligne sur
-  la ligne de base puis descendu de 0.14em : centre sur la hauteur des
-  capitales a 0.5px pres, mesure a l'encre sur les vraies pages. Au survol, il grossissait
-  (son decalage annulait la reduction Phosphor) et une pilule voilee
-  apparaissait derriere tout le titre : il glisse et s'eclaire seulement.
-- Meme conflit de transform ailleurs : la fleche des sections depliables
-  ne se retournait plus une fois ouverte, et l'icone des cartes sans
-  image n'etait plus centree.
-- Barre de defilement : sur ecran tactile, styler `::-webkit-scrollbar`
-  remplacait la barre native, fine et temporaire, par une barre epaisse
-  et permanente, jusque sous chaque rangee de cartes. Elle est masquee au
-  tactile, ou l'on defile au doigt. A la souris, Chrome ignorait la barre
-  du theme (il la neutralise des que `scrollbar-width` est pose) et
-  dessinait la sienne, fleches comprises : `scrollbar-width` est reserve a
-  Firefox, Chrome recoit la pilule fine sans fleches.
+### Fixed
 
-### Ajoute
+- MUI icons left in Material next to the Phosphor icons: Cast and SyncPlay in
+  the header depending on their state (the Cast button becomes a labelled
+  button during casting, and was only recognized by its French `aria-label`),
+  library card buttons, menus and dashboard. The 130 SVG icons MUI can display
+  are recognized by their `data-testid`, kept in production, and redrawn in
+  Phosphor through a mask: size and color stay MUI's.
+- Header never glass: in 12 it always carries the `MuiAppBar-colorTransparent`
+  variant, which v3.0 turned into a blur-free gradient. And the content never
+  passed underneath: the page scrolls in a container that starts below the
+  header. On single-bar pages (home, search, lists, item page), that container
+  now moves up under the header and its content keeps its place: when
+  scrolling, posters pass behind the glass, which blurs them and takes their
+  color. Libraries, whose bar changes height on mobile, keep the client's
+  behavior.
+- Item page on phone: the client does not load the fixed background image
+  there, so the page had neither the colored background of desktop nor an
+  image under the header. The banner now moves up under the header and
+  continues under the content as a blurred ambiance, with a fade from the
+  sharp image. Play goes full width, the round buttons below it: on a centered
+  row, the last one wrapped alone below 412px. The poster's shadow is reduced,
+  it used to fall on the Play button.
+- Chevron of section titles ("Films, recently added ›"): it sat below the
+  text line, especially on mobile (client margins in em of different font
+  sizes, title padding in mobile layout). Aligned on the baseline and lowered
+  by 0.14em: centered on cap height to within 0.5px, measured on ink on real
+  pages. On hover it used to grow (its offset cancelled the Phosphor
+  reduction) and a veiled pill appeared behind the whole title: it now only
+  slides and brightens.
+- Same transform conflict elsewhere: the arrow of expandable sections no
+  longer flipped once open, and the icon of image-less cards was no longer
+  centered.
+- Scrollbar: on touch screens, styling `::-webkit-scrollbar` replaced the
+  native thin, temporary bar with a thick, permanent one, even under every row
+  of cards. It is hidden on touch, where you scroll with a finger. With a
+  mouse, Chrome ignored the theme's bar (it neutralizes it as soon as
+  `scrollbar-width` is set) and drew its own, arrows included:
+  `scrollbar-width` is reserved for Firefox, Chrome gets the thin pill without
+  arrows.
 
-- `src/91-icones-mui.css`, genere par `tools/icones-mui.py` a partir d'une
-  table icone MUI -> Phosphor. Une icone qui a un equivalent Material deja
-  remappe recoit le meme glyphe. Les cases a cocher, boutons radio et la
-  fleche des listes deroulantes restent dessines par leurs modules.
+### Added
 
-## [3.1.0] - 2026-09-30 - Jellyfin 12.x, layout Modern
+- `src/91-icones-mui.css`, generated by `tools/icones-mui.py` from an MUI icon
+  -> Phosphor table. An icon that has an already-remapped Material equivalent
+  gets the same glyph. Checkboxes, radio buttons and the dropdown arrow stay
+  drawn by their own modules.
 
-La base reste neutre, mais la couleur vient maintenant des affiches et des
-fonds : le verre la laisse passer, les cartes bougent.
+## [3.1.0] - 2026-09-30 - Jellyfin 12.x, Modern layout
 
-### Ajoute
+The base stays neutral, but color now comes from posters and backgrounds: the
+glass lets it through, the cards move.
 
-- Verre plus present : flou de 28px sature a x1.8 et reflet sur l'arete
-  (`--glass-edge`), pose sur l'en-tete, le tiroir (permanent compris), les
-  menus, feuilles d'actions, dialogues, notifications et infobulles. La
-  page derriere un dialogue ouvert est legerement floutee.
-- Cartes : au survol l'affiche se souleve avec un leger rebond, son image
-  zoome dans le cadre, l'anneau blanc s'accompagne d'une ombre. Les
-  boutons du bas deviennent des pastilles de verre de taille fixe.
-- Page d'item : boutons ronds en verre sur l'image de fond ; lueur
-  blanche au survol du bouton Lecture et des boutons principaux.
-- Connexion : panneau de verre sous un halo blanc.
-- Page d'item sur ordinateur : l'image de fond reste nette dans le haut
-  de la page (`--hero-height`), et le contenu la floute en passant dessus
-  (`--hero-blur`, `--hero-veil`), avec un fondu sous le titre. Le client
-  ne remplit la banniere `#itemBackdrop` qu'en layout mobile : c'est
-  l'image du fond fixe qui sert de hero. Ombre douce sur le titre et le
-  logo, qui debordent sur l'image.
-- Boutons : legere compression au clic.
-- Nouveaux tokens : `--glass-strong`, `--glass-edge`, `--backdrop-dim`,
+### Added
+
+- More present glass: 28px blur saturated at x1.8 and a highlight on the edge
+  (`--glass-edge`), applied to the header, the drawer (permanent one included),
+  menus, action sheets, dialogs, notifications and tooltips. The page behind an
+  open dialog is slightly blurred.
+- Cards: on hover the poster lifts with a slight bounce, its image zooms
+  within the frame, and the white ring comes with a shadow. The bottom buttons
+  become fixed-size glass chips.
+- Item page: round glass buttons over the background image; white glow on
+  hover of the Play button and of the main buttons.
+- Login: glass panel under a white halo.
+- Item page on desktop: the background image stays sharp at the top of the
+  page (`--hero-height`), and the content blurs it as it passes over
+  (`--hero-blur`, `--hero-veil`), with a fade under the title. The client only
+  fills the `#itemBackdrop` banner in mobile layout: the fixed-background
+  image serves as the hero. Soft shadow on the title and logo, which overflow
+  onto the image.
+- Buttons: slight compression on click.
+- New tokens: `--glass-strong`, `--glass-edge`, `--backdrop-dim`,
   `--shadow-lift`, `--glow-primary`, `--ease-spring`, `--t-slow`,
-  `--card-lift`, `--card-zoom`, `--press`. Le mouvement est coupe sous
+  `--card-lift`, `--card-zoom`, `--press`. Motion is disabled under
   `prefers-reduced-motion`.
 
-### Corrige
+### Fixed
 
-- Anneau, ombre et survol des cartes coupes net : le client pose
-  `contain: layout style paint` sur chaque carte, et le confinement de
-  peinture decoupe comme un `overflow: hidden`. Ramene a `layout style`.
-  Les rangees a defilement natif (`.scrollX`, tactile) recoivent une marge
-  verticale pour la meme raison.
-- Image de fond jamais visible : `.backgroundContainer` la recouvrait d'un
-  aplat opaque. Remplace par un voile degrade, et l'image est plus saturee.
-- Icone du bouton lecture des cartes invisible (blanc sur blanc) : le
-  survol generique des boutons-icones l'emportait sur elle.
-- Portraits de la page de connexion reduits a 24px : leur largeur en
-  pourcentage etait calculee pour une grille pleine page.
-- Page d'item en fenetre etroite (sous ~1000px, layout ordinateur) : le
-  titre tombait a 0px de large, ecrase par la rangee de boutons. Les
-  boutons passent sous le titre sous 62.5em, et le titre peut passer a la
-  ligne. Sans image de fond, la zone du haut n'est plus un vide de 400px.
+- Card ring, shadow and hover cut off sharply: the client sets
+  `contain: layout style paint` on every card, and paint containment clips like
+  an `overflow: hidden`. Brought back to `layout style`. Natively scrolling
+  rows (`.scrollX`, touch) get a vertical margin for the same reason.
+- Background image never visible: `.backgroundContainer` covered it with an
+  opaque flat fill. Replaced by a gradient veil, and the image is more
+  saturated.
+- Play button icon on cards invisible (white on white): the generic hover of
+  icon buttons won over it.
+- Login page portraits shrunk to 24px: their percentage width was computed for
+  a full-page grid.
+- Item page in a narrow window (under ~1000px, desktop layout): the title
+  collapsed to 0px wide, squeezed by the button row. The buttons now go under
+  the title below 62.5em, and the title may wrap. Without a background image,
+  the top area is no longer a 400px void.
 
-## [3.0.0] - 2026-09-25 - Jellyfin 12.x, layout Modern
+## [3.0.0] - 2026-09-25 - Jellyfin 12.x, Modern layout
 
-Reecriture complete. Plus de base tierce : Ultrachromic est retire, avec
-toutes les regles qui existaient pour le corriger. Le theme est desormais un
-systeme de tokens et un module par famille de composants, applique a toute
-l'application, tableau de bord compris.
+Complete rewrite. No third-party base anymore: Ultrachromic is removed, along
+with all the rules that existed to fix it. The theme is now a token system and
+one module per component family, applied to the whole app, dashboard included.
 
 ### Direction
 
-- Surfaces neutres, sans teinte : l'accent bleu-violet de la v2 disparait.
-- Le blanc devient la couleur d'action : bouton Lecture, boutons principaux,
-  cases cochees, interrupteurs, barres de progression, element selectionne.
-- Relief par la luminosite des surfaces et des filets d'un pixel, sans
-  lueurs ni ombres portees colorees. Les seules couleurs franches sont
-  semantiques : erreur, succes, avertissement.
+- Neutral, untinted surfaces: the blue-violet accent of v2 is gone.
+- White becomes the action color: Play button, main buttons, checked
+  checkboxes, switches, progress bars, selected item.
+- Depth through the brightness of surfaces and one-pixel rules, with no
+  colored glows or drop shadows. The only saturated colors are semantic:
+  error, success, warning.
 
-### Ajoute
+### Added
 
-- `src/01-tokens.css` : toutes les valeurs du theme (fonds, voiles, filets,
-  texte, couleurs semantiques, verre, rayons, anneau de focus, mouvement).
-- `src/02-palette-jf.css` : les tokens branches sur les variables `--jf-*`,
-  que lisent a la fois MUI et le theme de base du client.
-- Un module par famille de composants, chacun couvrant l'ancien composant
-  du client et son equivalent MUI : boutons, champs et listes deroulantes,
-  cases et interrupteurs, surfaces flottantes (menus, dialogues, feuilles
-  d'actions, infobulles, alertes), listes et tableaux, onglets et puces.
-- `js/theme-dashboard.js` : en 12, le CSS de branding n'est pas applique au
-  tableau de bord. Ce script, a installer par JavaScript Injector, y charge
-  la feuille servie sur `/Branding/Css`.
-- `src/95-plugins.css` : etiquettes de qualite de Jellyfin Enhanced ramenees
-  a des etiquettes de verre sombre, fenetre de choix des saisons Jellyseerr,
-  onglets des marque-pages.
-- Icones : `edit`, `image`, `refresh`, `video_library` et `tune` remappees
-  sur Phosphor, et l'icone Collections de la barre du haut (`#/boxsets`).
+- `src/01-tokens.css`: every value of the theme (backgrounds, veils, rules,
+  text, semantic colors, glass, radii, focus ring, motion).
+- `src/02-palette-jf.css`: the tokens wired to the `--jf-*` variables, read by
+  both MUI and the client's base theme.
+- One module per component family, each covering the client's legacy component
+  and its MUI equivalent: buttons, fields and dropdowns, checkboxes and
+  switches, floating surfaces (menus, dialogs, action sheets, tooltips,
+  alerts), lists and tables, tabs and chips.
+- `js/theme-dashboard.js`: in 12, branding CSS is not applied to the
+  dashboard. This script, to install with JavaScript Injector, loads the
+  stylesheet served at `/Branding/Css` there.
+- `src/95-plugins.css`: Jellyfin Enhanced quality labels brought back to dark
+  glass labels, Jellyseerr's season picker, bookmark tabs.
+- Icons: `edit`, `image`, `refresh`, `video_library` and `tune` remapped to
+  Phosphor, and the Collections icon of the top bar (`#/boxsets`).
 
-### Retire
+### Removed
 
 - Ultrachromic (`src/vendor/`, `vendor.list`, `vendor.exclude`,
-  `update-vendor.sh`, workflow `veille-upstream`).
-- Le layout Legacy : onglets et en-tete `.skinHeader`, et les compensations
-  de hauteur qu'ils imposaient.
-- Les modules 02 a 25 de la v2, remplaces par les modules de composants.
+  `update-vendor.sh`, the `veille-upstream` workflow).
+- The Legacy layout: `.skinHeader` tabs and header, and the height
+  compensations they required.
+- Modules 02 to 25 of v2, replaced by the component modules.
 
-### Change
+### Changed
 
-- `build.py` ne fait plus que concatener `src/` et verifier le resultat.
-- Le fichier construit passe de 123 Ko a 83 Ko.
+- `build.py` now only concatenates `src/` and checks the result.
+- The built file goes from 123 KB to 83 KB.
 
 ## [2.0.0] - 2026-09-15 - Jellyfin 12.x
 
-Portage sur Jellyfin 12, dont le layout **Modern** est desormais celui par
-defaut. Version majeure parce que la cible change, pas parce que le theme a
-ete refait : l'essentiel n'a pas bouge, et c'est le fait marquant de ce
-portage.
+Port to Jellyfin 12, whose **Modern** layout is now the default. A major
+version because the target changes, not because the theme was redone: most of
+it did not move, and that is the striking fact of this port.
 
-### Contexte
+### Context
 
-La 12 n'est pas un client neuf. Les pages d'item, de connexion, de liste, les
-preferences et la file d'attente sont toujours rendues par les controleurs
-d'avant, **y compris en Modern** : c'est explicite dans le source du client,
-`src/apps/modern/routes/legacyRoutes/`. Et les cartes, pourtant reecrites en
-composants React, emettent le meme vocabulaire de classes qu'en 10.11
-(`cardScalable`, `cardContent`, `cardText`, `innerCardFooter`,
-`cardOverlayButton`, `cardIndicators`). Enfin `layout-desktop`, `layout-mobile`
-et `layout-tv` sont toujours posees sur `<html>` par `layoutManager`, meme en
-Modern.
+12 is not a new client. The item, login and list pages, the preferences and
+the queue are still rendered by the earlier controllers, **Modern included**:
+this is explicit in the client's source, `src/apps/modern/routes/legacyRoutes/`.
+And the cards, although rewritten as React components, emit the same class
+vocabulary as in 10.11 (`cardScalable`, `cardContent`, `cardText`,
+`innerCardFooter`, `cardOverlayButton`, `cardIndicators`). Finally
+`layout-desktop`, `layout-mobile` and `layout-tv` are still set on `<html>` by
+`layoutManager`, even in Modern.
 
-Consequence : les modules 02 a 22 s'appliquent sans modification. Ce qui
-change, c'est l'habillage de l'en-tete, du tiroir et des barres d'outils,
-refaits en MUI.
+Consequence: modules 02 to 22 apply unchanged. What changes is the styling of
+the header, the drawer and the toolbars, redone in MUI.
 
-### Ajoute
+### Added
 
-- `src/23-modern.css`. Habillage des quatre elements que la 12 rend en MUI :
-  en-tete, tiroir, entrees selectionnees, navigation des bibliotheques. Deux
-  appuis, choisis pour leur duree de vie :
+- `src/23-modern.css`. Styling of the four elements 12 renders in MUI: header,
+  drawer, selected entries, library navigation. Two anchors, chosen for their
+  lifespan:
 
-  - les **classes de composant MUI** (`.MuiAppBar-root`, `.MuiDrawer-paper`,
-    `.Mui-selected`, `.MuiButton-colorPrimary`), qui font partie de l'API
-    publique de MUI. C'est ce qui remplace les hachages `css-4yt2of`,
-    `css-17c09up` et `css-fknfom` qu'Ultrachromic vise encore : Emotion les
-    recalcule des que le style amont bouge, ils ne designaient deja plus rien
-    en 12.1 ;
-  - les **variables `--jf-*`** du theme de base, que la 12 a introduites et
-    que son source presente comme exposees pour les themes personnalises.
-    L'accent du preset y est branche, donc les composants MUI cessent de
-    revenir au bleu Jellyfin par defaut.
+  - the **MUI component classes** (`.MuiAppBar-root`, `.MuiDrawer-paper`,
+    `.Mui-selected`, `.MuiButton-colorPrimary`), which are part of MUI's public
+    API. They replace the `css-4yt2of`, `css-17c09up` and `css-fknfom` hashes
+    that Ultrachromic still targets: Emotion recomputes them as soon as
+    upstream styles move, and they already matched nothing in 12.1;
+  - the base theme's **`--jf-*` variables**, which 12 introduced and which its
+    source presents as exposed for custom themes. The preset's accent is wired
+    into them, so MUI components stop falling back to the default Jellyfin
+    blue.
 
-  La navigation de bibliotheque reprend la pilule de `05-onglets.css`, aux
-  memes valeurs, pour que les deux layouts se ressemblent : gris clair pour
-  la vue courante, accent reserve au focus telecommande.
+  Library navigation reuses the pill of `05-onglets.css`, with the same
+  values, so that both layouts look alike: light gray for the current view,
+  accent reserved for remote-control focus.
 
-- `src/25-icones-mui.css`. Les icones de la barre Modern sont des composants
-  SVG MUI : le dessin est dans le balisage et non dans une police, et le
-  `data-testid` qui les nommait est retire du build de production — verifie
-  dans le bundle servi. La methode de `07-icones.css`, qui remappe
-  `.material-icons.<nom>` sur Phosphor, ne peut donc pas s'y appliquer.
-  L'accroche retenue est la route du lien, stable et independante de la
-  langue : `appRouter` construit `#/movies?`, `#/tv?`, `#/music?` a partir du
-  type de collection. Le SVG est masque, le glyphe Phosphor pose en `::after`.
-  Diffusion et SyncPlay n'etant ni des liens ni porteurs d'identifiant,
-  ils passent par `aria-label`, donc par le francais ; dans une autre langue
-  ces deux icones restent en SVG et rien d'autre ne bouge.
+- `src/25-icones-mui.css`. The icons of the Modern bar are MUI SVG components:
+  the drawing is in the markup and not in a font, and the `data-testid` that
+  named them is stripped from the production build — checked in the served
+  bundle. The method of `07-icones.css`, which remaps `.material-icons.<name>`
+  to Phosphor, therefore cannot apply to them. The chosen hook is the link's
+  route, stable and language-independent: `appRouter` builds `#/movies?`,
+  `#/tv?`, `#/music?` from the collection type. The SVG is hidden, the
+  Phosphor glyph set in `::after`. Cast and SyncPlay being neither links nor
+  carrying an identifier, they go through `aria-label`, hence through French;
+  in another language these two icons stay SVG and nothing else moves.
 
-- `src/24-champs.css`. Voir « Corrige ».
+- `src/24-champs.css`. See "Fixed".
 
-- `--accent-canal` dans `src/01-reglages.css`. Meme couleur que `--accent`,
-  en composantes separees par des espaces : MUI attend cette syntaxe pour ses
-  variables `*Channel`, ou la notation en virgules est invalide.
+- `--accent-canal` in `src/01-reglages.css`. Same color as `--accent`, as
+  space-separated components: MUI expects this syntax for its `*Channel`
+  variables, where comma notation is invalid.
 
-### Modifie
+### Changed
 
-- Ultrachromic resynchronise sur [`1398af2`](https://github.com/CTalvio/Ultrachromic/tree/1398af21b8fe120a972bd00942ad60a76a932647).
-  L'amont a corrige pour la 12 : l'affiche de la page d'item redevient
-  `position: relative` et accepte les transformations, le logo de titre est
-  scope en `.layout-desktop` et recoit un placement propre en TV, les champs
-  sans bordure retrouvent leur padding. Les modules dont dependent 08, 10, 11,
-  12 et 13 — `hoverglow`, `overlayprogress`, `cornerindicator` — sont
-  inchanges, verifie avant d'accepter le diff.
+- Ultrachromic resynchronized on [`1398af2`](https://github.com/CTalvio/Ultrachromic/tree/1398af21b8fe120a972bd00942ad60a76a932647).
+  Upstream fixed for 12: the item page poster is `position: relative` again
+  and accepts transforms, the title logo is scoped to `.layout-desktop` and
+  gets proper placement on TV, borderless fields get their padding back. The
+  modules that 08, 10, 11, 12 and 13 depend on — `hoverglow`,
+  `overlayprogress`, `cornerindicator` — are unchanged, checked before
+  accepting the diff.
 
-- `build.py` annonce la cible 12.x dans l'en-tete du fichier construit.
+- `build.py` announces the 12.x target in the header of the built file.
 
-### Corrige
+### Fixed
 
-- Le trou en haut des pages de liste en Modern. Ultrachromic decale
-  `#indexPage` et consorts de 68px, ou 130px sous 100em de large, pour
-  degager l'en-tete fixe de Jellyfin ; `05-onglets.css` ajoutait 100px de
-  meme nature sur telephone. En Modern ces valeurs sont du vide : l'en-tete
-  legacy n'est plus affiche, et la barre MUI est un `OffsetAppBar`, qui pose
-  lui-meme un cale-pied de la hauteur qu'il mesure. Neutralise dans
-  `23-modern.css`, sous `:root:has(.MuiAppBar-root)` — le Legacy n'ayant
-  aucune AppBar MUI dans son arborescence, la condition sert de test de
-  layout.
+- The gap at the top of list pages in Modern. Ultrachromic offsets
+  `#indexPage` and the like by 68px, or 130px under 100em wide, to clear
+  Jellyfin's fixed header; `05-onglets.css` added 100px of the same kind on
+  phones. In Modern these values are empty space: the legacy header is no
+  longer displayed, and the MUI bar is an `OffsetAppBar`, which sets its own
+  footrest of the height it measures. Neutralized in `23-modern.css`, under
+  `:root:has(.MuiAppBar-root)` — Legacy having no MUI AppBar in its tree, the
+  condition serves as a layout test.
 
-- Les arcs de cercle flottant a droite des boutons de la barre de
-  bibliotheque. Celle-ci assemble ses boutons en `MuiButtonGroup`, ou MUI
-  dessine un groupe d'un seul tenant dont seuls les bouts sont arrondis, et
-  separe ses membres par un bord droit d'un pixel. La pilule de
-  `23-modern.css` arrondissait chacun d'eux a 999px : ce bord suivait la
-  courbe. Seuls les cotes qui se touchent sont desormais redresses, par
-  `MuiButtonGroup-firstButton`, `-lastButton` et `-middleButton` — passer par
-  les bouts plutot que remettre `-grouped` a plat evite d'aplatir un groupe
-  reduit a un seul bouton.
+- The circle arcs floating to the right of the library bar's buttons. The bar
+  assembles its buttons as a `MuiButtonGroup`, where MUI draws a one-piece
+  group with only the ends rounded, and separates its members with a one-pixel
+  right border. The pill of `23-modern.css` rounded each of them to 999px:
+  that border followed the curve. Only the sides that touch are now
+  straightened, through `MuiButtonGroup-firstButton`, `-lastButton` and
+  `-middleButton` — going through the ends rather than flattening `-grouped`
+  avoids flattening a group reduced to a single button.
 
-- Le compteur d'elements de la barre, ovale sur un chiffre seul. MUI donne au
-  chip une hauteur fixe et un padding lateral ; une `min-width` egale a la
-  hauteur en fait un cercle tant que le texte tient dedans, et le laisse
-  s'allonger quand la pagination le remplit par une plage.
+- The bar's item counter, oval on a single digit. MUI gives the chip a fixed
+  height and side padding; a `min-width` equal to the height makes it a circle
+  as long as the text fits, and lets it stretch when pagination fills it with
+  a range.
 
-- La lisibilite du compteur d'episodes, qui se lisait gris fonce alors que sa
-  couleur calculee est bien `rgb(255, 255, 255)`. La cause est une propriete
-  heritee : Ultrachromic pose `text-shadow: 0 0 4px rgba(0,0,0,.6)
-  !important` sur `body`, et `text-shadow` descend dans tout le document.
-  Devant une affiche, sur un titre, c'est ce qui le rend lisible ; sur le
-  chiffre d'une pastille haut de 11 px, une ombre noire floutee sur 4 px et
-  sans decalage deborde du glyphe et en noie l'interieur. Coupee sur les
-  pastilles, qui ont un fond plein et n'en ont aucun besoin. Le fond passe au
-  passage a 95 % d'opacite, avec un lisere sombre rendu — `indicator_floating.css`
-  retire celui que Jellyfin pose.
+- The readability of the episode counter, which read dark gray although its
+  computed color is indeed `rgb(255, 255, 255)`. The cause is an inherited
+  property: Ultrachromic sets `text-shadow: 0 0 4px rgba(0,0,0,.6) !important`
+  on `body`, and `text-shadow` flows down the whole document. In front of a
+  poster, on a title, that is what makes it legible; on the digit of an
+  11px-high chip, a black shadow blurred over 4px with no offset overflows the
+  glyph and drowns its inside. Turned off on chips, which have a solid
+  background and need none. The background goes to 95% opacity along the way,
+  with a dark rendered hairline — `indicator_floating.css` removes the one
+  Jellyfin sets.
 
-- Les listes deroulantes ecrasees. Regression venue d'Ultrachromic, pas de
-  Jellyfin : `fields_noborder.css` ecrase depuis peu le padding de
-  `.emby-select` par `0 1.9em 0 .35em !important`. Plus aucun padding
-  vertical, donc un champ a la hauteur de sa ligne de texte, et un libelle
-  entre dans la courbe de la pilule que `rounding.css` dessine autour.
-  `24-champs.css` retablit les valeurs de Jellyfin, avec 0.75em a gauche
-  pour tenir compte de cet arrondi.
+- Squashed dropdowns. A regression from Ultrachromic, not from Jellyfin:
+  `fields_noborder.css` recently overrides `.emby-select`'s padding with
+  `0 1.9em 0 .35em !important`. No vertical padding anymore, hence a field as
+  tall as its line of text, and a label running into the curve of the pill
+  that `rounding.css` draws around it. `24-champs.css` restores Jellyfin's
+  values, with 0.75em on the left to account for that rounding.
 
-### Supprime
+### Removed
 
-- `js/onglets-dans-la-page.js` et les regles de `05-onglets.css` qui en
-  dependaient. Le script clonait la rangee d'onglets de l'en-tete dans la
-  zone qui defile, sur telephone, parce que le CSS ne peut pas reparenter un
-  element et que ces onglets vivaient dans un en-tete `position: fixed`. En
-  12 cet en-tete n'est plus affiche et la navigation passe par la barre MUI :
-  le script n'a plus d'objet. Retire aussi de la configuration du plugin
-  JavaScript Injector, ou `apply-js.sh` l'avait ecrit.
+- `js/onglets-dans-la-page.js` and the rules of `05-onglets.css` that
+  depended on it. The script cloned the header's tab row into the scrolling
+  area, on phones, because CSS cannot reparent an element and those tabs lived
+  in a `position: fixed` header. In 12 that header is no longer displayed and
+  navigation goes through the MUI bar: the script has no purpose left. Also
+  removed from the JavaScript Injector plugin's configuration, where
+  `apply-js.sh` had written it.
 
 ## [1.3.0] - 2026-08-23 - Jellyfin 10.11.x
 
-### Ajouté
+### Added
 
-- `src/19-rangees-degrade.css`. Une rangée de cartes porte elle-même la
-  gouttière de page (`.padded-left` / `.padded-right`, `3.3%`), et un padding
-  fait partie de la boîte de rognage : l'`overflow-x` découpe au bord
-  **extérieur** de la gouttière. Tant que la rangée n'a pas défilé le retrait
-  se voit, et dès le premier défilement les cartes le traversent et viennent
-  toucher le bord de l'écran, pendant que le titre de section, lui, reste
-  aligné sur la colonne. C'est le débordement à gauche visible sur PC et sur
-  TV.
+- `src/19-rangees-degrade.css`. A row of cards carries the page gutter itself
+  (`.padded-left` / `.padded-right`, `3.3%`), and padding is part of the
+  clipping box: `overflow-x` cuts at the **outer** edge of the gutter. As long
+  as the row has not scrolled the inset shows, and from the first scroll the
+  cards cross it and touch the screen edge, while the section title stays
+  aligned on the column. This is the left overflow visible on PC and on TV.
 
-  Corrigé par un masque en dégradé plutôt que par des marges : une marge
-  ferait rentrer le bord de rognage sur l'alignement des cartes et couperait
-  net l'anneau de focus TV de la première carte, qui déborde de sa boîte. Le
-  masque est fixé à la boîte et non au contenu ; le fondu vaut exactement la
-  gouttière, donc la première carte au repos est intacte et seul son halo
-  s'atténue en débordant. Sous `@supports` : un navigateur de TV qui ignore
-  `mask-image` retrouve le comportement d'avant.
+  Fixed with a gradient mask rather than margins: a margin would bring the
+  clipping edge in to the cards' alignment and cut off the TV focus ring of
+  the first card, which overflows its box. The mask is attached to the box and
+  not to the content; the fade equals exactly the gutter, so the first card at
+  rest is intact and only its halo fades as it overflows. Under `@supports`: a
+  TV browser that ignores `mask-image` gets the previous behavior.
 
-- `src/20-page-item-mobile.css`. Le téléphone était le seul layout resté sur
-  le rendu par défaut de la page d'un item. `title_simple.css` rend
-  `.detailRibbon` transparent, mais sous `.layout-desktop` seulement, et la TV
-  reçoit son `background: none` de `themes/dark` : le téléphone n'entre dans
-  aucun des deux cas et gardait `rgba(32, 32, 32, .8)`, une dalle grise pleine
-  largeur sous l'affiche de fond, où s'entassaient titre, informations et
-  boutons.
+- `src/20-page-item-mobile.css`. The phone was the only layout left on the
+  default rendering of an item page. `title_simple.css` makes `.detailRibbon`
+  transparent, but under `.layout-desktop` only, and TV gets its
+  `background: none` from `themes/dark`: the phone falls in neither case and
+  kept `rgba(32, 32, 32, .8)`, a full-width gray slab under the background
+  poster, where title, information and buttons piled up.
 
-  Trois corrections qui vont ensemble : la dalle disparaît, le bas de
-  l'affiche de fond se dissout au lieu d'être coupé net, par un masque et non
-  par un dégradé de couleur, donc rien à accorder avec le fond de page, et
-  l'image remonte sous l'en-tête. Cette dernière n'est pas un ajout mais un retrait :
-  `#itemDetailPage` est une `.selfBackdropPage`, mise à `padding-top: 0`
-  précisément pour que son image commence au bord haut, et Jellyfin lui donne
-  déjà un voile `::before` qui s'éteint sur la hauteur d'un en-tête. La marge
-  de `4rem` posée par `fixes.css` rendait ce voile inutile et laissait une
-  bande noire que le bureau n'a jamais eue.
+  Three fixes that go together: the slab disappears, the bottom of the
+  background poster dissolves instead of being cut off, through a mask and not
+  a color gradient, so nothing to match with the page background, and the
+  image moves up under the header. That last one is not an addition but a
+  removal: `#itemDetailPage` is a `.selfBackdropPage`, set to `padding-top: 0`
+  precisely so its image starts at the top edge, and Jellyfin already gives it
+  a `::before` veil that fades out over the height of a header. The `4rem`
+  margin set by `fixes.css` made that veil useless and left a black strip that
+  desktop never had.
 
-- `src/21-info-media.css`. La classification et le marqueur de sous-titres
-  sont les deux seuls `.mediaInfoText` d'une page d'item ; le reste de la
-  rangée est du texte nu. Ils recevaient pourtant un aplat gris bleuté à 20 %,
-  donc une couleur qui dépend de ce qu'il y a dessous : lisible sur le fond de
-  page, délavé sur une affiche claire. Ils reprennent la grammaire du thème,
-  un contour et pas un fond, et la gélule des sections 2 et 18. En blanc et
-  non à l'accent : cette pastille ne signale ni un état ni une action, elle
-  range une information parmi d'autres.
+- `src/21-info-media.css`. The rating and the subtitles marker are the only
+  two `.mediaInfoText` of an item page; the rest of the row is bare text. They
+  nevertheless received a 20% blue-gray flat fill, hence a color that depends
+  on what is underneath: legible on the page background, washed out on a light
+  poster. They take the theme's grammar again, an outline and not a fill, and
+  the capsule of sections 2 and 18. In white and not in the accent: this chip
+  signals neither a state nor an action, it files a piece of information among
+  others.
 
-- `src/22-liste-progression.css`. `overlayprogress.css` étire la barre de
-  progression à `2000em` pour en faire un voile, et vise pour cela deux pages
-  par leur ID. La section 11 rattrape le cas des cartes ; les lignes de liste,
-  celles de la liste des épisodes d'une saison, qui est justement sur
-  `#itemDetailPage`, n'étaient rattrapées par rien. Le même état, « commencé,
-  pas fini », se lisait donc en barre flottante sur une vignette, en ligne à
-  moitié teintée juste en dessous, et en trait de `.28em` sur les pages où
-  l'ID ne matche pas : trois rendus pour un seul état. La ligne de liste
-  s'aligne sur la carte et reprend telles quelles les variables de la
-  section 11.
+- `src/22-liste-progression.css`. `overlayprogress.css` stretches the progress
+  bar to `2000em` to make it a veil, and targets two pages by ID for that.
+  Section 11 catches the case of cards; list rows, those of a season's episode
+  list, which is precisely on `#itemDetailPage`, were caught by nothing. The
+  same state, "started, not finished", therefore read as a floating bar on a
+  thumbnail, as a half-tinted row just below, and as a `.28em` line on pages
+  where the ID does not match: three renderings for one state. The list row
+  now aligns on the card and reuses section 11's variables as they are.
 
 ## [1.2.0] - 2026-08-19 - Jellyfin 10.11.x
 
-### Ajouté
+### Added
 
-- `src/16-tv-focus.css`. Sur TV, la carte visée était cernée d'un cadre bleu
-  de `.5em`, au `#00a4dc` codé en dur dans `themes/dark/theme.css` et sans
-  rapport avec l'accent du thème. L'origine n'est pas un choix de Jellyfin
-  mais une détection : `cardBuilder` ne pose `.show-animation` que sous
-  `!browser.slow && !browser.edge`, et Tizen tombe dans « slow ». Le zoom de
-  focus prévu par le client, `scale(1.07)`, n'atteint donc jamais la TV, et
-  il ne reste que le cadre de repli. Le module rend les deux : anneau fin à
-  l'accent, et l'agrandissement que la TV aurait dû avoir.
+- `src/16-tv-focus.css`. On TV, the focused card was ringed by a `.5em` blue
+  frame, with `#00a4dc` hard-coded in `themes/dark/theme.css` and unrelated to
+  the theme's accent. The origin is not a Jellyfin choice but a detection:
+  `cardBuilder` only sets `.show-animation` under
+  `!browser.slow && !browser.edge`, and Tizen falls into "slow". The focus
+  zoom planned by the client, `scale(1.07)`, therefore never reaches the TV,
+  and only the fallback frame remains. The module restores both: a thin ring
+  in the accent, and the enlargement the TV should have had.
 
-  Le zoom demandait de retirer `contain: paint` de la seule carte visée,
-  faute de quoi le confinement de peinture le rognait pile à son bord. Le dégagement
-  vertical, lui, existait déjà : Jellyfin porte `padded-top-focusscale`
-  (`margin-top: -1.5em; padding-top: 1.5em`) sur ses rangées, ce qui borne
-  `--tv-card-zoom` à 1.15 environ avant que la carte se fasse couper par
-  l'`overflow-y: hidden` de `.scrollX`.
+  The zoom required removing `contain: paint` from the focused card alone,
+  otherwise paint containment clipped it right at its edge. The vertical
+  clearance already existed: Jellyfin carries `padded-top-focusscale`
+  (`margin-top: -1.5em; padding-top: 1.5em`) on its rows, which bounds
+  `--tv-card-zoom` to about 1.15 before the card gets cut off by `.scrollX`'s
+  `overflow-y: hidden`.
 
-  Le module reprend aussi les boutons de la page d'un film : plus d'aplat au
-  focus, l'accent passe sur le trait, comme le fait Jellyfin pour les icônes
-  de l'en-tête en TV. Et le bouton Lecture, déjà à l'accent au repos, se
-  signale par un anneau blanc : l'éclaircir ne se voyait pas d'un fauteuil,
-  et l'inverser en fond blanc faisait une rupture là où il ne s'agit que de
-  marquer un état.
+  The module also takes over the movie page's buttons: no more flat fill on
+  focus, the accent moves to the stroke, as Jellyfin does for the header icons
+  on TV. And the Play button, already in the accent at rest, signals itself
+  with a white ring: lightening it was not visible from an armchair, and
+  inverting it to a white fill made a break where it is only about marking a
+  state.
 
-- `src/17-boutons-survol.css`. Un seul langage de survol pour les boutons
-  secondaires : icônes de l'en-tête, rangée de la page d'un film, bandeau de
-  sélection. Tous recevaient un aplat à l'accent, mais par deux règles
-  distinctes, `.paper-icon-button-light:hover` et `.button-flat:hover`,
-  ce qui explique qu'une correction sur l'une ne se répercutait pas sur
-  l'autre.
+- `src/17-boutons-survol.css`. A single hover language for secondary buttons:
+  header icons, the movie page's row, the selection banner. All received a flat
+  fill in the accent, but through two distinct rules,
+  `.paper-icon-button-light:hover` and `.button-flat:hover`, which explains why
+  a fix on one did not carry over to the other.
 
-  Le scintillement sur la page d'un film venait de `effects/glassy.css` :
-  le survol crée une couche de composition **et** demande un
-  `backdrop-filter: blur(4px)` au même instant. Sur une page d'item
-  l'en-tête est `.semiTransparent`, posé sur l'affiche de fond : il y a de
-  la matière à flouter et le passage se voit. Sur l'accueil il surplombe un
-  aplat sombre, et la même règle ne produit rien de visible.
+  The flicker on the movie page came from `effects/glassy.css`: hover creates
+  a compositing layer **and** requests a `backdrop-filter: blur(4px)` at the
+  same moment. On an item page the header is `.semiTransparent`, set on the
+  background poster: there is material to blur and the transition shows. On the
+  home page it sits over a dark flat fill, and the same rule produces nothing
+  visible.
 
-- `src/18-selection.css`. Le bandeau de sélection était à
-  `rgba(var(--accent), .8)`, donc 20 % de la page défilait au travers, et
-  collé bord à bord alors que tout le reste du thème flotte. Il reprend la
-  surface des autres éléments flottants, fond très sombre et flou
-  d'arrière-plan comme `.dialog` et `.toast`, et l'accent y redevient un
-  liseré.
+- `src/18-selection.css`. The selection banner was `rgba(var(--accent), .8)`,
+  so 20% of the page scrolled through it, and stuck edge to edge whereas
+  everything else in the theme floats. It takes the surface of the other
+  floating elements, a very dark background and backdrop blur like `.dialog`
+  and `.toast`, and the accent is a hairline again there.
 
-  Les cartes ont demandé un détour. `.itemSelectionPanel` est posé sur
-  **toutes** les cartes dès l'entrée en mode sélection, pas seulement sur
-  les cochées : le voile à l'accent d'Ultrachromic teintait donc la grille
-  entière, et l'accent ne distinguait rien. Pire, rien dans le DOM ne marque
-  une carte cochée : le module de sélection ne tient qu'un tableau d'ID en
-  JavaScript et bascule `input.checked`, sans jamais poser de classe. D'où
-  un découpage en deux étages : un voile neutre et une case bien visible,
-  que tout moteur sait rendre ; puis l'anneau d'accent sur la carte cochée,
-  sous `@supports selector(:has(*))`, puisqu'il faut remonter du champ à son
-  ancêtre.
+  The cards took a detour. `.itemSelectionPanel` is set on **all** cards as
+  soon as selection mode starts, not only the checked ones: Ultrachromic's
+  accent veil therefore tinted the whole grid, and the accent distinguished
+  nothing. Worse, nothing in the DOM marks a checked card: the selection
+  module only holds an array of IDs in JavaScript and toggles `input.checked`,
+  never setting a class. Hence a two-stage split: a neutral veil and a clearly
+  visible checkbox, which any engine can render; then the accent ring on the
+  checked card, under `@supports selector(:has(*))`, since it has to climb
+  from the field to its ancestor.
 
-- `--btn-hover-bg` dans `src/01-reglages.css`, `--tv-card-ring` et
-  `--tv-card-zoom` dans `src/16-tv-focus.css`.
+- `--btn-hover-bg` in `src/01-reglages.css`, `--tv-card-ring` and
+  `--tv-card-zoom` in `src/16-tv-focus.css`.
 
-### Supprimé
+### Removed
 
-- `.mainDetailButtons .detailButton { align-self: center !important }` dans
-  `src/03-page-item.css`. Règle morte : Jellyfin pose déjà
-  `align-items: center` sur `.mainDetailButtons`, et rien ne déclare
-  `align-self` sur ces boutons : elle réaffirmait la valeur calculée.
-- Deux des trois sélecteurs d'annulation de `src/12-carte-zone.css`.
-  `.card-hoverable` est porté par `.card` lui-même et `.cardBox` en est un
-  enfant : les trois pèsent 0-3-0 et désignent le même jeu d'éléments. Celui
-  du dessus suffit, les deux autres ne faisaient que nommer les règles
-  visées, ce que le commentaire fait déjà.
+- `.mainDetailButtons .detailButton { align-self: center !important }` in
+  `src/03-page-item.css`. Dead rule: Jellyfin already sets `align-items: center`
+  on `.mainDetailButtons`, and nothing declares `align-self` on these buttons:
+  it restated the computed value.
+- Two of the three cancellation selectors of `src/12-carte-zone.css`.
+  `.card-hoverable` is carried by `.card` itself and `.cardBox` is a child of
+  it: the three weigh 0-3-0 and designate the same set of elements. The top
+  one is enough, the other two only named the targeted rules, which the
+  comment already does.
 
-  Vérifié mécaniquement avant de couper : toutes les classes visées par
-  `src/*.css` existent encore dans le client servi, et les paires
-  (sélecteur, propriété) déclarées plusieurs fois sont par ailleurs toutes
-  des surcharges légitimes d'Ultrachromic.
+  Checked mechanically before cutting: every class targeted by `src/*.css`
+  still exists in the served client, and the (selector, property) pairs
+  declared several times are otherwise all legitimate overrides of
+  Ultrachromic.
 
 ## [1.1.1] - 2026-08-12 - Jellyfin 10.11.x
 
-### Corrigé
+### Fixed
 
-- Une barre de défilement horizontale apparaissait en bas de l'accueil, alors
-  qu'aucun contenu ne débordait réellement de la page. `src/15-barre-defilement.css`
-  referme l'axe sur `#indexPage` et ses trois pages sœurs.
+- A horizontal scrollbar appeared at the bottom of the home page, although no
+  content actually overflowed the page. `src/15-barre-defilement.css` closes
+  the axis on `#indexPage` and its three sibling pages.
 
-  L'origine est indirecte : `header_transparent-dashboard.css` pose
-  `overflow-y: scroll` sur ces pages pour qu'elles défilent sous l'en-tête
-  transparent, et la spec CSS impose alors que l'axe horizontal, resté à
-  `visible`, se calcule en `auto`. Le conteneur de page devenait défilable
-  latéralement pour un dépassement d'un pixel. Jellyfin, lui, ne pose aucun
-  `overflow` sur ses conteneurs de page. Les rangées de cartes gardent leur
-  propre défileur `.scrollX` : on continue de défiler sur la ligne.
+  The origin is indirect: `header_transparent-dashboard.css` sets
+  `overflow-y: scroll` on these pages so they scroll under the transparent
+  header, and the CSS spec then requires the horizontal axis, left at
+  `visible`, to compute as `auto`. The page container became laterally
+  scrollable for a one-pixel overflow. Jellyfin itself sets no `overflow` on
+  its page containers. Card rows keep their own `.scrollX` scroller: you keep
+  scrolling along the row.
 
 ## [1.1.0] - 2026-08-12 - Jellyfin 10.11.x
 
-### Supprimé
+### Removed
 
-- `smallercast.css` n'est plus chargé : ses 18 media queries rapetissaient et
-  carraient les vignettes du casting. Les vignettes portrait de Jellyfin sont
-  rétablies.
+- `smallercast.css` is no longer loaded: its 18 media queries shrank and
+  squared the cast thumbnails. Jellyfin's portrait thumbnails are restored.
 
-### Ajouté
+### Added
 
-- `src/vendor.exclude`, seul moyen de retirer un module du preset sans
-  modifier l'amont, ce qui rendrait `update-vendor.sh` conflictuel à chaque
-  resynchronisation. `build.py` refuse de construire si une entrée n'est
-  jamais rencontrée, et le fichier construit porte la liste de ce qui a
-  réellement été omis.
-- `src/14-carte-fond.css`. `smallercast.css` portait aussi une règle
-  `.cardPadder` globale, sans rapport avec le casting : elle neutralise le
-  fond d'attente affiché sous chaque vignette avant chargement de l'image.
-  Elle est reprise à l'identique, sinon ce fond réapparaissait sur toutes les
-  grilles.
+- `src/vendor.exclude`, the only way to remove a module from the preset
+  without modifying upstream, which would make `update-vendor.sh` conflict on
+  every resync. `build.py` refuses to build if an entry is never encountered,
+  and the built file carries the list of what was actually omitted.
+- `src/14-carte-fond.css`. `smallercast.css` also carried a global
+  `.cardPadder` rule, unrelated to the cast: it neutralizes the placeholder
+  background shown under each thumbnail before its image loads. It is taken
+  over identically, otherwise that background reappeared on every grid.
 
-### Corrigé
+### Fixed
 
-- `build.py` annonçait des caractères sous le libellé « octets ». Les tirets
-  cadratins en pèsent trois chacun en UTF-8, d'où un écart de 18 avec ce que
-  renvoyait le CDN.
-- Les quatre scripts étaient enregistrés en `100644`. Le dépôt vit sur un
-  lecteur Windows, donc sous `core.filemode false`, où `chmod +x` n'influence
-  plus ce que git enregistre : ils arrivaient non exécutables sur un clone
-  Linux et la CI échouait en code 126.
+- `build.py` reported characters under the "bytes" label. Em dashes weigh
+  three each in UTF-8, hence a gap of 18 with what the CDN returned.
+- The four scripts were recorded as `100644`. The repository lives on a
+  Windows drive, hence under `core.filemode false`, where `chmod +x` no longer
+  affects what git records: they arrived non-executable on a Linux clone and CI
+  failed with exit code 126.
 
 ## [1.0.0] - 2026-08-12 - Jellyfin 10.11.x
 
-Première version publiée. Reprend le `ultrachromic.css` maintenu jusqu'ici
-à la main, à l'octet près, réorganisé en modules.
+First published version. Takes over the `ultrachromic.css` maintained by hand
+until then, byte for byte, reorganized into modules.
 
-### Ajouté
+### Added
 
-- Construction par `build.py` : Ultrachromic et les modules maison fusionnés
-  en un seul `dist/theme.css`, servi par jsDelivr en une requête.
-- Ultrachromic vendorisé et figé sur `fa158a2`. Le dépôt amont n'a ni tag ni
-  release, et une URL sans version pointait donc sur le HEAD de `main` : le
-  thème était bâti sur une cible mouvante.
-- `update-vendor.sh` pour resynchroniser cette copie, sans commit, de façon
-  à lire le diff avant de l'accepter.
-- Vérifications bloquantes à la construction : accolades équilibrées, aucun
-  `@import` après une règle, `display: !important` gardé par `:not(.hide)`.
-- `apply-local.sh` et `apply-js.sh` paramétrables par `JELLYFIN_DIR`,
-  `JELLYFIN_CONTAINER` et `JELLYFIN_URL`.
+- Build by `build.py`: Ultrachromic and the in-house modules merged into a
+  single `dist/theme.css`, served by jsDelivr in one request.
+- Ultrachromic vendored and pinned on `fa158a2`. The upstream repository has
+  no tag or release, so an unversioned URL pointed at the HEAD of `main`: the
+  theme was built on a moving target.
+- `update-vendor.sh` to resynchronize that copy, without committing, so the
+  diff can be read before accepting it.
+- Blocking checks at build time: balanced braces, no `@import` after a rule,
+  `display: !important` guarded by `:not(.hide)`.
+- `apply-local.sh` and `apply-js.sh` configurable through `JELLYFIN_DIR`,
+  `JELLYFIN_CONTAINER` and `JELLYFIN_URL`.
 
-### Modifié
+### Changed
 
-- Les `@import` distants sont remontés en tête du fichier construit, quelle
-  que soit leur place dans les sources.
-- Les URL d'images d'Ultrachromic, qui pointaient sur sa branche `main`,
-  sont épinglées sur le commit vendorisé.
-- `apply-local.sh` échappe le XML au lieu d'interdire `<` et `&` dans le CSS.
-  Cette interdiction était devenue intenable : `jf_font.css` importe Google
-  Fonts avec un `&` dans son URL. Le déséchappement est vérifié par relecture.
+- Remote `@import`s are hoisted to the top of the built file, wherever they
+  sit in the sources.
+- Ultrachromic's image URLs, which pointed at its `main` branch, are pinned
+  to the vendored commit.
+- `apply-local.sh` escapes XML instead of forbidding `<` and `&` in the CSS.
+  That prohibition had become untenable: `jf_font.css` imports Google Fonts
+  with an `&` in its URL. Unescaping is checked by reading it back.
 
-### Corrigé
+### Fixed
 
-- Trois à quatre niveaux d'`@import` en cascade à l'exécution, cause du flash
-  d'interface non stylée au premier chargement et de l'arrivée tardive de
-  `--accent`.
+- Three to four levels of cascading `@import` at runtime, the cause of the
+  flash of unstyled UI on first load and of `--accent` arriving late.
 
 [1.1.1]: https://github.com/matqueme/jellyfin-theme/releases/tag/v1.1.1
 [1.1.0]: https://github.com/matqueme/jellyfin-theme/releases/tag/v1.1.0
