@@ -7,6 +7,15 @@ title of each version.
 The history up to 3.1.2 was originally written in French and translated
 afterwards. File names under `src/` are French, and appear as they are.
 
+## [3.1.8] - 2026-10-02 - Jellyfin 12.x, Modern layout
+
+### Changed
+
+- Smaller Jellyfin logo: the client sets it at 1.25em in the header (28px) and
+  2.5rem in the drawer (37px), next to menu icons of 18px and 24px. In plain
+  white it outweighed everything around it. It is now 20px in the header and
+  26px in the drawer, a little above the icons because its shape is solid.
+
 ## [3.1.7] - 2026-10-02 - Jellyfin 12.x, Modern layout
 
 ### Fixed

@@ -172,3 +172,18 @@ img[src*="icon-transparent"],
 .pageTitleWithDefaultLogo {
   filter: brightness(0) invert(1);
 }
+
+/* Taille. Le client le pose a 1.25em dans l'en-tete (28px) et 2.5rem dans le
+   tiroir (37px), a cote d'icones de menu de 18px et 24px : plein blanc, il
+   pesait plus que tout ce qui l'entoure. Ramene a l'echelle des icones, un
+   peu au-dessus parce que sa forme est pleine. */
+.MuiButton-startIcon > img[src*="icon-transparent"] {
+  height: 1.35rem;
+  max-height: none;
+  max-width: none;
+  width: 1.35rem;
+}
+
+.MuiListItemIcon-root > img[src*="icon-transparent"] {
+  height: 1.75rem;
+}
