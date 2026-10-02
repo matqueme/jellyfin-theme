@@ -127,6 +127,17 @@
   padding-top: 1.25rem;
 }
 
+/* Marges droite et gauche de la grille. Les cartes sont des pourcentages de
+   la grille, mais chacune a une marge droite de .6em (celle de .cardBox),
+   derniere de la ligne comprise : les affiches s'arretent avant la marge,
+   alors que la premiere touche la sienne a gauche. On retire cette marge a
+   la marge droite de la grille. .cardBox est en .6em de la police de la
+   carte, qui vaut deux fois celle de la grille (mesure : 17.86px contre
+   14.88px) : d'ou 1.2em ici. Pas sur TV, ou le client met .4em. */
+:root:not(.layout-tv) .libraryPage .itemsContainer.vertical-wrap {
+  padding-right: calc(max(env(safe-area-inset-right), 3.3%) - 1.2em);
+}
+
 /* Barre de la bibliotheque : titre, fleche et compteur centres a l'encre.
    Les boites sont centrees (mesure : 0.00px d'ecart) mais Plus Jakarta Sans
    pose sa ligne de base un peu bas dans la sienne : a 4x, le texte « Movies »

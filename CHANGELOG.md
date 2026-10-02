@@ -7,6 +7,26 @@ title of each version.
 The history up to 3.1.2 was originally written in French and translated
 afterwards. File names under `src/` are French, and appear as they are.
 
+## [3.1.7] - 2026-10-02 - Jellyfin 12.x, Modern layout
+
+### Fixed
+
+- Right margin of libraries, for real this time: the cards are percentages of
+  the grid, but each one has a right margin of `.6em` of its own font size
+  (17.9px, the last card of a row included), so the posters stopped 18px
+  before the right margin while the first one touches the left one. That
+  margin is now taken off the grid's right padding. Measured at 700, 1100,
+  1500 and 1920px: left and right margins are equal. Not applied on TV, where
+  the client uses a different card margin.
+
+### Changed
+
+- Active "played" and "favorite" buttons on cards: the client turns their icon
+  red (`MuiSvgIcon-colorError`), the only loud colour on a card, and red read
+  as an error. The active button is now a solid white pill with a dark icon,
+  like on the item page, dimmed on hover. Same rule for the older cards of the
+  home page.
+
 ## [3.1.6] - 2026-10-02 - Jellyfin 12.x, Modern layout
 
 ### Changed

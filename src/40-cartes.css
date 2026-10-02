@@ -179,6 +179,27 @@
   }
 }
 
+/* Etats actifs (vu, favori). Le client passe l'icone en rouge
+   (MuiSvgIcon-colorError) : seule couleur franche d'une carte, et le rouge
+   disait « erreur ». Comme sur la fiche, le bouton actif est plein blanc,
+   icone noire ; il s'attenue au survol. Anciennes cartes (accueil) : memes
+   icones de police que la fiche. */
+.cardOverlayContainer .cardOverlayButton-br .cardOverlayButton:has(.MuiSvgIcon-colorError, .playstatebutton-icon-played, .ratingbutton-icon-withrating) {
+  background-color: var(--primary);
+}
+
+.cardOverlayButton .MuiSvgIcon-colorError,
+.cardOverlayButton .playstatebutton-icon-played,
+.cardOverlayButton .ratingbutton-icon-withrating {
+  color: var(--on-primary);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cardOverlayContainer .cardOverlayButton-br .cardOverlayButton:has(.MuiSvgIcon-colorError, .playstatebutton-icon-played, .ratingbutton-icon-withrating):hover {
+    background-color: rgb(var(--primary-canal) / 0.78);
+  }
+}
+
 /* Curseur : une main sur l'affiche et les liens, une fleche ailleurs. Le
    client la pose sur toute la carte, marges comprises. */
 .card {

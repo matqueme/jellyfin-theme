@@ -1,6 +1,6 @@
 /* =====================================================================
    Theme Jellyfin, par matqueme
-   Version 3.1.6, pour Jellyfin 12.x, layout Modern
+   Version 3.1.7, pour Jellyfin 12.x, layout Modern
 
    FICHIER CONSTRUIT : NE PAS EDITER.
    Genere par build.py depuis src/. Toute modification faite ici sera
@@ -2066,6 +2066,27 @@ img[src*="icon-transparent"],
   }
 }
 
+/* Etats actifs (vu, favori). Le client passe l'icone en rouge
+   (MuiSvgIcon-colorError) : seule couleur franche d'une carte, et le rouge
+   disait « erreur ». Comme sur la fiche, le bouton actif est plein blanc,
+   icone noire ; il s'attenue au survol. Anciennes cartes (accueil) : memes
+   icones de police que la fiche. */
+.cardOverlayContainer .cardOverlayButton-br .cardOverlayButton:has(.MuiSvgIcon-colorError, .playstatebutton-icon-played, .ratingbutton-icon-withrating) {
+  background-color: var(--primary);
+}
+
+.cardOverlayButton .MuiSvgIcon-colorError,
+.cardOverlayButton .playstatebutton-icon-played,
+.cardOverlayButton .ratingbutton-icon-withrating {
+  color: var(--on-primary);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cardOverlayContainer .cardOverlayButton-br .cardOverlayButton:has(.MuiSvgIcon-colorError, .playstatebutton-icon-played, .ratingbutton-icon-withrating):hover {
+    background-color: rgb(var(--primary-canal) / 0.78);
+  }
+}
+
 /* Curseur : une main sur l'affiche et les liens, une fleche ailleurs. Le
    client la pose sur toute la carte, marges comprises. */
 .card {
@@ -2417,6 +2438,17 @@ img[src*="icon-transparent"],
    leur propre marge. */
 .libraryPage .itemsContainer.vertical-wrap {
   padding-top: 1.25rem;
+}
+
+/* Marges droite et gauche de la grille. Les cartes sont des pourcentages de
+   la grille, mais chacune a une marge droite de .6em (celle de .cardBox),
+   derniere de la ligne comprise : les affiches s'arretent avant la marge,
+   alors que la premiere touche la sienne a gauche. On retire cette marge a
+   la marge droite de la grille. .cardBox est en .6em de la police de la
+   carte, qui vaut deux fois celle de la grille (mesure : 17.86px contre
+   14.88px) : d'ou 1.2em ici. Pas sur TV, ou le client met .4em. */
+:root:not(.layout-tv) .libraryPage .itemsContainer.vertical-wrap {
+  padding-right: calc(max(env(safe-area-inset-right), 3.3%) - 1.2em);
 }
 
 /* Barre de la bibliotheque : titre, fleche et compteur centres a l'encre.
