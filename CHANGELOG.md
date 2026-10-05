@@ -7,6 +7,23 @@ title of each version.
 The history up to 3.1.2 was originally written in French and translated
 afterwards. File names under `src/` are French, and appear as they are.
 
+## [3.2.2] - 2026-10-05 - Jellyfin 12.x, Modern layout
+
+### Changed
+
+- The "Skip intro / Skip credits" button (the client's media segment button,
+  fed by Intro Skipper) kept the client's flat grey rectangle. It is now a
+  frosted-glass pill with white text, like the theme's other floating
+  surfaces, and turns solid white on hover like the primary buttons.
+
+### Fixed
+
+- Near the end of a film, the skip button sat right over the time bubble and
+  trickplay thumbnail of the position bar, so you could not see where you
+  were seeking (to watch the credits, for instance). As on Netflix, the button
+  now fades out and ignores clicks while the bubble is shown, when hovering or
+  dragging the bar, and comes back as soon as it hides.
+
 ## [3.2.1] - 2026-10-02 - Jellyfin 12.x, Modern layout
 
 ### Fixed
