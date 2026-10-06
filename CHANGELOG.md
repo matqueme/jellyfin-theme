@@ -7,6 +7,18 @@ title of each version.
 The history up to 3.1.2 was originally written in French and translated
 afterwards. File names under `src/` are French, and appear as they are.
 
+## [3.2.4] - 2026-10-06 - Jellyfin 12.x, Modern layout
+
+### Fixed
+
+- The previous/next page buttons of library pages stayed white when the
+  client disabled them (everything fits on one page), so they looked
+  usable: a more specific header rule repainted them over the disabled
+  state. Disabled buttons are now dimmed everywhere, whatever rule colors
+  them elsewhere, MUI ones included. The older `.emby-button` (form and
+  dialog buttons) had no disabled look at all, neither in the client nor in
+  the theme; they now fade out the way the client fades its icon buttons.
+
 ## [3.2.3] - 2026-10-06 - Jellyfin 12.x, Modern layout
 
 ### Fixed
