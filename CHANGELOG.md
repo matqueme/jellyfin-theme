@@ -7,6 +7,16 @@ title of each version.
 The history up to 3.1.2 was originally written in French and translated
 afterwards. File names under `src/` are French, and appear as they are.
 
+## [3.2.3] - 2026-10-06 - Jellyfin 12.x, Modern layout
+
+### Fixed
+
+- Jellyfin 12.2 gave the "Reset filters" button of library pages a new
+  icon (`FilterAltOff`) and changed the icon of mixed libraries from `Quiz`
+  to `OndemandVideo` (`ondemand_video` in the older markup). Both were left
+  as Material icons among the Phosphor ones; they are now a crossed-out
+  funnel and a play screen, matching the rest of the interface.
+
 ## [3.2.2] - 2026-10-05 - Jellyfin 12.x, Modern layout
 
 ### Changed

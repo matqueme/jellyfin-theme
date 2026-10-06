@@ -55,6 +55,7 @@
 .MuiSvgIcon-root[data-testid="FavoriteIcon"],
 .MuiSvgIcon-root[data-testid="FileDownloadIcon"],
 .MuiSvgIcon-root[data-testid="FilterAltIcon"],
+.MuiSvgIcon-root[data-testid="FilterAltOffIcon"],
 .MuiSvgIcon-root[data-testid="FilterListIcon"],
 .MuiSvgIcon-root[data-testid="FilterListOffIcon"],
 .MuiSvgIcon-root[data-testid="FirstPageIcon"],
@@ -87,6 +88,7 @@
 .MuiSvgIcon-root[data-testid="NavigateBeforeIcon"],
 .MuiSvgIcon-root[data-testid="NavigateNextIcon"],
 .MuiSvgIcon-root[data-testid="NotificationsIcon"],
+.MuiSvgIcon-root[data-testid="OndemandVideoIcon"],
 .MuiSvgIcon-root[data-testid="OpenInNewIcon"],
 .MuiSvgIcon-root[data-testid="PaletteIcon"],
 .MuiSvgIcon-root[data-testid="PauseIcon"],
@@ -190,6 +192,7 @@
 .MuiSvgIcon-root[data-testid="FavoriteIcon"] > *,
 .MuiSvgIcon-root[data-testid="FileDownloadIcon"] > *,
 .MuiSvgIcon-root[data-testid="FilterAltIcon"] > *,
+.MuiSvgIcon-root[data-testid="FilterAltOffIcon"] > *,
 .MuiSvgIcon-root[data-testid="FilterListIcon"] > *,
 .MuiSvgIcon-root[data-testid="FilterListOffIcon"] > *,
 .MuiSvgIcon-root[data-testid="FirstPageIcon"] > *,
@@ -222,6 +225,7 @@
 .MuiSvgIcon-root[data-testid="NavigateBeforeIcon"] > *,
 .MuiSvgIcon-root[data-testid="NavigateNextIcon"] > *,
 .MuiSvgIcon-root[data-testid="NotificationsIcon"] > *,
+.MuiSvgIcon-root[data-testid="OndemandVideoIcon"] > *,
 .MuiSvgIcon-root[data-testid="OpenInNewIcon"] > *,
 .MuiSvgIcon-root[data-testid="PaletteIcon"] > *,
 .MuiSvgIcon-root[data-testid="PauseIcon"] > *,
@@ -323,6 +327,7 @@
 .MuiSvgIcon-root[data-testid="FavoriteIcon"] { --ph: url("https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.1.1/assets/bold/heart-bold.svg"); } /* heart */
 .MuiSvgIcon-root[data-testid="FileDownloadIcon"] { --ph: url("https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.1.1/assets/bold/download-simple-bold.svg"); } /* download-simple */
 .MuiSvgIcon-root[data-testid="FilterAltIcon"] { --ph: url("https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.1.1/assets/bold/funnel-bold.svg"); } /* funnel */
+.MuiSvgIcon-root[data-testid="FilterAltOffIcon"] { --ph: url("https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.1.1/assets/bold/funnel-x-bold.svg"); } /* funnel-x */
 .MuiSvgIcon-root[data-testid="FilterListIcon"] { --ph: url("https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.1.1/assets/bold/funnel-simple-bold.svg"); } /* funnel-simple */
 .MuiSvgIcon-root[data-testid="FilterListOffIcon"] { --ph: url("https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.1.1/assets/bold/funnel-simple-x-bold.svg"); } /* funnel-simple-x */
 .MuiSvgIcon-root[data-testid="FirstPageIcon"] { --ph: url("https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.1.1/assets/bold/caret-line-left-bold.svg"); } /* caret-line-left */
@@ -355,6 +360,7 @@
 .MuiSvgIcon-root[data-testid="NavigateBeforeIcon"] { --ph: url("https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.1.1/assets/bold/caret-left-bold.svg"); } /* caret-left */
 .MuiSvgIcon-root[data-testid="NavigateNextIcon"] { --ph: url("https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.1.1/assets/bold/caret-right-bold.svg"); } /* caret-right */
 .MuiSvgIcon-root[data-testid="NotificationsIcon"] { --ph: url("https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.1.1/assets/bold/bell-bold.svg"); } /* bell */
+.MuiSvgIcon-root[data-testid="OndemandVideoIcon"] { --ph: url("https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.1.1/assets/bold/monitor-play-bold.svg"); } /* monitor-play */
 .MuiSvgIcon-root[data-testid="OpenInNewIcon"] { --ph: url("https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.1.1/assets/bold/arrow-square-out-bold.svg"); } /* arrow-square-out */
 .MuiSvgIcon-root[data-testid="PaletteIcon"] { --ph: url("https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.1.1/assets/bold/palette-bold.svg"); } /* palette */
 .MuiSvgIcon-root[data-testid="PauseIcon"] { --ph: url("https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.1.1/assets/bold/pause-bold.svg"); } /* pause */

@@ -79,6 +79,7 @@
 .material-icons.more_vert,
 .material-icons.movie,
 .material-icons.music_note,
+.material-icons.ondemand_video,
 .material-icons.navigate_before,
 .material-icons.navigate_next,
 .material-icons.pause,
@@ -205,6 +206,7 @@
 .material-icons.more_vert:before { content: "\e208" !important; }
 .material-icons.movie:before { content: "\e8c2" !important; }
 .material-icons.music_note:before { content: "\e33c" !important; }
+.material-icons.ondemand_video:before { content: "\e58c" !important; }
 .material-icons.navigate_before:before { content: "\e138" !important; }
 .material-icons.navigate_next:before { content: "\e13a" !important; }
 .material-icons.pause:before { content: "\e39e" !important; }

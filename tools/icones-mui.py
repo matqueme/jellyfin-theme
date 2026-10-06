@@ -78,6 +78,7 @@ MAPPING = {
     "MoreVert": "dots-three-vertical",
     "Movie": "film-slate",
     "MusicNote": "music-note",
+    "OndemandVideo": "monitor-play",  # bibliotheque mixte (12.2), comme Dvr
     "NavigateBefore": "caret-left",
     "NavigateNext": "caret-right",
     "Pause": "pause",
@@ -126,6 +127,7 @@ MAPPING = {
     "ErrorOutline": "warning-circle",
     "ExpandLess": "caret-up",
     "Extension": "puzzle-piece",
+    "FilterAltOff": "funnel-x",  # Reinitialiser les filtres (12.2)
     "FilterList": "funnel-simple",
     "FilterListOff": "funnel-simple-x",
     "FirstPage": "caret-line-left",
