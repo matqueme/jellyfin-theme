@@ -7,6 +7,15 @@ title of each version.
 The history up to 3.1.2 was originally written in French and translated
 afterwards. File names under `src/` are French, and appear as they are.
 
+## [3.2.10] - 2026-11-20 - Jellyfin 12.x, Modern layout
+
+### Fixed
+
+- The plain-text track line introduced in 3.2.9 (a track list with nothing
+  to choose) kept the icon inset by the padding of a pill it no longer has.
+  The icon now sits on the left edge, in line with the edge of the pills
+  below it.
+
 ## [3.2.9] - 2026-11-20 - Jellyfin 12.x, Modern layout
 
 ### Changed
