@@ -7,6 +7,15 @@ title of each version.
 The history up to 3.1.2 was originally written in French and translated
 afterwards. File names under `src/` are French, and appear as they are.
 
+## [3.2.11] - 2026-11-21 - Jellyfin 12.x, Modern layout
+
+### Fixed
+
+- The "watched" check on an episode row (season page, collections, lists)
+  was red, the color the client keeps for favorites, so the two states were
+  told apart by shape only. It is now white like everywhere else in the
+  theme (cards, item page); the favorite heart keeps its red.
+
 ## [3.2.10] - 2026-11-20 - Jellyfin 12.x, Modern layout
 
 ### Fixed

@@ -270,3 +270,11 @@
 .mdl-spinner__layer {
   border-color: var(--primary) !important;
 }
+
+/* Etat « vu » d'une ligne (episode, piste, element de liste) : le client
+   passe la coche en rouge, la couleur qu'il reserve au favori. Le vu reste
+   blanc comme partout ailleurs dans le theme (cartes, fiche) ; seul le
+   favori garde le rouge du client. */
+.listItemButton .playstatebutton-icon-played {
+  color: var(--text);
+}
