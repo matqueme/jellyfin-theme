@@ -182,11 +182,17 @@
   background: rgb(255 255 255 / 0.22);
 }
 
-/* !important : .emby-select[disabled] (plus haut) retire tout fond. */
+/* Une piste unique (ou une seule version) : le client desactive le select,
+   il n'y a rien a choisir. Une pastille le faisait passer pour un bouton ;
+   c'est une information, donc du texte a plat avec son icone, sans fond ni
+   fleche. Les pastilles restent pour ce qui se change. Le fond est deja
+   retire par .emby-select[disabled] (plus haut). */
 .trackSelections .selectContainer select.detailTrackSelect[disabled] {
-  background: var(--veil-3) !important;
+  box-shadow: none;
+  color: var(--text-2);
+  font-weight: 500;
   opacity: 1;
-  padding-right: 1.2rem;
+  padding-right: 0;
 }
 
 /* Le client cale la fleche en haut du conteneur (top: .2em) ; elle est

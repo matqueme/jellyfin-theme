@@ -7,6 +7,15 @@ title of each version.
 The history up to 3.1.2 was originally written in French and translated
 afterwards. File names under `src/` are French, and appear as they are.
 
+## [3.2.9] - 2026-11-20 - Jellyfin 12.x, Modern layout
+
+### Changed
+
+- A track list the client disables (a single audio, subtitle or video
+  track, or a single version: nothing to choose) kept the glass pill of the
+  others and so looked like a button. It is now plain text with its icon, no
+  background and no arrow; pills are kept for what can actually be changed.
+
 ## [3.2.8] - 2026-11-20 - Jellyfin 12.x, Modern layout
 
 ### Fixed
