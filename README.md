@@ -19,15 +19,21 @@ Rows, a glass header, cards that lift on hover.
 
 ### Item page
 
-Sharp hero, round buttons, a readable details sheet.
+Sharp hero, round buttons, a readable details sheet, and audio and subtitle tracks as glass pills.
 
 ![Item page](docs/images/page-item.webp)
 
 ### Library
 
-Cards, "watched" badges, progress bars, alphabet index.
+Cards, "watched" badges, progress bars, favorites, filters and sorting in glass pills.
 
 ![Library](docs/images/bibliotheque.webp)
+
+### Series
+
+Season page: episode rows with a large thumbnail, a play button that turns solid white on hover, and the same round buttons as the item page.
+
+![Season page](docs/images/serie.webp)
 
 ### Menus, filters, login and preferences
 
@@ -39,14 +45,14 @@ One design for the client's legacy components and for MUI's.
 
 ![Item page on mobile, home in TV layout](docs/images/mobile-tv.webp)
 
-<sub>Screenshots taken on a test Jellyfin 12.1 server (English UI). Posters and artwork: © their respective owners, via TMDb.</sub>
+<sub>Screenshots taken on a test Jellyfin 12.4 server (English UI). Posters and artwork: © their respective owners, via TMDb.</sub>
 
 ## Installation
 
 Dashboard → General → **Custom CSS**, a single line:
 
 ```css
-@import url('https://cdn.jsdelivr.net/gh/matqueme/jellyfin-theme@v3.2.2/dist/theme.css');
+@import url('https://cdn.jsdelivr.net/gh/matqueme/jellyfin-theme@v3.2.10/dist/theme.css');
 ```
 
 Then `Ctrl+F5` in the client. The `@import` must stay the first thing in the
@@ -93,7 +99,7 @@ Phosphor) and the Phosphor SVGs used for MUI icons are still loaded from a CDN.
 
 | Theme | Jellyfin | Base |
 |---|---|---|
-| `v3.1.2` to `v3.2.2` | 12.x, Modern layout (+ Samsung app, 10.11 client) | none |
+| `v3.1.2` to `v3.2.10` | 12.x, Modern layout (+ Samsung app, 10.11 client) | none |
 | `v3.0.0` to `v3.1.1` | 12.x, Modern layout | none |
 | `v2.0.0` | 12.x | [Ultrachromic `1398af2`](https://github.com/CTalvio/Ultrachromic/tree/1398af21b8fe120a972bd00942ad60a76a932647) |
 | `v1.3.0` | 10.11.x | [Ultrachromic `fa158a2`](https://github.com/CTalvio/Ultrachromic/tree/fa158a241cb24298c9996af3cf6460ae2f9d522f) |

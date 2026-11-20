@@ -20,15 +20,21 @@ Les rangées, l'en-tête en verre, des cartes qui se soulèvent au survol.
 
 ### Page d'un film
 
-Hero net, boutons ronds, fiche lisible.
+Hero net, boutons ronds, fiche lisible, pistes audio et sous-titres en pastilles de verre.
 
 ![Page d'un film](docs/images/page-item.webp)
 
 ### Bibliothèque
 
-Cartes, pastilles « vu », barre de progression, index alphabétique.
+Cartes, pastilles « vu », barre de progression, favoris, filtres et tri en pastilles de verre.
 
 ![Bibliothèque](docs/images/bibliotheque.webp)
+
+### Séries
+
+Page d'une saison : lignes d'épisodes à grande vignette, bouton de lecture qui devient un disque blanc au survol, mêmes boutons ronds que la page d'un film.
+
+![Page d'une saison](docs/images/serie.webp)
 
 ### Menus, filtres, connexion et préférences
 
@@ -40,14 +46,14 @@ Un seul dessin pour les anciens composants du client et pour ceux de MUI.
 
 ![Page d'un film sur mobile, accueil en layout TV](docs/images/mobile-tv.webp)
 
-<sub>Captures prises sur un serveur Jellyfin 12.1 de test, interface en anglais. Affiches et visuels : © leurs ayants droit, via TMDb.</sub>
+<sub>Captures prises sur un serveur Jellyfin 12.4 de test, interface en anglais. Affiches et visuels : © leurs ayants droit, via TMDb.</sub>
 
 ## Installation
 
 Tableau de bord → Général → **CSS personnalisé**, une seule ligne :
 
 ```css
-@import url('https://cdn.jsdelivr.net/gh/matqueme/jellyfin-theme@v3.2.2/dist/theme.css');
+@import url('https://cdn.jsdelivr.net/gh/matqueme/jellyfin-theme@v3.2.10/dist/theme.css');
 ```
 
 Puis `Ctrl+F5` sur le client. L'`@import` doit rester la première chose du
@@ -94,7 +100,7 @@ Phosphor) et les SVG Phosphor des icônes MUI restent chargés depuis un CDN.
 
 | Thème | Jellyfin | Base |
 |---|---|---|
-| `v3.1.2` à `v3.2.2` | 12.x, layout Modern (+ app Samsung, client 10.11) | aucune |
+| `v3.1.2` à `v3.2.10` | 12.x, layout Modern (+ app Samsung, client 10.11) | aucune |
 | `v3.0.0` à `v3.1.1` | 12.x, layout Modern | aucune |
 | `v2.0.0` | 12.x | [Ultrachromic `1398af2`](https://github.com/CTalvio/Ultrachromic/tree/1398af21b8fe120a972bd00942ad60a76a932647) |
 | `v1.3.0` | 10.11.x | [Ultrachromic `fa158a2`](https://github.com/CTalvio/Ultrachromic/tree/fa158a241cb24298c9996af3cf6460ae2f9d522f) |
