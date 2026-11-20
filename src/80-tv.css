@@ -73,6 +73,26 @@
   transform: scale(1.08) !important;
 }
 
+/* Pastilles de pistes de la fiche (21-champs) : le meme blanc plein, zoom et
+   halo que les boutons. Le select est le seul element qui prend le focus,
+   mais le libelle (icone) et la fleche sont ses voisins : :has() sur le
+   conteneur pour leur donner la couleur du plein. */
+.layout-tv .trackSelections .selectContainer:has(.detailTrackSelect:focus) {
+  color: var(--on-primary);
+}
+
+.layout-tv .trackSelections .selectContainer:has(.detailTrackSelect:focus) .selectLabel,
+.layout-tv .trackSelections .selectContainer:has(.detailTrackSelect:focus) .selectArrowContainer {
+  color: inherit;
+}
+
+.layout-tv .trackSelections .selectContainer .detailTrackSelect:focus {
+  background: var(--primary);
+  box-shadow: 0 0 36px rgb(var(--primary-canal) / 0.35);
+  color: var(--on-primary);
+  transform: scale(1.04);
+}
+
 .emby-select-focusscale:focus,
 .emby-input:focus {
   transform: none;

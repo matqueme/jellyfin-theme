@@ -99,27 +99,100 @@
   line-height: 1.5;
 }
 
-/* Les selects de pistes de la page d'item (Video, Audio, Sous-titres) :
-   sans cadre, en ligne avec leur libelle ; on leur donne la forme d'une
-   pastille cliquable pour qu'ils se lisent comme des controles. */
+/* Pistes de la fiche (Source, Video, Audio, Sous-titres).
+   Le client en fait une colonne de longs champs, chacun avec son libelle et
+   le detail technique complet de la piste (« VFF : Dolby Digital Plus 7.1
+   @1024 kb/s - French - Dolby Digital+ - Par defaut ») : tres large pour
+   une information qu'on lit rarement. Ici : des pastilles de verre sur une
+   ligne, qui se partagent la largeur, avec une icone a la place du libelle
+   et le texte coupe par « ... » (le debut, « VFF », est le plus utile).
+   Les pastilles passent a la ligne si elles sont plus de deux, et l'une
+   sous l'autre sur petit ecran.
+
+   Le libelle reste dans le DOM (font-size: 0) pour les lecteurs d'ecran.
+   Le client force margin et max-width sur ces conteneurs : d'ou les
+   !important. Un select desactive (une seule piste) garde sa pastille : c'est
+   une information, pas un controle grise. */
+.trackSelections {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6em 0.8em;
+}
+
+.trackSelections .selectContainer {
+  flex: 1 1 14em;
+  margin: 0 !important;
+  min-width: 0;
+}
+
+.trackSelections .selectContainer .selectLabel {
+  color: var(--text-2);
+  flex: none;
+  font-size: 0;
+  height: 1.3rem;
+  left: 0.9em;
+  line-height: 0;
+  margin: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.3rem;
+  z-index: 1;
+}
+
+.trackSelections .selectContainer .selectLabel::before {
+  font-family: "Phosphor-Bold";
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.trackSelections .selectSourceContainer .selectLabel::before { content: "\e466"; } /* stack */
+.trackSelections .selectVideoContainer .selectLabel::before { content: "\e792"; } /* film-strip */
+.trackSelections .selectAudioContainer .selectLabel::before { content: "\e44a"; } /* speaker-high */
+.trackSelections .selectSubtitlesContainer .selectLabel::before { content: "\e1a8"; } /* subtitles */
+
 .trackSelections .selectContainer .detailTrackSelect {
-  background: var(--veil-1);
+  background: var(--veil-3);
   border: 1px solid transparent;
   border-radius: var(--r-pill);
-  padding: 0.25em 2em 0.25em 0.8em;
+  box-shadow: var(--glass-edge);
+  color: var(--text);
+  flex: 1 1 auto;
+  font-weight: 600;
+  min-width: 0;
+  overflow: hidden;
+  padding: 0.5em 2.3em 0.5em 2.8em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
 }
 
 .trackSelections .selectContainer .detailTrackSelect:hover {
-  background: var(--veil-2);
+  background: rgb(255 255 255 / 0.22);
 }
 
+/* !important : .emby-select[disabled] (plus haut) retire tout fond. */
 .trackSelections .selectContainer .detailTrackSelect[disabled] {
-  background: none !important;
-  padding-left: 0.8em;
+  background: var(--veil-3) !important;
+  opacity: 1;
+  padding-right: 1em;
 }
 
 .trackSelections .selectContainer .selectArrowContainer {
-  right: 0.6em;
+  right: 0.7em;
+}
+
+/* Petit ecran : une pastille par ligne. .layout-mobile pour le telephone,
+   la largeur pour une fenetre etroite sur ordinateur. */
+.layout-mobile .trackSelections .selectContainer {
+  flex-basis: 100%;
+}
+
+@media (max-width: 600px) {
+  .trackSelections .selectContainer {
+    flex-basis: 100%;
+  }
 }
 
 /* --- MUI ------------------------------------------------------------- */

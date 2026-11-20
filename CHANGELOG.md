@@ -7,6 +7,30 @@ title of each version.
 The history up to 3.1.2 was originally written in French and translated
 afterwards. File names under `src/` are French, and appear as they are.
 
+## [3.2.6] - 2026-11-20 - Jellyfin 12.x, Modern layout
+
+### Changed
+
+- The audio and subtitle tracks of the item page (and the source and video
+  ones when there are several) were long, thin fields, each showing the full
+  technical detail of the track ("VFF : Dolby Digital Plus 7.1 @1024 kb/s -
+  French - Dolby Digital+ - Default"). They are now glass pills on a single
+  line, sharing the width, with an icon in place of the label and the text
+  cut with an ellipsis (the start, "VFF", is the useful part). On a phone, or
+  in a narrow window, they stack one under the other. A track list with a
+  single track keeps its pill, as it is information rather than a control.
+  On TV, the focused pill turns solid white with a glow and a slight zoom, like
+  the buttons. The label stays in the page for screen readers.
+
+### Fixed
+
+- The scroll arrows of a row (cast and crew, similar items, home rows...) sit
+  on the title line and the row starts right under them. At their original
+  size (59px) they went lower than the top of the cards: 13px of overlap on
+  the item page, 7px on the home page, so even at rest they looked glued to
+  the pictures and the focus ring touched them. They are now 36px, still
+  centered on the title, with about 14px of air above the cards.
+
 ## [3.2.5] - 2026-11-20 - Jellyfin 12.x, Modern layout
 
 ### Fixed

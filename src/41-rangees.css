@@ -77,10 +77,28 @@
   text-underline-offset: 0.2em;
 }
 
-/* Fleches de defilement : boutons ronds voiles. */
-.emby-scrollbuttons-button {
+/* Fleches de defilement : boutons ronds voiles.
+
+   Elles sont en position: absolute en haut de la section, sur la ligne du
+   titre, et la rangee commence juste dessous. A leur taille d'origine
+   (59px) elles descendaient plus bas que le haut des cartes : sur la fiche,
+   13px de recouvrement ; sur l'accueil, 7px. Meme au repos on les voyait
+   collees aux images, et l'anneau de focus les touchait. A 36px elles
+   restent a leur place, centrees sur le titre, avec 14px de respiration.
+   Selecteurs plus lourds que ceux du client, dont la feuille est injectee
+   apres la notre (.paper-icon-button-light, .detailVerticalSection). */
+.emby-scrollbuttons > .emby-scrollbuttons-button {
   background: var(--veil-1);
+  height: 2.25rem;
   margin: 0 0.15em;
+  padding: 0;
+  width: 2.25rem;
+}
+
+/* Fiche : le client descend les fleches de .4em, de quoi les faire toucher
+   les cartes. Le titre y est un peu plus haut que sur l'accueil. */
+.verticalSection.detailVerticalSection > .emby-scrollbuttons {
+  padding-top: 0.15rem;
 }
 
 .emby-scrollbuttons-button:disabled {
