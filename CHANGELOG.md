@@ -7,6 +7,18 @@ title of each version.
 The history up to 3.1.2 was originally written in French and translated
 afterwards. File names under `src/` are French, and appear as they are.
 
+## [3.2.5] - 2026-11-20 - Jellyfin 12.x, Modern layout
+
+### Fixed
+
+- On TV, the main buttons (Play/Resume on the item page, Pause in the
+  player) were solid white at rest and solid white when focused too, so
+  nothing showed that the remote was on them. At rest they are now glass with
+  a white outline; solid white only means "focused". The focused button also
+  grows slightly and gets a soft glow, as do the round buttons next to it
+  (watched, favorite...), which did not scale before. Desktop and mobile are
+  unchanged.
+
 ## [3.2.4] - 2026-10-06 - Jellyfin 12.x, Modern layout
 
 ### Fixed
