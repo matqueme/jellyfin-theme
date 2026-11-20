@@ -7,6 +7,20 @@ title of each version.
 The history up to 3.1.2 was originally written in French and translated
 afterwards. File names under `src/` are French, and appear as they are.
 
+## [3.2.8] - 2026-11-20 - Jellyfin 12.x, Modern layout
+
+### Fixed
+
+- The scroll arrows of a row stopped about 12px short of the right edge of
+  the content, which the button row of the item page (Play, watched,
+  favorite, ...) reaches. The client centers the two arrows in a box at
+  least 104px wide, and once they were reduced to 36px in 3.2.6 that left
+  empty space on each side. They are now right-aligned, with no margin after
+  the last one.
+- The source and video tracks of the item page get a whole line again, so
+  their text ("4K HEVC Dolby Vision ...") reads in full; only the audio and
+  subtitle pills, below, share a line and are cut with an ellipsis.
+
 ## [3.2.7] - 2026-11-20 - Jellyfin 12.x, Modern layout
 
 ### Fixed

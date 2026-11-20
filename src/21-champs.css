@@ -147,6 +147,14 @@
   line-height: 1;
 }
 
+/* Source et video : une ligne pour elles seules. Leur texte (« 4K HEVC Dolby
+   Vision ... ») se lit volontiers en entier, et c'est le detail de l'audio
+   et des sous-titres, dessous, qui est coupe. */
+.trackSelections .selectSourceContainer,
+.trackSelections .selectVideoContainer {
+  flex-basis: 100%;
+}
+
 .trackSelections .selectSourceContainer .selectLabel::before { content: "\e466"; } /* stack */
 .trackSelections .selectVideoContainer .selectLabel::before { content: "\e792"; } /* film-strip */
 .trackSelections .selectAudioContainer .selectLabel::before { content: "\e44a"; } /* speaker-high */

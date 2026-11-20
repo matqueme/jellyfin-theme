@@ -95,6 +95,19 @@
   width: 2.25rem;
 }
 
+/* Le client centre les deux fleches dans une boite de 104px au moins. Reduites
+   a 36px, elles laissaient du vide de chaque cote et s'arretaient ~12px
+   avant le bord droit du contenu, que la ligne de boutons de la fiche
+   (Lecture, vu, favori, ...) atteint : elles se calent donc a droite, sans
+   marge apres la derniere. */
+.emby-scroller-container > .emby-scrollbuttons {
+  justify-content: flex-end;
+}
+
+.emby-scrollbuttons > .emby-scrollbuttons-button:last-child {
+  margin-right: 0;
+}
+
 /* Fiche : le client descend les fleches de .4em, de quoi les faire toucher
    les cartes. Le titre y est un peu plus haut que sur l'accueil. */
 .verticalSection.detailVerticalSection > .emby-scrollbuttons {
