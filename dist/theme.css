@@ -1,6 +1,6 @@
 /* =====================================================================
    Theme Jellyfin, par matqueme
-   Version 3.2.6, pour Jellyfin 12.x, layout Modern
+   Version 3.2.7, pour Jellyfin 12.x, layout Modern
 
    FICHIER CONSTRUIT : NE PAS EDITER.
    Genere par build.py depuis src/. Toute modification faite ici sera
@@ -898,7 +898,7 @@ a[data-role="button"]:focus {
   flex: none;
   font-size: 0;
   height: 1.3rem;
-  left: 0.9em;
+  left: 1rem; /* rem : le libelle est en font-size: 0, un em donnerait 0 */
   line-height: 0;
   margin: 0;
   pointer-events: none;
@@ -920,7 +920,9 @@ a[data-role="button"]:focus {
 .trackSelections .selectAudioContainer .selectLabel::before { content: "\e44a"; } /* speaker-high */
 .trackSelections .selectSubtitlesContainer .selectLabel::before { content: "\e1a8"; } /* subtitles */
 
-.trackSelections .selectContainer .detailTrackSelect {
+/* select.detailTrackSelect : plus lourd que la regle du client
+   (padding: 0), quel que soit l'ordre dans lequel les feuilles arrivent. */
+.trackSelections .selectContainer select.detailTrackSelect {
   background: var(--veil-3);
   border: 1px solid transparent;
   border-radius: var(--r-pill);
@@ -930,25 +932,32 @@ a[data-role="button"]:focus {
   font-weight: 600;
   min-width: 0;
   overflow: hidden;
-  padding: 0.5em 2.3em 0.5em 2.8em;
+  padding: 0.5em 2.6rem 0.5em 3rem;
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 100%;
 }
 
-.trackSelections .selectContainer .detailTrackSelect:hover {
+.trackSelections .selectContainer select.detailTrackSelect:hover {
   background: rgb(255 255 255 / 0.22);
 }
 
 /* !important : .emby-select[disabled] (plus haut) retire tout fond. */
-.trackSelections .selectContainer .detailTrackSelect[disabled] {
+.trackSelections .selectContainer select.detailTrackSelect[disabled] {
   background: var(--veil-3) !important;
   opacity: 1;
-  padding-right: 1em;
+  padding-right: 1.2rem;
 }
 
+/* Le client cale la fleche en haut du conteneur (top: .2em) ; elle est
+   centree ici. Pas de display ici : le client cache la fleche d'un select
+   desactive par display: none. */
 .trackSelections .selectContainer .selectArrowContainer {
-  right: 0.7em;
+  bottom: auto;
+  line-height: 0;
+  right: 0.9rem;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 /* Petit ecran : une pastille par ligne. .layout-mobile pour le telephone,

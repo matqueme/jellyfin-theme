@@ -7,6 +7,18 @@ title of each version.
 The history up to 3.1.2 was originally written in French and translated
 afterwards. File names under `src/` are French, and appear as they are.
 
+## [3.2.7] - 2026-11-20 - Jellyfin 12.x, Modern layout
+
+### Fixed
+
+- The track pills introduced in 3.2.6 were misplaced in the real client:
+  the icon touched the left edge of the pill (its offset was in `em`, and
+  the label is set to `font-size: 0`, so it came out as 0), the text sat too
+  far from it, and the dropdown arrow stuck to the top instead of being
+  centered. Offsets are now in `rem`, the arrow is centered vertically, and
+  the selector is heavy enough (`select.detailTrackSelect`) to win over the
+  client's own `padding: 0` whatever the order the stylesheets load in.
+
 ## [3.2.6] - 2026-11-20 - Jellyfin 12.x, Modern layout
 
 ### Changed
